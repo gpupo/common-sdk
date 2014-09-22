@@ -3,23 +3,23 @@
 namespace Gpupo\CommonSdk\Entity;
 
 abstract class EntityAbstract extends CollectionAbstract
-{   
+{
     public function __construct(array $data = null)
     {
         if (!$this instanceof EntityInterface) {
             throw new \Exception('EntityInterface deve ser implementada');
         }
-        
+
         $schema = $this->getSchema();
-        
+
         if (!empty($schema)) {
             parent::__construct($this->initSchema($this->getSchema(), $data));
         }
     }
-    
+
     protected function initSchema(array $schema, $data)
     {
-        foreach($schema as $key => $value) {
+        foreach ($schema as $key => $value) {
             if ($value == 'collection') {
                 $schema[$key] = $this->factoryCollection();
             } elseif ($value == 'object') {
@@ -29,16 +29,16 @@ abstract class EntityAbstract extends CollectionAbstract
             } elseif ($value == 'array') {
                 $schema[$key] = [];
             }
-        } 
-        
+        }
+
         return $schema;
     }
-    
+
     protected function factoryCollection()
     {
         return new Collection;
     }
-    
+
     public function toArray()
     {
         if ($this->validate()) {
@@ -48,7 +48,7 @@ abstract class EntityAbstract extends CollectionAbstract
 
     protected function validate()
     {
-        foreach($this->getSchema() as $key => $value) {
+        foreach ($this->getSchema() as $key => $value) {
             $current = $this->get($key);
             if ($value == 'integer') {
                 if (intval($current) !== $current) {
@@ -60,7 +60,7 @@ abstract class EntityAbstract extends CollectionAbstract
                 }
             }
         }
-        
+
         return true;
     }
 }

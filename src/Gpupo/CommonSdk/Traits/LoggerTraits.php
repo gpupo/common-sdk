@@ -5,6 +5,6 @@ class LoggerTraits
 {
     protected function addDebug($message, array $context = null)
     {
-        
+
     }
 }
