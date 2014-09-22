@@ -9,7 +9,7 @@
     "require": {
         "php": ">=5.5",
         "doctrine/common": "*",
-        "psr/log": "dev-master"
+        "psr/log": "*"
     },
     "extra": {
         "branch-alias": {
