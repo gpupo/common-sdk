@@ -1,0 +1,14 @@
+{
+    "name": "gpupo/common-sdk",
+    "description": "Common SDK Objects",
+    "keywords": ["sdk"],
+    "license": "MIT",
+    "autoload": {
+        "psr-0": { "Gpupo": "src" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
