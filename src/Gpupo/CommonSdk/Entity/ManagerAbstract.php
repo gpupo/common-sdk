@@ -2,6 +2,8 @@
 
 namespace Gpupo\CommonSdk\Entity;
 
+use Gpupo\CommonSdk\ClientInterface;
+
 abstract class ManagerAbstract
 {
     protected $client;
