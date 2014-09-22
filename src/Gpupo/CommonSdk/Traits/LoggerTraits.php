@@ -1,10 +1,12 @@
 <?php
 namespace Gpupo\CommonSdk\Traits;
 
-class LoggerTraits
+trait LoggerTraits
 {
     protected function addDebug($message, array $context = null)
     {
-
+        echo "Message . $message \n\n";
+        print_r($context);
+        
     }
 }
