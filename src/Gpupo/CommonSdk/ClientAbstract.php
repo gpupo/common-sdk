@@ -6,24 +6,10 @@ use Gpupo\CommonSdk\Entity\Collection;
 
 abstract class ClientAbstract
 {
-    use Traits\LoggerTraits;
+    use Traits\LoggerTrait;
+    use Traits\SingletonTrait;
     
     protected $options = [];
-
-    protected static $instance;
-
-    /**
-     * Permite acesso a instancia dinamica
-     */
-    public static function getInstance()
-    {
-        if (!isset(self::$instance)) {
-            $class=get_called_class();
-            self::$instance = new $class();
-        }
-
-        return self::$instance;
-    }
     
     public function factoryRequest($resource, $post = false)
     {
@@ -85,7 +71,7 @@ abstract class ClientAbstract
         $data['httpStatusCode'] = curl_getinfo($request, CURLINFO_HTTP_CODE);
         curl_close($request);
 
-        $this->addDebug('exec',$data);
+        $this->debug('exec',$data);
         
         return new Response($data);
     }
@@ -99,7 +85,7 @@ abstract class ClientAbstract
 
     public function post($resource, $body)
     {
-        $this->addDebug('post', [
+        $this->debug('post', [
             'resource'  => $resource,
             'body'      => $body,
         ]);
