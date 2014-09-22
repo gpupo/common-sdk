@@ -9,26 +9,26 @@ abstract class CollectionAbstract extends ArrayCollection
     public function toArray()
     {
         $list = parent::toArray();
-        
-        foreach($list as $key => $value) {
+
+        foreach ($list as $key => $value) {
             if ($value instanceof CollectionAbstract) {
                 $list[$key] = $value->toArray();
             }
         }
-        
+
         return $list;
     }
-    
+
     public function toJson()
     {
         return json_encode($this->toArray());
     }
-    
+
     /**
      * Magic method that implements
      *
      * @param string $method
-     * @param array $args
+     * @param array  $args
      *
      * @throws \BadMethodCallException
      * @return mixed
@@ -41,13 +41,13 @@ abstract class CollectionAbstract extends ArrayCollection
 
         if ($command == "set") {
             $this->set($field, current($args));
-            
+
             return $this;
-        } else if ($command == "get") {
+        } elseif ($command == "get") {
             return $this->get($field);
-        } else if ($command == "add") {
+        } elseif ($command == "add") {
             $this->add($field, current($args));
-            
+
             return $this;
         } else {
             throw new \BadMethodCallException("There is no method ".$method);

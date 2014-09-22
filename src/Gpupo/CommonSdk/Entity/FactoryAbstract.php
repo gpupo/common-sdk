@@ -6,5 +6,5 @@ namespace Gpupo\CommonSdk\Entity;
 
 abstract class FactoryAbstract
 {
-    
+
 }
