@@ -24,7 +24,6 @@ abstract class ClientAbstract
 
         return self::$instance;
     }
-
     
     public function factoryRequest($resource, $post = false)
     {
