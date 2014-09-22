@@ -15,22 +15,7 @@ abstract class ClientAbstract
         curl_setopt( $curlClient , CURLOPT_POST, $post);
         curl_setopt( $curlClient , CURLOPT_RETURNTRANSFER, true );
         curl_setopt($curlClient, CURLOPT_VERBOSE, $this->getOptions()->get('verbose'));
-
-        $url = $this->getOptions()->get('base_url') . '/'
-            . $this->getOptions()->get('version') . $resource;
-
-        curl_setopt($curlClient, CURLOPT_URL, $url);
-
-        $token = $this->getOptions()->get('token');
-
-        if (empty($token)) {
-            throw new \InvalidArgumentException('Token nao informado');
-        }
-
-        curl_setopt($curlClient, CURLOPT_HTTPHEADER, array(
-            'Authorization: Basic ' . base64_encode($token . ':'),
-            'Content-Type: application/json',
-        ));
+        curl_setopt($curlClient, CURLOPT_URL, $this->getResourceUri($resource));
 
         return $curlClient;
     }
@@ -61,10 +46,6 @@ abstract class ClientAbstract
 
     public function post($resource, $body)
     {
-        $this->debug('post', [
-            'resource'  => $resource,
-            'body'      => $body,
-        ]);
         $request = $this->factoryRequest($resource, true);
 
         curl_setopt($request, CURLOPT_POSTFIELDS, $body);
