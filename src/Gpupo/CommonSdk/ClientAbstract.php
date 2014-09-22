@@ -6,8 +6,8 @@ use Gpupo\CommonSdk\Entity\Collection;
 
 abstract class ClientAbstract
 {
-    const VERSION = 1;
-
+    use Traits\LoggerTraits;
+    
     protected $options = [];
 
     protected static $instance;
@@ -25,6 +25,7 @@ abstract class ClientAbstract
         return self::$instance;
     }
 
+    
     public function factoryRequest($resource, $post = false)
     {
         $curlClient = curl_init();
@@ -85,6 +86,8 @@ abstract class ClientAbstract
         $data['httpStatusCode'] = curl_getinfo($request, CURLINFO_HTTP_CODE);
         curl_close($request);
 
+        $this->addDebug('exec',$data);
+        
         return new Response($data);
     }
 
@@ -97,6 +100,10 @@ abstract class ClientAbstract
 
     public function post($resource, $body)
     {
+        $this->addDebug('post', [
+            'resource'  => $resource,
+            'body'      => $body,
+        ]);
         $request = $this->factoryRequest($resource, true);
 
         curl_setopt($request, CURLOPT_POSTFIELDS, $body);
