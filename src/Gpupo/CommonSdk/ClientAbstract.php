@@ -2,14 +2,11 @@
 
 namespace Gpupo\CommonSdk;
 
-use Gpupo\CommonSdk\Entity\Collection;
-
 abstract class ClientAbstract
 {
     use Traits\LoggerTrait;
     use Traits\SingletonTrait;
-    
-    protected $options = [];
+    use Traits\OptionsTrait;
     
     public function factoryRequest($resource, $post = false)
     {
@@ -36,27 +33,6 @@ abstract class ClientAbstract
         ));
 
         return $curlClient;
-    }
-
-    public function getOptions()
-    {
-        return $this->options;
-    }
-
-    protected function setOptions(Array $options = [])
-    {
-        $defaultOptions = [
-            'token'     => false,
-            'base_url'  => 'https://api-marketplace.submarino.com.br',
-            'version'   => 'sandbox',
-            'verbose'   => false, // Display communication with server
-        ];
-
-        $list = array_merge($defaultOptions, $options);
-
-        $this->options = new Collection($list);
-
-        return $this;
     }
 
     public function __construct($options = [])
