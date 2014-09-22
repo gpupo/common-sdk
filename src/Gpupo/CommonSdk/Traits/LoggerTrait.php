@@ -4,7 +4,7 @@ namespace Gpupo\CommonSdk\Traits;
 trait LoggerTrait
 {
     use \Psr\Log\LoggerTrait;
-    use Psr\Log\LoggerAwareTrait;
+    use \Psr\Log\LoggerAwareTrait;
     
     public function getLogger()
     {
