@@ -6,6 +6,10 @@
     "autoload": {
         "psr-0": { "Gpupo": "src" }
     },
+    "require": {
+        "php": ">=5.5",
+        "doctrine/common": "*"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
