@@ -47,6 +47,8 @@ class Transport extends Collection
         switch ($this->getMethod()) {
             case 'POST':
                 $this->setOption(CURLOPT_POST, true);
+                $this->setOption(CURLOPT_POSTFIELDS, $this->getBody());
+        
                 break;
             case 'PUT':
                 $this->setOption(CURLOPT_PUT, true);

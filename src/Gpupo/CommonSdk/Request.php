@@ -21,11 +21,7 @@ class Request extends Collection
     public function exec()
     {        
         $transport =  $this->getTransport()->setUrl($this->get('url'))
-            ->setMethod($this->get('method', 'GET'));
-        
-        if ($this->get('body', false)) {
-            $transport->setOption(CURLOPT_POSTFIELDS, $this->get('body'));
-        }
+            ->setMethod($this->get('method', 'GET'))->setBody($this->getBody());
         
         return $transport->exec();
     }
