@@ -8,16 +8,24 @@ abstract class ClientAbstract
     use Traits\SingletonTrait;
     use Traits\OptionsTrait;
     
+    protected function factoryTransport()
+    {
+        return new Transport($this->getOptions());
+    }
+    
     public function factoryRequest($resource, $post = false)
     {
-        $curlClient = curl_init();
-        curl_setopt($curlClient, CURLOPT_SSLVERSION, 3);
-        curl_setopt( $curlClient , CURLOPT_POST, $post);
-        curl_setopt( $curlClient , CURLOPT_RETURNTRANSFER, true );
-        curl_setopt($curlClient, CURLOPT_VERBOSE, $this->getOptions()->get('verbose'));
-        curl_setopt($curlClient, CURLOPT_URL, $this->getResourceUri($resource));
-
-        return $curlClient;
+        $request = new Request;
+        
+        
+        if ($post) {
+            $request->setMethod('POST');
+        }
+        
+        $request->setTransport($this->factoryTransport())
+            ->setUrl($this->getResourceUri($resource));
+        
+        return $request;
     }
 
     public function __construct($options = [])
@@ -25,16 +33,14 @@ abstract class ClientAbstract
         $this->setOptions($options);
     }
 
-    protected function exec($request)
+    protected function exec(Request $request)
     {
-        $data = [];
-        $data['responseRaw'] = curl_exec($request);
-        $data['httpStatusCode'] = curl_getinfo($request, CURLINFO_HTTP_CODE);
-        curl_close($request);
-
-        $this->debug('exec',$data);
+        $data = $request->exec();
+        $response = new Response($data);
         
-        return new Response($data);
+        $this->debug('exec',$response->toLog());
+        
+        return $response;
     }
 
     public function get($resource)
@@ -48,16 +54,22 @@ abstract class ClientAbstract
     {
         $request = $this->factoryRequest($resource, true);
 
-        curl_setopt($request, CURLOPT_POSTFIELDS, $body);
+        curl_setopt($request->getAgent(), CURLOPT_POSTFIELDS, $body);
 
         return $this->exec($request);
     }
 
     public function put($resource, $body)
     {
-        $request = $this->factoryRequest($resource, true);
-
-        curl_setopt($request, CURLOPT_PUT, true);
+        $this->debug('put', [
+            'resource'  => $resource,
+            'body'      => $body
+        ]);
+        
+        $request = $this->factoryRequest($resource);
+        
+        $request->setMethod('PUT');
+        curl_setopt($request->getAgent(), CURLOPT_PUT, true);
 
         $pointer = fopen('php://temp/maxmemory:512000', 'w+');
         //$pointer = tmpfile();
