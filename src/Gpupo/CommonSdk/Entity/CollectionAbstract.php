@@ -24,6 +24,11 @@ abstract class CollectionAbstract extends ArrayCollection
         return json_encode($this->toArray());
     }
 
+    public function toLog()
+    {
+        return $this->toArray();
+    }
+    
     /**
      * Magic method that implements
      *
