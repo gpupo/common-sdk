@@ -17,7 +17,6 @@ abstract class ClientAbstract
     {
         $request = new Request;
         
-        
         if ($post) {
             $request->setMethod('POST');
         }
@@ -35,12 +34,23 @@ abstract class ClientAbstract
 
     protected function exec(Request $request)
     {
-        $data = $request->exec();
-        $response = new Response($data);
-        
-        $this->debug('exec',$response->toLog());
-        
-        return $response;
+        try {
+            $data = $request->exec();
+            $response = new Response($data);
+            $response->setLogger($this->getLogger());
+            $response->validate();
+            
+            $this->debug('Response',$response->toLog());
+            
+            return $response;
+        } catch (\Exception $e) {
+            $this->error('Execucao fracassada', [
+                'exception' => $e->toLog(),
+                'request'   => $request->toLog(),
+            ]);
+            
+            throw $e;
+        }
     }
 
     public function get($resource)
@@ -52,39 +62,17 @@ abstract class ClientAbstract
 
     public function post($resource, $body)
     {
-        $request = $this->factoryRequest($resource, true);
-
-        curl_setopt($request->getAgent(), CURLOPT_POSTFIELDS, $body);
-
+        $request = $this->factoryRequest($resource, true)
+            ->setBody($body);
+        
         return $this->exec($request);
     }
 
     public function put($resource, $body)
     {
-        $this->debug('put', [
-            'resource'  => $resource,
-            'body'      => $body
-        ]);
+        $request = $this->factoryRequest($resource)->setBody($body)
+            ->setMethod('PUT');
         
-        $request = $this->factoryRequest($resource);
-        
-        $request->setMethod('PUT');
-        curl_setopt($request->getAgent(), CURLOPT_PUT, true);
-
-        $pointer = fopen('php://temp/maxmemory:512000', 'w+');
-        //$pointer = tmpfile();
-        if (!$pointer) {
-            throw new \Exception('could not open temp memory data');
-        }
-        fwrite($pointer, $body);
-        fseek($pointer, 0);
-
-        curl_setopt($request, CURLOPT_BINARYTRANSFER, true);
-        curl_setopt($request, CURLOPT_INFILE, $pointer);
-        curl_setopt($request, CURLOPT_INFILESIZE, strlen($body));
-
-        //curl_setopt($request, CURLOPT_POSTFIELDS, $body);
-        //curl_setopt($request, CURLOPT_CUSTOMREQUEST, "PUT");
         return $this->exec($request);
     }
 }
