@@ -21,7 +21,7 @@ abstract class ManagerAbstract
 
     protected function exceptionHandler(\Exception $exception, $method, $resource)
     {
-        return new ManagerException($method . ' on ' . $resource . ' FAIL:' 
+        return new ManagerException($method . ' on ' . $resource . ' FAIL:'
             . $exception->getMessage(), $exception->getCode(), $exception);
     }
 
@@ -35,11 +35,11 @@ abstract class ManagerAbstract
             throw $this->exceptionHandler($exception, $method, $resource);
         }
     }
-    
+
     protected function execute($method, $resource, $body = null)
     {
         $this->perform($method, $resource, $body);
-        
+
         return true;
     }
 }

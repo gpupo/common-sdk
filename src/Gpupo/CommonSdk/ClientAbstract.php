@@ -7,23 +7,23 @@ abstract class ClientAbstract
     use Traits\LoggerTrait;
     use Traits\SingletonTrait;
     use Traits\OptionsTrait;
-    
+
     protected function factoryTransport()
     {
         return new Transport($this->getOptions());
     }
-    
+
     public function factoryRequest($resource, $post = false)
     {
         $request = new Request;
-        
+
         if ($post) {
             $request->setMethod('POST');
         }
-        
+
         $request->setTransport($this->factoryTransport())
             ->setUrl($this->getResourceUri($resource));
-        
+
         return $request;
     }
 
@@ -39,16 +39,16 @@ abstract class ClientAbstract
             $response = new Response($data);
             $response->setLogger($this->getLogger());
             $response->validate();
-            
+
             $this->debug('Response',$response->toLog());
-            
+
             return $response;
         } catch (\Exception $e) {
             $this->error('Execucao fracassada', [
                 'exception' => $e->toLog(),
                 'request'   => $request->toLog(),
             ]);
-            
+
             throw $e;
         }
     }
@@ -64,7 +64,7 @@ abstract class ClientAbstract
     {
         $request = $this->factoryRequest($resource, true)
             ->setBody($body);
-        
+
         return $this->exec($request);
     }
 
@@ -72,7 +72,7 @@ abstract class ClientAbstract
     {
         $request = $this->factoryRequest($resource)->setBody($body)
             ->setMethod('PUT');
-        
+
         return $this->exec($request);
     }
 }

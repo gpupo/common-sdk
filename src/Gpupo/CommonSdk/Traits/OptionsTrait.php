@@ -6,7 +6,7 @@ use Gpupo\CommonSdk\Entity\Collection;
 trait OptionsTrait
 {
     protected $options = [];
-    
+
     public function getOptions()
     {
         return $this->options;
