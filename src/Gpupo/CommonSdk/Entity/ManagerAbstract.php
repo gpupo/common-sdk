@@ -12,18 +12,17 @@ abstract class ManagerAbstract
     
     protected $maps;
     
-    public function save(EntityInterface $entity)
+    public function save(EntityInterface $entity, $route = 'save')
     {
-        return $this->execute($this->factoryMap('save'), $entity->toJson());
+        return $this->execute($this->factoryMap($route), $entity->toJson());
     }
 
     public function findById($itemId)
     {       
         $response =  $this->perform($this->factoryMap('findById',
             ['itemId' => $itemId]));
-        $product = new Product($response->getData()->toArray());
-
-        return $product;
+        
+        return $response;
     }
 
     public function fetch($offset = 1, $limit = 50)
@@ -31,9 +30,7 @@ abstract class ManagerAbstract
         $response =  $this->perform($this->factoryMap('fetch',
             ['offset' => $offset, 'limit' => $limit]));
 
-        $product = new Product($response->getData()->toArray());
-
-        return $product;
+        return $response->getData();
     }
 
     public function factoryMap($operation, array $parameters = null)
@@ -82,10 +79,65 @@ abstract class ManagerAbstract
         }
     }
 
+    protected function factoryCollection(array $list)
+    {
+        return new Collection($list);
+    }
+    
     protected function execute(Map $map, $body = null)
     {
         $this->perform($map, $body);
 
         return true;
+    }
+
+    protected function getEntityName()
+    {
+        if (empty($this->entity)) {
+            throw new ManagerException('Entity missed!');
+        }
+        
+        return $this->entity;
+    }
+    
+    protected function factoryEntityCollection(array $data)
+    {               
+        $list = [];
+        foreach ($data as $item) {
+            if (is_array($item)) {
+                $list[] = $this->factoryEntity($item);
+            }
+        }
+
+        return $this->factoryCollection($list);
+    }
+    
+    protected function factoryEntity(array $data = null)
+    {
+        $object = str_replace('Manager', $this->getEntityName(), get_called_class());
+        
+        return new $object($data);
+    }
+    
+    /**
+     * Magic method that implements
+     *
+     * @param string $method
+     * @param array  $args
+     *
+     * @throws \BadMethodCallException
+     * @return mixed
+     */
+    public function __call($method, $args)
+    {
+        $command = substr($method, 0, 4);
+        $field = substr($method, 4);
+        $field[0] = strtolower($field[0]);
+
+        if ($command == "save") {
+            return $this->save(current($args), $field);
+        } else {
+            throw new \BadMethodCallException("There is no method ".$method);
+        }
     }
 }
