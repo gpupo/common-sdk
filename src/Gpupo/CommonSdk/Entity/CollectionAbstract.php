@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 abstract class CollectionAbstract extends ArrayCollection
 {
     use \Gpupo\CommonSdk\Traits\MagicCallTrait;
-    
+
     public function toArray()
     {
         $list = parent::toArray();
@@ -29,5 +29,5 @@ abstract class CollectionAbstract extends ArrayCollection
     public function toLog()
     {
         return $this->toArray();
-    }    
+    }
 }

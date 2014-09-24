@@ -6,9 +6,9 @@ use Gpupo\CommonSdk\Entity\Collection;
 use Gpupo\CommonSdk\Exception\RequestException;
 
 class Response extends Collection
-{    
+{
     use Traits\LoggerTrait;
-    
+
     protected static $statusTexts = [
         100 => 'Continue',
         101 => 'Switching Protocols',
@@ -69,26 +69,25 @@ class Response extends Collection
         510 => 'Not Extended',
         511 => 'Network Authentication Required',
     ];
-     
+
     public function __construct(array $elements = array())
     {
         parent::__construct($elements);
     }
-    
+
     public function validate()
     {
         if ($this->getHttpStatusCode() > 399) {
-            
+
             $this->error("Response With Errors", $this->toLog());
-            
+
             throw new RequestException(
                 static::$statusTexts[$this->getHttpStatusCode()],
                 $this->getHttpStatusCode());
         }
-        
+
         return true;
     }
-
 
     public function getData()
     {

@@ -9,6 +9,6 @@ class RuntimeException extends \RuntimeException implements ExceptionInterface
         return [
             'message'   => $this->message,
             'code'      => $this->code,
-        ];        
+        ];
     }
 }
