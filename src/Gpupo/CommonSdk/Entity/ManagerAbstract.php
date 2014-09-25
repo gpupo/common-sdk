@@ -28,10 +28,10 @@ abstract class ManagerAbstract
         return $response->getData();
     }
 
-    public function fetch($offset = 1, $limit = 50)
+    public function fetch($offset = 1, $limit = 50, array $parameters = [])
     {
         $response =  $this->perform($this->factoryMap('fetch',
-            ['offset' => $offset, 'limit' => $limit]));
+            array_merge($parameters, ['offset' => $offset, 'limit' => $limit])));
 
         return $response->getData();
     }

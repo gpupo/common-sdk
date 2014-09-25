@@ -40,7 +40,12 @@ abstract class ClientAbstract
             $response->setLogger($this->getLogger());
             $response->validate();
 
-            $this->debug('Response',$response->toLog());
+            $this->debug('Client Execution',
+                [
+                    'request'   => $request->toLog(),
+                    'response'  => $response->toLog(),
+                ]
+            );
 
             return $response;
         } catch (\Exception $e) {
