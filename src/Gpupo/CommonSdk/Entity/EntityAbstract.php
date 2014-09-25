@@ -65,12 +65,15 @@ abstract class EntityAbstract extends CollectionAbstract
         foreach ($this->getSchema() as $key => $value) {
             $current = $this->get($key);
             if ($value == 'integer') {
-                if (intval($current) !== $current) {
-                    throw new \InvalidArgumentException($key . 'should have value of type Integer valid');
+                if (!empty($current) && intval($current) !== $current) {
+                    throw new \InvalidArgumentException($key 
+                        . ' should have value of type Integer valid (received ' 
+                        . $current . ')');
                 }
-            } elseif ($value == 'number') {
-                if (floatval($current) != $current) {
-                    throw new \InvalidArgumentException($key . 'should have value of type Number valid');
+            } elseif (!empty($current) && $value == 'number') {
+                if (!is_numeric($current)) {
+                    throw new \InvalidArgumentException($key 
+                        . ' should have value of type Number valid');
                 }
             }
         }
