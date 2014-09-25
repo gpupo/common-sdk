@@ -21,12 +21,23 @@ class Map extends Collection
     {
         $route = $this->get('resource');
         $parameters = $this->getParameters();
-        if ($parameters) {
-            foreach ($parameters as $key => $value) {
-                $route = str_replace("{" . $key . "}", $value, $route);
-            }
+        if (!empty($parameters) && is_array($parameters)) {
+            $route = $this->populatePlaceholders($route, $parameters);
         }
 
         return $route;
+    }
+    
+    protected function populatePlaceholders($route, $parameters)
+    {
+        foreach ($parameters as $key => $value) {
+            if (!empty($value)) {
+                $route = str_replace("{" . $key . "}", $value, $route);
+            } else {
+                $route = str_replace('&' . $key . "={" . $key . "}", '', $route);
+            }
+        }
+        
+        return $route;        
     }
 }
