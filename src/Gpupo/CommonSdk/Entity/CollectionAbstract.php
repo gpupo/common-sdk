@@ -21,9 +21,16 @@ abstract class CollectionAbstract extends ArrayCollection
         return $list;
     }
 
-    public function toJson()
+    public function toJson($route = null)
     {
-        return json_encode($this->toArray());
+        if (empty($route) || $route == 'save') {
+            $data = $this->toArray();
+        } else {
+            $method = 'to' . ucfirst($route);
+            $data = $this->$method();
+        }
+        
+        return json_encode($data);
     }
 
     public function toLog()

@@ -17,7 +17,7 @@ abstract class ManagerAbstract
 
     public function save(EntityInterface $entity, $route = 'save')
     {
-        return $this->execute($this->factoryMap($route), $entity->toJson());
+        return $this->execute($this->factoryMap($route), $entity->toJson($route));
     }
 
     public function findById($itemId)
@@ -43,7 +43,7 @@ abstract class ManagerAbstract
         }
 
         if (!array_key_exists($operation, $this->maps)) {
-            throw new ManagerException('Map not found');
+            throw new ManagerException('Map [' . $operation . '] not found');
         }
 
         $data = $this->maps[$operation];
@@ -136,7 +136,7 @@ abstract class ManagerAbstract
         $field[0] = strtolower($field[0]);
 
         if ($command == "save") {
-            return $this->save(current($args), $field);
+            return $this->save(current($args), $method);
         } else {
             throw new \BadMethodCallException("There is no method ".$method);
         }
