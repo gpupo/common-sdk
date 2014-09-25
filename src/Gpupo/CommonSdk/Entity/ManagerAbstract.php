@@ -5,9 +5,12 @@ namespace Gpupo\CommonSdk\Entity;
 use Gpupo\CommonSdk\ClientInterface;
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Map;
+use Gpupo\CommonSdk\Traits\FactoryTrait;
 
 abstract class ManagerAbstract
 {
+    use FactoryTrait;
+    
     protected $client;
     
     protected $maps;
@@ -22,7 +25,7 @@ abstract class ManagerAbstract
         $response =  $this->perform($this->factoryMap('findById',
             ['itemId' => $itemId]));
         
-        return $response;
+        return $response->getData();
     }
 
     public function fetch($offset = 1, $limit = 50)
@@ -114,9 +117,7 @@ abstract class ManagerAbstract
     
     protected function factoryEntity(array $data = null)
     {
-        $object = str_replace('Manager', $this->getEntityName(), get_called_class());
-        
-        return new $object($data);
+        return $this->factoryNeighborObject($this->getEntityName(), $data);
     }
     
     /**

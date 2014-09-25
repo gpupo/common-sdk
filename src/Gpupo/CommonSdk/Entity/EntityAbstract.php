@@ -2,8 +2,12 @@
 
 namespace Gpupo\CommonSdk\Entity;
 
+use Gpupo\CommonSdk\Traits\FactoryTrait;
+
 abstract class EntityAbstract extends CollectionAbstract
 {
+    use FactoryTrait;
+    
     public function __construct(array $data = null)
     {
         if (!$this instanceof EntityInterface) {
@@ -23,7 +27,7 @@ abstract class EntityAbstract extends CollectionAbstract
             if ($value == 'collection') {
                 $schema[$key] = $this->factoryCollection();
             } elseif ($value == 'object') {
-                $schema[$key] = false;
+                $schema[$key] = $this->factoryNeighborObject(ucfirst($key), $data[$key]);
             } elseif (!empty($data) && array_key_exists($key, $data)) {
                 $schema[$key] = $data[$key];
             } elseif ($value == 'array') {
@@ -33,7 +37,7 @@ abstract class EntityAbstract extends CollectionAbstract
 
         return $schema;
     }
-
+       
     protected function factoryCollection()
     {
         return new Collection;
