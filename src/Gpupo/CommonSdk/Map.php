@@ -13,20 +13,20 @@ class Map extends Collection
             'resource'      => $elements[1],
             'parameters'    => $parameters,
         ];
-        
+
         parent::__construct($data);
     }
-    
+
     public function getResource()
     {
         $route = $this->get('resource');
         $parameters = $this->getParameters();
-        if($parameters) {
+        if ($parameters) {
             foreach ($parameters as $key => $value) {
                 $route = str_replace("{" . $key . "}", $value, $route);
             }
         }
-        
+
         return $route;
     }
 }
