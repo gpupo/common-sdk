@@ -10,21 +10,21 @@ use Gpupo\CommonSdk\Traits\FactoryTrait;
 abstract class ManagerAbstract
 {
     use FactoryTrait;
-    
+
     protected $client;
-    
+
     protected $maps;
-    
+
     public function save(EntityInterface $entity, $route = 'save')
     {
         return $this->execute($this->factoryMap($route), $entity->toJson());
     }
 
     public function findById($itemId)
-    {       
+    {
         $response =  $this->perform($this->factoryMap('findById',
             ['itemId' => $itemId]));
-        
+
         return $response->getData();
     }
 
@@ -41,17 +41,17 @@ abstract class ManagerAbstract
         if (!is_array($this->maps)) {
             throw new ManagerException('Maps missed!');
         }
-        
+
         if (!array_key_exists($operation, $this->maps)) {
             throw new ManagerException('Map not found');
         }
-        
+
         $data = $this->maps[$operation];
         if (!is_array($data)) {
             throw new ManagerException('Map MUST be array');
         }
-        
-        return new Map($data, $parameters);        
+
+        return new Map($data, $parameters);
     }
 
     public function __construct(ClientInterface $client)
@@ -86,7 +86,7 @@ abstract class ManagerAbstract
     {
         return new Collection($list);
     }
-    
+
     protected function execute(Map $map, $body = null)
     {
         $this->perform($map, $body);
@@ -99,12 +99,12 @@ abstract class ManagerAbstract
         if (empty($this->entity)) {
             throw new ManagerException('Entity missed!');
         }
-        
+
         return $this->entity;
     }
-    
+
     protected function factoryEntityCollection(array $data)
-    {               
+    {
         $list = [];
         foreach ($data as $item) {
             if (is_array($item)) {
@@ -114,12 +114,12 @@ abstract class ManagerAbstract
 
         return $this->factoryCollection($list);
     }
-    
+
     protected function factoryEntity(array $data = null)
     {
         return $this->factoryNeighborObject($this->getEntityName(), $data);
     }
-    
+
     /**
      * Magic method that implements
      *
