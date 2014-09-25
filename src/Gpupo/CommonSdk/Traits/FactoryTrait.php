@@ -38,6 +38,17 @@ trait FactoryTrait
         $list[key($list)] = $objectName;
         $fullyQualified = implode('\\', $list);
         
+        if (!class_exists($fullyQualified)) {
+            $error = $fullyQualified;
+            $fullyQualified .= '\\' . $objectName;
+        }
+        
+        if (!class_exists($fullyQualified)) {
+            $error .= ' or ' . $fullyQualified;
+            
+            throw new \Exception('Class ' . $error . ' not found');
+        }
+        
         return $fullyQualified;
     }
 

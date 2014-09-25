@@ -25,7 +25,6 @@ abstract class EntityAbstract extends CollectionAbstract
     {
         $get = function ($key, $default = '') use ($data) {
             $fill = $default;
-            
             if (array_key_exists($key, $data)) {
                 $fill = $data[$key];
             }
@@ -35,13 +34,13 @@ abstract class EntityAbstract extends CollectionAbstract
         
         foreach ($schema as $key => $value) {
             if ($value == 'collection') {
-                $schema[$key] = $this->factoryCollection();
+                $schema[$key] = $this->factoryCollection($get($key, []));
             } elseif ($value == 'object') {
                 $schema[$key] = $this->factoryNeighborObject(ucfirst($key),
                     $get($key, []));
             } elseif ($value == 'array') {
                 $schema[$key] = $get($key, []);
-            } elseif (in_array($value, ['string', 'integer'])) {
+            } elseif (in_array($value, ['string', 'integer', 'number'])) {
                 $schema[$key] = $get($key);
             }
         }
@@ -49,9 +48,9 @@ abstract class EntityAbstract extends CollectionAbstract
         return $schema;
     }
 
-    protected function factoryCollection()
+    protected function factoryCollection($data = [])
     {
-        return new Collection;
+        return new Collection($data);
     }
 
     public function toArray()
