@@ -21,27 +21,31 @@ abstract class EntityAbstract extends CollectionAbstract
         }
     }
 
-    protected function initSchema(array $schema, $data)
+    protected function getInitValue($data, $key, $default = '')
     {
-        $get = function ($key, $default = '') use ($data) {
-            $fill = $default;
-            if (array_key_exists($key, $data)) {
-                $fill = $data[$key];
+        if (array_key_exists($key, $data)) {
+            $fill = $data[$key];
+            if (is_array($default) && !is_array($fill)) {
+                $fill = [$key => $fill];
             }
-            
-            return $fill;
-        };
-        
+        }
+
+        return (isset($fill)) ? $fill : $default;
+    }
+    
+    protected function initSchema(array $schema, $data)
+    {        
         foreach ($schema as $key => $value) {
             if ($value == 'collection') {
-                $schema[$key] = $this->factoryCollection($get($key, []));
+                $schema[$key] = $this->factoryCollection(
+                    $this->getInitValue($data, $key, []));
             } elseif ($value == 'object') {
                 $schema[$key] = $this->factoryNeighborObject(ucfirst($key),
-                    $get($key, []));
+                    $this->getInitValue($data, $key, []));
             } elseif ($value == 'array') {
-                $schema[$key] = $get($key, []);
+                $schema[$key] = $this->getInitValue($data, $key, []);
             } elseif (in_array($value, ['string', 'integer', 'number'])) {
-                $schema[$key] = $get($key);
+                $schema[$key] = $this->getInitValue($data, $key);
             }
         }
 
