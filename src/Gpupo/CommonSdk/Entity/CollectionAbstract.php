@@ -29,7 +29,7 @@ abstract class CollectionAbstract extends ArrayCollection
             $method = 'to' . ucfirst($route);
             $data = $this->$method();
         }
-        
+
         return json_encode($data);
     }
 
