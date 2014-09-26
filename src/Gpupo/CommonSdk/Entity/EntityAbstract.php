@@ -32,9 +32,9 @@ abstract class EntityAbstract extends CollectionAbstract
 
         return (isset($fill)) ? $fill : $default;
     }
-    
+
     protected function initSchema(array $schema, $data)
-    {        
+    {
         foreach ($schema as $key => $value) {
             if ($value == 'collection') {
                 $schema[$key] = $this->factoryCollection(
@@ -70,13 +70,13 @@ abstract class EntityAbstract extends CollectionAbstract
             $current = $this->get($key);
             if ($value == 'integer') {
                 if (!empty($current) && intval($current) !== $current) {
-                    throw new \InvalidArgumentException($key 
-                        . ' should have value of type Integer valid (received ' 
+                    throw new \InvalidArgumentException($key
+                        . ' should have value of type Integer valid (received '
                         . $current . ')');
                 }
             } elseif (!empty($current) && $value == 'number') {
                 if (!is_numeric($current)) {
-                    throw new \InvalidArgumentException($key 
+                    throw new \InvalidArgumentException($key
                         . ' should have value of type Number valid');
                 }
             }

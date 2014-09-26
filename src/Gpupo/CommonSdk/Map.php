@@ -27,7 +27,7 @@ class Map extends Collection
 
         return $route;
     }
-    
+
     protected function populatePlaceholders($route, $parameters)
     {
         foreach ($parameters as $key => $value) {
@@ -37,7 +37,7 @@ class Map extends Collection
                 $route = str_replace('&' . $key . "={" . $key . "}", '', $route);
             }
         }
-        
-        return $route;        
+
+        return $route;
     }
 }
