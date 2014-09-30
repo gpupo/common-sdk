@@ -23,7 +23,7 @@ abstract class EntityAbstract extends CollectionAbstract
 
     protected function getInitValue($data, $key, $default = '')
     {
-        if (array_key_exists($key, $data)) {
+        if (is_array($data) && array_key_exists($key, $data)) {
             $fill = $data[$key];
             if (is_array($default) && !is_array($fill)) {
                 $fill = [$key => $fill];
