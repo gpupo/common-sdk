@@ -17,15 +17,30 @@ abstract class ManagerAbstract
 
     public function save(EntityInterface $entity, $route = 'save')
     {
+        $existent = $this->findById($entity->getId());
+       
+        if ($existent) {
+            return $this->update($entity, $existent);
+        }
+
         return $this->execute($this->factoryMap($route), $entity->toJson($route));
+    }
+
+    public function update(EntityInterface $entity, EntityInterface $existent)
+    {
+        throw new ManagerException('Update must be implemented!'); 
     }
 
     public function findById($itemId)
     {
-        $response =  $this->perform($this->factoryMap('findById',
+        try {
+            $response =  $this->perform($this->factoryMap('findById',
             ['itemId' => $itemId]));
 
-        return $response->getData();
+            return $response->getData();
+        } catch (ManagerException $exception) {
+            return false;
+        }
     }
 
     public function fetch($offset = 1, $limit = 50, array $parameters = [])

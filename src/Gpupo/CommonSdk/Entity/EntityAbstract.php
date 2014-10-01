@@ -44,7 +44,7 @@ abstract class EntityAbstract extends CollectionAbstract
                     $this->getInitValue($data, $key, []));
             } elseif ($value == 'array') {
                 $schema[$key] = $this->getInitValue($data, $key, []);
-            } elseif (in_array($value, ['string', 'integer', 'number'])) {
+            } elseif (in_array($value, ['string', 'integer', 'number', 'boolean'])) {
                 $schema[$key] = $this->getInitValue($data, $key);
             }
         }
