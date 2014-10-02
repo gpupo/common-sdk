@@ -15,5 +15,13 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "Gpupo\\": "tests"
+        }
     }
 }

@@ -33,7 +33,7 @@ abstract class EntityAbstract extends CollectionAbstract
             } elseif ($value == 'array') {
                 $schema[$key] = EntityTools::getInitValue($data, $key, []);
             } elseif (in_array($value, ['string', 'integer', 'number', 'boolean'])) {
-                $schema[$key] = EntityTools::normalize(EntityTools::getInitValue($data, $key), $value);
+                $schema[$key] = EntityTools::normalizeType(EntityTools::getInitValue($data, $key), $value);
             }
         }
 
