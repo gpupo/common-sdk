@@ -21,31 +21,19 @@ abstract class EntityAbstract extends CollectionAbstract
         }
     }
 
-    protected function getInitValue($data, $key, $default = '')
-    {
-        if (is_array($data) && array_key_exists($key, $data)) {
-            $fill = $data[$key];
-            if (is_array($default) && !is_array($fill)) {
-                $fill = [$key => $fill];
-            }
-        }
-
-        return (isset($fill)) ? $fill : $default;
-    }
-
     protected function initSchema(array $schema, $data)
     {
         foreach ($schema as $key => $value) {
             if ($value == 'collection') {
                 $schema[$key] = $this->factoryCollection(
-                    $this->getInitValue($data, $key, []));
+                    EntityTools::getInitValue($data, $key, []));
             } elseif ($value == 'object') {
                 $schema[$key] = $this->factoryNeighborObject(ucfirst($key),
-                    $this->getInitValue($data, $key, []));
+                    EntityTools::getInitValue($data, $key, []));
             } elseif ($value == 'array') {
-                $schema[$key] = $this->getInitValue($data, $key, []);
+                $schema[$key] = EntityTools::getInitValue($data, $key, []);
             } elseif (in_array($value, ['string', 'integer', 'number', 'boolean'])) {
-                $schema[$key] = $this->getInitValue($data, $key);
+                $schema[$key] = EntityTools::normalize(EntityTools::getInitValue($data, $key), $value);
             }
         }
 
@@ -67,19 +55,7 @@ abstract class EntityAbstract extends CollectionAbstract
     protected function validate()
     {
         foreach ($this->getSchema() as $key => $value) {
-            $current = $this->get($key);
-            if ($value == 'integer') {
-                if (!empty($current) && intval($current) !== $current) {
-                    throw new \InvalidArgumentException($key
-                        . ' should have value of type Integer valid (received '
-                        . $current . ')');
-                }
-            } elseif (!empty($current) && $value == 'number') {
-                if (!is_numeric($current)) {
-                    throw new \InvalidArgumentException($key
-                        . ' should have value of type Number valid');
-                }
-            }
+            EntityTools::validate($this->get($key), $value);
         }
 
         return true;
