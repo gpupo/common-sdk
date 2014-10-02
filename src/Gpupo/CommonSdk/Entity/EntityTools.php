@@ -16,13 +16,16 @@ class EntityTools
         return (isset($fill)) ? $fill : $default;
     }
 
-    public static function normalize($data, $type)
+    public static function normalizeType($data, $type)
     {
         switch ($type) {
             case 'integer':
-                return (int) $data;
+                return intval($data);
             case 'boolean':
-                return (boolean) $data;
+                return boolval($data);
+            case 'number':
+            case 'float':
+                return floatval($data);
             default:
                 return $data;
         }
@@ -45,5 +48,5 @@ class EntityTools
 
         return true;
     }
- 
+
 }
