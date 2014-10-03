@@ -33,6 +33,12 @@ abstract class CollectionAbstract extends ArrayCollection
         return json_encode($data);
     }
 
+    protected function piece($key, $newKey = null)
+    {
+
+        return [$newKey?: $key => $this->get($key)];
+    }
+
     public function __toString()
     {
         return $this->toJson();
