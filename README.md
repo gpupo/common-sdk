@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
+
 
 ## Install
 
