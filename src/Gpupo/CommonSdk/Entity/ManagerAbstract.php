@@ -26,6 +26,24 @@ abstract class ManagerAbstract
         return $this->execute($this->factoryMap($route), $entity->toJson($route));
     }
 
+    public function atributesDiff(EntityInterface $entityA, EntityInterface $entityB, array $atributes)
+    {
+        $list = [];
+        foreach ($atributes as $atribute) {
+            $method = 'get' . ucfirst($atribute);
+            if ($entityA->$method() != $entityB->$method() )
+            {   
+                $list[] = $atribute;
+            }
+        }
+
+        if (!empty($list)) {
+            return $list;
+        }
+
+        return false;
+    }
+
     public function update(EntityInterface $entity, EntityInterface $existent)
     {
         throw new ManagerException('Update must be implemented!');
