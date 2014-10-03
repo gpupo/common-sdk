@@ -35,7 +35,6 @@ abstract class CollectionAbstract extends ArrayCollection
 
     protected function piece($key, $newKey = null)
     {
-
         return [$newKey?: $key => $this->get($key)];
     }
 

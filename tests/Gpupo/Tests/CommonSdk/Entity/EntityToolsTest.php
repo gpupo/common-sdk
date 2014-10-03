@@ -10,7 +10,7 @@ class EntityToolsTest extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderInformacao
-     */ 
+     */
     public function testNormalizaTiposDeInformacao($value, $type, $expected)
     {
         $this->assertTrue(EntityTools::normalizeType($value, $type) === $expected);

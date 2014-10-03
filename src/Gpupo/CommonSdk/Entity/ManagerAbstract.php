@@ -31,8 +31,7 @@ abstract class ManagerAbstract
         $list = [];
         foreach ($atributes as $atribute) {
             $method = 'get' . ucfirst($atribute);
-            if ($entityA->$method() != $entityB->$method() )
-            {   
+            if ($entityA->$method() != $entityB->$method() ) {
                 $list[] = $atribute;
             }
         }
