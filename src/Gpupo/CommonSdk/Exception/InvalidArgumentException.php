@@ -4,7 +4,7 @@ namespace Gpupo\CommonSdk\Exception;
 
 use Gpupo\CommonSdk\Traits\ExceptionTrait;
 
-class RuntimeException extends \RuntimeException implements ExceptionInterface
+class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
     use ExceptionTrait;
 }

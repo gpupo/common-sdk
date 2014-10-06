@@ -2,13 +2,9 @@
 
 namespace Gpupo\CommonSdk\Exception;
 
+use Gpupo\CommonSdk\Traits\ExceptionTrait;
+
 class UnexpectedValueException extends \UnexpectedValueException implements ExceptionInterface
 {
-    public function toLog()
-    {
-        return [
-            'message'   => $this->message,
-            'code'      => $this->code,
-        ];
-    }
+    use ExceptionTrait;
 }

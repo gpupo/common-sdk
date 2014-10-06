@@ -2,6 +2,8 @@
 
 namespace Gpupo\CommonSdk\Entity;
 
+use Gpupo\CommonSdk\Exception\InvalidArgumentException;
+
 class EntityTools
 {
     public static function getInitValue($data, $key, $default = '')
@@ -31,19 +33,32 @@ class EntityTools
         }
     }
 
-    public static function validate($current, $value)
+    public static function validate($key, $current, $value, $required = false)
     {
-        if ($value == 'integer') {
-            if (!empty($current) && intval($current) !== $current) {
-                throw new \InvalidArgumentException($key
-                    . ' should have value of type Integer valid (received '
-                    . $current . ')');
-            }
-        } elseif (!empty($current) && $value == 'number') {
-            if (!is_numeric($current)) {
-                throw new \InvalidArgumentException($key
-                    . ' should have value of type Number valid');
-            }
+        $empty = function($value) use ($required) {
+            return ($required) ? false : empty($value);
+        };
+
+        $throw = function() use ($key, $current, $value) {
+            throw new InvalidArgumentException($key
+                . ' should have value of type ' . $value
+                . ' valid.[' . $current . '] received.');
+        };
+
+        if ($empty($current)) {
+            return true;
+        }
+
+        if ($value == 'integer' && intval($current) !== $current) {
+            $throw();
+        }
+        
+        if ($value == 'number' && !is_numeric($current)) {
+            $throw();
+        }
+        
+        if ($value == 'string' && strlen($current) < 5) {
+            $throw();
         }
 
         return true;
