@@ -8,6 +8,20 @@ abstract class EntityAbstract extends CollectionAbstract
 {
     use FactoryTrait;
 
+    protected $requiredSchema = [];
+    
+    protected function setRequiredSchema(array $array)
+    {
+        $this->requiredSchema = $array;
+
+        return $this;
+    }
+
+    protected function isRequired($key)
+    {
+        return in_array($key, $this->requiredSchema);
+    }
+        
     public function __construct(array $data = null)
     {
         if (!$this instanceof EntityInterface) {
@@ -55,9 +69,23 @@ abstract class EntityAbstract extends CollectionAbstract
     protected function validate()
     {
         foreach ($this->getSchema() as $key => $value) {
-            EntityTools::validate($this->get($key), $value);
+            $current = $this->get($key); 
+            if ($current instanceof EntityInterface) {
+                $current->validate();
+            } else {
+                EntityTools::validate($key, $current, $value, $this->isRequired($key));
+            }
         }
 
         return true;
+    }
+
+    public function isValid()
+    {
+        try {
+            return $this->validate();
+        } catch (\Exception $exception) {
+            return false;
+        }
     }
 }
