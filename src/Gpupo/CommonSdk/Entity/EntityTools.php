@@ -57,7 +57,7 @@ class EntityTools
             $throw();
         }
         
-        if ($value == 'string' && strlen($current) < 5) {
+        if ($value == 'string' && strlen($current) < 1) {
             $throw();
         }
 
