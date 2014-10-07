@@ -9,8 +9,9 @@ abstract class EntityAbstract extends CollectionAbstract
     use FactoryTrait;
 
     protected $requiredSchema = [];
+    protected $optionalSchema = [];
     
-    protected function setRequiredSchema(array $array)
+    protected function setRequiredSchema(array $array = [])
     {
         $this->requiredSchema = $array;
 
@@ -21,7 +22,23 @@ abstract class EntityAbstract extends CollectionAbstract
     {
         return in_array($key, $this->requiredSchema);
     }
+
+    protected function isOptional($key)
+    {
+        return in_array($key, $this->optionalSchema);
+    }
         
+    protected function setOptionalSchema(array $array = [])
+    {
+        $this->optionalSchema = $array;
+
+        return $this;
+    }
+
+    protected function setUp()
+    {
+    }
+
     public function __construct(array $data = null)
     {
         if (!$this instanceof EntityInterface) {
@@ -33,6 +50,8 @@ abstract class EntityAbstract extends CollectionAbstract
         if (!empty($schema)) {
             parent::__construct($this->initSchema($this->getSchema(), $data));
         }
+
+        $this->setUp();
     }
 
     protected function initSchema(array $schema, $data)
@@ -62,7 +81,15 @@ abstract class EntityAbstract extends CollectionAbstract
     public function toArray()
     {
         if ($this->validate()) {
-            return parent::toArray();
+            $array = parent::toArray();
+
+            foreach ($array as $key => $value) {
+                if (empty($value) && $this->isOptional($key)) {
+                    unset($array[$key]);
+                }
+            }
+
+            return $array;
         }
     }
 
