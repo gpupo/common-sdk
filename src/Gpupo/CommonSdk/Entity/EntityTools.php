@@ -35,11 +35,11 @@ class EntityTools
 
     public static function validate($key, $current, $value, $required = false)
     {
-        $empty = function($value) use ($required) {
+        $empty = function ($value) use ($required) {
             return ($required) ? false : empty($value);
         };
 
-        $throw = function() use ($key, $current, $value) {
+        $throw = function () use ($key, $current, $value) {
             throw new InvalidArgumentException($key
                 . ' should have value of type ' . $value
                 . ' valid.[' . $current . '] received.');
@@ -52,11 +52,11 @@ class EntityTools
         if ($value == 'integer' && intval($current) !== $current) {
             $throw();
         }
-        
+
         if ($value == 'number' && !is_numeric($current)) {
             $throw();
         }
-        
+
         if ($value == 'string' && strlen($current) < 1) {
             $throw();
         }
