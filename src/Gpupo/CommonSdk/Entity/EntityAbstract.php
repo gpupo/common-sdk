@@ -10,7 +10,7 @@ abstract class EntityAbstract extends CollectionAbstract
 
     protected $requiredSchema = [];
     protected $optionalSchema = [];
-    
+
     protected function setRequiredSchema(array $array = [])
     {
         $this->requiredSchema = $array;
@@ -27,7 +27,7 @@ abstract class EntityAbstract extends CollectionAbstract
     {
         return in_array($key, $this->optionalSchema);
     }
-        
+
     protected function setOptionalSchema(array $array = [])
     {
         $this->optionalSchema = $array;
@@ -96,7 +96,7 @@ abstract class EntityAbstract extends CollectionAbstract
     protected function validate()
     {
         foreach ($this->getSchema() as $key => $value) {
-            $current = $this->get($key); 
+            $current = $this->get($key);
             if ($current instanceof EntityInterface) {
                 $current->validate();
             } else {

@@ -2,7 +2,7 @@
 
 namespace Gpupo\CommonSdk\Traits;
 
-Trait ExceptionTrait 
+Trait ExceptionTrait
 {
     public function toLog()
     {
