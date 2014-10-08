@@ -2,6 +2,8 @@
 
 namespace Gpupo\CommonSdk;
 
+use Psr\Log\LoggerInterface;
+
 abstract class ClientAbstract
 {
     use Traits\LoggerTrait;
@@ -27,9 +29,13 @@ abstract class ClientAbstract
         return $request;
     }
 
-    public function __construct($options = [])
+    public function __construct($options = [], LoggerInterface $logger = null)
     {
         $this->setOptions($options);
+
+        if ($logger) {
+            $this->setLogger($logger);
+        }
     }
 
     protected function exec(Request $request)
