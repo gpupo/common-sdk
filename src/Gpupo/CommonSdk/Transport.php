@@ -22,7 +22,12 @@ class Transport extends Collection
     public function __construct(Collection $options)
     {
         $this->curl = curl_init();
-        $this->setOption(CURLOPT_SSLVERSION, 3);
+        
+        $sslVersion =  $options->get('sslVersion');
+        if ($sslVersion) {
+            $this->setOption(CURLOPT_SSLVERSION, $sslVersion);
+        }
+
         $this->setOption(CURLOPT_RETURNTRANSFER, true );
         $this->setOption(CURLOPT_VERBOSE, $options->get('verbose'));
 

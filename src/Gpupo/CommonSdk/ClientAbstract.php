@@ -3,6 +3,7 @@
 namespace Gpupo\CommonSdk;
 
 use Psr\Log\LoggerInterface;
+use Gpupo\CommonSdk\Exception\RequestException;
 
 abstract class ClientAbstract
 {
@@ -54,7 +55,7 @@ abstract class ClientAbstract
             );
 
             return $response;
-        } catch (\Exception $e) {
+        } catch (RequestException $e) {
             $this->error('Execucao fracassada', [
                 'exception' => $e->toLog(),
                 'request'   => $request->toLog(),

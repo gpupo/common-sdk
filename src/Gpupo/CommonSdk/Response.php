@@ -77,7 +77,7 @@ class Response extends Collection
 
     public function validate()
     {
-        if ($this->getHttpStatusCode() > 399) {
+        if ($this->getHttpStatusCode() < 100 || $this->getHttpStatusCode() > 399) {
 
             $this->error("Response With Errors", $this->toLog());
 
