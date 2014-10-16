@@ -91,11 +91,8 @@ class Response extends Collection
 
     public function getData()
     {
-        $data = json_decode($this->get('responseRaw'));
-        if (!is_array($data)) {
-            $data = [];
-        }
-        
+        $data = (array) json_decode($this->get('responseRaw'), true);
+
         return new Collection($data, true);
     }
 
