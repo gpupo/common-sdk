@@ -23,11 +23,8 @@ class Transport extends Collection
     {
         $this->curl = curl_init();
         
-        $sslVersion =  $options->get('sslVersion');
-        if ($sslVersion) {
-            $this->setOption(CURLOPT_SSLVERSION, $sslVersion);
-        }
-
+        $sslVersion =  $options->get('sslVersion', 'SecureTransport');
+        $this->setOption(CURLOPT_SSLVERSION, $sslVersion);
         $this->setOption(CURLOPT_RETURNTRANSFER, true );
         $this->setOption(CURLOPT_VERBOSE, $options->get('verbose'));
 
@@ -69,8 +66,6 @@ class Transport extends Collection
                 $this->setOption(CURLOPT_BINARYTRANSFER, true);
                 $this->setOption(CURLOPT_INFILE, $pointer);
                 $this->setOption(CURLOPT_INFILESIZE, strlen($this->getBody()));
-                //curl_setopt($request, CURLOPT_POSTFIELDS, $body);
-                //curl_setopt($request, CURLOPT_CUSTOMREQUEST, "PUT");
 
                 break;
         }
