@@ -71,7 +71,7 @@ abstract class ClientAbstract
 
         if ($ttl && $this->hasCacheItemPool()) {
             $key = $this->factoryCacheKey($resource);
-            $cacheItem = $this->getCacheItemPool()->get($key);
+            $cacheItem = $this->getCacheItemPool()->getItem($key);
 
             if ($cacheItem->exists()) {
                 return $cacheItem->get();
