@@ -9,7 +9,8 @@
     "require": {
         "php": ">=5.5",
         "doctrine/common": "*",
-        "psr/log": "*"
+        "psr/log": "*",
+        "gpupo/cache": "dev-master"
     },
     "extra": {
         "branch-alias": {
