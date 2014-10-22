@@ -3,11 +3,13 @@
 namespace Gpupo\CommonSdk;
 
 use Psr\Log\LoggerInterface;
+use Psr\Cache\ItemPoolInterface;
 use Gpupo\CommonSdk\Exception\RequestException;
 
 abstract class ClientAbstract
 {
     use Traits\LoggerTrait;
+    use Traits\CacheTrait;
     use Traits\SingletonTrait;
     use Traits\OptionsTrait;
 
@@ -30,13 +32,11 @@ abstract class ClientAbstract
         return $request;
     }
 
-    public function __construct($options = [], LoggerInterface $logger = null)
+    public function __construct($options = [], LoggerInterface $logger = null, CacheItemPoolInterface $cacheItemPool = null)
     {
         $this->setOptions($options);
-
-        if ($logger) {
-            $this->setLogger($logger);
-        }
+        $this->initLogger($logger);
+        $this->initCache($cacheItemPool);
     }
 
     protected function exec(Request $request)
@@ -69,11 +69,38 @@ abstract class ClientAbstract
     {
         $request = $this->factoryRequest($resource);
 
-        return $this->exec($request);
+        if ($this->hasCacheItemPool()) {
+            $key = $this->factoryCacheKey($resource)
+            $cacheItem = $this->getCacheItemPool()->get($key);
+
+            if ($cacheItem->exists()) {
+                return $cacheItem->get();
+            }
+
+            $response = $this->exec($request);
+            $cacheItem->set($response, $this->getOptions()->get('cacheTTL', 3600));
+            $this->getCacheItemPool()->save($cacheItem);
+
+            return $response;
+        } else {
+            return $this->exec($request);
+        }
+    }
+
+    protected function destroyCache($resource)
+    {
+        if ($this->hasCacheItemPool()) {
+            $key = $this->factoryCacheKey($resource);
+            $this->getCacheItemPool()->deleteItens([$key]);
+        }
+
+        return $this;
     }
 
     public function post($resource, $body)
     {
+        $this->destroyCache($resource);
+
         $request = $this->factoryRequest($resource, true)
             ->setBody($body);
 
@@ -82,6 +109,8 @@ abstract class ClientAbstract
 
     public function put($resource, $body)
     {
+        $this->destroyCache($resource);
+
         $request = $this->factoryRequest($resource)->setBody($body)
             ->setMethod('PUT');
 
