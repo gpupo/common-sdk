@@ -65,12 +65,12 @@ abstract class ClientAbstract
         }
     }
 
-    public function get($resource)
+    public function get($resource, $ttl = null)
     {
         $request = $this->factoryRequest($resource);
 
-        if ($this->hasCacheItemPool()) {
-            $key = $this->factoryCacheKey($resource)
+        if ($ttl && $this->hasCacheItemPool()) {
+            $key = $this->factoryCacheKey($resource);
             $cacheItem = $this->getCacheItemPool()->get($key);
 
             if ($cacheItem->exists()) {
@@ -78,9 +78,11 @@ abstract class ClientAbstract
             }
 
             $response = $this->exec($request);
-            $cacheItem->set($response, $this->getOptions()->get('cacheTTL', 3600));
-            $this->getCacheItemPool()->save($cacheItem);
-
+            if ($ttl === true) {
+                $ttl = $this->getOptions()->get('cacheTTL', 3600);
+                $cacheItem->set($response, $ttl);
+                $this->getCacheItemPool()->save($cacheItem);
+            }
             return $response;
         } else {
             return $this->exec($request);
