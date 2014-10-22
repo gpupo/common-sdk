@@ -10,7 +10,7 @@ trait CacheTrait
     public function initCache($cacheItemPool)
     {
         if (!empty($cacheItemPool)) {
-            return $this->setCacheItemPool($logger);
+            return $this->setCacheItemPool($cacheItemPool);
         }
     }
 }
