@@ -5,13 +5,15 @@ namespace Gpupo\CommonSdk;
 use Psr\Log\LoggerInterface;
 use Psr\Cache\ItemPoolInterface;
 use Gpupo\CommonSdk\Exception\RequestException;
+use Gpupo\Common\Traits\SingletonTrait;
+use Gpupo\Common\Traits\OptionsTrait;
 
 abstract class ClientAbstract
 {
     use Traits\LoggerTrait;
     use Traits\CacheTrait;
-    use Traits\SingletonTrait;
-    use Traits\OptionsTrait;
+    use SingletonTrait;
+    use OptionsTrait;
 
     protected function factoryTransport()
     {
@@ -74,7 +76,12 @@ abstract class ClientAbstract
             $cacheItem = $this->getCacheItemPool()->getItem($key);
 
             if ($cacheItem->exists()) {
-                return $cacheItem->get();
+
+                $response = $cacheItem->get();
+
+                var_dump($response);
+                
+                return $response;
             }
 
             $response = $this->exec($request);
