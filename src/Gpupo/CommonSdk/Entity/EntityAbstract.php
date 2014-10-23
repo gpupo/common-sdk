@@ -3,6 +3,7 @@
 namespace Gpupo\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Traits\FactoryTrait;
+use Gpupo\Common\Entity\CollectionAbstract;
 
 abstract class EntityAbstract extends CollectionAbstract
 {
