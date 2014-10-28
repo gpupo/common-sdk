@@ -2,7 +2,7 @@
 
 namespace Gpupo\CommonSdk;
 
-use Gpupo\CommonSdk\Entity\Collection;
+use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Exception\RuntimeException;
 
 class Transport extends Collection
