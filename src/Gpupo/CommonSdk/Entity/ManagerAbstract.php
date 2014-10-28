@@ -6,6 +6,7 @@ use Gpupo\CommonSdk\ClientInterface;
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Map;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
+use Gpupo\Common\Entity\Collection;
 
 abstract class ManagerAbstract
 {
