@@ -87,9 +87,11 @@ abstract class ManagerAbstract
         return new Map($data, $parameters);
     }
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $client = null)
     {
-        $this->client = $client;
+        if ($client) {
+            $this->client = $client;
+        }
     }
 
     public function getClient()
