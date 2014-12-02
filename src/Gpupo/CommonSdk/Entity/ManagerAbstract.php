@@ -6,7 +6,6 @@ use Gpupo\CommonSdk\ClientInterface;
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Map;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
-use Gpupo\Common\Entity\Collection;
 
 abstract class ManagerAbstract
 {
@@ -18,7 +17,7 @@ abstract class ManagerAbstract
 
     public function save(EntityInterface $entity, $route = 'save')
     {
-        $existent = $this->findById($entity->getId());
+        $existent = $entity->getPrevious() ?: $this->findById($entity->getId());
 
         if ($existent) {
             return $this->update($entity, $existent);
@@ -87,11 +86,9 @@ abstract class ManagerAbstract
         return new Map($data, $parameters);
     }
 
-    public function __construct(ClientInterface $client = null)
+    public function __construct(ClientInterface $client)
     {
-        if ($client) {
-            $this->client = $client;
-        }
+        $this->client = $client;
     }
 
     public function getClient()
