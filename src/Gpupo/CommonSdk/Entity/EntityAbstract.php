@@ -3,7 +3,7 @@
 namespace Gpupo\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Traits\FactoryTrait;
-use Gpupo\Common\Entity\CollectionAbstract;
+use Gpupo\CommonSdk\Entity\EntityInterface;
 
 abstract class EntityAbstract extends CollectionAbstract
 {
@@ -11,6 +11,7 @@ abstract class EntityAbstract extends CollectionAbstract
 
     protected $requiredSchema = [];
     protected $optionalSchema = [];
+    protected $previous;
 
     protected function setRequiredSchema(array $array = [])
     {
@@ -115,5 +116,17 @@ abstract class EntityAbstract extends CollectionAbstract
         } catch (\Exception $exception) {
             return false;
         }
+    }
+
+    public function setPrevious(EntityInterface $previous)
+    {
+        $this->previous = $previous;
+        
+        return $this;
+    }
+    
+    public function getPrevious()
+    {
+        return $this->previous;
     }
 }
