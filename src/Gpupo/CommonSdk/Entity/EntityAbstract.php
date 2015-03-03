@@ -2,6 +2,8 @@
 
 namespace Gpupo\CommonSdk\Entity;
 
+use Gpupo\Common\Entity\CollectionAbstract;
+use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Entity\EntityInterface;
 

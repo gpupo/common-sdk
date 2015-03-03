@@ -2,6 +2,8 @@
 
 namespace Gpupo\CommonSdk\Entity;
 
+use Gpupo\Common\Entity\CollectionAbstract;
+use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\ClientInterface;
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Map;
@@ -86,9 +88,11 @@ abstract class ManagerAbstract
         return new Map($data, $parameters);
     }
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $client = null)
     {
-        $this->client = $client;
+        if ($client) {
+            $this->client = $client;
+        }
     }
 
     public function getClient()
