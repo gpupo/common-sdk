@@ -11,7 +11,7 @@
         "doctrine/common": "*",
         "psr/log": "*",
         "gpupo/cache": "dev-master",
-        "gpupo/common": "dev-master"
+        "gpupo/common": "~1.0@dev"
     },
     "extra": {
         "branch-alias": {
@@ -25,5 +25,6 @@
         "psr-0": {
             "Gpupo\\": "tests"
         }
-    }
+    },
+    "minimum-stability" : "dev"    
 }

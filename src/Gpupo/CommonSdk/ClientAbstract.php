@@ -79,8 +79,6 @@ abstract class ClientAbstract
 
                 $response = $cacheItem->get();
 
-                var_dump($response);
-                
                 return $response;
             }
 
