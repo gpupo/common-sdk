@@ -10,7 +10,7 @@
         "php": ">=5.5",
         "doctrine/common": "*",
         "psr/log": "*",
-        "gpupo/cache": "dev-master",
+        "gpupo/cache": "~1.0@dev",
         "gpupo/common": "~1.0@dev"
     },
     "extra": {
