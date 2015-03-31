@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of common-sdk
+ *
+ * (c) Gilmar Pupo <g@g1mr.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Gpupo\CommonSdk\Entity;
 
-use Gpupo\Common\Entity\CollectionAbstract;
 use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\ClientInterface;
 use Gpupo\CommonSdk\Exception\ManagerException;
@@ -32,8 +40,8 @@ abstract class ManagerAbstract
     {
         $list = [];
         foreach ($atributes as $atribute) {
-            $method = 'get' . ucfirst($atribute);
-            if ($entityA->$method() != $entityB->$method() ) {
+            $method = 'get'.ucfirst($atribute);
+            if ($entityA->$method() !== $entityB->$method()) {
                 $list[] = $atribute;
             }
         }
@@ -77,7 +85,7 @@ abstract class ManagerAbstract
         }
 
         if (!array_key_exists($operation, $this->maps)) {
-            throw new ManagerException('Map [' . $operation . '] not found');
+            throw new ManagerException('Map ['.$operation.'] not found');
         }
 
         $data = $this->maps[$operation];
@@ -102,8 +110,8 @@ abstract class ManagerAbstract
 
     protected function exceptionHandler(\Exception $exception, $method, $resource)
     {
-        return new ManagerException($method . ' on ' . $resource . ' FAIL:'
-            . $exception->getMessage(), $exception->getCode(), $exception);
+        return new ManagerException($method.' on '.$resource.' FAIL:'
+            .$exception->getMessage(), $exception->getCode(), $exception);
     }
 
     protected function perform(Map $map, $body = null)
@@ -157,12 +165,13 @@ abstract class ManagerAbstract
     }
 
     /**
-     * Magic method that implements
+     * Magic method that implements.
      *
      * @param string $method
      * @param array  $args
      *
      * @throws \BadMethodCallException
+     *
      * @return mixed
      */
     public function __call($method, $args)
@@ -171,10 +180,10 @@ abstract class ManagerAbstract
         $field = substr($method, 4);
         $field[0] = strtolower($field[0]);
 
-        if ($command == "save") {
+        if ($command === 'save') {
             return $this->save(current($args), $method);
         } else {
-            throw new \BadMethodCallException("There is no method ".$method);
+            throw new \BadMethodCallException('There is no method '.$method);
         }
     }
 }

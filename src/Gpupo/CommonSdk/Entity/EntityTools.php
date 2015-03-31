@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of common-sdk
+ *
+ * (c) Gilmar Pupo <g@g1mr.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Gpupo\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Exception\InvalidArgumentException;
@@ -41,27 +50,26 @@ class EntityTools
 
         $throw = function () use ($key, $current, $value) {
             throw new InvalidArgumentException($key
-                . ' should have value of type ' . $value
-                . ' valid.[' . $current . '] received.');
+                .' should have value of type '.$value
+                .' valid.['.$current.'] received.');
         };
 
         if ($empty($current)) {
             return true;
         }
 
-        if ($value == 'integer' && intval($current) !== $current) {
+        if ($value === 'integer' && intval($current) !== $current) {
             $throw();
         }
 
-        if ($value == 'number' && !is_numeric($current)) {
+        if ($value === 'number' && !is_numeric($current)) {
             $throw();
         }
 
-        if ($value == 'string' && strlen($current) < 1) {
+        if ($value === 'string' && strlen($current) < 1) {
             $throw();
         }
 
         return true;
     }
-
 }
