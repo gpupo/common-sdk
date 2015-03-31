@@ -1,12 +1,20 @@
 <?php
 
+/*
+ * This file is part of common-sdk
+ *
+ * (c) Gilmar Pupo <g@g1mr.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Gpupo\CommonSdk;
 
-use Psr\Log\LoggerInterface;
-use Psr\Cache\ItemPoolInterface;
-use Gpupo\CommonSdk\Exception\RequestException;
-use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\Common\Traits\OptionsTrait;
+use Gpupo\Common\Traits\SingletonTrait;
+use Gpupo\CommonSdk\Exception\RequestException;
+use Psr\Log\LoggerInterface;
 
 abstract class ClientAbstract
 {
@@ -22,7 +30,7 @@ abstract class ClientAbstract
 
     public function factoryRequest($resource, $post = false)
     {
-        $request = new Request;
+        $request = new Request();
 
         if ($post) {
             $request->setMethod('POST');
@@ -76,7 +84,6 @@ abstract class ClientAbstract
             $cacheItem = $this->getCacheItemPool()->getItem($key);
 
             if ($cacheItem->exists()) {
-
                 $response = $cacheItem->get();
 
                 return $response;
@@ -88,6 +95,7 @@ abstract class ClientAbstract
                 $cacheItem->set($response, $ttl);
                 $this->getCacheItemPool()->save($cacheItem);
             }
+
             return $response;
         } else {
             return $this->exec($request);

@@ -10,8 +10,8 @@
         "php": ">=5.5",
         "doctrine/common": "*",
         "psr/log": "*",
-        "gpupo/cache": "~1.0@dev",
-        "gpupo/common": "~1.0@dev"
+        "gpupo/cache": "~1.0",
+        "gpupo/common": "~1.0"
     },
     "extra": {
         "branch-alias": {
@@ -25,6 +25,5 @@
         "psr-0": {
             "Gpupo\\": "tests"
         }
-    },
-    "minimum-stability" : "dev"    
+    }
 }

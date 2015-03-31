@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of common-sdk
+ *
+ * (c) Gilmar Pupo <g@g1mr.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Gpupo\CommonSdk\Traits;
 
 trait FactoryTrait
@@ -16,10 +26,10 @@ trait FactoryTrait
         $command = substr($method, 0, 7);
         $objectName = substr($method, 7);
 
-        if ($command == "factory") {
+        if ($command === 'factory') {
             return self::factory($objectName, current($args), next($args));
         } else {
-            throw new \BadMethodCallException("There is no method ".$method);
+            throw new \BadMethodCallException('There is no method '.$method);
         }
     }
 
@@ -40,16 +50,15 @@ trait FactoryTrait
 
         if (!class_exists($fullyQualified)) {
             $error = $fullyQualified;
-            $fullyQualified .= '\\' . $objectName;
+            $fullyQualified .= '\\'.$objectName;
         }
 
         if (!class_exists($fullyQualified)) {
-            $error .= ' or ' . $fullyQualified;
+            $error .= ' or '.$fullyQualified;
 
-            throw new \Exception('Class ' . $error . ' not found');
+            throw new \Exception('Class '.$error.' not found');
         }
 
         return $fullyQualified;
     }
-
 }

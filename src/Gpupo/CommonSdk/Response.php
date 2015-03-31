@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of common-sdk
+ *
+ * (c) Gilmar Pupo <g@g1mr.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
@@ -78,8 +87,7 @@ class Response extends Collection
     public function validate()
     {
         if ($this->getHttpStatusCode() < 100 || $this->getHttpStatusCode() > 399) {
-
-            $this->error("Response With Errors", $this->toLog());
+            $this->error('Response With Errors', $this->toLog());
 
             throw new RequestException(
                 static::$statusTexts[$this->getHttpStatusCode()],
@@ -99,7 +107,7 @@ class Response extends Collection
     public function toLog()
     {
         return [
-            'raw' => str_replace('"', '', $this->getResponseRaw()),
+            'raw'           => str_replace('"', '', $this->getResponseRaw()),
             'statusCode'    => $this->getHttpStatusCode(),
         ];
     }
