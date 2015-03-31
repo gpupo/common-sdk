@@ -7,9 +7,9 @@
         "psr-0": { "Gpupo": "src" }
     },
     "require": {
-        "php": ">=5.5",
-        "doctrine/common": "*",
-        "psr/log": "*",
+        "php": ">=5.4",
+        "doctrine/common": "~2.0",
+        "psr/log": "~1.0",
         "gpupo/cache": "~1.0",
         "gpupo/common": "~1.0"
     },
@@ -19,11 +19,12 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "~4.0"
     },
     "autoload-dev": {
         "psr-0": {
             "Gpupo\\": "tests"
         }
-    }
+    },
+    "minimum-stability" : "stable"
 }
