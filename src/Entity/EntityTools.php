@@ -13,6 +13,13 @@ namespace Gpupo\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Exception\InvalidArgumentException;
 
+// Hack for old php versions (<5.5) to use boolval()
+if (!function_exists('boolval')) {
+    function boolval($val) {
+        return (bool) $val;
+    }
+}
+
 class EntityTools
 {
     public static function getInitValue($data, $key, $default = '')
