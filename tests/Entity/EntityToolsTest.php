@@ -12,7 +12,7 @@
 namespace Gpupo\Tests\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Entity\EntityTools;
-use Gpupo\Tests\TestCaseAbstract;
+use Gpupo\Tests\CommonSdk\TestCaseAbstract;
 
 class EntityToolsTest extends TestCaseAbstract
 {

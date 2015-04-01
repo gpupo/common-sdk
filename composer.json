@@ -4,26 +4,27 @@
     "keywords": ["sdk"],
     "license": "MIT",
     "autoload": {
-        "psr-0": { "Gpupo": "src" }
+        "psr-4": {
+            "Gpupo\\CommonSdk\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gpupo\\Tests\\CommonSdk\\": "tests"
+        }
     },
     "require": {
         "php": ">=5.5",
-        "doctrine/common": "*",
-        "psr/log": "*",
-        "gpupo/cache": "~1.0",
-        "gpupo/common": "~1.0"
+        "psr/log": "~1.0",
+        "gpupo/cache": "~1.2",
+        "gpupo/common": "~1.2"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "1.5-dev"
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
-    },
-    "autoload-dev": {
-        "psr-0": {
-            "Gpupo\\": "tests"
-        }
+        "phpunit/phpunit": "~4.0"
     }
 }
