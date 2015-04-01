@@ -1,6 +1,6 @@
 {
     "name": "gpupo/common-sdk",
-    "description": "Common SDK Objects",
+    "description": "Componente de uso comum entre SDKs para integração a partir de aplicações PHP com as APIs de Marketplaces",
     "keywords": ["sdk"],
     "license": "MIT",
     "autoload": {
