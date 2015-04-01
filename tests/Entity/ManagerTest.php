@@ -12,7 +12,7 @@
 namespace Gpupo\Tests\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Entity\Manager;
-use Gpupo\Tests\TestCaseAbstract;
+use Gpupo\Tests\CommonSdk\TestCaseAbstract;
 
 class ManagerTest extends TestCaseAbstract
 {

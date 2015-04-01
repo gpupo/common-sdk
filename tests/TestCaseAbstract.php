@@ -11,13 +11,6 @@
 
 namespace Gpupo\Tests\CommonSdk;
 
-use Gpupo\CommonSdk\Client;
-use Gpupo\Tests\TestCaseAbstract;
-
-class ClientTest extends TestCaseAbstract
+abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 {
-    public function testInit()
-    {
-        $client = new Client();
-    }
 }

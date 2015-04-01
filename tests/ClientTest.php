@@ -9,8 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Gpupo\Tests;
+namespace Gpupo\Tests\CommonSdk;
 
-abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
+use Gpupo\CommonSdk\Client;
+
+class ClientTest extends TestCaseAbstract
 {
+    public function testInit()
+    {
+        $client = new Client();
+    }
 }
