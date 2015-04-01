@@ -2,7 +2,7 @@
 
 Componente de uso comum entre SDKs para integração a partir de aplicações PHP com as APIs de Marketplaces
 
-Veja: [submarino-sdk](https://github.com/gpupo/submarino-sdk)  - B2W Marketplace
+Veja: [gpupo/submarino-sdk](https://github.com/gpupo/submarino-sdk)  - B2W Marketplace
 
 ## Install
 
