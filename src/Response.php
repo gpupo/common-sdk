@@ -86,12 +86,17 @@ class Response extends Collection
 
     public function validate()
     {
-        if ($this->getHttpStatusCode() < 100 || $this->getHttpStatusCode() > 399) {
+        $code = $this->getHttpStatusCode();
+        if ($code < 100 || $code > 399) {
             $this->error('Response With Errors', $this->toLog());
 
-            throw new RequestException(
-                static::$statusTexts[$this->getHttpStatusCode()],
-                $this->getHttpStatusCode());
+            if (array_key_exists($code, static::$statusTexts)) {
+                $message = static::$statusTexts[$code];
+            } else {
+                $message = 'Unknow Error ('.$code.')';
+            }
+            
+            throw new RequestException($message,$code);
         }
 
         return true;
