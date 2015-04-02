@@ -16,6 +16,11 @@ use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSdk\Exception\RequestException;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @method setMethod(string $string)
+ * @method setBody(string $string)
+ * @method string getResourceUri()
+ */
 abstract class ClientAbstract
 {
     use Traits\LoggerTrait;
@@ -28,12 +33,16 @@ abstract class ClientAbstract
         return new Transport($this->getOptions());
     }
 
-    public function factoryRequest($resource, $post = false)
+    public function factoryRequest($resource, $method = false, $destroyCache = false)
     {
+        if ($destroyCache) {
+            $this->destroyCache($resource);
+        }
+
         $request = new Request();
 
-        if ($post) {
-            $request->setMethod('POST');
+        if ($method) {
+            $request->setMethod($method);
         }
 
         $request->setTransport($this->factoryTransport())
@@ -112,23 +121,15 @@ abstract class ClientAbstract
         return $this;
     }
 
-    public function post($resource, $body)
+    public function post($resource, $body, $name = 'POST')
     {
-        $this->destroyCache($resource);
-
-        $request = $this->factoryRequest($resource, true)
-            ->setBody($body);
+        $request = $this->factoryRequest($resource, $name, true)->setBody($body);
 
         return $this->exec($request);
     }
 
     public function put($resource, $body)
     {
-        $this->destroyCache($resource);
-
-        $request = $this->factoryRequest($resource)->setBody($body)
-            ->setMethod('PUT');
-
-        return $this->exec($request);
+        return $this->post($resource, $body, 'PUT');
     }
 }
