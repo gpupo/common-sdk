@@ -5,11 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Gpupo\\CommonSdk\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
+            "Gpupo\\CommonSdk\\": "src",
             "Gpupo\\Tests\\CommonSdk\\": "tests"
         }
     },

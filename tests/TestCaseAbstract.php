@@ -15,7 +15,12 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
-{
+{    
+    public function assertHttpStatusCodeSuccess($code, $context = null)
+    {
+        $this->assertContains($code, array(200, 204), $context);
+    }
+
     public function getLogger()
     {
         $channel = str_replace('\\', '.', get_called_class());
