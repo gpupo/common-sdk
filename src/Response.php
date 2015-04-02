@@ -95,8 +95,8 @@ class Response extends Collection
             } else {
                 $message = 'Unknow Error ('.$code.')';
             }
-            
-            throw new RequestException($message,$code);
+
+            throw new RequestException($message, $code);
         }
 
         return true;
