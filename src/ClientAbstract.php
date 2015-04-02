@@ -130,4 +130,17 @@ abstract class ClientAbstract
     {
         return $this->post($resource, $body, 'PUT');
     }
+    
+    public function getResourceUri($resource)
+    {
+        $url = $this->getOptions()->get('base_url');
+        $version = $this->getOptions()->get('version');
+        $endpoint = str_replace('{VERSION}', $version, $url);
+
+        if ($resource[0] !== '/') {
+            $endpoint .= '/';
+        }
+
+        return $endpoint.$resource;
+    }
 }
