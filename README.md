@@ -1,5 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
-[![Scrutinizer Quality Score](http://img.shields.io/scrutinizer/g/gpupo/commom-sdk.svg?style=flat-square)](https://scrutinizer-ci.com/g/gpupo/common-sdk/)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gpupo/common-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gpupo/common-sdk/?branch=master)
 
 Componente de uso comum entre SDKs para integração a partir de aplicações PHP com as APIs de Marketplaces
 
