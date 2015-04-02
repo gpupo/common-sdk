@@ -17,9 +17,7 @@ use Gpupo\CommonSdk\Exception\RequestException;
 use Psr\Log\LoggerInterface;
 
 /**
- * @method setMethod(string $string)
- * @method setBody(string $string)
- * @method string getResourceUri()
+ * @method string getResourceUri(string $resource)
  */
 abstract class ClientAbstract
 {
@@ -33,7 +31,7 @@ abstract class ClientAbstract
         return new Transport($this->getOptions());
     }
 
-    public function factoryRequest($resource, $method = false, $destroyCache = false)
+    public function factoryRequest($resource, $method = '', $destroyCache = false)
     {
         if ($destroyCache) {
             $this->destroyCache($resource);
@@ -41,7 +39,7 @@ abstract class ClientAbstract
 
         $request = new Request();
 
-        if ($method) {
+        if (!empty($method)) {
             $request->setMethod($method);
         }
 
