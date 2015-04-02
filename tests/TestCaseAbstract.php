@@ -25,8 +25,9 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
     {
         $channel = str_replace('\\', '.', get_called_class());
         $log = new Logger($channel);
-        $log->pushHandler(new StreamHandler(
-            $this->getResourceFilePath('logs/tests.log'), Logger::DEBUG));
+        $filePath = $this->getResourceFilePath('logs/tests.log', true);
+        
+        $log->pushHandler(new StreamHandler($filePath, Logger::DEBUG));
 
         return $log;
     }
@@ -57,14 +58,17 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
         return json_decode($this->getResourceContent($file), true);
     }
 
-    protected function getResourceFilePath($file)
+    protected function getResourceFilePath($file, $create = false)
     {
         $path =  getcwd().'/Resources/'.$file;
 
         if (file_exists($path)) {
             return $path;
-        } else {
-            throw new \InvalidArgumentException('File '.$path.' Not Exist');
+        } elseif ($create) {
+            touch($path);
+            return $this->getResourceFilePath($file);
         }
+            
+        throw new \InvalidArgumentException('File '.$path.' Not Exist');
     }
 }
