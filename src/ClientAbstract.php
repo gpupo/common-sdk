@@ -130,7 +130,7 @@ abstract class ClientAbstract
     {
         return $this->post($resource, $body, 'PUT');
     }
-    
+
     public function getResourceUri($resource)
     {
         $url = $this->getOptions()->get('base_url');

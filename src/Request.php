@@ -17,7 +17,6 @@ use Gpupo\Common\Entity\Collection;
  * @method setMethod(string $string)
  * @method setBody(string $string)
  * @method setUrl(string $string)
- *
  */
 class Request extends Collection
 {
