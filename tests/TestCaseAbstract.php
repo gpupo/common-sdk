@@ -15,7 +15,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
-{    
+{
     public function assertHttpStatusCodeSuccess($code, $context = null)
     {
         $this->assertContains($code, array(200, 204), $context);
@@ -26,7 +26,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
         $channel = str_replace('\\', '.', get_called_class());
         $log = new Logger($channel);
         $filePath = $this->getResourceFilePath('logs/tests.log', true);
-        
+
         $log->pushHandler(new StreamHandler($filePath, Logger::DEBUG));
 
         return $log;
@@ -66,9 +66,10 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return $path;
         } elseif ($create) {
             touch($path);
+
             return $this->getResourceFilePath($file);
         }
-            
+
         throw new \InvalidArgumentException('File '.$path.' Not Exist');
     }
 }
