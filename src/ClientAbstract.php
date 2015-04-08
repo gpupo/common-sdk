@@ -16,9 +16,6 @@ use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSdk\Exception\RequestException;
 use Psr\Log\LoggerInterface;
 
-/**
- * @method string getResourceUri(string $resource)
- */
 abstract class ClientAbstract
 {
     use Traits\LoggerTrait;
