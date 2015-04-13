@@ -17,7 +17,7 @@ use Psr\Log\LoggerInterface;
 abstract class FactoryAbstract
 {
     use SingletonTrait;
-    
+
     protected $config;
     protected $logger;
     protected $client;
@@ -26,7 +26,7 @@ abstract class FactoryAbstract
     {
         $this->setup($config, $logger);
     }
-    
+
     public function setup(array $config = [], LoggerInterface $logger = null)
     {
         $this->config = $config;
@@ -36,14 +36,14 @@ abstract class FactoryAbstract
     abstract public function setClient();
 
     abstract public function getNamespace();
-    
+
     public function getDelegateSchema($key)
     {
         $list = $this->getGenericSchemaByNamespace($this->getNamespace());
 
         return $this->resolvSchema($list, $key);
     }
-    
+
     protected function resolvSchema(array $list, $key)
     {
         if (!array_key_exists($key, $list)) {
@@ -87,10 +87,10 @@ abstract class FactoryAbstract
     {
         if (!class_exists($className)) {
             $schema = $this->getDelegateSchema($className);
-            
+
             $className = $schema['manager'];
         }
-        
+
         return new $className($this->getClient());
     }
 
@@ -99,7 +99,7 @@ abstract class FactoryAbstract
         $schema = $this->getDelegateSchema($name);
 
         return forward_static_call([$schema['class'], $schema['method']], $data);
-        
+
         //return ::($data);
     }
 
