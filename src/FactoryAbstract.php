@@ -99,8 +99,6 @@ abstract class FactoryAbstract
         $schema = $this->getDelegateSchema($name);
 
         return forward_static_call([$schema['class'], $schema['method']], $data);
-
-        //return ::($data);
     }
 
     /**
