@@ -12,7 +12,7 @@
 namespace Gpupo\CommonSdk\Entity;
 
 use Gpupo\Common\Entity\Collection;
-use Gpupo\CommonSdk\ClientInterface;
+use Gpupo\CommonSdk\Client\ClientInterface;
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Map;
 use Gpupo\CommonSdk\Traits\FactoryTrait;

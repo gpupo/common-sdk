@@ -46,5 +46,15 @@ class ClientTest extends TestCaseAbstract
             ]));
 
         $this->assertEquals($url, $client->getResourceUri(['url' => $url]));
+        
+        return $client;
+    }
+    
+    /**
+     * @depends testAUrlEvitandoConfiguracao
+     */
+    public function testAcessoAObjetoRequest($client)
+    {
+        $this->assertInstanceOf('\Gpupo\CommonSdk\Request', $client->factoryRequest('/'));
     }
 }
