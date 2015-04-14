@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of common-sdk
+ * This file is part of gpupo/common-sdk
  *
  * (c) Gilmar Pupo <g@g1mr.com>
  *
@@ -24,7 +24,7 @@ class GenericProviderTest extends TestCaseAbstract
                 'endpointAuthorize' => 'https://foo/bar?client_id={clientId}',
             ]
         );
-        
+
         $this->assertEquals('https://foo/bar?client_id=lambda', $provider->getAuthorizationUrl());
     }
 }

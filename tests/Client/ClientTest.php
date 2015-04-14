@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of common-sdk
+ * This file is part of gpupo/common-sdk
  *
  * (c) Gilmar Pupo <g@g1mr.com>
  *
@@ -22,7 +22,7 @@ class ClientTest extends TestCaseAbstract
         $this->assertEquals('/sku',
         $client->getResourceUri('/sku'));
     }
-    
+
     public function testAUrlBaseadoEmConfiguracao()
     {
         $client = new Client([
@@ -30,10 +30,10 @@ class ClientTest extends TestCaseAbstract
         ]);
         $this->assertEquals('https://foo.com/sku',
         $client->getResourceUri('/sku'));
-        
+
         return $client;
     }
-    
+
     /**
      * @depends testAUrlBaseadoEmConfiguracao
      */
@@ -44,7 +44,7 @@ class ClientTest extends TestCaseAbstract
             $client->getResourceUri([
                 'endpoint'  => 'https://bar.com/hi',
             ]));
-        
+
         $this->assertEquals($url, $client->getResourceUri(['url' => $url]));
     }
 }

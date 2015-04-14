@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of common-sdk
+ * This file is part of gpupo/common-sdk
  *
  * (c) Gilmar Pupo <g@g1mr.com>
  *
@@ -108,26 +108,26 @@ abstract class ClientAbstract extends BoardAbstract
         if (!is_array($resource)) {
             return $resource;
         }
-        
-        foreach(['endpoint', 'url'] as $key) {
+
+        foreach (['endpoint', 'url'] as $key) {
             if (array_key_exists($key, $resource) && !empty($resource[$key])) {
                 return $resource[$key];
             }
         }
-        
+
         return false;
     }
-    
+
     public function getResourceUri($resource)
     {
         $base = $this->getOptions()->get('base_url');
-        
+
         if (empty($base) || is_array($resource)) {
             return $this->normalizeResourceUri($resource);
         }
 
         $endpoint = $this->fillPlaceholdersWithOptions($base, ['version']);
-            
+
         if ($resource[0] !== '/') {
             $endpoint .= '/';
         }
