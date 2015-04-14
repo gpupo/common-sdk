@@ -7,7 +7,7 @@ use Symfony\CS\Fixer\Contrib\HeaderCommentFixer;
 
 
 $header = <<<EOF
-This file is part of common-sdk
+This file is part of gpupo/common-sdk
 
 (c) Gilmar Pupo <g@g1mr.com>
 

@@ -9,9 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Gpupo\CommonSdk;
+namespace Gpupo\CommonSdk\Client\Oauth2;
 
-interface ClientInterface
+abstract class AccessTokenAbstract
 {
-    public function getDefaultOptions();
 }

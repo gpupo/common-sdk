@@ -9,12 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Gpupo\CommonSdk;
+namespace Gpupo\CommonSdk\Client\Oauth2\Provider;
 
-final class Client extends ClientAbstract
+class GenericProvider extends ProviderAbstract
 {
     public function getDefaultOptions()
     {
-        return [];
+        return [
+            'endpointAuthorize'      => '',
+            'endpointAccessToken'    => '',
+        ];
     }
 }

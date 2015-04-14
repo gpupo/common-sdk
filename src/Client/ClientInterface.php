@@ -9,14 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Gpupo\Tests\CommonSdk;
+namespace Gpupo\CommonSdk\Client;
 
-use Gpupo\CommonSdk\Client;
-
-class ClientTest extends TestCaseAbstract
+interface ClientInterface
 {
-    public function testInit()
-    {
-        $client = new Client();
-    }
+    public function getDefaultOptions();
 }

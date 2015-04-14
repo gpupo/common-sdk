@@ -9,20 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Gpupo\CommonSdk;
+namespace Gpupo\CommonSdk\Client;
 
-use Gpupo\Common\Traits\OptionsTrait;
-use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSdk\Exception\RequestException;
-use Psr\Log\LoggerInterface;
 
-abstract class ClientAbstract
+abstract class ClientAbstract extends BoardAbstract
 {
-    use Traits\LoggerTrait;
-    use Traits\CacheTrait;
-    use SingletonTrait;
-    use OptionsTrait;
-
     protected function factoryTransport()
     {
         return new Transport($this->getOptions());
@@ -44,13 +36,6 @@ abstract class ClientAbstract
             ->setUrl($this->getResourceUri($resource));
 
         return $request;
-    }
-
-    public function __construct($options = [], LoggerInterface $logger = null, CacheItemPoolInterface $cacheItemPool = null)
-    {
-        $this->setOptions($options);
-        $this->initLogger($logger);
-        $this->initCache($cacheItemPool);
     }
 
     protected function exec(Request $request)
@@ -106,16 +91,6 @@ abstract class ClientAbstract
         }
     }
 
-    protected function destroyCache($resource)
-    {
-        if ($this->hasCacheItemPool()) {
-            $key = $this->factoryCacheKey($resource);
-            $this->getCacheItemPool()->deleteItens([$key]);
-        }
-
-        return $this;
-    }
-
     public function post($resource, $body, $name = 'POST')
     {
         $request = $this->factoryRequest($resource, $name, true)->setBody($body);
@@ -128,12 +103,31 @@ abstract class ClientAbstract
         return $this->post($resource, $body, 'PUT');
     }
 
+    protected function normalizeResourceUri($resource)
+    {
+        if (!is_array($resource)) {
+            return $resource;
+        }
+        
+        foreach(['endpoint', 'url'] as $key) {
+            if (array_key_exists($key, $resource) && !empty($resource[$key])) {
+                return $resource[$key];
+            }
+        }
+        
+        return false;
+    }
+    
     public function getResourceUri($resource)
     {
-        $url = $this->getOptions()->get('base_url');
-        $version = $this->getOptions()->get('version');
-        $endpoint = str_replace('{VERSION}', $version, $url);
+        $base = $this->getOptions()->get('base_url');
+        
+        if (empty($base) || is_array($resource)) {
+            return $this->normalizeResourceUri($resource);
+        }
 
+        $endpoint = $this->fillPlaceholdersWithOptions($base, ['version']);
+            
         if ($resource[0] !== '/') {
             $endpoint .= '/';
         }
