@@ -19,6 +19,6 @@ abstract class ProviderAbstract extends BoardAbstract
 
     public function getAuthorizationUrl()
     {
-        return $this->fillPlaceholdersWithOptions($this->getOptions()->getEndpointAuthorize(), ['clientId']);
+        return $this->fillPlaceholdersWithOptions($this->getOptions()->getAuthorize(), ['clientId']);
     }
 }

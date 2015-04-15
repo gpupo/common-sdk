@@ -18,11 +18,26 @@ use Gpupo\CommonSdk\Response;
 
 abstract class ClientAbstract extends BoardAbstract
 {
+    
+    abstract protected function renderAuthorization();
+    
+    protected function renderContentType()
+    {
+        return 'Content-Type: application/json;charset=UTF-8';
+    }
+    
     protected function factoryTransport()
     {
-        return new Transport($this->getOptions());
-    }
+        $transport = new Transport($this->getOptions());
+      
+        $transport->setOption(CURLOPT_HTTPHEADER, [
+            $this->renderAuthorization(),
+            $this->renderContentType(),
+        ]);
 
+        return $transport;
+    }
+    
     public function factoryRequest($resource, $method = '', $destroyCache = false)
     {
         if ($destroyCache) {

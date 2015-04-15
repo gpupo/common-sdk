@@ -16,8 +16,8 @@ class GenericProvider extends ProviderAbstract
     public function getDefaultOptions()
     {
         return [
-            'endpointAuthorize'      => '',
-            'endpointAccessToken'    => '',
+            'authorize'      => '',
+            'accessToken'    => '',
         ];
     }
 }

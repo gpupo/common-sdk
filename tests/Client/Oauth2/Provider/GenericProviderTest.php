@@ -21,7 +21,7 @@ class GenericProviderTest extends TestCaseAbstract
         $provider = new GenericProvider(
             [
                 'clientId'          => 'lambda',
-                'endpointAuthorize' => 'https://foo/bar?client_id={clientId}',
+                'authorize' => 'https://foo/bar?client_id={clientId}',
             ]
         );
 
