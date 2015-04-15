@@ -17,4 +17,8 @@ final class Client extends ClientAbstract
     {
         return [];
     }
+    
+    protected function renderAuthorization()
+    {
+    }
 }
