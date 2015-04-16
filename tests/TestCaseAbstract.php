@@ -34,9 +34,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     protected function hasToken()
     {
-        $token = $this->getConstant('API_TOKEN');
-
-        return empty($token) ? false : true;
+        return $this->hasConstant('API_TOKEN');
     }
 
     protected function getConstant($name, $default = false)
@@ -46,6 +44,13 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
         }
 
         return $default;
+    }
+
+    protected function hasConstant($name)
+    {
+        $value = $this->getConstant($name);
+
+        return empty($value) ? false : true;
     }
 
     protected function getResourceContent($file)
