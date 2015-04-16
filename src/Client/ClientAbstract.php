@@ -45,10 +45,7 @@ abstract class ClientAbstract extends BoardAbstract
 
     protected function factoryTransport()
     {
-        $transport = new Transport($this->getOptions());
-        $transport->setOption(CURLOPT_HTTPHEADER, $this->renderHeader());
-
-        return $transport;
+        return new Transport($this->getOptions());
     }
 
     public function factoryRequest($resource, $method = '', $destroyCache = false)
@@ -64,6 +61,7 @@ abstract class ClientAbstract extends BoardAbstract
         }
 
         $request->setTransport($this->factoryTransport())
+            ->setHeader($this->renderHeader())
             ->setUrl($this->getResourceUri($resource));
 
         return $request;

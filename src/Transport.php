@@ -40,6 +40,11 @@ class Transport extends Collection
         parent::__construct([]);
     }
 
+    public function setHeader(array $list)
+    {
+        return $this->setOption(CURLOPT_HTTPHEADER, $list);
+    }
+
     public function setUrl($url)
     {
         $this->set('url', $url);
