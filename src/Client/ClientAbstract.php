@@ -13,31 +13,44 @@ namespace Gpupo\CommonSdk\Client;
 
 use Gpupo\CommonSdk\Exception\RequestException;
 use Gpupo\CommonSdk\Request;
-use Gpupo\CommonSdk\Transport;
 use Gpupo\CommonSdk\Response;
+use Gpupo\CommonSdk\Transport;
 
 abstract class ClientAbstract extends BoardAbstract
 {
-    
     abstract protected function renderAuthorization();
-    
+
     protected function renderContentType()
     {
         return 'Content-Type: application/json;charset=UTF-8';
     }
-    
+
+    protected function renderHeader()
+    {
+        $list = [];
+
+        foreach ([
+            $this->renderAuthorization(),
+            $this->renderContentType(),
+        ] as $item) {
+            if (is_array($item)) {
+                $list = array_merge($list, $item);
+            } elseif (!empty($item)) {
+                $list[] = $item;
+            }
+        }
+
+        return $list;
+    }
+
     protected function factoryTransport()
     {
         $transport = new Transport($this->getOptions());
-      
-        $transport->setOption(CURLOPT_HTTPHEADER, [
-            $this->renderAuthorization(),
-            $this->renderContentType(),
-        ]);
+        $transport->setOption(CURLOPT_HTTPHEADER, $this->renderHeader());
 
         return $transport;
     }
-    
+
     public function factoryRequest($resource, $method = '', $destroyCache = false)
     {
         if ($destroyCache) {
