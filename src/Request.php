@@ -35,7 +35,9 @@ class Request extends Collection
     public function exec()
     {
         $transport =  $this->getTransport()->setUrl($this->get('url'))
-            ->setMethod($this->get('method', 'GET'))->setBody($this->getBody());
+            ->setMethod($this->get('method', 'GET'))
+            ->setHeader($this->getHeader())
+            ->setBody($this->getBody());
 
         return $transport->exec();
     }

@@ -57,4 +57,14 @@ class ClientTest extends TestCaseAbstract
     {
         $this->assertInstanceOf('\Gpupo\CommonSdk\Request', $client->factoryRequest('/'));
     }
+
+    /**
+     * @depends testAUrlEvitandoConfiguracao
+     */
+    public function testObjetoRequestPossuiHeader($client)
+    {
+        $request = $client->factoryRequest('/');
+
+        $this->assertContains('Content-Type: application/json;charset=UTF-8', $request->getHeader());
+    }
 }
