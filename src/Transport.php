@@ -42,7 +42,9 @@ class Transport extends Collection
 
     public function setHeader(array $list)
     {
-        return $this->setOption(CURLOPT_HTTPHEADER, $list);
+        $this->setOption(CURLOPT_HTTPHEADER, $list);
+
+        return $this;
     }
 
     public function setUrl($url)
