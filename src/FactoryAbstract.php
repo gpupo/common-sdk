@@ -42,9 +42,7 @@ abstract class FactoryAbstract
 
     public function getDelegateSchema($key)
     {
-        $list = $this->getGenericSchemaByNamespace($this->getNamespace());
-
-        return $this->resolvSchema(array_merge($list, $this->getSchema()), $key);
+        return $this->resolvSchema($this->getSchema($this->getNamespace()), $key);
     }
 
     protected function resolvSchema(array $list, $key)
@@ -56,31 +54,7 @@ abstract class FactoryAbstract
         return $list[$key];
     }
 
-    protected function getSchema()
-    {
-        return [];
-    }
-
-    protected function getGenericSchemaByNamespace($namespace)
-    {
-        return [
-            'product' => [
-                'class'     => $namespace.'Product\Factory',
-                'method'    => 'factoryProduct',
-                'manager'   => $namespace.'Product\Manager',
-            ],
-            'sku' => [
-                'class'     => $namespace.'Product\Factory',
-                'method'    => 'factorySku',
-                'manager'   => $namespace.'Product\Sku\Manager',
-            ],
-            'order' => [
-                'class'     => $namespace.'Order\Factory',
-                'method'    => 'factoryOrder',
-                'manager'   => $namespace.'Order\Manager',
-            ],
-        ];
-    }
+    abstract protected function getSchema($namespace = null);
 
     public function getClient()
     {
@@ -102,21 +76,32 @@ abstract class FactoryAbstract
         return new $className($this->getClient());
     }
 
-    protected function delegate($name, $data)
+    protected function forwardCallForMethod($schema, $data)
     {
-        $schema = $this->getDelegateSchema($name);
-
-        if (!class_exists($schema['class'])) {
-            throw new Exception\InvalidArgumentException('Class ['
-                .$schema['class'].'] not found!');
-        }
-
-        if (!method_exists ($schema['class'], $schema['method'])) {
+        if (!method_exists($schema['class'], $schema['method'])) {
             throw new Exception\InvalidArgumentException('Method ['
                 .$schema['class'].'::'.$schema['method'].'()] not found!');
         }
 
         return forward_static_call([$schema['class'], $schema['method']], $data);
+    }
+
+    protected function delegate($name, $data)
+    {
+        $schema = $this->getDelegateSchema($name);
+
+        $className = $schema['class'];
+
+        if (!class_exists($className)) {
+            throw new Exception\InvalidArgumentException('Class ['
+                .$className.'] not found!');
+        }
+
+        if (array_key_exists('method', $schema)) {
+            return $this->forwardCallForMethod($schema, $data);
+        }
+
+        return new $className($data);
     }
 
     /**
