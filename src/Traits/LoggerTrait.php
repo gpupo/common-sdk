@@ -23,9 +23,11 @@ trait LoggerTrait
         return $this->logger;
     }
 
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger = null)
     {
-        $this->logger = $logger;
+        if ($logger) {
+            $this->logger = $logger;
+        }
 
         return $this;
     }
