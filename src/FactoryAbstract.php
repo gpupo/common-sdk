@@ -22,6 +22,8 @@ abstract class FactoryAbstract
     protected $logger;
     protected $client;
 
+    abstract public function getNamespace();
+
     public function __construct(array $config = [], LoggerInterface $logger = null)
     {
         $this->setup($config, $logger);
@@ -33,9 +35,10 @@ abstract class FactoryAbstract
         $this->logger = $logger;
     }
 
-    abstract public function setClient();
-
-    abstract public function getNamespace();
+    public function setClient(array $clientOptions = [])
+    {
+        $this->client =  new Client($clientOptions, $this->logger);
+    }
 
     public function getDelegateSchema($key)
     {
