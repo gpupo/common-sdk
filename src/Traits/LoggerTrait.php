@@ -11,7 +11,7 @@
 
 namespace Gpupo\CommonSdk\Traits;
 
-use \Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 trait LoggerTrait
 {
