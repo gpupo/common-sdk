@@ -14,6 +14,9 @@ namespace Gpupo\CommonSdk;
 use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Exception\RuntimeException;
 
+/**
+ * @method setMethod(string $string)
+ */
 class Transport extends Collection
 {
     protected $curl;
