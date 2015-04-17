@@ -30,12 +30,19 @@ class Request extends Collection
 
     public function getTransport()
     {
-        return $this->get('transport');
+        $transport = $this->get('transport');
+
+        if (!$transport instanceof Transport) {
+            throw new Exception\RequestException('Transport missed');
+        }
+
+        return $transport;
     }
 
     public function exec()
     {
-        $transport =  $this->getTransport()->setUrl($this->get('url'))
+        $transport = $this->getTransport()
+            ->setUrl($this->get('url'))
             ->setMethod($this->get('method', 'GET'))
             ->setHeader($this->getHeader())
             ->setBody($this->getBody());
