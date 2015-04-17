@@ -35,10 +35,7 @@ abstract class FactoryAbstract
         $this->logger = $logger;
     }
 
-    public function setClient(array $clientOptions = [])
-    {
-        $this->client =  new Client($clientOptions, $this->logger);
-    }
+    abstract public function setClient(array $clientOptions = []);
 
     public function getDelegateSchema($key)
     {
