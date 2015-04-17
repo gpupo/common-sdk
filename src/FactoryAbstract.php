@@ -56,7 +56,7 @@ abstract class FactoryAbstract
     public function getClient()
     {
         if (!$this->client) {
-            $this->setClient();
+            $this->setClient($this->config);
         }
 
         return $this->client;
