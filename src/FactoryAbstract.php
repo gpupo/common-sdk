@@ -44,7 +44,7 @@ abstract class FactoryAbstract
     {
         $list = $this->getGenericSchemaByNamespace($this->getNamespace());
 
-        return $this->resolvSchema($list, $key);
+        return $this->resolvSchema(array_merge($list, $this->getSchema()), $key);
     }
 
     protected function resolvSchema(array $list, $key)
@@ -54,6 +54,11 @@ abstract class FactoryAbstract
         }
 
         return $list[$key];
+    }
+
+    protected function getSchema()
+    {
+        return [];
     }
 
     protected function getGenericSchemaByNamespace($namespace)
@@ -100,6 +105,16 @@ abstract class FactoryAbstract
     protected function delegate($name, $data)
     {
         $schema = $this->getDelegateSchema($name);
+
+        if (!class_exists($schema['class'])) {
+            throw new Exception\InvalidArgumentException('Class ['
+                .$schema['class'].'] not found!');
+        }
+
+        if (!method_exists ($schema['class'], $schema['method'])) {
+            throw new Exception\InvalidArgumentException('Method ['
+                .$schema['class'].'::'.$schema['method'].'()] not found!');
+        }
 
         return forward_static_call([$schema['class'], $schema['method']], $data);
     }
