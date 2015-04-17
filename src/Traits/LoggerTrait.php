@@ -11,6 +11,8 @@
 
 namespace Gpupo\CommonSdk\Traits;
 
+use \Psr\Log\LoggerInterface;
+
 trait LoggerTrait
 {
     use \Psr\Log\LoggerTrait;
@@ -19,6 +21,13 @@ trait LoggerTrait
     public function getLogger()
     {
         return $this->logger;
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+
+        return $this;
     }
 
     public function initLogger($logger)
