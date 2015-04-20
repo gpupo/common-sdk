@@ -114,8 +114,19 @@ abstract class ManagerAbstract
             .$exception->getMessage(), $exception->getCode(), $exception);
     }
 
+    /**
+     * Possibilita hook com sobrecarga na implementação, para lidar com erros
+     * que necessitam nova tentativa de execução
+     */
     protected function retry(\Exception $exception, $i)
     {
+        if ($i === 1 && $exception->getCode() >= 500) {
+
+            sleep(5);
+
+            return true;
+        }
+
         return false;
     }
 
