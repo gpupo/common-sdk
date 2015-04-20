@@ -114,15 +114,26 @@ abstract class ManagerAbstract
             .$exception->getMessage(), $exception->getCode(), $exception);
     }
 
+    protected function retry(\Exception $exception, $i)
+    {
+        return false;
+    }
+
     protected function perform(Map $map, $body = null)
     {
         $methodName = strtolower($map->getMethod());
 
-        try {
-            return $this->getClient()->$methodName($map->getResource(), $body);
-        } catch (\Exception $exception) {
-            throw $this->exceptionHandler($exception, $map->getMethod(),
-                $map->getResource());
+        $i = 0;
+        while ($i <= 5) {
+            $i++;
+            try {
+                return $this->getClient()->$methodName($map->getResource(), $body);
+            } catch (\Exception $exception) {
+                if (!$this->retry($exception, $i)) {
+                    throw $this->exceptionHandler($exception, $map->getMethod(),
+                        $map->getResource());
+                }
+            }
         }
     }
 
