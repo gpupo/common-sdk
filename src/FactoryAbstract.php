@@ -23,6 +23,8 @@ abstract class FactoryAbstract
     protected $client;
 
     abstract public function getNamespace();
+    
+    abstract protected function getSchema($namespace = null);
 
     public function __construct(array $config = [], LoggerInterface $logger = null)
     {
@@ -51,7 +53,6 @@ abstract class FactoryAbstract
         return $list[$key];
     }
 
-    abstract protected function getSchema($namespace = null);
 
     public function getClient()
     {
