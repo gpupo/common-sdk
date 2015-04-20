@@ -13,9 +13,12 @@ namespace Gpupo\Tests\CommonSdk;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Gpupo\CommonSdk\Traits\LoggerTrait;
 
 abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 {
+    use LoggerTrait;
+
     public function assertHttpStatusCodeSuccess($code, $context = null)
     {
         $this->assertContains($code, array(200, 204), $context);
@@ -23,13 +26,39 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     public function getLogger()
     {
-        $channel = str_replace('\\', '.', get_called_class());
-        $log = new Logger($channel);
-        $filePath = $this->getResourceFilePath('logs/tests.log', true);
+        if (!$this->logger) {
+            $channel = str_replace('\\', '.', get_called_class());
+            $logger = new Logger($channel);
+            $filePath = $this->getResourceFilePath('logs/tests.log', true);
+            $logger->pushHandler(new StreamHandler($filePath, Logger::DEBUG));
+            $this->setLogger($logger);
+        }
 
-        $log->pushHandler(new StreamHandler($filePath, Logger::DEBUG));
+        return $this->logger;
+    }
 
-        return $log;
+    protected function logMark($message, array $callers, $mode = 'skipped')
+    {
+        $context = [
+            'test'      => $callers[1]['function'],
+            'message'   => $message,
+        ];
+
+        return $this->log('info', 'Test ' . $mode, $context);
+    }
+
+    public function markSkipped($message = '')
+    {
+        $this->logMark($message, debug_backtrace());
+
+        return $this->markTestSkipped($message);
+    }
+
+    public function markIncomplete($message = '')
+    {
+        $this->logMark($message, debug_backtrace(), 'incomplete');
+
+        return $this->markTestIncomplete($message);
     }
 
     protected function hasToken()
