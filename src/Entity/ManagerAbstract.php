@@ -70,7 +70,7 @@ abstract class ManagerAbstract
         }
     }
 
-    public function fetch($offset = 1, $limit = 50, array $parameters = [])
+    public function fetch($offset = 0, $limit = 50, array $parameters = [])
     {
         $response =  $this->perform($this->factoryMap('fetch',
             array_merge($parameters, ['offset' => $offset, 'limit' => $limit])));
@@ -78,6 +78,12 @@ abstract class ManagerAbstract
         return $response->getData();
     }
 
+    /**
+     * Encontra a URL e método para uma execução de Request.
+     *
+     * @param string $operation  Operação de execução (save, fetch)
+     * @param array  $parameters Parâmetros que serão alocados nos placeholders
+     */
     public function factoryMap($operation, array $parameters = null)
     {
         if (!is_array($this->maps)) {
