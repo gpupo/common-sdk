@@ -116,12 +116,14 @@ abstract class ManagerAbstract
 
     /**
      * Possibilita hook com sobrecarga na implementação, para lidar com erros
-     * que necessitam nova tentativa de execução
+     * que necessitam nova tentativa de execução.
+     *
+     * @param Exception $exception Exceção recebida no processo de execução do Request
+     * @param int       $i         Numero da iteração para a mesma execução
      */
     protected function retry(\Exception $exception, $i)
     {
         if ($i === 1 && $exception->getCode() >= 500) {
-
             sleep(5);
 
             return true;
