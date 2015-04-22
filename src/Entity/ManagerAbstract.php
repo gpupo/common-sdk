@@ -36,8 +36,12 @@ abstract class ManagerAbstract
         return $this->execute($this->factoryMap($route), $entity->toJson($route));
     }
 
-    public function atributesDiff(EntityInterface $entityA, EntityInterface $entityB, array $atributes)
+    public function atributesDiff(EntityInterface $entityA, EntityInterface $entityB, array $atributes = null)
     {
+        if (empty($atributes)) {
+            $atributes = array_keys($entityA->getSchema());
+        }
+
         $list = [];
         foreach ($atributes as $atribute) {
             $method = 'get'.ucfirst($atribute);
