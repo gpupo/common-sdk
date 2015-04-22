@@ -11,9 +11,9 @@
 
 namespace Gpupo\Tests\CommonSdk;
 
+use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Gpupo\CommonSdk\Traits\LoggerTrait;
 
 abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 {
@@ -44,7 +44,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             'message'   => $message,
         ];
 
-        return $this->log('info', 'Test ' . $mode, $context);
+        return $this->log('info', 'Test '.$mode, $context);
     }
 
     public function markSkipped($message = '')
