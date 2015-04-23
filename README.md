@@ -29,6 +29,8 @@ MIT, see LICENSE.
 - [ ] Objeto ``Transport`` deve adotar padrão Driver, suportando outras bibliotecas além de ``cUrl``
 - [ ] Testes devem suportar Mockups
 - [ ] ``Client\Oauth2`` deve oferecer funcionalidades para possibilitar a aquisição e renovação de tokens em processo antes de ``Request->exec()``;
+- [ ] Melhor a documentação dos objetos - utilizar [lista apontada pelo Scrutinizer](https://scrutinizer-ci.com/g/gpupo/common-sdk/issues/master)
+
 
 ---
 
