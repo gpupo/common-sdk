@@ -12,8 +12,8 @@
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Traits\SingletonTrait;
-use Psr\Log\LoggerInterface;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
+use Psr\Log\LoggerInterface;
 
 abstract class FactoryAbstract
 {
