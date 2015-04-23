@@ -11,6 +11,7 @@
 
 namespace Gpupo\Tests\CommonSdk\Entity;
 
+use Gpupo\CommonSdk\Entity\Entity;
 use Gpupo\CommonSdk\Entity\Manager;
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
 
@@ -33,5 +34,70 @@ class ManagerTest extends TestCaseAbstract
         $collection = $factoryCollection->invokeArgs($manager, [['foo' => 'bar']]);
 
         $this->assertEquals('bar', $collection->getFoo());
+    }
+
+    /**
+     * @dataProvider dataProviderEntityData
+     */
+    public function testNaoEncontraDiferencaEntreEntidadesIguais($dataA)
+    {
+        $entityA = new Entity($dataA);
+        $entityB = clone $entityA;
+
+        $manager = new Manager();
+
+        $this->assertFalse($manager->attributesDiff($entityA, $entityB));
+    }
+
+    /**
+     * @dataProvider dataProviderEntityData
+     */
+    public function testEncontraDiferencaEntreEntidadesDiferentes($dataA, $dataB)
+    {
+        $entityA = new Entity($dataA);
+        $entityB = new Entity($dataB);
+
+        $manager = new Manager();
+
+        $this->assertEquals(['foo', 'bar'], $manager->attributesDiff($entityA, $entityB));
+    }
+
+    /**
+     * @dataProvider dataProviderEntityData
+     */
+    public function testEncontraDiferencaEntreEntidadesDiferentesAPartirDeChavesSelecionadas($dataA, $dataB)
+    {
+        $entityA = new Entity($dataA);
+        $entityB = new Entity($dataB);
+
+        $manager = new Manager();
+
+        foreach (['foo', 'bar'] as $key) {
+            $this->assertEquals([$key], $manager->attributesDiff($entityA, $entityB, [$key]));
+        }
+    }
+
+    /**
+     * @dataProvider dataProviderEntityData
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFalhaAoTentarEncontrarDiferencaUsandoPropriedadeInexistente($dataA, $dataB)
+    {
+        $entityA = new Entity($dataA);
+        $entityB = new Entity($dataB);
+
+        $manager = new Manager();
+
+        $manager->attributesDiff($entityA, $entityB, ['noExist']);
+    }
+
+    public function dataProviderEntityData()
+    {
+        return [
+            [
+                ['foo' => 'hello', 'bar' => 1],
+                ['foo' => 'world', 'bar' => 2],
+            ],
+        ];
     }
 }

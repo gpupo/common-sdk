@@ -15,11 +15,13 @@ use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Client\ClientInterface;
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Map;
+use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 
 abstract class ManagerAbstract
 {
     use FactoryTrait;
+    use EntityDiffTrait;
 
     protected $client;
 
@@ -34,27 +36,6 @@ abstract class ManagerAbstract
         }
 
         return $this->execute($this->factoryMap($route), $entity->toJson($route));
-    }
-
-    public function atributesDiff(EntityInterface $entityA, EntityInterface $entityB, array $atributes = null)
-    {
-        if (empty($atributes)) {
-            $atributes = array_keys($entityA->getSchema());
-        }
-
-        $list = [];
-        foreach ($atributes as $atribute) {
-            $method = 'get'.ucfirst($atribute);
-            if ($entityA->$method() !== $entityB->$method()) {
-                $list[] = $atribute;
-            }
-        }
-
-        if (!empty($list)) {
-            return $list;
-        }
-
-        return false;
     }
 
     public function update(EntityInterface $entity, EntityInterface $existent)

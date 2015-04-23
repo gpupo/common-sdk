@@ -105,6 +105,16 @@ abstract class EntityAbstract extends CollectionAbstract
         }
     }
 
+    public function schemaKeys()
+    {
+        return array_keys($this->getSchema());
+    }
+
+    public function schemaHasKey($key)
+    {
+        return in_array($key, $this->schemaKeys(), true);
+    }
+
     protected function validate()
     {
         foreach ($this->getSchema() as $key => $value) {
