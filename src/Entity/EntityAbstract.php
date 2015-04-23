@@ -23,15 +23,29 @@ abstract class EntityAbstract extends CollectionAbstract
     protected $optionalSchema = [];
     protected $previous;
 
+    /**
+     * Utilizado em entidades que possuem chave primária diferente de [id].
+     *
+     * @type string
+     */
+    protected $primaryKey;
+
     abstract public function getSchema();
 
     /**
      * Toda entidade deve possuir um Id
      * mesmo que não possua o atributo Id em seu Schema.
      * Quando este for o caso, getId() será um alias padronizado
-     * para acesso ao campo identificador da entidade
+     * para acesso ao campo identificador da entidade.
      */
-    abstract public function getId();
+    public function getId()
+    {
+        if (empty($this->primaryKey)) {
+            return $this->get('id');
+        }
+
+        return $this->get($this->primaryKey);
+    }
 
     protected function setRequiredSchema(array $array = [])
     {

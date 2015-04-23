@@ -16,19 +16,20 @@ namespace Gpupo\CommonSdk\Entity;
  */
 final class Entity extends EntityAbstract implements EntityInterface
 {
+    /**
+     * {@inheritDoc}
+     * Necessário para identificar foo como chave primária, mas se esta
+     *  entidade possuísse propriedade [id] isto seria desnecessário.
+     *
+     * @type string
+     */
+    protected $primaryKey = 'foo';
+
     public function getSchema()
     {
         return  [
             'foo'   => 'string',
             'bar'   => 'number',
         ];
-    }
-
-    /**
-     * Alias, permitindo acesso ao identificador foo
-     */
-    public function getId()
-    {
-        return $this->getFoo();
     }
 }
