@@ -54,7 +54,14 @@ trait EntityDiffTrait
     protected function attributesResolv(EntityInterface $entityA, array $attributes = null)
     {
         if (empty($attributes)) {
-            return $entityA->schemaKeys();
+            $list = [];
+            foreach ($entityA->getSchema() as $key => $value) {
+                if ($value != 'object') {
+                    $list[] = $key;
+                }
+            }
+
+            return $list;
         }
 
         return $attributes;
