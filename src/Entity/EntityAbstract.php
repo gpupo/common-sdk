@@ -25,6 +25,14 @@ abstract class EntityAbstract extends CollectionAbstract
 
     abstract public function getSchema();
 
+    /**
+     * Toda entidade deve possuir um Id
+     * mesmo que não possua o atributo Id em seu Schema.
+     * Quando este for o caso, getId() será um alias padronizado
+     * para acesso ao campo identificador da entidade
+     */
+    abstract public function getId();
+
     protected function setRequiredSchema(array $array = [])
     {
         $this->requiredSchema = $array;

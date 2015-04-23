@@ -23,4 +23,12 @@ final class Entity extends EntityAbstract implements EntityInterface
             'bar'   => 'number',
         ];
     }
+
+    /**
+     * Alias, permitindo acesso ao identificador foo
+     */
+    public function getId()
+    {
+        return $this->getFoo();
+    }
 }
