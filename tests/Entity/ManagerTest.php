@@ -42,7 +42,7 @@ class ManagerTest extends TestCaseAbstract
     public function testNaoEncontraDiferencaEntreEntidadesIguais($dataA)
     {
         $entityA = new Entity($dataA);
-        $entityB = clone $entityA;
+        $entityB = new Entity($dataA);
 
         $manager = new Manager();
 

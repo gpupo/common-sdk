@@ -56,7 +56,7 @@ trait EntityDiffTrait
         if (empty($attributes)) {
             $list = [];
             foreach ($entityA->getSchema() as $key => $value) {
-                if ($value != 'object') {
+                if ($value !== 'object') {
                     $list[] = $key;
                 }
             }
