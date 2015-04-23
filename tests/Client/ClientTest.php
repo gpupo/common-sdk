@@ -16,14 +16,14 @@ use Gpupo\Tests\CommonSdk\TestCaseAbstract;
 
 class ClientTest extends TestCaseAbstract
 {
-    public function testAUrlIndependenteDeConfiguracao()
+    public function testUrlIndependenteDeConfiguracao()
     {
         $client = new Client();
         $this->assertEquals('/sku',
         $client->getResourceUri('/sku'));
     }
 
-    public function testAUrlBaseadoEmConfiguracao()
+    public function testUrlBaseadoEmConfiguracao()
     {
         $client = new Client([
             'base_url'      => 'https://foo.com',
@@ -37,7 +37,7 @@ class ClientTest extends TestCaseAbstract
     /**
      * @depends testAUrlBaseadoEmConfiguracao
      */
-    public function testAUrlEvitandoConfiguracao($client)
+    public function testUrlEvitandoConfiguracao($client)
     {
         $url = 'https://bar.com/hi';
         $this->assertEquals($url,
