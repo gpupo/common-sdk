@@ -23,6 +23,8 @@ abstract class EntityAbstract extends CollectionAbstract
     protected $optionalSchema = [];
     protected $previous;
 
+    abstract public function getSchema();
+    
     protected function setRequiredSchema(array $array = [])
     {
         $this->requiredSchema = $array;
