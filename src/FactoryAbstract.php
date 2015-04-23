@@ -13,13 +13,15 @@ namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Traits\SingletonTrait;
 use Psr\Log\LoggerInterface;
+use Gpupo\CommonSdk\Traits\LoggerTrait;
 
 abstract class FactoryAbstract
 {
     use SingletonTrait;
+    use LoggerTrait;
 
     protected $config;
-    protected $logger;
+
     protected $client;
 
     abstract public function getNamespace();
@@ -34,7 +36,7 @@ abstract class FactoryAbstract
     public function setup(array $config = [], LoggerInterface $logger = null)
     {
         $this->config = $config;
-        $this->logger = $logger;
+        $this->initLogger($logger);
     }
 
     abstract public function setClient(array $clientOptions = []);
@@ -70,7 +72,13 @@ abstract class FactoryAbstract
             $className = $schema['manager'];
         }
 
-        return new $className($this->getClient());
+        $manager = new $className($this->getClient());
+
+        if ($this->getLogger()) {
+            $manager->initLogger($this->getLogger());
+        }
+
+        return $manager;
     }
 
     protected function forwardCallForMethod($schema, $data)

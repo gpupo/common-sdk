@@ -17,15 +17,43 @@ use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Map;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
+use Gpupo\CommonSdk\Traits\LoggerTrait;
 
 abstract class ManagerAbstract
 {
     use FactoryTrait;
     use EntityDiffTrait;
+    use LoggerTrait;
 
     protected $client;
 
     protected $maps;
+
+    protected $dryRun = false;
+
+    protected function isDryRun()
+    {
+        return ($this->dryRun === true);
+    }
+
+    /**
+     * Possibilita o uso de operações de gravação remota sem que estas sejam de
+     * fato executadas. Isto é útimo para testes.
+     *
+     * <code>
+     * //Exemplo de uso
+     *
+     * $manager = new Manager();
+     * $manager->setDryRun()->save($entity);
+     *
+     * </code>
+     */
+    public function setDryRun($value = true)
+    {
+        $this->dryRun = boolval($value);
+
+        return $this;
+    }
 
     public function save(EntityInterface $entity, $route = 'save')
     {
@@ -146,7 +174,9 @@ abstract class ManagerAbstract
 
     protected function execute(Map $map, $body = null)
     {
-        $this->perform($map, $body);
+        if (!$this->isDryRun()) {
+            $this->perform($map, $body);
+        }
 
         return true;
     }
