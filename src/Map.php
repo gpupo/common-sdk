@@ -40,10 +40,10 @@ class Map extends Collection
     protected function populatePlaceholders($route, $parameters)
     {
         foreach ($parameters as $key => $value) {
-            if (!empty($value)) {
-                $route = str_replace('{'.$key.'}', $value, $route);
-            } else {
+            if (empty($value) && $value !== 0 && $value !== '0') {
                 $route = str_replace('&'.$key.'={'.$key.'}', '', $route);
+            } else {
+                $route = str_replace('{'.$key.'}', $value, $route);
             }
         }
 
