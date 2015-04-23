@@ -15,11 +15,6 @@
         "gpupo/cache": "~1.2",
         "gpupo/common": "~1.3"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0-dev"
-        }
-    },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
     },

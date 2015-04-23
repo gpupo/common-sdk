@@ -115,8 +115,6 @@ abstract class ManagerAbstract
     protected function retry(\Exception $exception, $i)
     {
         if ($i === 1 && $exception->getCode() >= 500) {
-            sleep(5);
-
             return true;
         }
 
