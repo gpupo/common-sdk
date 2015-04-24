@@ -18,12 +18,14 @@ use Gpupo\CommonSdk\Map;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
+use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 
 abstract class ManagerAbstract
 {
     use FactoryTrait;
     use EntityDiffTrait;
     use LoggerTrait;
+    use MagicCommandTrait;
 
     protected $client;
 
@@ -53,6 +55,16 @@ abstract class ManagerAbstract
         $this->dryRun = boolval($value);
 
         return $this;
+    }
+
+    protected function magicCommandCallList()
+    {
+        return ['save'];
+    }
+
+    protected function magicSave($suplement, $input)
+    {
+        return $this->save($input, $suplement);
     }
 
     public function save(EntityInterface $entity, $route = 'save')
@@ -205,28 +217,5 @@ abstract class ManagerAbstract
     protected function factoryEntity(array $data = null)
     {
         return $this->factoryNeighborObject($this->getEntityName(), $data);
-    }
-
-    /**
-     * Magic method that implements.
-     *
-     * @param string $method
-     * @param array  $args
-     *
-     * @throws \BadMethodCallException
-     *
-     * @return mixed
-     */
-    public function __call($method, $args)
-    {
-        $command = substr($method, 0, 4);
-        $field = substr($method, 4);
-        $field[0] = strtolower($field[0]);
-
-        if ($command === 'save') {
-            return $this->save(current($args), $method);
-        } else {
-            throw new \BadMethodCallException('There is no method '.$method);
-        }
     }
 }
