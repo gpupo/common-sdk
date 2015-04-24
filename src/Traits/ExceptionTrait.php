@@ -16,8 +16,8 @@ trait ExceptionTrait
     public function toLog()
     {
         return [
-            'message'   => $this->message,
-            'code'      => $this->code,
+            'message'   => $this->getMessage(),
+            'code'      => $this->getCode(),
         ];
     }
 }
