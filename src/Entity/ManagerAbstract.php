@@ -27,6 +27,8 @@ abstract class ManagerAbstract
     use LoggerTrait;
     use MagicCommandTrait;
 
+    protected $entity;
+
     protected $client;
 
     protected $maps;
