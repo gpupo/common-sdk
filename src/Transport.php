@@ -21,6 +21,10 @@ class Transport extends Collection
 {
     protected $curl;
 
+    protected $registerPath = false;
+
+    protected $containerLog = [];
+
     public function setOption($option, $value)
     {
         return curl_setopt($this->curl, $option, $value);
@@ -63,29 +67,41 @@ class Transport extends Collection
         return strtoupper($this->get('method', 'GET'));
     }
 
+    protected function execPost()
+    {
+        $this->setOption(CURLOPT_POST, true);
+        $this->setOption(CURLOPT_POSTFIELDS, $this->getBody());
+
+        return $this;
+    }
+
+    protected function execPut()
+    {
+        $this->setOption(CURLOPT_PUT, true);
+        $pointer = fopen('php://temp/maxmemory:512000', 'w+');
+
+        if (!$pointer) {
+            throw new RuntimeException('Could not open temp memory data');
+        }
+
+        fwrite($pointer, $this->getBody());
+        fseek($pointer, 0);
+
+        $this->setOption(CURLOPT_BINARYTRANSFER, true);
+        $this->setOption(CURLOPT_INFILE, $pointer);
+        $this->setOption(CURLOPT_INFILESIZE, strlen($this->getBody()));
+
+        return $this;
+    }
+
     public function exec()
     {
         switch ($this->getMethod()) {
             case 'POST':
-                $this->setOption(CURLOPT_POST, true);
-                $this->setOption(CURLOPT_POSTFIELDS, $this->getBody());
-
+                $this->execPost();
                 break;
             case 'PUT':
-                $this->setOption(CURLOPT_PUT, true);
-                $pointer = fopen('php://temp/maxmemory:512000', 'w+');
-
-                if (!$pointer) {
-                    throw new RuntimeException('Could not open temp memory data');
-                }
-
-                fwrite($pointer, $this->getBody());
-                fseek($pointer, 0);
-
-                $this->setOption(CURLOPT_BINARYTRANSFER, true);
-                $this->setOption(CURLOPT_INFILE, $pointer);
-                $this->setOption(CURLOPT_INFILESIZE, strlen($this->getBody()));
-
+                $this->execPut();
                 break;
         }
 
@@ -94,12 +110,53 @@ class Transport extends Collection
             'httpStatusCode'    => $this->getInfo(CURLINFO_HTTP_CODE),
         ];
 
+        $this->register();
+
         curl_close($this->curl);
 
         return $data;
     }
 
+    /**
+     * Permite o registro de cada requisição em arquivo.
+     *
+     * @param string $path Caminho completo do diretório para gravação de arquivos
+     */
+    public function setRegisterPath($path)
+    {
+        $this->registerPath = $path;
+    }
+
+    protected function getRegisterFilename()
+    {
+        $filename = $this->registerPath.'/'.date('Y-m-d-h-i-u').'-'
+            .$this->getMethod().'.txt';
+        touch($filename);
+
+        if (file_exists($filename)) {
+            return $filename;
+        }
+
+        throw new Exception\RuntimeException('Impossivel registrar em '.$path);
+    }
+
+    public function register()
+    {
+        if (!empty($this->registerPath)) {
+            try {
+                $filename = $this->getRegisterFilename();
+                $data = json_encode(curl_getinfo($this->curl)).$this->getBody();
+                @file_put_contents($filename, $data, FILE_TEXT);
+            } catch (\Exception $e) {
+                $this->containerLog['err'][] = $e->getMessage();
+            }
+        }
+
+        return $this;
+    }
+
     public function toLog()
     {
+        return $this->containerLog;
     }
 }
