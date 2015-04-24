@@ -140,29 +140,36 @@ class Transport extends Collection
         throw new Exception\RuntimeException('Impossivel registrar em '.$path);
     }
 
-    public function register()
+    protected function registerEncode($title, $data)
     {
-        $encode = function ($data) {
-            return json_encode($data, JSON_PRETTY_PRINT)."\n\n";
-        };
+        return '## '.$title.':'."\n"
+            .json_encode($data, JSON_UNESCAPED_UNICODE)."\n===\n";
+    }
 
-        if (!empty($this->registerPath)) {
-            try {
-                $filename = $this->getRegisterFilename();
-                $data = $encode(curl_getinfo($this->curl));
+    protected function registerSaveToFile()
+    {
+        $filename = $this->getRegisterFilename();
+        $data = $this->registerEncode('cUrl', curl_getinfo($this->curl));
 
-                $body = $this->getBody();
-                if (!empty($body)) {
-                    $data .= $encode(json_decode($body));
-                }
-
-                @file_put_contents($filename, $data, FILE_TEXT);
-            } catch (\Exception $e) {
-                $this->containerLog['err'][] = $e->getMessage();
-            }
+        $body = $this->getBody();
+        if (!empty($body)) {
+            $data .= $this->registerEncode('Body', json_decode($body));
         }
 
-        return $this;
+        return file_put_contents($filename, $data, FILE_TEXT);
+    }
+
+    public function register()
+    {
+        if (!empty($this->registerPath)) {
+            try {
+                return $this->registerSaveToFile();
+            } catch (\Exception $e) {
+                $this->containerLog['err'][] = $e->getMessage();
+
+                return false;
+            }
+        }
     }
 
     public function toLog()
