@@ -13,12 +13,14 @@ namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
+use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
 
 abstract class FactoryAbstract
 {
     use SingletonTrait;
     use LoggerTrait;
+    use MagicCommandTrait;
 
     protected $config;
 
@@ -33,10 +35,16 @@ abstract class FactoryAbstract
         $this->setup($config, $logger);
     }
 
+    protected function magicCreate($suplement, $input)
+    {
+        return $this->delegate($suplement, $input);
+    }
+
     public function setup(array $config = [], LoggerInterface $logger = null)
     {
         $this->config = $config;
         $this->initLogger($logger);
+        $this->magicCommandCallAdd('create');
     }
 
     abstract public function setClient(array $clientOptions = []);
@@ -107,26 +115,5 @@ abstract class FactoryAbstract
         }
 
         return new $className($data);
-    }
-
-    /**
-     * @param string $method
-     * @param array  $args
-     *
-     * @throws \BadMethodCallException
-     *
-     * @return mixed
-     */
-    public function __call($method, $args)
-    {
-        $command = substr($method, 0, 6);
-        $object = substr($method, 6);
-        $object[0] = strtolower($object[0]);
-
-        if ($command === 'create') {
-            return $this->delegate($object, current($args));
-        } else {
-            throw new \BadMethodCallException('There is no method '.$method);
-        }
     }
 }
