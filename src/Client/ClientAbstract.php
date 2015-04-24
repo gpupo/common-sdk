@@ -45,7 +45,14 @@ abstract class ClientAbstract extends BoardAbstract
 
     protected function factoryTransport()
     {
-        return new Transport($this->getOptions());
+        $transport = new Transport($this->getOptions());
+
+        $path = $this->getOptions()->get('registerPath', false);
+        if ($path) {
+            $transport->setRegisterPath($path);
+        }
+
+        return $transport;
     }
 
     public function factoryRequest($resource, $method = '', $destroyCache = false)
