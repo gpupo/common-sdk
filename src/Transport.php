@@ -16,12 +16,13 @@ use Gpupo\CommonSdk\Exception\RuntimeException;
 
 /**
  * @method setMethod(string $string)
+ * @method string getBody()
  */
 class Transport extends Collection
 {
     protected $curl;
 
-    protected $registerPath = false;
+    protected $registerPath;
 
     protected $containerLog = [];
 
@@ -129,8 +130,7 @@ class Transport extends Collection
 
     protected function getRegisterFilename()
     {
-        $filename = $this->registerPath.'/'.date('Y-m-d-h-i-u').'-'
-            .$this->getMethod().'.txt';
+        $filename = $this->registerPath.'/request-'.date('Y-m-d-h-i-s').'.txt';
         touch($filename);
 
         if (file_exists($filename)) {
@@ -142,10 +142,20 @@ class Transport extends Collection
 
     public function register()
     {
+        $encode = function ($data) {
+            return json_encode($data, JSON_PRETTY_PRINT) . "\n\n";
+        };
+
         if (!empty($this->registerPath)) {
             try {
                 $filename = $this->getRegisterFilename();
-                $data = json_encode(curl_getinfo($this->curl)).$this->getBody();
+                $data = $encode(curl_getinfo($this->curl));
+
+                $body = $this->getBody();
+                if (!empty($body)) {
+                    $data .= $encode(json_decode($body));
+                }
+
                 @file_put_contents($filename, $data, FILE_TEXT);
             } catch (\Exception $e) {
                 $this->containerLog['err'][] = $e->getMessage();
