@@ -43,13 +43,14 @@ trait FactoryTrait
 
     protected static function getFullyQualifiedNeighborObject($calledClass, $objectName)
     {
+        $error = '';
         $list = explode('\\', $calledClass);
         end($list);
         $list[key($list)] = $objectName;
         $fullyQualified = implode('\\', $list);
 
         if (!class_exists($fullyQualified)) {
-            $error = $fullyQualified;
+            $error .= $fullyQualified;
             $fullyQualified .= '\\'.$objectName;
         }
 
