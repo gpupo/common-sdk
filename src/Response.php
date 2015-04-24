@@ -14,6 +14,10 @@ namespace Gpupo\CommonSdk;
 use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Exception\RequestException;
 
+/**
+ * @method getHttpStatusCode()
+ * @method getResponseRaw()
+ */
 class Response extends Collection
 {
     use Traits\LoggerTrait;
