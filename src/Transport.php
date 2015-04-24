@@ -143,7 +143,7 @@ class Transport extends Collection
     public function register()
     {
         $encode = function ($data) {
-            return json_encode($data, JSON_PRETTY_PRINT) . "\n\n";
+            return json_encode($data, JSON_PRETTY_PRINT)."\n\n";
         };
 
         if (!empty($this->registerPath)) {

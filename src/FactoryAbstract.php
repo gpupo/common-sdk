@@ -28,6 +28,9 @@ abstract class FactoryAbstract
 
     abstract public function getNamespace();
 
+    /**
+     * @return array
+     */
     abstract protected function getSchema($namespace = null);
 
     public function __construct(array $config = [], LoggerInterface $logger = null)
@@ -54,10 +57,16 @@ abstract class FactoryAbstract
         return $this->resolvSchema($this->getSchema($this->getNamespace()), $key);
     }
 
+    /**
+     * Encontra as configurações para criação de objeto, implementadas (array) em getSchema();.
+     */
     protected function resolvSchema(array $list, $key)
     {
+        $key[0] = strtolower($key[0]);
+
         if (!array_key_exists($key, $list)) {
-            throw new \BadMethodCallException('Faltando Factory Schema');
+            throw new \BadMethodCallException('Faltando Factory ['.$key
+                .'] no Schema ['.implode(' ', array_keys($list)).']');
         }
 
         return $list[$key];
