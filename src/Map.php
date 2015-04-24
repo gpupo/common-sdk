@@ -13,6 +13,10 @@ namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
 
+/**
+ * @method string getMethod()
+ * @method array getParameters()
+ */
 class Map extends Collection
 {
     public function __construct(array $elements = array(), array $parameters = null)
