@@ -18,6 +18,8 @@ use Gpupo\Common\Entity\Collection;
  * @method setBody(string $string)
  * @method setUrl(string $string)
  * @method setHeader(string $string)
+ * @method getBody()
+ * @method getHeader() 
  */
 class Request extends Collection
 {
