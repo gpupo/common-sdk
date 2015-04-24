@@ -37,10 +37,15 @@ class Map extends Collection
         return $route;
     }
 
+    protected function isEmpty($value)
+    {
+        return (empty($value) && $value !== 0 && $value !== '0');
+    }
+
     protected function populatePlaceholders($route, $parameters)
     {
         foreach ($parameters as $key => $value) {
-            if (empty($value) && $value !== 0 && $value !== '0') {
+            if ($this->isEmpty($value)) {
                 $route = str_replace('&'.$key.'={'.$key.'}', '', $route);
             } else {
                 $route = str_replace('{'.$key.'}', $value, $route);
