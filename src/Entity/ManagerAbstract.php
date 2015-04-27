@@ -82,7 +82,9 @@ abstract class ManagerAbstract
 
     public function update(EntityInterface $entity, EntityInterface $existent)
     {
-        throw new ManagerException('Update must be implemented!');
+        if ($this->attributesDiff($existent, $entity)) {
+            throw new ManagerException('Update must be implemented!');
+        }
     }
 
     public function findById($itemId)
