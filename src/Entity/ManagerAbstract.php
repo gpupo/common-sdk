@@ -80,12 +80,17 @@ abstract class ManagerAbstract
         return $this->execute($this->factoryMap($route), $entity->toJson($route));
     }
 
-    public function update(EntityInterface $entity, EntityInterface $existent)
-    {
-        if ($this->attributesDiff($existent, $entity)) {
-            throw new ManagerException('Update must be implemented!');
-        }
-    }
+    /**
+     * Manager deve implementar sua forma de atualização
+     *
+     * <code>
+     * //..
+     *   if ($this->attributesDiff($existent, $entity)) {
+     *   // faça um tipo de ação usando self::execute()
+     *   }
+     * </code>
+     */
+    abstract public function update(EntityInterface $entity, EntityInterface $existent);
 
     public function findById($itemId)
     {

@@ -13,4 +13,8 @@ namespace Gpupo\CommonSdk\Entity;
 
 final class Manager extends ManagerAbstract implements ManagerInterface
 {
+    public function update(EntityInterface $entity, EntityInterface $existent)
+    {
+        return $this->attributesDiff($existent, $entity);
+    }
 }
