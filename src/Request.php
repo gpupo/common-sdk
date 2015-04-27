@@ -17,7 +17,7 @@ use Gpupo\Common\Entity\Collection;
  * @method setMethod(string $string)
  * @method setBody(string $string)
  * @method setUrl(string $string)
- * @method setHeader(string $string)
+ * @method setHeader(array $string)
  * @method getBody()
  * @method getHeader()
  */
