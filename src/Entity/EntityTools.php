@@ -64,7 +64,7 @@ class EntityTools
 
     public static function validate($key, $current, $value, $required = false)
     {
-        if (self::isEmptyValue($current)) {
+        if (self::isEmptyValue($current, $required)) {
             return true;
         }
 
