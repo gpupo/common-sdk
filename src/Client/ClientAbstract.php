@@ -25,6 +25,9 @@ abstract class ClientAbstract extends BoardAbstract
         return 'Content-Type: application/json;charset=UTF-8';
     }
 
+    /**
+     * @return Array
+     */
     protected function renderHeader()
     {
         $list = [];
