@@ -14,7 +14,7 @@ namespace Gpupo\CommonSdk\Traits;
 trait ExceptionTrait
 {
     abstract public function getMessage();
-    
+
     abstract public function getCode();
 
     public function toLog()

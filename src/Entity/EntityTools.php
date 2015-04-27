@@ -50,34 +50,50 @@ class EntityTools
         }
     }
 
+    protected static function returnInvalid($key, $current, $value)
+    {
+        throw new InvalidArgumentException($key
+            .' should have value of type '.$value
+            .' valid.['.$current.'] received.');
+    }
+
+    protected static function isEmptyValue($value, $required = false)
+    {
+        return ($required) ? false : empty($value);
+    }
+
     public static function validate($key, $current, $value, $required = false)
     {
-        $empty = function ($value) use ($required) {
-            return ($required) ? false : empty($value);
-        };
-
-        $throw = function () use ($key, $current, $value) {
-            throw new InvalidArgumentException($key
-                .' should have value of type '.$value
-                .' valid.['.$current.'] received.');
-        };
-
-        if ($empty($current)) {
+        if (self::isEmptyValue($current)) {
             return true;
         }
 
-        if ($value === 'integer' && intval($current) !== $current) {
-            $throw();
-        }
-
-        if ($value === 'number' && !is_numeric($current)) {
-            $throw();
-        }
-
-        if ($value === 'string' && strlen($current) < 1) {
-            $throw();
+        foreach (['Integer', 'Number', 'String'] as $type) {
+            $testMethod = 'test'.$type;
+            self::$testMethod($key, $current, $value);
         }
 
         return true;
+    }
+
+    protected static function testInteger($key, $current, $value)
+    {
+        if ($value === 'integer' && intval($current) !== $current) {
+            self::returnInvalid($key, $current, $value);
+        }
+    }
+
+    protected static function testNumber($key, $current, $value)
+    {
+        if ($value === 'number' && !is_numeric($current)) {
+            self::returnInvalid($key, $current, $value);
+        }
+    }
+
+    protected static function testString($key, $current, $value)
+    {
+        if ($value === 'string' && strlen($current) < 1) {
+            self::returnInvalid($key, $current, $value);
+        }
     }
 }
