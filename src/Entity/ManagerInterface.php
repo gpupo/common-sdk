@@ -13,4 +13,5 @@ namespace Gpupo\CommonSdk\Entity;
 
 interface ManagerInterface
 {
+    public function update(EntityInterface $entity, EntityInterface $existent);
 }
