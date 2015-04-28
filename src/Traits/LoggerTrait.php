@@ -38,7 +38,7 @@ trait LoggerTrait
             return $this->setLogger($logger);
         }
     }
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         if ($this->getLogger()) {
             return $this->getLogger()->log($level, $message, $context);
