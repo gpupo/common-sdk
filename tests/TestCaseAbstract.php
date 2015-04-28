@@ -11,6 +11,7 @@
 
 namespace Gpupo\Tests\CommonSdk;
 
+use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -105,5 +106,15 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
         }
 
         throw new \InvalidArgumentException('File '.$path.' Not Exist');
+    }
+
+    protected function factoryResponseFromFixture($file, $httpStatusCode = 200)
+    {
+        $response = new Response([
+            'httpStatusCode'    => $httpStatusCode,
+            'responseRaw'       => $this->getResourceJson($file),
+        ]);
+
+        return $response;
     }
 }
