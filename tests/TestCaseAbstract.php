@@ -112,7 +112,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
     {
         $response = new Response([
             'httpStatusCode'    => $httpStatusCode,
-            'responseRaw'       => $this->getResourceJson($file),
+            'responseRaw'       => $this->getResourceContent($file),
         ]);
 
         return $response;

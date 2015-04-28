@@ -16,8 +16,9 @@ use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
+use Gpupo\CommonSdk\Client\ClientManagerAbstract;
 
-abstract class ManagerAbstract
+abstract class ManagerAbstract extends ClientManagerAbstract
 {
     use FactoryTrait;
     use EntityDiffTrait;
@@ -66,6 +67,7 @@ abstract class ManagerAbstract
 
             return $response->getData();
         } catch (ManagerException $exception) {
+
             return false;
         }
     }
