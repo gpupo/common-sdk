@@ -19,7 +19,7 @@ use Gpupo\Common\Entity\Collection;
  */
 class Map extends Collection
 {
-    public function __construct(array $elements = array(), array $parameters = null)
+    public function __construct(array $elements = [], array $parameters = null)
     {
         $data = [
             'method'        => $elements[0],

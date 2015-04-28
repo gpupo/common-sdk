@@ -83,7 +83,7 @@ class Response extends Collection
         511 => 'Network Authentication Required',
     ];
 
-    public function __construct(array $elements = array())
+    public function __construct(array $elements = [])
     {
         parent::__construct($elements);
     }

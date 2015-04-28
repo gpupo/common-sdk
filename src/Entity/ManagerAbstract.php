@@ -81,7 +81,7 @@ abstract class ManagerAbstract
     }
 
     /**
-     * Manager deve implementar sua forma de atualização
+     * Manager deve implementar sua forma de atualização.
      *
      * <code>
      * //..

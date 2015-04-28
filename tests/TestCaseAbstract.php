@@ -21,7 +21,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     public function assertHttpStatusCodeSuccess($code, $context = null)
     {
-        $this->assertContains($code, array(200, 204), $context);
+        $this->assertContains($code, [200, 204], $context);
     }
 
     public function getLogger()
