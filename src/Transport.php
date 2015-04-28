@@ -137,7 +137,7 @@ class Transport extends Collection
             return $filename;
         }
 
-        throw new Exception\RuntimeException('Impossivel registrar em '.$path);
+        throw new Exception\RuntimeException('Impossivel registrar em '.$this->registerPath);
     }
 
     protected function registerEncode($title, $data)

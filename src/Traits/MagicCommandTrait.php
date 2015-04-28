@@ -15,6 +15,7 @@ namespace Gpupo\CommonSdk\Traits;
  * Rápida implementação de métodos mágicos.
  *
  * Exemplo de uso :
+ *
  * <code>
  *
  *    use MagicCommandTrait;
