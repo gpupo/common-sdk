@@ -111,11 +111,11 @@ abstract class ClientManagerAbstract
      * que necessitam nova tentativa de execução.
      *
      * @param Exception $exception Exceção recebida no processo de execução do Request
-     * @param int       $i         Numero da iteração para a mesma execução
+     * @param int       $attempt   Numero da iteração para a mesma execução
      */
-    protected function retry(\Exception $exception, $i)
+    protected function retry(\Exception $exception, $attempt)
     {
-        if ($i === 1 && $exception->getCode() >= 500) {
+        if ($attempt === 1 && $exception->getCode() >= 500) {
             return true;
         }
 
@@ -124,35 +124,38 @@ abstract class ClientManagerAbstract
 
     protected function perform(Map $map, $body = null)
     {
-        $logPrefix = 'ClientManager:Perform:';
         $dryRun = $this->getDryRun();
 
         if (empty($dryRun)) {
-            $this->log('debug', $logPrefix.'Real');
-
-            return $this->performReal($map, $body);
+            return $this->performReturn($this->performReal($map, $body), 'Real', $map);
         } elseif ($dryRun instanceof Response) {
-            $this->log('debug', $logPrefix.'Mockup');
-
-            return $dryRun;
+            return $this->performReturn($dryRun, 'Mockup', $map);
         }
 
-        $this->log('debug', $logPrefix.'Bypass');
+        return $this->performReturn(true, 'Bypass', $map);
+    }
 
-        return true;
+    protected function performReturn($return, $mode, Map $map)
+    {
+        $this->log('debug', 'ClientManager:Perform', [
+            'mode'  => $mode,
+            'map'   => $map->toLog(),
+        ]);
+
+        return $return;
     }
 
     protected function performReal(Map $map, $body = null)
     {
         $methodName = strtolower($map->getMethod());
 
-        $i = 0;
-        while ($i <= 5) {
-            $i++;
+        $attempt = 0;
+        while ($attempt <= 5) {
+            $attempt++;
             try {
                 return $this->getClient()->$methodName($map->getResource(), $body);
             } catch (\Exception $exception) {
-                if (!$this->retry($exception, $i)) {
+                if (!$this->retry($exception, $attempt)) {
                     throw $this->exceptionHandler($exception, $map->getMethod(),
                         $map->getResource());
                 }
