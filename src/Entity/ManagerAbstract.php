@@ -62,7 +62,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
     public function findById($itemId)
     {
         try {
-            $response =  $this->perform($this->factoryMap('findById',
+            $response = $this->perform($this->factoryMap('findById',
             ['itemId' => $itemId]));
 
             return $response->getData();
@@ -73,7 +73,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
 
     public function fetch($offset = 0, $limit = 50, array $parameters = [])
     {
-        $response =  $this->perform($this->factoryMap('fetch',
+        $response = $this->perform($this->factoryMap('fetch',
             array_merge($parameters, ['offset' => $offset, 'limit' => $limit])));
 
         return $response->getData();
