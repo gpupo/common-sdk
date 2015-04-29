@@ -33,6 +33,9 @@ trait FactoryTrait
         }
     }
 
+    /**
+     * @param string $objectName
+     */
     public static function factory($objectName, $data = null)
     {
         $object = self::getFullyQualifiedNeighborObject(get_called_class(),
@@ -41,6 +44,9 @@ trait FactoryTrait
         return new $object($data);
     }
 
+    /**
+     * @param string $calledClass
+     */
     protected static function getFullyQualifiedNeighborObject($calledClass, $objectName)
     {
         $error = '';
