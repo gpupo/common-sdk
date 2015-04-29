@@ -40,7 +40,7 @@ class Transport extends Collection
     {
         $this->curl = curl_init();
 
-        $sslVersion =  $options->get('sslVersion', 'SecureTransport');
+        $sslVersion = $options->get('sslVersion', 'SecureTransport');
         $this->setOption(CURLOPT_SSLVERSION, $sslVersion);
         $this->setOption(CURLOPT_RETURNTRANSFER, true);
         $this->setOption(CURLOPT_VERBOSE, $options->get('verbose'));
@@ -140,6 +140,9 @@ class Transport extends Collection
         throw new Exception\RuntimeException('Impossivel registrar em '.$this->registerPath);
     }
 
+    /**
+     * @param string $title
+     */
     protected function registerEncode($title, $data)
     {
         return '## '.$title.':'."\n"
