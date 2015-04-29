@@ -99,7 +99,7 @@ abstract class ClientManagerAbstract
 
     protected function exceptionHandler(\Exception $exception, $method, $resource)
     {
-        $text = $method.' on '.$resource.' FAIL:' .$exception->getMessage();
+        $text = $method.' on '.$resource.' FAIL:'.$exception->getMessage();
 
         $this->log('critical', $text, ['code' => $exception->getCode()]);
 
@@ -124,19 +124,20 @@ abstract class ClientManagerAbstract
 
     protected function perform(Map $map, $body = null)
     {
+        $logPrefix = 'ClientManager:Perform:';
         $dryRun = $this->getDryRun();
 
         if (empty($dryRun)) {
-            $this->log('debug', 'Perform:Real');
+            $this->log('debug', $logPrefix.'Real');
 
             return $this->performReal($map, $body);
         } elseif ($dryRun instanceof Response) {
-            $this->log('debug', 'Perform:Mockup');
+            $this->log('debug', $logPrefix.'Mockup');
 
             return $dryRun;
         }
 
-        $this->log('debug', 'Perform:bypass');
+        $this->log('debug', $logPrefix.'Bypass');
 
         return true;
     }
