@@ -58,4 +58,11 @@ class Map extends Collection
 
         return $route;
     }
+
+    public function toLog()
+    {
+        return array_merge($this->toArray(), [
+            'endpoint'  => $this->getResource(),
+        ]);
+    }
 }
