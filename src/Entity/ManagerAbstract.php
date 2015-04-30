@@ -67,6 +67,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
 
             return $response->getData();
         } catch (ManagerException $exception) {
+
             return false;
         }
     }
@@ -105,7 +106,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
         return $this->factoryCollection($list);
     }
 
-    protected function factoryEntity(array $data = null)
+    protected function factoryEntity($data = null)
     {
         return $this->factoryNeighborObject($this->getEntityName(), $data);
     }
