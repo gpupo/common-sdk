@@ -72,7 +72,7 @@ abstract class EntityAbstract extends CollectionAbstract
     }
 
     /**
-     * Permite normalização de $data
+     * Permite normalização de $data.
      */
     protected function beforeConstruct(array $data = null)
     {
@@ -80,14 +80,13 @@ abstract class EntityAbstract extends CollectionAbstract
     }
 
     /**
-     * Permite ação após construção
+     * Permite ação após construção.
      */
     protected function setUp()
     {
     }
 
     /**
-     *
      * @param array|EntityInterface $data
      */
     public function __construct($data = null)
