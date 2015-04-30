@@ -71,20 +71,39 @@ abstract class EntityAbstract extends CollectionAbstract
         return $this;
     }
 
+    /**
+     * Permite normalização de $data
+     */
+    protected function beforeConstruct(array $data = null)
+    {
+        return $data;
+    }
+
+    /**
+     * Permite ação após construção
+     */
     protected function setUp()
     {
     }
 
-    public function __construct(array $data = null)
+    /**
+     *
+     * @param array|EntityInterface $data
+     */
+    public function __construct($data = null)
     {
         if (!$this instanceof EntityInterface) {
             throw new \Exception('EntityInterface deve ser implementada');
         }
 
+        if ($data instanceof EntityInterface) {
+            $data = $data->toArray();
+        }
+
         $schema = $this->getSchema();
 
         if (!empty($schema)) {
-            parent::__construct($this->initSchema($this->getSchema(), $data));
+            parent::__construct($this->initSchema($this->getSchema(), $this->beforeConstruct($data)));
         }
 
         $this->setUp();
