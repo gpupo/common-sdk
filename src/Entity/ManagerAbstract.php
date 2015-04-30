@@ -67,17 +67,37 @@ abstract class ManagerAbstract extends ClientManagerAbstract
 
             return $response->getData();
         } catch (ManagerException $exception) {
-
             return false;
         }
     }
 
+    protected function fetchDefaultParameters()
+    {
+        return [];
+    }
+
+    /**
+     * @return Gpupo\Common\Entity\CollectionAbstract|null
+     */
+    protected function fetchPrepare($data)
+    {
+        if (empty($data)) {
+            return;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return Gpupo\Common\Entity\CollectionAbstract|null
+     */
     public function fetch($offset = 0, $limit = 50, array $parameters = [])
     {
-        $response = $this->perform($this->factoryMap('fetch',
-            array_merge($parameters, ['offset' => $offset, 'limit' => $limit])));
+        $pars = array_merge($this->fetchDefaultParameters(), $parameters, ['offset' => $offset, 'limit' => $limit]);
 
-        return $response->getData();
+        $response = $this->perform($this->factoryMap('fetch', $pars));
+
+        return $this->fetchPrepare($response->getData());
     }
 
     protected function factoryCollection(array $list)
@@ -94,7 +114,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
         return $this->entity;
     }
 
-    protected function factoryEntityCollection(array $data)
+    protected function factoryEntityCollection($data)
     {
         $list = [];
         foreach ($data as $item) {
