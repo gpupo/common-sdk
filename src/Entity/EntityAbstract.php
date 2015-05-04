@@ -74,7 +74,7 @@ abstract class EntityAbstract extends CollectionAbstract
     /**
      * Permite normalização de $data.
      */
-    protected function beforeConstruct(array $data = null)
+    protected function beforeConstruct($data = null)
     {
         return $data;
     }
