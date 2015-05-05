@@ -141,7 +141,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
     {
         global $argv;
 
-        if (count($argv) > 1 && $argv[1] !== '--stderr') {
+        if (count($argv) <= 1 || $argv[1] !== '--stderr') {
             return false;
         }
 
