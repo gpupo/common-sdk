@@ -11,6 +11,7 @@
 
 namespace Gpupo\Tests\CommonSdk;
 
+use Gpupo\CommonSdk\Entity\EntityInterface;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Monolog\Handler\StreamHandler;
@@ -116,5 +117,34 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
         ]);
 
         return $response;
+    }
+
+    /**
+     * Exibe a documentação automática para Entidades.
+     *
+     * Contém os métodos mágicos e é exibida quando o segundo parâmetro enviados ao
+     * phpunit é --stderr desde que o método setUpBeforeClass() do teste seja
+     * implementado conforme exemplo a seguir
+     *
+     * <code>
+     *     //...
+     *     public static function setUpBeforeClass()
+     *     {
+     *          self::displayClassDocumentation(new Product());
+     *     }
+     *     //...
+     * </code>
+     *
+     * @param EntityInterface $entity [description]
+     */
+    public static function displayClassDocumentation(EntityInterface $entity)
+    {
+        global $argv;
+
+        if (count($argv) > 1 && $argv[1] !== '--stderr') {
+            return false;
+        }
+
+        echo "\n/**\n * ".implode("\n ", $entity->magicMethodsDocumentation())."\n */\n";
     }
 }
