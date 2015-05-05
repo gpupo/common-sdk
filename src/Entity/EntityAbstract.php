@@ -13,11 +13,13 @@ namespace Gpupo\CommonSdk\Entity;
 
 use Gpupo\Common\Entity\Collection;
 use Gpupo\Common\Entity\CollectionAbstract;
+use Gpupo\CommonSdk\Traits\DocumentationTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 
 abstract class EntityAbstract extends CollectionAbstract
 {
     use FactoryTrait;
+    use DocumentationTrait;
 
     protected $requiredSchema = [];
     protected $optionalSchema = [];
@@ -190,27 +192,5 @@ abstract class EntityAbstract extends CollectionAbstract
     public function getPrevious()
     {
         return $this->previous;
-    }
-
-    public function magicMethodsDocumentation()
-    {
-        $list = [
-
-            'Magic methods on '.get_called_class().":\n *",
-        ];
-
-        $returnType = [
-            'number'    => 'mixed',
-            'object'    => '\Gpupo\CommonSdk\Entity\EntityInterface',
-        ];
-
-        foreach ($this->getSchema() as $key => $value) {
-            $name = ucfirst($key);
-            $return  = array_key_exists($value, $returnType) ? $returnType[$value] : $value;
-            $list[] = '* @method '.$return.' get'.$name.'();';
-            $list[] = '* @method set'.$name.'('.$return.');';
-        }
-
-        return $list;
     }
 }
