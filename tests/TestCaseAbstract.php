@@ -11,7 +11,7 @@
 
 namespace Gpupo\Tests\CommonSdk;
 
-use Gpupo\CommonSdk\Entity\EntityInterface;
+use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Monolog\Handler\StreamHandler;
@@ -137,7 +137,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
      *
      * @param EntityInterface $entity [description]
      */
-    public static function displayClassDocumentation(EntityInterface $entity)
+    public static function displayClassDocumentation(EntityAbstract $entity)
     {
         global $argv;
 
@@ -145,6 +145,6 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return false;
         }
 
-        echo "\n/**\n * ".implode("\n ", $entity->magicMethodsDocumentation())."\n */\n";
+        echo "\n/**\n * ".implode("\n ", $entity->documentationClassDocblock())."\n */\n";
     }
 }

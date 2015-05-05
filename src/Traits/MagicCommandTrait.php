@@ -33,6 +33,11 @@ namespace Gpupo\CommonSdk\Traits;
  */
 trait MagicCommandTrait
 {
+    public function getSchema()
+    {
+        return [];
+    }
+
     protected $magicCommandContainer = [];
 
     /**
