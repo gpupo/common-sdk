@@ -116,7 +116,7 @@ class CurlDriver extends DriverAbstract
         ];
 
         $this->close();
-        
+
         return $data;
     }
 

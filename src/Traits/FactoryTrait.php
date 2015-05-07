@@ -49,7 +49,26 @@ trait FactoryTrait
      */
     protected static function getFullyQualifiedNeighborObject($calledClass, $objectName)
     {
+        $errors = '';
+        $entityRepository = [$calledClass];
+        $entityRepository[] = get_parent_class($calledClass);
+
+        foreach ($entityRepository as $class) {
+            $data = self::resolvNeighborObject($class, $objectName);
+            if (!empty($data['found'])) {
+                return $data['found'];
+            }
+
+            $errors .= $data['error'];
+        }
+
+        throw new \Exception('Class '.$errors.' not found');
+    }
+
+    protected static function resolvNeighborObject($calledClass, $objectName)
+    {
         $error = '';
+        $found = false;
         $list = explode('\\', $calledClass);
         end($list);
         $list[key($list)] = $objectName;
@@ -62,10 +81,10 @@ trait FactoryTrait
 
         if (!class_exists($fullyQualified)) {
             $error .= ' or '.$fullyQualified;
-
-            throw new \Exception('Class '.$error.' not found');
+        } else {
+            $found = $fullyQualified;
         }
 
-        return $fullyQualified;
+        return ['error' => $error, 'found' => $found];
     }
 }
