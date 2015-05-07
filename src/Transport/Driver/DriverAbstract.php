@@ -12,7 +12,7 @@
 namespace Gpupo\CommonSdk\Transport\Driver;
 
 use Gpupo\Common\Entity\Collection;
-
+use Gpupo\CommonSdk\Exception\RuntimeException;
 /**
  * @method setMethod(string $string)
  * @method string getBody()
@@ -53,7 +53,7 @@ abstract class DriverAbstract extends Collection
             return $filename;
         }
 
-        throw new Exception\RuntimeException('Impossivel registrar em '.$this->registerPath);
+        throw new RuntimeException('Impossivel registrar em '.$this->registerPath);
     }
 
     /**
