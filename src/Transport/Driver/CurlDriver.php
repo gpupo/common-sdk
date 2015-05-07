@@ -115,13 +115,17 @@ class CurlDriver extends DriverAbstract
             'httpStatusCode'    => $this->getInfo(CURLINFO_HTTP_CODE),
         ];
 
-        $this->lastTransfer = new Collection(curl_getinfo($this->curl));
+        $this->close();
+        
+        return $data;
+    }
 
+    protected function close()
+    {
+        $this->lastTransfer = new Collection(curl_getinfo($this->curl));
         $this->register();
 
-        curl_close($this->curl);
-
-        return $data;
+        return curl_close($this->curl);
     }
 
     protected function registerSaveToFile()
