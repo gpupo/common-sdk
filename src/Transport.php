@@ -15,5 +15,4 @@ use Gpupo\CommonSdk\Transport\Driver\CurlDriver;
 
 class Transport extends CurlDriver
 {
-
 }

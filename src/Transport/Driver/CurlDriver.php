@@ -11,18 +11,26 @@
 
 namespace Gpupo\CommonSdk\Transport\Driver;
 
+use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Exception\RuntimeException;
 
-class CurlTransport extends DriverAbstract
+class CurlDriver extends DriverAbstract
 {
     protected $curl;
+
+    protected $lastTransfer;
+
+    public function getLastTransfer()
+    {
+        return $this->lastTransfer;
+    }
 
     public function setOption($option, $value)
     {
         return curl_setopt($this->curl, $option, $value);
     }
 
-    public function getInfo($option)
+    public function getInfo($option = 0)
     {
         return curl_getinfo($this->curl, $option);
     }
@@ -37,6 +45,7 @@ class CurlTransport extends DriverAbstract
         $sslVersion = $options->get('sslVersion', 'SecureTransport');
         $this->setOption(CURLOPT_SSLVERSION, $sslVersion);
         $this->setOption(CURLOPT_RETURNTRANSFER, true);
+        $this->setOption(CURLINFO_HEADER_OUT, true);
         $this->setOption(CURLOPT_VERBOSE, $options->get('verbose'));
         $this->setOption(CURLOPT_SSL_VERIFYPEER, $options->get('sslVerifyPeer', true));
 
@@ -106,6 +115,8 @@ class CurlTransport extends DriverAbstract
             'httpStatusCode'    => $this->getInfo(CURLINFO_HTTP_CODE),
         ];
 
+        $this->lastTransfer = new Collection(curl_getinfo($this->curl));
+
         $this->register();
 
         curl_close($this->curl);
@@ -116,7 +127,7 @@ class CurlTransport extends DriverAbstract
     protected function registerSaveToFile()
     {
         $filename = $this->getRegisterFilename();
-        $data = $this->registerEncode('cUrl', curl_getinfo($this->curl));
+        $data = $this->registerEncode('cUrl', $this->getLastTransfer());
 
         $body = $this->getBody();
         if (!empty($body)) {
