@@ -1,6 +1,7 @@
 [![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gpupo/common-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gpupo/common-sdk/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/97bf5441-1b04-4f1d-a946-c547c61a90f0/mini.png)](https://insight.sensiolabs.com/projects/97bf5441-1b04-4f1d-a946-c547c61a90f0)
+[![Code Climate](https://codeclimate.com/repos/554b625fe30ba01e88003d2f/badges/3e5baa4786d35478823a/gpa.svg)](https://codeclimate.com/repos/554b625fe30ba01e88003d2f/feed)
 
 Componente de uso comum entre SDKs para integração a partir de aplicações PHP com as APIs de Marketplaces
 

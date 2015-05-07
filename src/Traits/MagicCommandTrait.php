@@ -38,19 +38,19 @@ trait MagicCommandTrait
         return [];
     }
 
-    protected $magicCommandContainer = [];
+    protected $magicCommands = [];
 
     /**
      *  @return array
      */
     protected function magicCommandCallList()
     {
-        return $this->magicCommandContainer;
+        return $this->magicCommands;
     }
 
     protected function magicCommandCallAdd($name)
     {
-        $this->magicCommandContainer[] = $name;
+        $this->magicCommands[] = $name;
     }
 
     /**
@@ -77,11 +77,11 @@ trait MagicCommandTrait
 
     protected function magicCommandCall($mode, $method, $args)
     {
-        $n = strlen($mode);
-        $command = substr($method, 0, $n);
+        $len = strlen($mode);
+        $command = substr($method, 0, $len);
         if ($command === $mode) {
             $finalMethod = 'magic'.ucfirst($mode);
-            $suplement = substr($method, $n);
+            $suplement = substr($method, $len);
 
             return $this->$finalMethod($suplement, current($args));
         }
