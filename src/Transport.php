@@ -36,6 +36,9 @@ class Transport extends Collection
         return curl_getinfo($this->curl, $option);
     }
 
+    /**
+     * @see http://php.net/manual/pt_BR/function.curl-setopt.php
+     */
     public function __construct(Collection $options)
     {
         $this->curl = curl_init();
@@ -44,10 +47,7 @@ class Transport extends Collection
         $this->setOption(CURLOPT_SSLVERSION, $sslVersion);
         $this->setOption(CURLOPT_RETURNTRANSFER, true);
         $this->setOption(CURLOPT_VERBOSE, $options->get('verbose'));
-
-        foreach($options->get('transportOptions', []) as $key => $value) {
-            $this->setOption($key, $value);
-        }
+        $this->setOption(CURLOPT_SSL_VERIFYPEER, $options->get('sslVerifyPeer', true));
 
         parent::__construct([]);
     }
