@@ -1,6 +1,6 @@
 [![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gpupo/common-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gpupo/common-sdk/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/97bf5441-1b04-4f1d-a946-c547c61a90f0/small.png)](https://insight.sensiolabs.com/projects/97bf5441-1b04-4f1d-a946-c547c61a90f0)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/97bf5441-1b04-4f1d-a946-c547c61a90f0/mini.png)](https://insight.sensiolabs.com/projects/97bf5441-1b04-4f1d-a946-c547c61a90f0)
 
 Componente de uso comum entre SDKs para integração a partir de aplicações PHP com as APIs de Marketplaces
 
@@ -27,7 +27,7 @@ MIT, see LICENSE.
 ## Coisas para fazer:
 
 - [ ] Objeto ``Transport`` deve adotar padrão Driver, suportando outras bibliotecas além de ``cUrl``
-- [ ] Testes devem suportar Mockups
+- [x] Testes devem suportar Mockups
 - [ ] ``Client\Oauth2`` deve oferecer funcionalidades para possibilitar a aquisição e renovação de tokens em processo antes de ``Request->exec()``;
 - [ ] Melhor a documentação dos objetos - utilizar [lista apontada pelo Scrutinizer](https://scrutinizer-ci.com/g/gpupo/common-sdk/issues/master)
 

@@ -45,6 +45,10 @@ class Transport extends Collection
         $this->setOption(CURLOPT_RETURNTRANSFER, true);
         $this->setOption(CURLOPT_VERBOSE, $options->get('verbose'));
 
+        foreach($options->get('transportOptions', []) as $key => $value) {
+            $this->setOption($key, $value);
+        }
+
         parent::__construct([]);
     }
 

@@ -27,8 +27,8 @@ trait DocumentationTrait
         foreach ($this->getSchema() as $key => $value) {
             $name = ucfirst($key);
             $return  = array_key_exists($value, $returnType) ? $returnType[$value] : $value;
-            $list[] = '* @method '.$return.' get'.$name.'();';
-            $list[] = '* @method set'.$name.'('.$return.');';
+            $list[] = '* @method '.$return.' get'.$name.'()';
+            $list[] = '* @method set'.$name.'('.$return.' $'.$key.')';
         }
 
         return $list;
