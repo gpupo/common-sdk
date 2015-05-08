@@ -19,18 +19,28 @@ trait DocumentationTrait
     {
         $list = ['Magic methods on '.get_called_class().":\n *"];
 
-        $returnType = [
-            'number'    => 'mixed',
-            'object'    => '\Gpupo\CommonSdk\Entity\EntityInterface',
-        ];
-
         foreach ($this->getSchema() as $key => $value) {
             $name = ucfirst($key);
-            $return  = array_key_exists($value, $returnType) ? $returnType[$value] : $value;
+            $return  = $this->documentationResolvReturn($name, $value);
             $list[] = '* @method '.$return.' get'.$name.'()';
             $list[] = '* @method set'.$name.'('.$return.' $'.$key.')';
         }
 
         return $list;
+    }
+
+    protected function documentationResolvReturn($name, $returnType)
+    {
+        if ($returnType === 'number') {
+            return 'mixed';
+        }
+
+        if ($returnType === 'object') {
+            $method = 'get'.$name;
+            $className = get_class($this->$method());
+            return $className;
+        }
+
+        return $returnType;
     }
 }
