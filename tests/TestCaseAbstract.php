@@ -84,6 +84,14 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
         return empty($value) ? false : true;
     }
 
+    /**
+     * Caminho para o diretório de recursos
+     */
+    protected function getResourcesPath()
+    {
+        return getcwd() .'/Resources/';
+    }
+
     protected function getResourceContent($file)
     {
         return file_get_contents($this->getResourceFilePath($file));
@@ -96,7 +104,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     protected function getResourceFilePath($file, $create = false)
     {
-        $path =  getcwd().'/Resources/'.$file;
+        $path =  $this->getResourcesPath().$file;
 
         if (file_exists($path)) {
             return $path;
