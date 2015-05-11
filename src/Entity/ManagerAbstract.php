@@ -77,7 +77,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
     }
 
     /**
-     * @return Gpupo\Common\Entity\CollectionAbstract|null
+     * @return Gpupo\Common\Entity\Collection|null
      */
     protected function fetchPrepare($data)
     {
@@ -89,7 +89,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
     }
 
     /**
-     * @return Gpupo\Common\Entity\CollectionAbstract|null
+     * @return Gpupo\Common\Entity\Collection|null
      */
     public function fetch($offset = 0, $limit = 50, array $parameters = [])
     {

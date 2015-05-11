@@ -38,6 +38,7 @@ trait DocumentationTrait
         if ($returnType === 'object') {
             $method = 'get'.$name;
             $className = get_class($this->$method());
+
             return $className;
         }
 
