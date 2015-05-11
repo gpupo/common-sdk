@@ -32,7 +32,7 @@ trait DocumentationTrait
     protected function documentationResolvReturn($name, $returnType)
     {
         if ($returnType === 'number') {
-            return 'mixed';
+            return 'float';
         }
 
         if ($returnType === 'object') {
