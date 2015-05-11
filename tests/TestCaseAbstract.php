@@ -85,11 +85,11 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Caminho para o diretório de recursos
+     * Caminho para o diretório de recursos.
      */
     protected function getResourcesPath()
     {
-        return getcwd() .'/Resources/';
+        return getcwd().'/Resources/';
     }
 
     protected function getResourceContent($file)
