@@ -38,11 +38,17 @@ abstract class ClientManagerAbstract
         return $this->client;
     }
 
+    /**
+     * @return Gpupo\CommonSdk\Response|null
+     */
     public function getDryRun()
     {
         return $this->dryRun;
     }
 
+    /**
+     * @return boolean
+     */
     protected function isDryRun()
     {
         return !empty($this->dryRun);
@@ -52,7 +58,7 @@ abstract class ClientManagerAbstract
      * Possibilita o uso de operações de gravação remota sem que estas sejam de
      * fato executadas. Isto é útil para testes.
      *
-     * @param $value Gpupo\CommonSdk\Response|bool
+     * @param $value Gpupo\CommonSdk\Response
      *
      * <code>
      * //Exemplo de uso
@@ -61,9 +67,13 @@ abstract class ClientManagerAbstract
      *
      * </code>
      */
-    public function setDryRun($value = true)
+    public function setDryRun(Response $response = null)
     {
-        $this->dryRun = $value;
+        if (empty($response)) {
+            $response = new Response();
+        }
+
+        $this->dryRun = $response;
 
         return $this;
     }
