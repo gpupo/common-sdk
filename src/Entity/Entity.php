@@ -13,6 +13,8 @@ namespace Gpupo\CommonSdk\Entity;
 
 /**
  * Entidade exemplo, utilizada em tests unitários.
+ *
+ * @codeCoverageIgnore
  */
 final class Entity extends EntityAbstract implements EntityInterface
 {
