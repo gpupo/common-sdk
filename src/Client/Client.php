@@ -11,6 +11,9 @@
 
 namespace Gpupo\CommonSdk\Client;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class Client extends ClientAbstract
 {
     public function getDefaultOptions()

@@ -39,7 +39,7 @@ abstract class ClientManagerAbstract
     }
 
     /**
-     * @return Gpupo\CommonSdk\Response|null
+     * @return Gpupo\CommonSdk\Response|null|true
      */
     public function getDryRun()
     {
@@ -70,7 +70,7 @@ abstract class ClientManagerAbstract
     public function setDryRun(Response $response = null)
     {
         if (empty($response)) {
-            $response = new Response();
+            $response = true;
         }
 
         $this->dryRun = $response;

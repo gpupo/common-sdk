@@ -11,6 +11,9 @@
 
 namespace Gpupo\CommonSdk\Entity;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class Manager extends ManagerAbstract implements ManagerInterface
 {
     public function update(EntityInterface $entity, EntityInterface $existent)
