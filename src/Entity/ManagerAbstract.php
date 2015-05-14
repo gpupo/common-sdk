@@ -17,6 +17,7 @@ use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
+use Gpupo\CommonSdk\Response;
 
 abstract class ManagerAbstract extends ClientManagerAbstract
 {
@@ -38,7 +39,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
 
     public function save(EntityInterface $entity, $route = 'save')
     {
-        $existent = $entity->getPrevious() ?: $this->findById($entity->getId());
+        $existent = $entity->getPrevious();
 
         if ($existent) {
             return $this->update($entity, $existent);
@@ -59,13 +60,17 @@ abstract class ManagerAbstract extends ClientManagerAbstract
      */
     abstract public function update(EntityInterface $entity, EntityInterface $existent);
 
+    protected function processResponse(Response $response)
+    {
+        return $response->getData();
+    }
+
     public function findById($itemId)
     {
         try {
-            $response = $this->perform($this->factoryMap('findById',
-            ['itemId' => $itemId]));
+            $map = $this->factoryMap('findById',['itemId' => $itemId]);
 
-            return $response->getData();
+            return $this->processResponse($this->perform($map));
         } catch (ManagerException $exception) {
             return false;
         }
@@ -97,7 +102,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
 
         $response = $this->perform($this->factoryMap('fetch', $pars));
 
-        return $this->fetchPrepare($response->getData());
+        return $this->fetchPrepare($this->processResponse($response));
     }
 
     protected function factoryCollection(array $list)
