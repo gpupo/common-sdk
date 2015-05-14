@@ -47,6 +47,7 @@ phpunit --testdox | grep -vi php |  sed "s/.*\[/-&/" | sed 's/.*Gpupo.*/&\'$'\n/
 -->
 A lista abaixo é gerada a partir da saída da execução dos testes:
 
+
 ### Client\Client
 
 
@@ -58,13 +59,12 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 
 - [x] Acesso a url de autorizacao
 
-### Entity\EntityTools
+### Entity\Entity
 
 
-- [x] Valida tipos de informacao
-- [x] Normaliza tipos de informacao
-- [x] Aborta com uso de dados invalidos
-- [x] Sucesso com uso de dados validos
+- [x] Acesso a identificador padrao da entidade
+- [x] Acesso ao nome da entidade atual
+- [x] Valida dados obrigatórios
 
 ### Entity\Manager
 
@@ -74,3 +74,18 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 - [x] Encontra diferenca entre entidades diferentes
 - [x] Encontra diferenca entre entidades diferentes a partir de chaves selecionadas
 - [x] Falha ao tentar encontrar diferenca usando propriedade inexistente
+
+### Entity\Schema\Tools
+
+
+- [x] Valida tipos de informacao
+- [x] Normaliza tipos de informacao
+- [x] Aborta com uso de dados invalidos
+- [x] Sucesso com uso de dados validos
+
+### Transport
+
+
+- [x] Recebe objeto options
+- [x] Executa requisição a uma url informada
+- [x] Possui informações sobre a Última requisição

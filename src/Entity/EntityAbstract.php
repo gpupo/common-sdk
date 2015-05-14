@@ -11,6 +11,8 @@
 
 namespace Gpupo\CommonSdk\Entity;
 
+use Gpupo\CommonSdk\Entity\Schema\SchemaAbstract;
+
 abstract class EntityAbstract extends SchemaAbstract
 {
     protected $previous;
@@ -35,6 +37,43 @@ abstract class EntityAbstract extends SchemaAbstract
         }
 
         return $this->get($this->primaryKey);
+    }
+    
+    /**
+     * Permite normalização de $data.
+     */
+    protected function beforeConstruct($data = null)
+    {
+        return $data;
+    }
+
+    /**
+     * Permite ação após construção.
+     */
+    protected function setUp()
+    {
+    }
+
+    /**
+     * @param array|EntityInterface $data
+     */
+    public function __construct($data = null)
+    {
+        if (!$this instanceof EntityInterface) {
+            throw new \Exception('EntityInterface deve ser implementada');
+        }
+
+        if ($data instanceof EntityInterface) {
+            $data = $data->toArray();
+        }
+
+        $schema = $this->getSchema();
+
+        if (!empty($schema)) {
+            parent::__construct($this->initSchema($this->getSchema(), $this->beforeConstruct($data)));
+        }
+
+        $this->setUp();
     }
 
     protected function factoryCollection($data = [])

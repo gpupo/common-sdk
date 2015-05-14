@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Gpupo\CommonSdk\Entity;
+namespace Gpupo\CommonSdk\Entity\Schema;
 
 use Gpupo\Common\Entity\Collection;
 use Gpupo\Common\Entity\CollectionAbstract;
 use Gpupo\CommonSdk\Traits\DocumentationTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Exception\SchemaException;
-use Gpupo\CommonSdk\Entity\EntityTools as Tools;
 
 /**
  * @method log(string $level, string $string, array $context)
@@ -53,43 +52,6 @@ abstract class SchemaAbstract extends CollectionAbstract
         $this->optionalSchema = $array;
 
         return $this;
-    }
-
-    /**
-     * Permite normalização de $data.
-     */
-    protected function beforeConstruct($data = null)
-    {
-        return $data;
-    }
-
-    /**
-     * Permite ação após construção.
-     */
-    protected function setUp()
-    {
-    }
-
-    /**
-     * @param array|EntityInterface $data
-     */
-    public function __construct($data = null)
-    {
-        if (!$this instanceof EntityInterface) {
-            throw new \Exception('EntityInterface deve ser implementada');
-        }
-
-        if ($data instanceof EntityInterface) {
-            $data = $data->toArray();
-        }
-
-        $schema = $this->getSchema();
-
-        if (!empty($schema)) {
-            parent::__construct($this->initSchema($this->getSchema(), $this->beforeConstruct($data)));
-        }
-
-        $this->setUp();
     }
 
     protected function initSchema(array $schema, $data)

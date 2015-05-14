@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Gpupo\CommonSdk\Entity;
+namespace Gpupo\CommonSdk\Entity\Schema;
 
 use Gpupo\CommonSdk\Exception\SchemaException;
 
@@ -21,7 +21,7 @@ if (!function_exists('boolval')) {
     }
 }
 
-class EntityTools
+class Tools
 {
     public static function getInitValue($data, $key, $default = '')
     {
