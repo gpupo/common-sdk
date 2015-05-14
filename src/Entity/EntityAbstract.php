@@ -17,6 +17,9 @@ use Gpupo\CommonSdk\Traits\DocumentationTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Exception\SchemaException;
 
+/**
+ * @method log(string $level, string $string, array $context)
+ */
 abstract class EntityAbstract extends CollectionAbstract
 {
     use FactoryTrait;
@@ -190,7 +193,7 @@ abstract class EntityAbstract extends CollectionAbstract
     protected function validateScrutinizer($key, $current, $value, $required)
     {
         try {
-           EntityTools::validate($key, $current, $value, $this->isRequired($key));
+           EntityTools::validate($key, $current, $value, $required);
         } catch (SchemaException $exception) {
             $exception->addMessagePrefix($this->getCalledEntityName());
 
