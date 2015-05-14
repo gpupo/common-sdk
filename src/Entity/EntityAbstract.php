@@ -174,7 +174,7 @@ abstract class EntityAbstract extends CollectionAbstract
         return true;
     }
 
-    protected function getCalledEntityName($fullyQualified = null)
+    public function getCalledEntityName($fullyQualified = null)
     {
         $calledClass =  get_called_class();
 
