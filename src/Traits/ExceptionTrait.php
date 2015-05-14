@@ -35,6 +35,6 @@ trait ExceptionTrait
 
     public function addMessagePrefix($string)
     {
-        $this->setMessage($string.' ' . $this->getMessage());
+        $this->setMessage($string.' '.$this->getMessage());
     }
 }
