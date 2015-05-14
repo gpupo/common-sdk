@@ -14,12 +14,27 @@ namespace Gpupo\Tests\CommonSdk\Entity;
 use Gpupo\CommonSdk\Entity\Entity;
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
 
+/**
+ * @covers \Gpupo\CommonSdk\Entity\EntityAbstract
+ */
 class EntityTest extends TestCaseAbstract
 {
+    protected function factory()
+    {
+        return new Entity(['foo' => 'hello']);
+    }
+
     public function testAcessoAIdentificadorPadraoDaEntidade()
     {
-        $entity = new Entity(['foo' => 'hello']);
+        $entity = $this->factory();
 
         $this->assertEquals('hello', $entity->getId());
+    }
+
+    public function testAcessoAoNomeDaEntidadeAtual()
+    {
+        $entity = $this->factory();
+        $this->assertEquals('Entity', $entity->getCalledEntityName());
+        $this->assertEquals('Gpupo\CommonSdk\Entity\Entity', $entity->getCalledEntityName(true));
     }
 }
