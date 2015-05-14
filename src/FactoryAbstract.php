@@ -15,6 +15,7 @@ use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
+use Gpupo\CommonSdk\Entity\EntityAbstract;
 
 abstract class FactoryAbstract
 {
@@ -123,6 +124,15 @@ abstract class FactoryAbstract
             return $this->forwardCallForMethod($schema, $data);
         }
 
-        return new $className($data);
+        $entity = new $className($data);
+
+        return $this->decoratorEntity($entity);
+    }
+
+    protected function decoratorEntity(EntityAbstract $entity)
+    {
+        $entity->setLogger($this->getLogger());
+
+        return $entity;
     }
 }
