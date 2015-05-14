@@ -17,6 +17,7 @@ use Gpupo\CommonSdk\Entity\EntityInterface;
 use Gpupo\CommonSdk\Exception\SchemaException;
 use Gpupo\CommonSdk\Traits\DocumentationTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
+use Gpupo\CommonSdk\Traits\LoggerTrait;
 
 /**
  * @method log(string $level, string $string, array $context)
@@ -25,6 +26,7 @@ abstract class SchemaAbstract extends CollectionAbstract
 {
     use FactoryTrait;
     use DocumentationTrait;
+    use LoggerTrait;
 
     protected $requiredSchema = [];
     protected $optionalSchema = [];
