@@ -37,4 +37,13 @@ class EntityTest extends TestCaseAbstract
         $this->assertEquals('Entity', $entity->getCalledEntityName());
         $this->assertEquals('Gpupo\CommonSdk\Entity\Entity', $entity->getCalledEntityName(true));
     }
+
+    /**
+     * @expectedException \Gpupo\CommonSdk\Exception\SchemaException
+     */
+    public function testValidaDadosObrigatórios()
+    {
+        $entity = new Entity(['foo' => '']);
+        $entity->toJson();
+    }
 }

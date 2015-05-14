@@ -34,4 +34,9 @@ final class Entity extends EntityAbstract implements EntityInterface
             'bar'   => 'number',
         ];
     }
+
+    public function setUp()
+    {
+        $this->setRequiredSchema(['foo']);
+    }
 }

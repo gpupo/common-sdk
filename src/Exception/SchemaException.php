@@ -11,6 +11,6 @@
 
 namespace Gpupo\CommonSdk\Exception;
 
-class SchemaException extends  InvalidArgumentException
+class SchemaException extends InvalidArgumentException
 {
 }
