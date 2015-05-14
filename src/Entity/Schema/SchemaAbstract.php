@@ -54,6 +54,11 @@ abstract class SchemaAbstract extends CollectionAbstract
         return $this;
     }
 
+    protected function factoryCollection($data = [])
+    {
+        return new Collection($data);
+    }
+
     protected function initSchema(array $schema, $data)
     {
         foreach ($schema as $key => $value) {
