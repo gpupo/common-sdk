@@ -9,19 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Gpupo\Tests\CommonSdk\Entity;
+namespace Gpupo\Tests\CommonSdk\Entity\Schema;
 
-use Gpupo\CommonSdk\Entity\EntityTools;
+use Gpupo\CommonSdk\Entity\Schema\Tools;
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
 
-class EntityToolsTest extends TestCaseAbstract
+class ToolsTest extends TestCaseAbstract
 {
     /**
      * @dataProvider dataProviderInformacao
      */
     public function testValidaTiposDeInformacao($value, $type, $expected)
     {
-        $this->assertTrue(EntityTools::validate($type, $expected, $type, true));
+        $this->assertTrue(Tools::validate($type, $expected, $type, true));
     }
 
     /**
@@ -29,7 +29,7 @@ class EntityToolsTest extends TestCaseAbstract
      */
     public function testNormalizaTiposDeInformacao($value, $type, $expected)
     {
-        $this->assertTrue(EntityTools::normalizeType($value, $type) === $expected);
+        $this->assertTrue(Tools::normalizeType($value, $type) === $expected);
     }
 
     /**
@@ -37,12 +37,12 @@ class EntityToolsTest extends TestCaseAbstract
      */
     public function testAbortaComUsoDeDadosInvalidos()
     {
-        EntityTools::validate('foo', 'bar', 'integer', true);
+        Tools::validate('foo', 'bar', 'integer', true);
     }
 
     public function testSucessoComUsoDeDadosValidos()
     {
-        $this->assertTrue(EntityTools::validate('foo', 3456, 'integer', true));
+        $this->assertTrue(Tools::validate('foo', 3456, 'integer', true));
     }
 
     public function dataProviderInformacao()
