@@ -38,7 +38,7 @@ abstract class EntityAbstract extends SchemaAbstract
 
         return $this->get($this->primaryKey);
     }
-    
+
     /**
      * Permite normalização de $data.
      */
@@ -74,11 +74,6 @@ abstract class EntityAbstract extends SchemaAbstract
         }
 
         $this->setUp();
-    }
-
-    protected function factoryCollection($data = [])
-    {
-        return new Collection($data);
     }
 
     public function setPrevious(EntityInterface $previous)
