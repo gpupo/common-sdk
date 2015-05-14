@@ -11,6 +11,9 @@
 
 namespace Gpupo\CommonSdk\Traits;
 
+/**
+ * @property string $message
+ */
 trait ExceptionTrait
 {
     abstract public function getMessage();

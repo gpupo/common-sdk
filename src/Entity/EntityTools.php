@@ -62,7 +62,7 @@ class EntityTools
         return ($required) ? false : empty($value);
     }
 
-    public static function validate($key, $current, $value, $required = false)
+    public static function validate($key, $current, $value, $required = false, $prefix = '')
     {
         if (self::isEmptyValue($current, $required)) {
             return true;
@@ -70,7 +70,13 @@ class EntityTools
 
         foreach (['Integer', 'Number', 'String'] as $type) {
             $testMethod = 'test'.$type;
-            self::$testMethod($key, $current, $value);
+            try{
+                self::$testMethod($key, $current, $value);
+            } catch (SchemaException $exception) {
+                $exception->addMessagePrefix($prefix);
+
+                throw $exception;
+            }
         }
 
         return true;
