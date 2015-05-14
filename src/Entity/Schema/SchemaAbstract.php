@@ -13,9 +13,10 @@ namespace Gpupo\CommonSdk\Entity\Schema;
 
 use Gpupo\Common\Entity\Collection;
 use Gpupo\Common\Entity\CollectionAbstract;
+use Gpupo\CommonSdk\Entity\EntityInterface;
+use Gpupo\CommonSdk\Exception\SchemaException;
 use Gpupo\CommonSdk\Traits\DocumentationTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
-use Gpupo\CommonSdk\Exception\SchemaException;
 
 /**
  * @method log(string $level, string $string, array $context)
@@ -125,5 +126,4 @@ abstract class SchemaAbstract extends CollectionAbstract
             return false;
         }
     }
-
 }

@@ -70,7 +70,7 @@ class Tools
 
         foreach (['Integer', 'Number', 'String'] as $type) {
             $testMethod = 'test'.$type;
-            try{
+            try {
                 self::$testMethod($key, $current, $value);
             } catch (SchemaException $exception) {
                 $exception->addMessagePrefix($prefix);
