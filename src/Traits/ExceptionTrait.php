@@ -17,11 +17,21 @@ trait ExceptionTrait
 
     abstract public function getCode();
 
+    public function setMessage($string)
+    {
+        $this->message = $string;
+    }
+
     public function toLog()
     {
         return [
             'message'   => $this->getMessage(),
             'code'      => $this->getCode(),
         ];
+    }
+
+    public function addMessagePrefix($string)
+    {
+        $this->setMessage($string.' ' . $this->getMessage());
     }
 }

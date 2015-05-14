@@ -15,6 +15,7 @@ use Gpupo\Common\Entity\Collection;
 use Gpupo\Common\Entity\CollectionAbstract;
 use Gpupo\CommonSdk\Traits\DocumentationTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
+use Gpupo\CommonSdk\Exception\SchemaException;
 
 abstract class EntityAbstract extends CollectionAbstract
 {
@@ -166,18 +167,44 @@ abstract class EntityAbstract extends CollectionAbstract
             if ($current instanceof EntityInterface) {
                 $current->validate();
             } else {
-                EntityTools::validate($key, $current, $value, $this->isRequired($key));
+                $this->validateScrutinizer($key, $current, $value, $this->isRequired($key));
             }
         }
 
         return true;
     }
 
+    protected function getCalledEntityName($fullyQualified = null)
+    {
+        $calledClass =  get_called_class();
+
+        if ($fullyQualified) {
+            return $calledClass;
+        }
+
+        $list = explode('\\', $calledClass);
+
+        return end($list);
+    }
+
+    protected function validateScrutinizer($key, $current, $value, $required)
+    {
+        try {
+           EntityTools::validate($key, $current, $value, $this->isRequired($key));
+        } catch (SchemaException $exception) {
+            $exception->addMessagePrefix($this->getCalledEntityName());
+
+            throw $exception;
+        }
+    }
+
     public function isValid()
     {
         try {
             return $this->validate();
-        } catch (\Exception $exception) {
+        } catch (SchemaException $exception) {
+            $this->log('WARNING', 'Validation Fail',  $exception->toLog());
+
             return false;
         }
     }
