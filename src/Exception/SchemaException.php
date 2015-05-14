@@ -11,11 +11,6 @@
 
 namespace Gpupo\CommonSdk\Exception;
 
-interface ExceptionInterface
+class SchemaException extends  InvalidArgumentException
 {
-    public function toLog();
-
-    public function setMessage($string);
-
-    public function addMessagePrefix($string);
 }

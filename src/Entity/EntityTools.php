@@ -11,7 +11,7 @@
 
 namespace Gpupo\CommonSdk\Entity;
 
-use Gpupo\CommonSdk\Exception\InvalidArgumentException;
+use Gpupo\CommonSdk\Exception\SchemaException;
 
 // Hack for old php versions (<5.5) to use boolval()
 if (!function_exists('boolval')) {
@@ -52,9 +52,9 @@ class EntityTools
 
     protected static function returnInvalid($key, $current, $value)
     {
-        throw new InvalidArgumentException($key
-            .' should have value of type '.$value
-            .' valid.['.$current.'] received.');
+        throw new SchemaException('Validation Fail:['.$key
+            .'] should have value of type ['.$value
+            .'].Received:['.$current.'].');
     }
 
     protected static function isEmptyValue($value, $required = false)
