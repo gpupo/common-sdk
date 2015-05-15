@@ -12,10 +12,10 @@
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Traits\SingletonTrait;
+use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
-use Gpupo\CommonSdk\Entity\EntityAbstract;
 
 abstract class FactoryAbstract
 {

@@ -14,10 +14,10 @@ namespace Gpupo\CommonSdk\Entity;
 use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Client\ClientManagerAbstract;
 use Gpupo\CommonSdk\Exception\ManagerException;
+use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
-use Gpupo\CommonSdk\Response;
 
 abstract class ManagerAbstract extends ClientManagerAbstract
 {
@@ -68,7 +68,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
     public function findById($itemId)
     {
         try {
-            $map = $this->factoryMap('findById',['itemId' => $itemId]);
+            $map = $this->factoryMap('findById', ['itemId' => $itemId]);
 
             return $this->processResponse($this->perform($map));
         } catch (ManagerException $exception) {
