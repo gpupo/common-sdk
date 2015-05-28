@@ -96,7 +96,8 @@ abstract class ClientManagerAbstract
         }
 
         if (!array_key_exists($operation, $this->maps)) {
-            throw new ManagerException('Map ['.$operation.'] not found');
+            throw new ManagerException('Map ['.$operation.'] not found on ['
+                .$this->getEntityName().' Manager]');
         }
 
         $data = $this->maps[$operation];
