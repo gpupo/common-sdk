@@ -15,6 +15,11 @@ matrix:
     - php: hhvm
     - php: 7.0
 
+branches:
+  except:
+    - psr7
+    - experimental
+
 before_script:
   - composer self-update
   - composer install --prefer-dist
