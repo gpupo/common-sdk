@@ -17,8 +17,7 @@ matrix:
 
 branches:
   except:
-    - psr7
-    - experimental
+    - /^psr.*$/
 
 before_script:
   - composer self-update
