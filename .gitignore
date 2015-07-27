@@ -3,3 +3,5 @@
 /nbproject/
 /.idea/
 /build/
+_layout/*
+_site/*

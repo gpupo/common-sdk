@@ -165,7 +165,7 @@ abstract class ClientAbstract extends BoardAbstract
             return $this->normalizeResourceUri($resource);
         }
 
-        $endpoint = $this->fillPlaceholdersWithOptions($base, ['version']);
+        $endpoint = $this->fillPlaceholdersWithOptions($base, ['version', 'protocol']);
 
         if ($resource[0] !== '/') {
             $endpoint .= '/';
