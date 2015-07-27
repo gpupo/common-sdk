@@ -1,6 +1,13 @@
 {
     "name": "gpupo/common-sdk",
     "description": "Componente de uso comum entre SDKs para integração a partir de aplicações PHP com as APIs de Marketplaces",
+    "homepage": "http://www.g1mr.com/common-sdk/",
+    "authors": [
+        {
+            "name": "Gilmar Pupo",
+            "email": "g@g1mr.com"
+        }
+    ],
     "keywords": ["sdk"],
     "license": "MIT",
     "autoload": {
@@ -18,6 +25,9 @@
     "require-dev": {
         "phpunit/phpunit": "~4.0",
         "codeclimate/php-test-reporter": "dev-master"
+    },
+    "config": {
+        "preferred-install": "dist"
     },
     "minimum-stability" : "stable"
 }
