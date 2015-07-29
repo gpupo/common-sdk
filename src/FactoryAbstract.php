@@ -49,6 +49,8 @@ abstract class FactoryAbstract
         $this->config = $config;
         $this->initLogger($logger);
         $this->magicCommandCallAdd('create');
+
+        return $this;
     }
 
     abstract public function setClient(array $clientOptions = []);
