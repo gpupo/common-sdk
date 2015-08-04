@@ -15,6 +15,7 @@ use Gpupo\Common\Traits\OptionsTrait;
 use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSdk\Traits\CacheTrait;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
+use Gpupo\CommonSdk\Traits\PlaceholderTrait;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 
@@ -24,6 +25,7 @@ abstract class BoardAbstract
     use CacheTrait;
     use SingletonTrait;
     use OptionsTrait;
+    use PlaceholderTrait;
 
     public function __construct($options = [], LoggerInterface $logger = null, CacheItemPoolInterface $cacheItemPool = null)
     {
@@ -44,14 +46,11 @@ abstract class BoardAbstract
 
     protected function fillPlaceholdersWithOptions($string, array $keys)
     {
+        $array = [];
         foreach ($keys as $key) {
-            $value = $this->getOptions()->get($key);
-            $string = str_replace([
-                '{'.$key.'}',
-                '{'.strtoupper($key).'}',
-            ], $value, $string);
+            $array[$key]= $this->getOptions()->get($key);
         }
 
-        return $string;
+        return $this->fillPlaceholdersWithArray($string, $array);
     }
 }
