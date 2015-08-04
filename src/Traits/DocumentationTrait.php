@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * For more information, see
+ * <http://www.g1mr.com/common-sdk/>.
  */
 
 namespace Gpupo\CommonSdk\Traits;
@@ -24,14 +27,13 @@ trait DocumentationTrait
             $description = 'Magic methods on '.get_called_class();
         }
 
-        $list[]= $description."\n *";
+        $list[] = $description."\n *";
 
         foreach ($this->getSchema() as $key => $value) {
             $name = ucfirst($key);
             $return  = $this->documentationResolvReturn($name, $value);
-            $list[] = '* @method set'.$name.'('.$return.' $'.$key.') Define '. ucfirst($name);
+            $list[] = '* @method set'.$name.'('.$return.' $'.$key.') Define '.ucfirst($name);
             $list[] = '* @method '.$return.' get'.$name.'() Acesso a '.ucfirst($name);
-
         }
 
         return $list;
