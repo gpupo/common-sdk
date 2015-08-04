@@ -12,18 +12,19 @@
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Traits\SingletonTrait;
+use Gpupo\Common\Traits\OptionsTrait;
 use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
+use Gpupo\Common\Interfaces\OptionsInterface;
 use Psr\Log\LoggerInterface;
 
 abstract class FactoryAbstract
 {
     use SingletonTrait;
+    use OptionsTrait;
     use LoggerTrait;
     use MagicCommandTrait;
-
-    protected $config;
 
     protected $client;
 
@@ -34,9 +35,9 @@ abstract class FactoryAbstract
      */
     abstract protected function getSchema($namespace = null);
 
-    public function __construct(array $config = [], LoggerInterface $logger = null)
+    public function __construct(array $options = [], LoggerInterface $logger = null)
     {
-        $this->setup($config, $logger);
+        $this->setup($options, $logger);
     }
 
     protected function magicCreate($suplement, $input)
@@ -44,9 +45,9 @@ abstract class FactoryAbstract
         return $this->delegate($suplement, $input);
     }
 
-    public function setup(array $config = [], LoggerInterface $logger = null)
+    public function setup(array $options = [], LoggerInterface $logger = null)
     {
-        $this->config = $config;
+        $this->setOptions($options);
         $this->initLogger($logger);
         $this->magicCommandCallAdd('create');
 
@@ -78,7 +79,7 @@ abstract class FactoryAbstract
     public function getClient()
     {
         if (!$this->client) {
-            $this->setClient($this->config);
+            $this->setClient($this->getOptions()->toArray());
         }
 
         return $this->client;
@@ -88,11 +89,14 @@ abstract class FactoryAbstract
     {
         if (!class_exists($className)) {
             $schema = $this->getDelegateSchema($className);
-
             $className = $schema['manager'];
         }
 
         $manager = new $className($this->getClient());
+
+        if ($manager instanceof OptionsInterface) {
+            $manager->receiveOptions($this->getOptions());
+        }
 
         if ($this->getLogger()) {
             $manager->initLogger($this->getLogger());
