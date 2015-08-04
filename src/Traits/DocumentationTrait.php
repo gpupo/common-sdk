@@ -17,13 +17,21 @@ trait DocumentationTrait
 
     public function documentationClassDocblock()
     {
-        $list = ['Magic methods on '.get_called_class().":\n *"];
+        $list = [];
+        if (property_exists($this, 'description')) {
+            $description = $this->description;
+        } else {
+            $description = 'Magic methods on '.get_called_class();
+        }
+
+        $list[]= $description."\n *";
 
         foreach ($this->getSchema() as $key => $value) {
             $name = ucfirst($key);
             $return  = $this->documentationResolvReturn($name, $value);
-            $list[] = '* @method '.$return.' get'.$name.'()';
-            $list[] = '* @method set'.$name.'('.$return.' $'.$key.')';
+            $list[] = '* @method set'.$name.'('.$return.' $'.$key.') Define '. ucfirst($name);
+            $list[] = '* @method '.$return.' get'.$name.'() Acesso a '.ucfirst($name);
+
         }
 
         return $list;
