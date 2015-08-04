@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * For more information, see
+ * <http://www.g1mr.com/common-sdk/>.
  */
 
 namespace Gpupo\CommonSdk\Client;
@@ -48,7 +51,7 @@ abstract class BoardAbstract
     {
         $array = [];
         foreach ($keys as $key) {
-            $array[$key]= $this->getOptions()->get($key);
+            $array[$key] = $this->getOptions()->get($key);
         }
 
         return $this->fillPlaceholdersWithArray($string, $array);

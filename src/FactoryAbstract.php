@@ -7,16 +7,19 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * For more information, see
+ * <http://www.g1mr.com/common-sdk/>.
  */
 
 namespace Gpupo\CommonSdk;
 
-use Gpupo\Common\Traits\SingletonTrait;
+use Gpupo\Common\Interfaces\OptionsInterface;
 use Gpupo\Common\Traits\OptionsTrait;
+use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
-use Gpupo\Common\Interfaces\OptionsInterface;
 use Psr\Log\LoggerInterface;
 
 abstract class FactoryAbstract
