@@ -81,8 +81,10 @@ abstract class ClientAbstract extends BoardAbstract
     }
 
     /**
-     * Executa a chamada http
-     * @param  Request $request Objeto com a requisição
+     * Executa a chamada http.
+     *
+     * @param Request $request Objeto com a requisição
+     *
      * @return Response Objeto com a resposta da requisição
      */
     protected function exec(Request $request)
@@ -148,10 +150,12 @@ abstract class ClientAbstract extends BoardAbstract
     }
 
     /**
-     * Executa uma requisição POST ou PUT
-     * @param  string $resource Url de Endpoint
-     * @param  string|array $body  Valores do Request
-     * @param  string $name     POST por default mas também pode ser usado para PUT
+     * Executa uma requisição POST ou PUT.
+     *
+     * @param string       $resource Url de Endpoint
+     * @param string|array $body     Valores do Request
+     * @param string       $name     POST por default mas também pode ser usado para PUT
+     *
      * @return Response
      */
     public function post($resource, $body, $name = 'POST')
@@ -160,9 +164,11 @@ abstract class ClientAbstract extends BoardAbstract
     }
 
     /**
-     * Executa uma requisição PUT, Facade para post()
-     * @param  string $resource Url de Endpoint
-     * @param  string|array $body  Valores do Request
+     * Executa uma requisição PUT, Facade para post().
+     *
+     * @param string       $resource Url de Endpoint
+     * @param string|array $body     Valores do Request
+     *
      * @return Response
      */
     public function put($resource, $body)
