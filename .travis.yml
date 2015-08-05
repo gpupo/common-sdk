@@ -23,7 +23,10 @@ before_script:
   - composer self-update
   - composer install --prefer-dist
 
-before_deploy:
-  - ./.codeclimate
+deploy:
+  provider: script
+  script: ./.codeclimate
+  on:
+  	branch: master
 
 script: vendor/bin/phpunit

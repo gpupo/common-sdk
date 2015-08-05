@@ -38,7 +38,7 @@ class ClientTest extends TestCaseAbstract
     }
 
     /**
-     * @depends testAUrlBaseadoEmConfiguracao
+     * @depends testUrlBaseadoEmConfiguracao
      */
     public function testUrlEvitandoConfiguracao($client)
     {
@@ -54,7 +54,7 @@ class ClientTest extends TestCaseAbstract
     }
 
     /**
-     * @depends testAUrlEvitandoConfiguracao
+     * @depends testUrlBaseadoEmConfiguracao
      */
     public function testAcessoAObjetoRequest($client)
     {
@@ -62,12 +62,32 @@ class ClientTest extends TestCaseAbstract
     }
 
     /**
-     * @depends testAUrlEvitandoConfiguracao
+     * @depends testUrlBaseadoEmConfiguracao
      */
     public function testObjetoRequestPossuiHeader($client)
     {
         $request = $client->factoryRequest('/');
 
         $this->assertContains('Content-Type: application/json;charset=UTF-8', $request->getHeader());
+    }
+
+
+    /**
+     * @depends testUrlBaseadoEmConfiguracao
+     */
+    public function testExecutaRequisiçõesPost($client)
+    {
+        $proxy = $this->proxy($client);
+        $string = 'foo=bar&zeta=jones';
+        $array = [
+            'foo'   => 'bar',
+            'zeta'  => 'jones',
+        ];
+
+        $request = $proxy->factoryPostRequest('/', $string);
+        $this->assertEquals($string, $request->getBody());
+
+        $request = $proxy->factoryPostRequest('/', $array);
+        $this->assertEquals($string, $request->getBody());
     }
 }
