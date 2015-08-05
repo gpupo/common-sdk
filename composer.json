@@ -1,6 +1,6 @@
 {
     "name": "gpupo/common-sdk",
-    "description": "Componente de uso comum entre SDKs para integração a partir de aplicações PHP com as APIs de Marketplaces",
+    "description": "Componente de uso comum entre SDKs para integração a partir de aplicações PHP com Restful webservices",
     "homepage": "http://www.g1mr.com/common-sdk/",
     "authors": [
         {
