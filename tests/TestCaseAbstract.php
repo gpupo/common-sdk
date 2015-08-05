@@ -27,7 +27,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     protected function proxy($class)
     {
-       return new Proxy($class);
+        return new Proxy($class);
     }
 
     public function assertHttpStatusCodeSuccess($code, $context = null)

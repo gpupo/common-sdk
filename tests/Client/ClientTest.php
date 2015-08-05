@@ -71,7 +71,6 @@ class ClientTest extends TestCaseAbstract
         $this->assertContains('Content-Type: application/json;charset=UTF-8', $request->getHeader());
     }
 
-
     /**
      * @depends testUrlBaseadoEmConfiguracao
      */
