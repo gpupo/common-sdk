@@ -19,10 +19,16 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use SebastianBergmann\PeekAndPoke\Proxy;
 
 abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 {
     use LoggerTrait;
+
+    protected function proxy($class)
+    {
+       return new Proxy($class);
+    }
 
     public function assertHttpStatusCodeSuccess($code, $context = null)
     {

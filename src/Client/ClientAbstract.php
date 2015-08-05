@@ -80,6 +80,11 @@ abstract class ClientAbstract extends BoardAbstract
         return $request;
     }
 
+    /**
+     * Executa a chamada http
+     * @param  Request $request Objeto com a requisição
+     * @return Response Objeto com a resposta da requisição
+     */
     protected function exec(Request $request)
     {
         try {
@@ -133,13 +138,33 @@ abstract class ClientAbstract extends BoardAbstract
         }
     }
 
-    public function post($resource, $body, $name = 'POST')
+    protected function factoryPostRequest($resource, $body, $name = 'POST')
     {
-        $request = $this->factoryRequest($resource, $name, true)->setBody($body);
+        if (is_array($body)) {
+            $body = http_build_query($body);
+        }
 
-        return $this->exec($request);
+        return $this->factoryRequest($resource, $name, true)->setBody($body);
     }
 
+    /**
+     * Executa uma requisição POST ou PUT
+     * @param  string $resource Url de Endpoint
+     * @param  string|array $body  Valores do Request
+     * @param  string $name     POST por default mas também pode ser usado para PUT
+     * @return Response
+     */
+    public function post($resource, $body, $name = 'POST')
+    {
+        return $this->exec($this->factoryPostRequest($resource, $body, $name));
+    }
+
+    /**
+     * Executa uma requisição PUT, Facade para post()
+     * @param  string $resource Url de Endpoint
+     * @param  string|array $body  Valores do Request
+     * @return Response
+     */
     public function put($resource, $body)
     {
         return $this->post($resource, $body, 'PUT');
