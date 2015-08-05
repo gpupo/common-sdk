@@ -23,4 +23,7 @@ before_script:
   - composer self-update
   - composer install --prefer-dist
 
+after_success:
+  - ./.codeclimate
+
 script: vendor/bin/phpunit
