@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e853f2d6e2544dc2feefcb59f09609f2",
+    "hash": "827c1249624ecf466434acbacb682542",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1580,17 +1580,17 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sebastianbergmann/peek-and-poke.git",
-                "reference": "6e32c6eb39d53048a628b4100b151bbcf6bf7d5d"
+                "url": "https://github.com/gpupo/peek-and-poke.git",
+                "reference": "44b1d2ffc1c00855342cf681604f81c156faa520"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/peek-and-poke/zipball/6e32c6eb39d53048a628b4100b151bbcf6bf7d5d",
-                "reference": "6e32c6eb39d53048a628b4100b151bbcf6bf7d5d",
+                "url": "https://api.github.com/repos/gpupo/peek-and-poke/zipball/44b1d2ffc1c00855342cf681604f81c156faa520",
+                "reference": "44b1d2ffc1c00855342cf681604f81c156faa520",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4"
@@ -1606,7 +1606,11 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "classmap": [
+                    "tests/"
+                ]
+            },
             "license": [
                 "BSD-3-Clause"
             ],
@@ -1618,7 +1622,10 @@
             ],
             "description": "Proxy for accessing non-public attributes and methods of an object",
             "homepage": "https://www.github.com/sebastianbergmann/peek-and-poke",
-            "time": "2015-07-04 18:27:41"
+            "support": {
+                "source": "https://github.com/gpupo/peek-and-poke/tree/master"
+            },
+            "time": "2015-08-06 17:07:57"
         },
         {
             "name": "sebastian/recursion-context",
