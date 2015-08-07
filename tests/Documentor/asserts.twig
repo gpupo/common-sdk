@@ -1,0 +1,20 @@
+
+// {{class}}
+{% for method in methods %}
+
+/**
+ * @dataProvider dataProviderObject
+ */
+public function testPossuiGetterParaAcessoA{{ method.case }}(EntityInterface $object, $expected = null)
+{
+    $this->assertSchemaGetter('{{ method.name }}', '{{ method.type }}', $object, $expected);
+}
+
+/**
+ * @dataProvider dataProviderObject
+ */
+public function testPossuiSetterParaDefinir{{ method.case }}(EntityInterface $object, $expected = null)
+{
+    $this->assertSchemaSetter('{{ method.name }}', '{{ method.type }}', $object);
+}
+{% endfor %}
