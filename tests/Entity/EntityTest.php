@@ -16,12 +16,22 @@ namespace Gpupo\Tests\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Entity\Entity;
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
+use Gpupo\Tests\CommonSdk\Traits\EntityTrait;
 
 /**
  * @covers \Gpupo\CommonSdk\Entity\EntityAbstract
  */
 class EntityTest extends TestCaseAbstract
 {
+    use EntityTrait;
+
+    public static function setUpBeforeClass()
+    {
+        static::setFullyQualifiedObject('\Gpupo\CommonSdk\Entity\Entity');
+        static::setUpEntityTest();
+        parent::setUpBeforeClass();
+    }
+
     protected function factory()
     {
         return new Entity(['foo' => 'hello']);
@@ -49,4 +59,5 @@ class EntityTest extends TestCaseAbstract
         $entity = new Entity(['foo' => '']);
         $entity->toJson();
     }
+
 }

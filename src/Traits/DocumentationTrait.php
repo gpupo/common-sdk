@@ -33,7 +33,7 @@ trait DocumentationTrait
             $data['schema'][] = [
                 'name'      => $name,
                 'type'      => $type,
-                'return'    => $this->documentationResolvReturn($name, $type),
+                'return'    => $this->__resolvReturn($name, $type),
             ];
         }
 
