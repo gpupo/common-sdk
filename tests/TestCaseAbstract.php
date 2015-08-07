@@ -162,6 +162,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return false;
         }
 
-        echo "\n/**\n * ".implode("\n ", $entity->documentationClassDocblock())."\n */\n";
+        echo Documentation::getInstance()->renderDocBlock($entity->toDocBLock());        
     }
+
 }

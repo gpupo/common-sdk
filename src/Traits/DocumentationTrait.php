@@ -18,35 +18,39 @@ trait DocumentationTrait
 {
     abstract public function getSchema();
 
-    public function documentationClassDocblock()
+    /**
+     * @internal
+     */
+    public function toDocBlock()
     {
-        $list = [];
-        if (property_exists($this, 'description')) {
-            $description = $this->description;
-        } else {
-            $description = 'Magic methods on '.get_called_class();
+        $data = [
+            'description'   => property_exists($this, 'description') ? $this->description : false,
+            'class'         => get_called_class(),
+            'schema'        => [],
+        ];
+
+        foreach ($this->getSchema() as $name => $type) {
+            $data['schema'][] = [
+                'name'      => $name,
+                'type'      => $type,
+                'return'    => $this->documentationResolvReturn($name, $type),
+            ];
         }
 
-        $list[] = $description."\n *";
-
-        foreach ($this->getSchema() as $key => $value) {
-            $name = ucfirst($key);
-            $return  = $this->documentationResolvReturn($name, $value);
-            $list[] = '* @method set'.$name.'('.$return.' $'.$key.') Define '.ucfirst($name);
-            $list[] = '* @method '.$return.' get'.$name.'() Acesso a '.ucfirst($name);
-        }
-
-        return $list;
+        return $data;
     }
 
-    protected function documentationResolvReturn($name, $returnType)
+    /**
+     * @internal
+     */
+    private function __resolvReturn($name, $returnType)
     {
         if ($returnType === 'number') {
             return 'float';
         }
 
         if ($returnType === 'object') {
-            $method = 'get'.$name;
+            $method = 'get'.ucfirst($name);
             $className = get_class($this->$method());
 
             return $className;

@@ -32,7 +32,8 @@
     "require-dev": {
         "phpunit/phpunit": "~4.0",
         "codeclimate/php-test-reporter": "dev-master",
-        "sebastian/peek-and-poke": "1.0.x@dev"
+        "sebastian/peek-and-poke": "1.0.x@dev",
+        "twig/twig" : "~1.0"
     },
     "config": {
         "preferred-install": "dist"
