@@ -19,6 +19,7 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 use SebastianBergmann\PeekAndPoke\Proxy;
 
 abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
@@ -162,7 +163,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return false;
         }
 
-        echo Documentation::getInstance()->renderDocBlock($entity->toDocBLock());
+        echo Docblock::getInstance()->generate($entity->toDocBLock());
     }
 
 }

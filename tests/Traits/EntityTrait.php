@@ -42,11 +42,27 @@ trait EntityTrait
         }
     }
 
+    /**
+     * @todo Reutilizar Tool
+     */
+    private function camelCase($string)
+    {
+        return ucfirst($string);
+    }
+
     public function assertSchemaGetter($name, $type, $object, $expected)
     {
         $this->assertEquals($expected[$name], $object->get($name));
-        $getter = 'get' . ucfirst($name);
-        $this->assertEquals($expected[$name], $object->$getter($name));
+        $getter = 'get' . $this->camelCase($name);
+        $this->assertEquals($expected[$name], $object->$getter());
+    }
+
+    public function assertSchemaSetter($name, $type, $object)
+    {
+        $case = $this->camelCase($name);
+        $setter = 'set' . $case;
+        $getter = 'get' . $case;
+        $this->assertEquals('foo', $object->$setter('foo')->$getter());
     }
 
     public function testPossuiSchema()

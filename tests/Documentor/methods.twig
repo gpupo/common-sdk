@@ -1,0 +1,9 @@
+/**
+ * {{class}}
+ *
+{% for method in methods %}
+ * @method {{ method.return }} {{ method.getter }}()    Acesso a {{ method.name }}
+ * @method {{ method.setter }}({{ method.return }} ${{method.name}})    Define {{ method.name }}
+{% endfor %}
+ *
+ */

@@ -15,6 +15,7 @@
 namespace Gpupo\Tests\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Entity\Entity;
+use Gpupo\CommonSdk\Entity\EntityInterface;
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
 use Gpupo\Tests\CommonSdk\Traits\EntityTrait;
 
@@ -30,6 +31,19 @@ class EntityTest extends TestCaseAbstract
         static::setFullyQualifiedObject('\Gpupo\CommonSdk\Entity\Entity');
         static::setUpEntityTest();
         parent::setUpBeforeClass();
+    }
+
+    public function dataProviderObject()
+    {
+        $expected = [
+            'foo'   => 'hello',
+            'bar'   => 1.2,
+        ];
+
+        return [[
+            new Entity($expected),
+            $expected
+        ]];
     }
 
     protected function factory()
@@ -60,4 +74,35 @@ class EntityTest extends TestCaseAbstract
         $entity->toJson();
     }
 
+    /**
+     * @dataProvider dataProviderObject
+     */
+    public function testPossuiGetterParaAcessoAFoo(EntityInterface $object, $expected = null)
+    {
+        $this->assertSchemaGetter('foo', 'string', $object, $expected);
+    }
+
+    /**
+     * @dataProvider dataProviderObject
+     */
+    public function testPossuiSetterParaDefinirFoo(EntityInterface $object, $expected = null)
+    {
+        $this->assertSchemaSetter('foo', 'string', $object);
+    }
+
+    /**
+     * @dataProvider dataProviderObject
+     */
+    public function testPossuiGetterParaAcessoABar(EntityInterface $object, $expected = null)
+    {
+        $this->assertSchemaGetter('bar', 'number', $object, $expected);
+    }
+
+    /**
+     * @dataProvider dataProviderObject
+     */
+    public function testPossuiSetterParaDefinirBar(EntityInterface $object, $expected = null)
+    {
+        $this->assertSchemaSetter('bar', 'number', $object);
+    }
 }
