@@ -42,4 +42,5 @@ final class Entity extends EntityAbstract implements EntityInterface
     {
         $this->setRequiredSchema(['foo']);
     }
+
 }
