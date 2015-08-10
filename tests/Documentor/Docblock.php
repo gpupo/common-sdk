@@ -23,6 +23,27 @@ class Docblock
 {
     use SingletonTrait;
 
+    protected $resourcesPath;
+
+    public function setResourcesPath($path)
+    {
+        $this->resourcesPath = $path;
+
+        return $this;
+    }
+
+    public function getResourcesDestinationPath($file)
+    {
+        if (!empty($this->resourcesPath)) {
+            $file = str_replace("\\", '_', $file);
+            $dir = "{$this->resourcesPath}Documentation";
+            $path =  "$dir/{$file}";
+            touch ($path);
+
+            return $path;
+        }
+    }
+
     protected function render($data, $template)
     {
         $loader = new Twig_Loader_String();
@@ -45,10 +66,10 @@ class Docblock
             ];
         }
 
-        return "\n\r"
-         .$this->renderDocSchema($data)
-         .$this->renderDocBlock($data)
-         ."\n\r" . $this->renderAssertsBlock($data)."\n";
+        $data['block'] =  $this->renderDocBlock($data);
+
+        $this->renderTest($data);
+
     }
 
     protected function camelCase($name)
@@ -56,17 +77,28 @@ class Docblock
         return str_replace(' ', '', ucwords(str_replace('_', ' ', ucfirst($name))));
     }
 
-    public function renderAssertsBlock(array $data)
+    protected function renderTest(array $data)
+    {
+        $dest = $this->getResourcesDestinationPath("testCase_{$data['class']}.php");
+        $data['asserts'] =  $this->renderAsserts($data);
+        $data['expected'] =  $this->renderExpected($data);
+
+        if ($dest) {
+            file_put_contents($dest, $this->render($data, 'testCase'));
+        }
+    }
+
+    protected function renderAsserts(array $data)
     {
         return $this->render($data, 'asserts');
     }
 
-    public function renderDocBlock(array $data)
+    protected function renderDocBlock(array $data)
     {
         return $this->render($data, 'methods');
     }
 
-    public function renderDocSchema(array $data)
+    protected function renderExpected(array $data)
     {
         return $this->render($data, 'schema');
     }

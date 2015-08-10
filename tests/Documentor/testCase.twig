@@ -1,0 +1,32 @@
+<?php
+//{{class}}
+//namespace ...;
+
+use Gpupo\CommonSdk\Entity\EntityInterface;
+use Gpupo\Tests\CommonSdk\Traits\EntityTrait;
+
+{{ block }}
+class Test extends EntityTestCaseAbstract
+{
+    use EntityTrait;
+
+    const QUALIFIED = '{{class}}';
+
+    public static function setUpBeforeClass()
+    {
+        static::setFullyQualifiedObject(self::QUALIFIED);
+        parent::setUpBeforeClass();
+    }
+
+    public function dataProviderObject()
+    {
+
+{{ expected|raw }}
+
+        return $this->dataProviderEntitySchema(self::QUALIFIED, $expected);
+    }
+
+
+{{ asserts|raw }}
+
+}
