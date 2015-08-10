@@ -75,7 +75,7 @@ trait EntityTrait
     {
         $getter = 'get' . $this->camelCase($name);
 
-        if ($type == 'object') {
+        if ($type === 'object') {
             return $this->assertInstanceOf('\Gpupo\Common\Entity\CollectionAbstract', $object->$getter());
         }
 
@@ -93,15 +93,19 @@ trait EntityTrait
         $case = $this->camelCase($name);
         $setter = 'set' . $case;
         $getter = 'get' . $case;
-        $this->assertEquals('foo', $object->$setter('foo')->$getter());
+
+        if ($type !== 'object') {
+            $this->assertEquals('foo', $object->$setter('foo')->$getter());
+        }
     }
 
-    public function testPossuiSchema()
+    /**
+     * @testdox Entidade é uma Coleção
+     * @dataProvider dataProviderObject
+     * @test
+     */
+    public function entityObject($object, $expected = null)
     {
-        $className = static::getFullyQualifiedObject();
-
-        if (class_exists($className)) {
-            $this->assertInstanceOf($className, self::createObject($className));
-        }
+        return $this->assertInstanceOf('\Gpupo\Common\Entity\CollectionAbstract', $object);
     }
 }
