@@ -20,12 +20,15 @@ trait EntityTrait
 
     public static function getFullyQualifiedObject()
     {
-        return self::$fullyQualifiedObject;
+        if (!empty(self::$fullyQualifiedObject)) {
+            return self::$fullyQualifiedObject;
+        }
     }
 
     public static function setFullyQualifiedObject($name)
     {
         self::$fullyQualifiedObject = $name;
+        self::setUpEntityTest();
     }
 
     public static function createObject($className, array $data = null)
@@ -33,13 +36,31 @@ trait EntityTrait
         return new $className($data);
     }
 
-    public static function setUpEntityTest()
+    public static function factoryFullyQualifiedObject(array $data = null)
     {
         $className = static::getFullyQualifiedObject();
 
         if (class_exists($className)) {
-            self::displayClassDocumentation(static::createObject($className));
+            return self::createObject($className, $data);
         }
+
+        throw new \Exception($className." not found!", 1);
+    }
+
+    public static function setUpEntityTest()
+    {
+        $object = self::factoryFullyQualifiedObject();
+        if ($object) {
+            self::displayClassDocumentation($object);
+        }
+    }
+
+    protected function dataProviderEntitySchema($className, array $data = null)
+    {
+        return [[
+            static::createObject($className, $data),
+            $data,
+        ]];
     }
 
     /**
@@ -52,8 +73,18 @@ trait EntityTrait
 
     public function assertSchemaGetter($name, $type, $object, $expected)
     {
-        $this->assertEquals($expected[$name], $object->get($name));
         $getter = 'get' . $this->camelCase($name);
+
+        if ($type == 'object') {
+            return $this->assertInstanceOf('\Gpupo\Common\Entity\CollectionAbstract', $object->$getter());
+        }
+
+        if (!array_key_exists($name, $expected)) {
+            return $this->markSkipped('not found key '.$name);
+        }
+
+        $this->assertEquals($expected[$name], $object->get($name));
+
         $this->assertEquals($expected[$name], $object->$getter());
     }
 

@@ -45,13 +45,15 @@ class Docblock
             ];
         }
 
-        return "\n\r".$this->renderDocBlock($data, 'methods')
-         ."\n\r" . $this->renderAssertsBlock($data, 'methods')."\n";
+        return "\n\r"
+         .$this->renderDocSchema($data)
+         .$this->renderDocBlock($data)
+         ."\n\r" . $this->renderAssertsBlock($data)."\n";
     }
 
     protected function camelCase($name)
     {
-        return ucfirst($name);
+        return str_replace(' ', '', ucwords(str_replace('_', ' ', ucfirst($name))));
     }
 
     public function renderAssertsBlock(array $data)
@@ -64,4 +66,8 @@ class Docblock
         return $this->render($data, 'methods');
     }
 
+    public function renderDocSchema(array $data)
+    {
+        return $this->render($data, 'schema');
+    }
 }
