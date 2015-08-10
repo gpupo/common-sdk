@@ -1,26 +1,22 @@
+    {% for method in methods %}
 
----
+    /**
+     * @testdox Possui método {{ method.getter }}() para acessar {{ method.case }}
+     * @dataProvider dataProviderObject
+     * @test
+     */
+    public function getter{{ method.case }}(EntityInterface $object, $expected = null)
+    {
+        $this->assertSchemaGetter('{{ method.name }}', '{{ method.type }}', $object, $expected);
+    }
 
-// {{class}}
-{% for method in methods %}
-
-/**
- * @testdox Possui método {{ method.getter }}() para acessar {{ method.case }}
- * @dataProvider dataProviderObject
- * @test
- */
-public function getter{{ method.case }}(EntityInterface $object, $expected = null)
-{
-    $this->assertSchemaGetter('{{ method.name }}', '{{ method.type }}', $object, $expected);
-}
-
-/**
- * @testdox Possui método {{ method.setter }}() que define {{ method.case }}
- * @dataProvider dataProviderObject
- * @test
- */
-public function setter{{ method.case }}(EntityInterface $object, $expected = null)
-{
-    $this->assertSchemaSetter('{{ method.name }}', '{{ method.type }}', $object);
-}
-{% endfor %}
+    /**
+     * @testdox Possui método {{ method.setter }}() que define {{ method.case }}
+     * @dataProvider dataProviderObject
+     * @test
+     */
+    public function setter{{ method.case }}(EntityInterface $object, $expected = null)
+    {
+        $this->assertSchemaSetter('{{ method.name }}', '{{ method.type }}', $object);
+    }
+    {% endfor %}

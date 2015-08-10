@@ -97,7 +97,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
     /**
      * Caminho para o diretório de recursos.
      */
-    protected function getResourcesPath()
+    public static function getResourcesPath()
     {
         return getcwd().'/Resources/';
     }
@@ -114,7 +114,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     protected function getResourceFilePath($file, $create = false)
     {
-        $path =  $this->getResourcesPath().$file;
+        $path =  static::getResourcesPath().$file;
 
         if (file_exists($path)) {
             return $path;
@@ -163,7 +163,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return false;
         }
 
-        echo Docblock::getInstance()->generate($entity->toDocBLock());
+        echo Docblock::getInstance()->setResourcesPath(static::getResourcesPath())->generate($entity->toDocBLock());
     }
 
 }
