@@ -28,7 +28,7 @@
         "psr/log": "~1.0",
         "gpupo/cache": "~1.2",
         "gpupo/common": "~1.5",
-        "twig/twig" : "~1.0"
+        "twig/twig" : "~1.20.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
