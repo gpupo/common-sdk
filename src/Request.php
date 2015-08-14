@@ -21,11 +21,25 @@ use Gpupo\Common\Entity\Collection;
  * @method setBody(string $string)
  * @method setUrl(string $string)
  * @method setHeader(array $string)
- * @method getBody()
- * @method getHeader()
  */
 class Request extends Collection
 {
+    /**
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->get('body');
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeader()
+    {
+        return $this->get('header');
+    }
+
     public function setTransport(Transport $transport)
     {
         $this->set('transport', $transport);
