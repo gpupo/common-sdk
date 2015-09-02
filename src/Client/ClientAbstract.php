@@ -201,7 +201,9 @@ abstract class ClientAbstract extends BoardAbstract
 
         $endpoint = $this->fillPlaceholdersWithOptions($base, ['version', 'protocol']);
 
-        if ($resource[0] !== '/') {
+        if (substr($resource, 0, 4) === 'http') {
+            return $resource;
+        } elseif ($resource[0] !== '/') {
             $endpoint .= '/';
         }
 
