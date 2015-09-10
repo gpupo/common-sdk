@@ -23,21 +23,25 @@ abstract class ClientAbstract extends BoardAbstract
 {
     abstract protected function renderAuthorization();
 
-    protected function renderContentType()
+    protected function renderContentType($method)
     {
+        if ($method == 'POST') {
+            return 'Content-Type: application/x-www-form-urlencoded';
+        }
+
         return 'Content-Type: application/json;charset=UTF-8';
     }
 
     /**
      * @return Array
      */
-    protected function renderHeader()
+    protected function renderHeader($method)
     {
         $list = [];
 
         foreach ([
             $this->renderAuthorization(),
-            $this->renderContentType(),
+            $this->renderContentType($method),
         ] as $item) {
             if (is_array($item)) {
                 $list = array_merge($list, $item);
@@ -74,7 +78,7 @@ abstract class ClientAbstract extends BoardAbstract
         }
 
         $request->setTransport($this->factoryTransport())
-            ->setHeader($this->renderHeader())
+            ->setHeader($this->renderHeader($method))
             ->setUrl($this->getResourceUri($resource));
 
         return $request;
@@ -91,6 +95,7 @@ abstract class ClientAbstract extends BoardAbstract
     {
         try {
             $data = $request->exec();
+
             $response = new Response($data);
             $response->setLogger($this->getLogger());
             $response->validate();
@@ -101,9 +106,9 @@ abstract class ClientAbstract extends BoardAbstract
                     'response'  => $response->toLog(),
                 ]
             );
-
             return $response;
         } catch (RequestException $e) {
+
             $this->error('Execucao fracassada', [
                 'exception' => $e->toLog(),
                 'request'   => $request->toLog(),
