@@ -63,10 +63,12 @@ abstract class DriverAbstract extends Collection
     /**
      * @param string $title
      */
-    protected function registerEncode($title, $data)
+    protected function registerEncode($title, $data, $encode = true)
     {
-        return '## '.$title.':'."\n"
-            .json_encode($data, JSON_UNESCAPED_UNICODE)."\n===\n";
+        if ($encode === true) {
+            $data = json_encode($data, JSON_UNESCAPED_UNICODE);
+        }
+        return '## '.$title.':'."\n".$data."\n";
     }
 
     abstract protected function registerSaveToFile();

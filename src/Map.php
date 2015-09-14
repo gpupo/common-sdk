@@ -68,4 +68,13 @@ class Map extends Collection
             'endpoint'  => $this->getResource(),
         ]);
     }
+
+    public function getMode()
+    {
+        $parameters = $this->getParameters();
+
+        if (array_key_exists('mode', $parameters)) {
+            return $parameters['mode'];
+        }
+    }
 }
