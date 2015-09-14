@@ -167,6 +167,10 @@ abstract class ClientManagerAbstract
         while ($attempt <= 5) {
             $attempt++;
             try {
+                if ($map->getMode()) {
+                    $this->getClient()->setMode($map->getMode());
+                }
+
                 return $this->getClient()->$methodName($map->getResource(), $body);
             } catch (\Exception $exception) {
                 if (!$this->retry($exception, $attempt)) {

@@ -21,27 +21,42 @@ use Gpupo\CommonSdk\Transport;
 
 abstract class ClientAbstract extends BoardAbstract
 {
+    protected $mode;
+
     abstract protected function renderAuthorization();
 
-    protected function renderContentType($method)
+    protected function renderContentType()
     {
-        if ($method == 'POST') {
+        if ($this->getMode() === 'form') {
+
+            $this->setMode(false);
+
             return 'Content-Type: application/x-www-form-urlencoded';
         }
 
         return 'Content-Type: application/json;charset=UTF-8';
     }
 
+    public function setMode($mode)
+    {
+        $this->mode =  $mode;
+    }
+
+    public function getMode()
+    {
+        return $this->mode;
+    }
+
     /**
      * @return Array
      */
-    protected function renderHeader($method)
+    protected function renderHeader()
     {
         $list = [];
 
         foreach ([
             $this->renderAuthorization(),
-            $this->renderContentType($method),
+            $this->renderContentType(),
         ] as $item) {
             if (is_array($item)) {
                 $list = array_merge($list, $item);
@@ -78,7 +93,7 @@ abstract class ClientAbstract extends BoardAbstract
         }
 
         $request->setTransport($this->factoryTransport())
-            ->setHeader($this->renderHeader($method))
+            ->setHeader($this->renderHeader())
             ->setUrl($this->getResourceUri($resource));
 
         return $request;
@@ -95,7 +110,6 @@ abstract class ClientAbstract extends BoardAbstract
     {
         try {
             $data = $request->exec();
-
             $response = new Response($data);
             $response->setLogger($this->getLogger());
             $response->validate();

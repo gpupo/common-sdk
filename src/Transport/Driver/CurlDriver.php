@@ -19,6 +19,8 @@ use Gpupo\CommonSdk\Exception\RuntimeException;
 
 class CurlDriver extends DriverAbstract
 {
+    protected $header = [];
+
     protected $curl;
 
     protected $lastTransfer;
@@ -57,6 +59,8 @@ class CurlDriver extends DriverAbstract
 
     public function setHeader(array $list)
     {
+        $this->header = $list;
+
         $this->setOption(CURLOPT_HTTPHEADER, $list);
 
         return $this;
@@ -134,11 +138,12 @@ class CurlDriver extends DriverAbstract
     protected function registerSaveToFile()
     {
         $filename = $this->getRegisterFilename();
-        $data = $this->registerEncode('cUrl', $this->getLastTransfer());
-
+        $data = "\n\n#===\n".$this->registerEncode('cUrl', $this->getLastTransfer());
+        $data .= $this->registerEncode('url', $this->get('url'), false);
+        $data .= $this->registerEncode('header', implode("\n", $this->header), false);
         $body = $this->getBody();
         if (!empty($body)) {
-            $data .= $this->registerEncode('Body', json_decode($body));
+            $data .= $this->registerEncode('Body', $body, false);
         }
 
         return file_put_contents($filename, $data, FILE_TEXT);
