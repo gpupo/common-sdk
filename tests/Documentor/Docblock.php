@@ -52,7 +52,7 @@ class Docblock
         return $twig->render(file_get_contents(__DIR__.'/'.$template.'.twig'), $data);
     }
 
-    public function generate(array $data)
+    public function generate(array $data, $json = null)
     {
         foreach($data['schema'] as $item) {
             $case = $this->camelCase($item['name']);
@@ -70,6 +70,11 @@ class Docblock
 
         $this->renderTest($data);
 
+        if(!empty($json)) {
+            $this->renderJson($data, $json);
+        }
+
+
     }
 
     protected function camelCase($name)
@@ -85,6 +90,15 @@ class Docblock
 
         if ($dest) {
             file_put_contents($dest, $this->render($data, 'testCase'));
+        }
+    }
+
+    protected function renderJson(array $data, $json)
+    {
+        $dest = $this->getResourcesDestinationPath("{$data['class']}.json");
+
+        if ($dest) {
+            file_put_contents($dest, $json);
         }
     }
 
