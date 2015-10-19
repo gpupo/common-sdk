@@ -163,7 +163,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return false;
         }
 
-        echo Docblock::getInstance()->setResourcesPath(static::getResourcesPath())->generate($entity->toDocBLock());
+        echo Docblock::getInstance()->setResourcesPath(static::getResourcesPath())->generate($entity->toDocBLock(),json_encode($entity->toArray(), JSON_PRETTY_PRINT));
     }
 
 }
