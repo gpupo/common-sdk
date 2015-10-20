@@ -72,8 +72,8 @@ class Map extends Collection
     public function getMode()
     {
         $parameters = $this->getParameters();
-
-        if (array_key_exists('mode', $parameters)) {
+        
+        if (is_array($parameters) && array_key_exists('mode', $parameters)) {
             return $parameters['mode'];
         }
     }
