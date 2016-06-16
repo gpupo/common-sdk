@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Interfaces\OptionsInterface;
@@ -71,9 +70,9 @@ abstract class FactoryAbstract
     {
         $key[0] = strtolower($key[0]);
 
-        if (!array_key_exists($key, $list)) {
-            throw new \BadMethodCallException('Faltando Factory ['.$key
-                .'] no Schema ['.implode(' ', array_keys($list)).']');
+        if ( ! array_key_exists($key, $list)) {
+            throw new \BadMethodCallException('Faltando Factory [' . $key
+                . '] no Schema [' . implode(' ', array_keys($list)) . ']');
         }
 
         return $list[$key];
@@ -81,7 +80,7 @@ abstract class FactoryAbstract
 
     public function getClient()
     {
-        if (!$this->client) {
+        if ( ! $this->client) {
             $this->setClient($this->getOptions()->toArray());
         }
 
@@ -90,7 +89,7 @@ abstract class FactoryAbstract
 
     public function factoryManager($className)
     {
-        if (!class_exists($className)) {
+        if ( ! class_exists($className)) {
             $schema = $this->getDelegateSchema($className);
             $className = $schema['manager'];
         }
@@ -110,9 +109,9 @@ abstract class FactoryAbstract
 
     protected function forwardCallForMethod($schema, $data)
     {
-        if (!method_exists($schema['class'], $schema['method'])) {
+        if ( ! method_exists($schema['class'], $schema['method'])) {
             throw new Exception\InvalidArgumentException('Method ['
-                .$schema['class'].'::'.$schema['method'].'()] not found!');
+                . $schema['class'] . '::' . $schema['method'] . '()] not found!');
         }
 
         return forward_static_call([$schema['class'], $schema['method']], $data);
@@ -124,9 +123,9 @@ abstract class FactoryAbstract
 
         $className = $schema['class'];
 
-        if (!class_exists($className)) {
+        if ( ! class_exists($className)) {
             throw new Exception\InvalidArgumentException('Class ['
-                .$className.'] not found!');
+                . $className . '] not found!');
         }
 
         if (array_key_exists('method', $schema)) {

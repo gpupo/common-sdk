@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Traits;
 
 use Gpupo\CommonSdk\Pool;
@@ -22,7 +21,7 @@ trait PoolTrait
 
     public function getPool()
     {
-        if (!$this->pool) {
+        if ( ! $this->pool) {
             $this->pool = new Pool();
         }
 

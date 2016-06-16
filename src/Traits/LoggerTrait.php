@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Traits;
 
 use Psr\Log\LoggerInterface;
@@ -37,7 +36,7 @@ trait LoggerTrait
 
     public function initLogger($logger)
     {
-        if (!empty($logger)) {
+        if ( ! empty($logger)) {
             return $this->setLogger($logger);
         }
     }

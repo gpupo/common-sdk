@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Entity\Schema;
 
 use Gpupo\Common\Entity\Collection;
@@ -110,7 +109,7 @@ abstract class SchemaAbstract extends CollectionAbstract
 
     public function getCalledEntityName($fullyQualified = null)
     {
-        $calledClass =  get_called_class();
+        $calledClass = get_called_class();
 
         if ($fullyQualified) {
             return $calledClass;

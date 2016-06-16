@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Traits;
 
 trait PlaceholderTrait
@@ -20,8 +19,8 @@ trait PlaceholderTrait
     {
         foreach ($array as $key => $value) {
             $string = str_replace([
-                '{'.$key.'}',
-                '{'.strtoupper($key).'}',
+                '{' . $key . '}',
+                '{' . strtoupper($key) . '}',
             ], $value, $string);
         }
 

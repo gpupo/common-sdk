@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Traits;
 
 use Gpupo\Cache\CacheAwareTrait;
@@ -22,7 +21,7 @@ trait CacheTrait
 
     public function initCache($cacheItemPool)
     {
-        if (!empty($cacheItemPool)) {
+        if ( ! empty($cacheItemPool)) {
             return $this->setCacheItemPool($cacheItemPool);
         }
     }

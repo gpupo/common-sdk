@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Transport\Driver;
 
 use Gpupo\Common\Entity\Collection;
@@ -50,14 +49,14 @@ abstract class DriverAbstract extends Collection
 
     protected function getRegisterFilename()
     {
-        $filename = $this->registerPath.'/request-'.date('Y-m-d-h-i-s').'.txt';
+        $filename = $this->registerPath . '/request-' . date('Y-m-d-h-i-s') . '.txt';
         touch($filename);
 
         if (file_exists($filename)) {
             return $filename;
         }
 
-        throw new RuntimeException('Impossivel registrar em '.$this->registerPath);
+        throw new RuntimeException('Impossivel registrar em ' . $this->registerPath);
     }
 
     /**
@@ -68,14 +67,15 @@ abstract class DriverAbstract extends Collection
         if ($encode === true) {
             $data = json_encode($data, JSON_UNESCAPED_UNICODE);
         }
-        return '## '.$title.':'."\n".$data."\n";
+
+        return '## ' . $title . ':' . "\n" . $data . "\n";
     }
 
     abstract protected function registerSaveToFile();
 
     public function register()
     {
-        if (!empty($this->registerPath)) {
+        if ( ! empty($this->registerPath)) {
             try {
                 return $this->registerSaveToFile();
             } catch (\Exception $e) {
