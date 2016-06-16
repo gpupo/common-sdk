@@ -18,20 +18,19 @@
     },
     "require": {
         "php": "^5.6 || ^7.0",
-        "psr/log": "~1.0",
-        "gpupo/cache": "~1.2",
-        "gpupo/common": "~1.5",
-        "twig/twig" : "~1.24",
-        "monolog/monolog": "~1",
         "symfony/console": "~3.1",
         "phpunit/phpunit": "~5.4",
-        "sebastian/peek-and-poke": "1.0.x@dev"
-    },
-    "require-dev": {
-      "codeclimate/php-test-reporter": "@dev"
+        "psr/log": "~1.0",
+        "gpupo/cache": "*",
+        "gpupo/common": "*",
+        "twig/twig": "*",
+        "monolog/monolog": "*",
+        "sebastian/peek-and-poke": "1.0.x@dev",
+        "codeclimate/php-test-reporter": "@dev"
     },
     "config": {
         "preferred-install": "dist"
     },
-    "minimum-stability" : "stable"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
