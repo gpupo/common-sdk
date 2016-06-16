@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk\Client\Oauth2\Provider;
 
 use Gpupo\CommonSdk\Client\Oauth2\Provider\GenericProvider;
@@ -23,11 +22,11 @@ class GenericProviderTest extends TestCaseAbstract
     {
         $provider = new GenericProvider(
             [
-                'clientId'          => 'lambda',
-                'authorize'         => 'https://foo/bar?client_id={clientId}',
+                'clientId'  => 'lambda',
+                'authorize' => 'https://foo/bar?client_id={clientId}',
             ]
         );
 
-        $this->assertEquals('https://foo/bar?client_id=lambda', $provider->getAuthorizationUrl());
+        $this->assertSame('https://foo/bar?client_id=lambda', $provider->getAuthorizationUrl());
     }
 }

@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk\Entity\Schema;
 
 use Gpupo\CommonSdk\Entity\Schema\Tools;

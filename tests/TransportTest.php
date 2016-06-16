@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
@@ -33,7 +32,7 @@ class TransportTest extends TestCaseAbstract
     {
         $transport->setUrl('https://github.com/');
         $data = $transport->exec();
-        $this->assertEquals(200, $data['httpStatusCode']);
+        $this->assertSame(200, $data['httpStatusCode']);
 
         return $transport;
     }
@@ -45,6 +44,6 @@ class TransportTest extends TestCaseAbstract
     {
         $lastTransfer = $transport->getLastTransfer();
         $this->assertInstanceof("\Gpupo\Common\Entity\Collection", $lastTransfer);
-        $this->assertEquals('https://github.com/', $lastTransfer->get('url'));
+        $this->assertSame('https://github.com/', $lastTransfer->get('url'));
     }
 }

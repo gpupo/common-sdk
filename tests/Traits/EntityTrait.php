@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk\Traits;
 
 trait EntityTrait
@@ -20,7 +19,7 @@ trait EntityTrait
 
     public static function getFullyQualifiedObject()
     {
-        if (!empty(self::$fullyQualifiedObject)) {
+        if ( ! empty(self::$fullyQualifiedObject)) {
             return self::$fullyQualifiedObject;
         }
     }
@@ -44,7 +43,7 @@ trait EntityTrait
             return self::createObject($className, $data);
         }
 
-        throw new \Exception($className." not found!", 1);
+        throw new \Exception($className . ' not found!', 1);
     }
 
     public static function setUpEntityTest()
@@ -79,13 +78,13 @@ trait EntityTrait
             return $this->assertInstanceOf('\Gpupo\Common\Entity\CollectionAbstract', $object->$getter());
         }
 
-        if (!array_key_exists($name, $expected)) {
-            return $this->markSkipped('not found key '.$name);
+        if ( ! array_key_exists($name, $expected)) {
+            return $this->markSkipped('not found key ' . $name);
         }
 
-        $this->assertEquals($expected[$name], $object->get($name));
+        $this->assertSame($expected[$name], $object->get($name));
 
-        $this->assertEquals($expected[$name], $object->$getter());
+        $this->assertSame($expected[$name], $object->$getter());
     }
 
     public function assertSchemaSetter($name, $type, $object)
@@ -95,7 +94,7 @@ trait EntityTrait
         $getter = 'get' . $case;
 
         if ($type !== 'object') {
-            $this->assertEquals('foo', $object->$setter('foo')->$getter());
+            $this->assertSame('foo', $object->$setter('foo')->$getter());
         }
     }
 

@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk\Client;
 
 use Gpupo\CommonSdk\Client\Client;
@@ -22,16 +21,16 @@ class ClientTest extends TestCaseAbstract
     public function testUrlIndependenteDeConfiguracao()
     {
         $client = new Client();
-        $this->assertEquals('/sku',
+        $this->assertSame('/sku',
         $client->getResourceUri('/sku'));
     }
 
     public function testUrlBaseadoEmConfiguracao()
     {
         $client = new Client([
-            'base_url'      => 'https://foo.com',
+            'base_url' => 'https://foo.com',
         ]);
-        $this->assertEquals('https://foo.com/sku',
+        $this->assertSame('https://foo.com/sku',
         $client->getResourceUri('/sku'));
 
         return $client;
@@ -43,12 +42,12 @@ class ClientTest extends TestCaseAbstract
     public function testUrlEvitandoConfiguracao($client)
     {
         $url = 'https://bar.com/hi';
-        $this->assertEquals($url,
+        $this->assertSame($url,
             $client->getResourceUri([
-                'endpoint'  => 'https://bar.com/hi',
+                'endpoint' => 'https://bar.com/hi',
             ]));
 
-        $this->assertEquals($url, $client->getResourceUri(['url' => $url]));
+        $this->assertSame($url, $client->getResourceUri(['url' => $url]));
 
         return $client;
     }
@@ -79,14 +78,14 @@ class ClientTest extends TestCaseAbstract
         $proxy = $this->proxy($client);
         $string = 'foo=bar&zeta=jones';
         $array = [
-            'foo'   => 'bar',
-            'zeta'  => 'jones',
+            'foo'  => 'bar',
+            'zeta' => 'jones',
         ];
 
         $request = $proxy->factoryPostRequest('/', $string);
-        $this->assertEquals($string, $request->getBody());
+        $this->assertSame($string, $request->getBody());
 
         $request = $proxy->factoryPostRequest('/', $array);
-        $this->assertEquals($string, $request->getBody());
+        $this->assertSame($string, $request->getBody());
     }
 }

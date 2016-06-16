@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Entity\Entity;
@@ -36,13 +35,13 @@ class EntityTest extends TestCaseAbstract
     public function dataProviderObject()
     {
         $expected = [
-            'foo'   => 'hello',
-            'bar'   => 1.2,
+            'foo' => 'hello',
+            'bar' => 1.2,
         ];
 
         return [[
             new Entity($expected),
-            $expected
+            $expected,
         ]];
     }
 
@@ -55,14 +54,14 @@ class EntityTest extends TestCaseAbstract
     {
         $entity = $this->factory();
 
-        $this->assertEquals('hello', $entity->getId());
+        $this->assertSame('hello', $entity->getId());
     }
 
     public function testAcessoAoNomeDaEntidadeAtual()
     {
         $entity = $this->factory();
-        $this->assertEquals('Entity', $entity->getCalledEntityName());
-        $this->assertEquals('Gpupo\CommonSdk\Entity\Entity', $entity->getCalledEntityName(true));
+        $this->assertSame('Entity', $entity->getCalledEntityName());
+        $this->assertSame('Gpupo\CommonSdk\Entity\Entity', $entity->getCalledEntityName(true));
     }
 
     /**
