@@ -29,7 +29,7 @@
         "gpupo/cache": "~1.2",
         "gpupo/common": "~1.5",
         "twig/twig" : "~1.24",
-        "monolog/monolog": "~1.12",
+        "monolog/monolog": "~1",
         "symfony/console": "~3.1"
     },
     "require-dev": {
