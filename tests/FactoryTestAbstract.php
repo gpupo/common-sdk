@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk;
 
 abstract class FactoryTestAbstract extends TestCaseAbstract
@@ -36,7 +35,7 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
      */
     public function testCentralizaCriacaoDeObjetos($objectExpected, $name, array $data = null)
     {
-        $method = 'create'.ucfirst($name);
+        $method = 'create' . ucfirst($name);
 
         return $this->assertFactoryWorks($objectExpected, $this->getFactory(), $method, $data);
     }

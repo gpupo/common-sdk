@@ -11,11 +11,9 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk\Documentor;
 
 use Gpupo\Common\Traits\SingletonTrait;
-
 use Twig_Environment;
 use Twig_Loader_String;
 
@@ -34,11 +32,11 @@ class Docblock
 
     public function getResourcesDestinationPath($file)
     {
-        if (!empty($this->resourcesPath)) {
-            $file = str_replace("\\", '_', $file);
+        if ( ! empty($this->resourcesPath)) {
+            $file = str_replace('\\', '_', $file);
             $dir = "{$this->resourcesPath}Documentation";
-            $path =  "$dir/{$file}";
-            touch ($path);
+            $path = "$dir/{$file}";
+            touch($path);
 
             return $path;
         }
@@ -49,32 +47,30 @@ class Docblock
         $loader = new Twig_Loader_String();
         $twig = new Twig_Environment($loader);
 
-        return $twig->render(file_get_contents(__DIR__.'/'.$template.'.twig'), $data);
+        return $twig->render(file_get_contents(__DIR__ . '/' . $template . '.twig'), $data);
     }
 
     public function generate(array $data, $json = null)
     {
-        foreach($data['schema'] as $item) {
+        foreach ($data['schema'] as $item) {
             $case = $this->camelCase($item['name']);
             $data['methods'][] = [
-                'getter'    => 'get'.$case,
-                'setter'    => 'set'.$case,
-                'return'    => $item['return'],
-                'name'      => $item['name'],
-                'type'      => $item['type'],
-                'case'      => $case,
+                'getter' => 'get' . $case,
+                'setter' => 'set' . $case,
+                'return' => $item['return'],
+                'name'   => $item['name'],
+                'type'   => $item['type'],
+                'case'   => $case,
             ];
         }
 
-        $data['block'] =  $this->renderDocBlock($data);
+        $data['block'] = $this->renderDocBlock($data);
 
         $this->renderTest($data);
 
-        if(!empty($json)) {
+        if ( ! empty($json)) {
             $this->renderJson($data, $json);
         }
-
-
     }
 
     protected function camelCase($name)
@@ -85,8 +81,8 @@ class Docblock
     protected function renderTest(array $data)
     {
         $dest = $this->getResourcesDestinationPath("testCase_{$data['class']}.php");
-        $data['asserts'] =  $this->renderAsserts($data);
-        $data['expected'] =  $this->renderExpected($data);
+        $data['asserts'] = $this->renderAsserts($data);
+        $data['expected'] = $this->renderExpected($data);
 
         if ($dest) {
             file_put_contents($dest, $this->render($data, 'testCase'));

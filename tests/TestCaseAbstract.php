@@ -11,15 +11,14 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk;
 
 use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
+use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 use SebastianBergmann\PeekAndPoke\Proxy;
 
 abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
@@ -38,7 +37,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     public function getLogger()
     {
-        if (!$this->logger) {
+        if ( ! $this->logger) {
             $channel = str_replace('\\', '.', get_called_class());
             $logger = new Logger($channel);
             $filePath = $this->getResourceFilePath('logs/tests.log', true);
@@ -52,11 +51,11 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
     protected function logMark($message, array $callers, $mode = 'skipped')
     {
         $context = [
-            'test'      => $callers[1]['function'],
-            'message'   => $message,
+            'test'    => $callers[1]['function'],
+            'message' => $message,
         ];
 
-        return $this->log('info', 'Test '.$mode, $context);
+        return $this->log('info', 'Test ' . $mode, $context);
     }
 
     public function markSkipped($message = '')
@@ -99,7 +98,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
      */
     public static function getResourcesPath()
     {
-        return getcwd().'/Resources/';
+        return getcwd() . '/Resources/';
     }
 
     protected function getResourceContent($file)
@@ -114,7 +113,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     protected function getResourceFilePath($file, $create = false)
     {
-        $path =  static::getResourcesPath().$file;
+        $path = static::getResourcesPath() . $file;
 
         if (file_exists($path)) {
             return $path;
@@ -124,14 +123,14 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return $this->getResourceFilePath($file);
         }
 
-        throw new \InvalidArgumentException('File '.$path.' Not Exist');
+        throw new \InvalidArgumentException('File ' . $path . ' Not Exist');
     }
 
     protected function factoryResponseFromFixture($file, $httpStatusCode = 200)
     {
         $response = new Response([
-            'httpStatusCode'    => $httpStatusCode,
-            'responseRaw'       => $this->getResourceContent($file),
+            'httpStatusCode' => $httpStatusCode,
+            'responseRaw'    => $this->getResourceContent($file),
         ]);
 
         return $response;
@@ -163,7 +162,6 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return false;
         }
 
-        echo Docblock::getInstance()->setResourcesPath(static::getResourcesPath())->generate($entity->toDocBLock(),json_encode($entity->toArray(), JSON_PRETTY_PRINT));
+        echo Docblock::getInstance()->setResourcesPath(static::getResourcesPath())->generate($entity->toDocBLock(), json_encode($entity->toArray(), JSON_PRETTY_PRINT));
     }
-
 }

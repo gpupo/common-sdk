@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\Tests\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Entity\Entity;
@@ -36,7 +35,7 @@ class ManagerTest extends TestCaseAbstract
 
         $collection = $factoryCollection->invokeArgs($manager, [['foo' => 'bar']]);
 
-        $this->assertEquals('bar', $collection->getFoo());
+        $this->assertSame('bar', $collection->getFoo());
     }
 
     /**
@@ -62,7 +61,7 @@ class ManagerTest extends TestCaseAbstract
 
         $manager = new Manager();
 
-        $this->assertEquals(['foo', 'bar'], $manager->attributesDiff($entityA, $entityB));
+        $this->assertSame(['foo', 'bar'], $manager->attributesDiff($entityA, $entityB));
     }
 
     /**
@@ -76,7 +75,7 @@ class ManagerTest extends TestCaseAbstract
         $manager = new Manager();
 
         foreach (['foo', 'bar'] as $key) {
-            $this->assertEquals([$key], $manager->attributesDiff($entityA, $entityB, [$key]));
+            $this->assertSame([$key], $manager->attributesDiff($entityA, $entityB, [$key]));
         }
     }
 
