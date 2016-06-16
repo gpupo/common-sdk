@@ -1,9 +1,11 @@
 *.swp
-/vendor/
-/nbproject/
-/.idea/
+vendor
+phpunit.xml
+Resources/*
 /build/
+*.phar
 _layout/*
 _site/*
-Resources/*
+app.json
 composer.lock
+*.cache
