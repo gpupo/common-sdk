@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Traits;
 
 /**
@@ -75,7 +74,7 @@ trait MagicCommandTrait
             }
         }
 
-        throw new \BadMethodCallException('There is no method ['.$method.']');
+        throw new \BadMethodCallException('There is no method [' . $method . ']');
     }
 
     protected function magicCommandCall($mode, $method, $args)
@@ -83,7 +82,7 @@ trait MagicCommandTrait
         $len = strlen($mode);
         $command = substr($method, 0, $len);
         if ($command === $mode) {
-            $finalMethod = 'magic'.ucfirst($mode);
+            $finalMethod = 'magic' . ucfirst($mode);
             $suplement = substr($method, $len);
 
             return $this->$finalMethod($suplement, current($args));

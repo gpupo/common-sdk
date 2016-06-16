@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Traits;
 
 use Gpupo\CommonSdk\Entity\EntityInterface;
@@ -36,7 +35,7 @@ trait EntityDiffTrait
             }
         }
 
-        if (!empty($list)) {
+        if ( ! empty($list)) {
             return $list;
         }
 
@@ -45,13 +44,13 @@ trait EntityDiffTrait
 
     protected function attributesCompare(EntityInterface $entityA, EntityInterface $entityB, $atribute)
     {
-        if (!$entityA->schemaHasKey($atribute)) {
+        if ( ! $entityA->schemaHasKey($atribute)) {
             throw new InvalidArgumentException('Atributo inexistente!');
         }
 
-        $method = 'get'.ucfirst($atribute);
+        $method = 'get' . ucfirst($atribute);
 
-        return ($entityA->$method() !== $entityB->$method());
+        return $entityA->$method() !== $entityB->$method();
     }
 
     protected function attributesResolv(EntityInterface $entityA, array $attributes = null)

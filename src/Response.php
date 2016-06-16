@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
@@ -100,7 +99,7 @@ class Response extends Collection
             if (array_key_exists($code, static::$statusTexts)) {
                 $message = static::$statusTexts[$code];
             } else {
-                $message = 'Unknow Error ('.$code.')';
+                $message = 'Unknow Error (' . $code . ')';
             }
 
             throw new RequestException($message, $code);
@@ -119,8 +118,8 @@ class Response extends Collection
     public function toLog()
     {
         return [
-            'raw'           => str_replace('"', '', $this->getResponseRaw()),
-            'statusCode'    => $this->getHttpStatusCode(),
+            'raw'        => str_replace('"', '', $this->getResponseRaw()),
+            'statusCode' => $this->getHttpStatusCode(),
         ];
     }
 }

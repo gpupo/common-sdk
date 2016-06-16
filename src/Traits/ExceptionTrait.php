@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Traits;
 
 /**
@@ -31,13 +30,13 @@ trait ExceptionTrait
     public function toLog()
     {
         return [
-            'message'   => $this->getMessage(),
-            'code'      => $this->getCode(),
+            'message' => $this->getMessage(),
+            'code'    => $this->getCode(),
         ];
     }
 
     public function addMessagePrefix($string)
     {
-        $this->setMessage($string.' '.$this->getMessage());
+        $this->setMessage($string . ' ' . $this->getMessage());
     }
 }

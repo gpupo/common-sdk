@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Client\Oauth2\Provider;
 
 class GenericProvider extends ProviderAbstract
@@ -19,8 +18,8 @@ class GenericProvider extends ProviderAbstract
     public function getDefaultOptions()
     {
         return [
-            'authorize'      => '',
-            'accessToken'    => '',
+            'authorize'   => '',
+            'accessToken' => '',
         ];
     }
 }

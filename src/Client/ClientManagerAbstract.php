@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Client;
 
 use Gpupo\CommonSdk\Exception\ManagerException;
@@ -54,7 +53,7 @@ abstract class ClientManagerAbstract
      */
     protected function isDryRun()
     {
-        return !empty($this->dryRun);
+        return ! empty($this->dryRun);
     }
 
     /**
@@ -94,17 +93,17 @@ abstract class ClientManagerAbstract
      */
     public function factoryMap($operation, array $parameters = null)
     {
-        if (!is_array($this->maps)) {
+        if ( ! is_array($this->maps)) {
             throw new ManagerException('Maps missed!');
         }
 
-        if (!array_key_exists($operation, $this->maps)) {
-            throw new ManagerException('Map ['.$operation.'] not found on ['
-                .$this->getEntityName().' Manager]');
+        if ( ! array_key_exists($operation, $this->maps)) {
+            throw new ManagerException('Map [' . $operation . '] not found on ['
+                . $this->getEntityName() . ' Manager]');
         }
 
         $data = $this->maps[$operation];
-        if (!is_array($data)) {
+        if ( ! is_array($data)) {
             throw new ManagerException('Map MUST be array');
         }
 
@@ -113,7 +112,7 @@ abstract class ClientManagerAbstract
 
     protected function exceptionHandler(\Exception $exception, $method, $resource)
     {
-        $text = $method.' on '.$resource.' FAIL:'.$exception->getMessage();
+        $text = $method . ' on ' . $resource . ' FAIL:' . $exception->getMessage();
 
         $this->log('critical', $text, ['code' => $exception->getCode()]);
 
@@ -152,8 +151,8 @@ abstract class ClientManagerAbstract
     protected function performReturn($return, $mode, Map $map)
     {
         $this->log('debug', 'ClientManager:Perform', [
-            'mode'  => $mode,
-            'map'   => $map->toLog(),
+            'mode' => $mode,
+            'map'  => $map->toLog(),
         ]);
 
         return $return;
@@ -165,7 +164,7 @@ abstract class ClientManagerAbstract
 
         $attempt = 0;
         while ($attempt <= 5) {
-            $attempt++;
+            ++$attempt;
             try {
                 if ($map->getMode()) {
                     $this->getClient()->setMode($map->getMode());
@@ -173,7 +172,7 @@ abstract class ClientManagerAbstract
 
                 return $this->getClient()->$methodName($map->getResource(), $body);
             } catch (\Exception $exception) {
-                if (!$this->retry($exception, $attempt)) {
+                if ( ! $this->retry($exception, $attempt)) {
                     throw $this->exceptionHandler($exception, $map->getMethod(),
                         $map->getResource());
                 }

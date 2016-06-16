@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
@@ -51,7 +50,7 @@ class Request extends Collection
     {
         $transport = $this->get('transport');
 
-        if (!$transport instanceof Transport) {
+        if ( ! $transport instanceof Transport) {
             throw new Exception\RequestException('Transport missed');
         }
 

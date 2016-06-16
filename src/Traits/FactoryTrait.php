@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Traits;
 
 trait FactoryTrait
@@ -32,7 +31,7 @@ trait FactoryTrait
         if ($command === 'factory') {
             return self::factory($objectName, current($args), next($args));
         } else {
-            throw new \BadMethodCallException('There is no method '.$method);
+            throw new \BadMethodCallException('There is no method ' . $method);
         }
     }
 
@@ -58,14 +57,14 @@ trait FactoryTrait
 
         foreach ($entityRepository as $class) {
             $data = self::resolvNeighborObject($class, $objectName);
-            if (!empty($data['found'])) {
+            if ( ! empty($data['found'])) {
                 return $data['found'];
             }
 
             $errors .= $data['error'];
         }
 
-        throw new \Exception('Class '.$errors.' not found');
+        throw new \Exception('Class ' . $errors . ' not found');
     }
 
     protected static function resolvNeighborObject($calledClass, $objectName)
@@ -77,13 +76,13 @@ trait FactoryTrait
         $list[key($list)] = $objectName;
         $fullyQualified = implode('\\', $list);
 
-        if (!class_exists($fullyQualified)) {
+        if ( ! class_exists($fullyQualified)) {
             $error .= $fullyQualified;
-            $fullyQualified .= '\\'.$objectName;
+            $fullyQualified .= '\\' . $objectName;
         }
 
-        if (!class_exists($fullyQualified)) {
-            $error .= ' or '.$fullyQualified;
+        if ( ! class_exists($fullyQualified)) {
+            $error .= ' or ' . $fullyQualified;
         } else {
             $found = $fullyQualified;
         }

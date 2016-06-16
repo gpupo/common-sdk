@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Client;
 
 use Gpupo\CommonSdk\Exception\RequestException;
@@ -28,7 +27,6 @@ abstract class ClientAbstract extends BoardAbstract
     protected function renderContentType()
     {
         if ($this->getMode() === 'form') {
-
             $this->setMode(false);
 
             return 'Content-Type: application/x-www-form-urlencoded';
@@ -39,7 +37,7 @@ abstract class ClientAbstract extends BoardAbstract
 
     public function setMode($mode)
     {
-        $this->mode =  $mode;
+        $this->mode = $mode;
     }
 
     public function getMode()
@@ -48,7 +46,7 @@ abstract class ClientAbstract extends BoardAbstract
     }
 
     /**
-     * @return Array
+     * @return array
      */
     protected function renderHeader()
     {
@@ -60,7 +58,7 @@ abstract class ClientAbstract extends BoardAbstract
         ] as $item) {
             if (is_array($item)) {
                 $list = array_merge($list, $item);
-            } elseif (!empty($item)) {
+            } elseif ( ! empty($item)) {
                 $list[] = $item;
             }
         }
@@ -88,7 +86,7 @@ abstract class ClientAbstract extends BoardAbstract
 
         $request = new Request();
 
-        if (!empty($method)) {
+        if ( ! empty($method)) {
             $request->setMethod($method);
         }
 
@@ -116,13 +114,13 @@ abstract class ClientAbstract extends BoardAbstract
 
             $this->debug('Client Execution',
                 [
-                    'request'   => $request->toLog(),
-                    'response'  => $response->toLog(),
+                    'request'  => $request->toLog(),
+                    'response' => $response->toLog(),
                 ]
             );
+
             return $response;
         } catch (RequestException $e) {
-
             $this->error('Execucao fracassada', [
                 'exception' => $e->toLog(),
                 'request'   => $request->toLog(),
@@ -197,12 +195,12 @@ abstract class ClientAbstract extends BoardAbstract
 
     protected function normalizeResourceUri($resource)
     {
-        if (!is_array($resource)) {
+        if ( ! is_array($resource)) {
             return $resource;
         }
 
         foreach (['endpoint', 'url'] as $key) {
-            if (array_key_exists($key, $resource) && !empty($resource[$key])) {
+            if (array_key_exists($key, $resource) && ! empty($resource[$key])) {
                 return $resource[$key];
             }
         }
@@ -226,6 +224,6 @@ abstract class ClientAbstract extends BoardAbstract
             $endpoint .= '/';
         }
 
-        return $endpoint.$resource;
+        return $endpoint . $resource;
     }
 }

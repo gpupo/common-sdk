@@ -11,7 +11,6 @@
  * For more information, see
  * <http://www.g1mr.com/common-sdk/>.
  */
-
 namespace Gpupo\CommonSdk\Entity;
 
 /**
@@ -22,7 +21,7 @@ namespace Gpupo\CommonSdk\Entity;
 final class Entity extends EntityAbstract implements EntityInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      * Necessário para identificar foo como chave primária, mas se esta
      *  entidade possuísse propriedade [id] isto seria desnecessário.
      *
@@ -33,8 +32,8 @@ final class Entity extends EntityAbstract implements EntityInterface
     public function getSchema()
     {
         return  [
-            'foo'   => 'string',
-            'bar'   => 'number',
+            'foo' => 'string',
+            'bar' => 'number',
         ];
     }
 
@@ -42,5 +41,4 @@ final class Entity extends EntityAbstract implements EntityInterface
     {
         $this->setRequiredSchema(['foo']);
     }
-
 }
