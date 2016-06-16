@@ -25,8 +25,10 @@
         "monolog/monolog": "~1",
         "symfony/console": "~3.1",
         "phpunit/phpunit": "~5.4",
-        "codeclimate/php-test-reporter": "dev-master",
         "sebastian/peek-and-poke": "1.0.x@dev"
+    },
+    "require-dev": {
+      "codeclimate/php-test-reporter": "@dev"
     },
     "config": {
         "preferred-install": "dist"
