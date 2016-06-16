@@ -11,7 +11,7 @@ Veja:
 * [Composer Package](https://packagist.org/packages/gpupo/) on packagist.org
 * [gpupo/submarino-sdk](https://github.com/gpupo/submarino-sdk)  - B2W Marketplace ![Build Status](https://secure.travis-ci.org/gpupo/submarino-sdk.png?branch=master)
 * [gpupo/cnova-sdk](https://github.com/gpupo/cnova-sdk)  - Cnova Marketplace ![Build Status](https://secure.travis-ci.org/gpupo/cnova-sdk.png?branch=master)
-* [marketplace-bundle Composer Package](https://packagist.org/packages/gpupo/marketplace-bundle) - Integração com Symfony2
+* [marketplace-bundle Composer Package](https://packagist.org/packages/gpupo/markethub-bundle) - Integração com Symfony2
 
 ## Install
 
