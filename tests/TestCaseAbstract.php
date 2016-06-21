@@ -35,13 +35,17 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
         $this->assertContains($code, [200, 204], $context);
     }
 
+    protected function getLoggerFilePath()
+    {
+        return $this->getVarPath() . 'logs/tests.log';
+    }
+
     public function getLogger()
     {
         if ( ! $this->logger) {
             $channel = str_replace('\\', '.', get_called_class());
             $logger = new Logger($channel);
-            $filePath = $this->getResourceFilePath('logs/tests.log', true);
-            $logger->pushHandler(new StreamHandler($filePath, Logger::DEBUG));
+            $logger->pushHandler(new StreamHandler($this->getLoggerFilePath(), Logger::DEBUG));
             $this->setLogger($logger);
         }
 
@@ -99,6 +103,11 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
     public static function getResourcesPath()
     {
         return getcwd() . '/Resources/';
+    }
+
+    public static function getVarPath()
+    {
+        return getcwd() . '/var/';
     }
 
     protected function getResourceContent($file)
