@@ -15,8 +15,7 @@ branches:
   except:
     - /^psr.*$/
 before_script:
-  - composer self-update
-  - composer install --prefer-dist
+  - ant
 script: ant test
 notifications:
   email: false
