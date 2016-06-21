@@ -14,8 +14,6 @@ matrix:
 branches:
   except:
     - /^psr.*$/
-before_script:
-  - ant
-script: ant test
+script: ant travis
 notifications:
   email: false

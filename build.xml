@@ -22,7 +22,8 @@
    <arg value="install"/>
   </exec>
  </target>
- <target name="test" description="Run tests" depends="phpunit,codeclimate"/>
+ <target name="travis" description="Run tests" depends="libraries, phpunit,codeclimate"/>
+ <target name="test" description="Run tests" depends="phpunit"/>
  <target name="phpunit" description="Generate Reports">
   <mkdir dir="${basedir}/var/logs"/>
   <touch file="${basedir}/var/logs/test.log"/>
