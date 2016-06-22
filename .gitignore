@@ -1,11 +1,9 @@
-*.swp
-vendor
-phpunit.xml
-Resources/*
 /build/
-*.phar
-_layout/*
-_site/*
+/vendor/
+/var/
 app.json
-composer.lock
+Resources/logs/*
+*.phar
+*.lock
 *.cache
+phpunit.xml

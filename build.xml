@@ -27,8 +27,12 @@
  <target name="phpunit" description="Generate Reports">
   <mkdir dir="${basedir}/var/logs"/>
   <touch file="${basedir}/var/logs/test.log"/>
-  <exec executable="${basedir}/vendor/bin/phpunit">
-  </exec>
+  <exec executable="${basedir}/vendor/bin/phpunit" outputproperty="log"/>
+  <echo message="${log}"/>
+  <condition property="onSuccess">
+    <matches pattern="OK" string="${log}"/>
+  </condition>
+  <fail message="Tests fail!" unless="onSuccess"/>
  </target>
  <target name="codeclimate" description="Upload Clover Report">
   <exec executable="${basedir}/vendor/bin/test-reporter">
