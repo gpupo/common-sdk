@@ -13,14 +13,29 @@
  */
 namespace Gpupo\CommonSdk\Traits;
 
+use Gpupo\CommonSdk\Entity\EntityAbstract;
+use Gpupo\Common\Entity\CollectionAbstract;
+
 trait FactoryTrait
 {
+    protected function factoryNewElement($className, $data)
+    {
+        if (
+            $data instanceof CollectionAbstract
+            && !in_array(EntityAbstract::class, class_parents($className))
+        ) {
+            $data = $data->toArray();
+        }
+
+        return new $className($data);
+    }
+
     protected function factoryNeighborObject($objectName, $data)
     {
-        $object = static::getFullyQualifiedNeighborObject(get_called_class(),
+        $className = static::getFullyQualifiedNeighborObject(get_called_class(),
             $objectName);
 
-        return new $object($data);
+        return $this->factoryNewElement($className, $data);
     }
 
     public static function __callStatic($method, $args)
