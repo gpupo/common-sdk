@@ -19,7 +19,7 @@ trait EntityTrait
 
     public static function getFullyQualifiedObject()
     {
-        if ( ! empty(self::$fullyQualifiedObject)) {
+        if (!empty(self::$fullyQualifiedObject)) {
             return self::$fullyQualifiedObject;
         }
     }
@@ -78,7 +78,7 @@ trait EntityTrait
             return $this->assertInstanceOf('\Gpupo\Common\Entity\CollectionAbstract', $object->$getter());
         }
 
-        if ( ! array_key_exists($name, $expected)) {
+        if (!array_key_exists($name, $expected)) {
             return $this->markSkipped('not found key ' . $name);
         }
 

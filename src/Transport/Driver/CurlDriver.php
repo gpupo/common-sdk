@@ -91,7 +91,7 @@ class CurlDriver extends DriverAbstract
         $this->setOption(CURLOPT_PUT, true);
         $pointer = fopen('php://temp/maxmemory:512000', 'w+');
 
-        if ( ! $pointer) {
+        if (!$pointer) {
             throw new RuntimeException('Could not open temp memory data');
         }
 
@@ -141,7 +141,7 @@ class CurlDriver extends DriverAbstract
         $data .= $this->registerEncode('url', $this->get('url'), false);
         $data .= $this->registerEncode('header', implode("\n", $this->header), false);
         $body = $this->getBody();
-        if ( ! empty($body)) {
+        if (!empty($body)) {
             $data .= $this->registerEncode('Body', $body, false);
         }
 

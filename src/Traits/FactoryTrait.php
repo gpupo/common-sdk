@@ -13,8 +13,8 @@
  */
 namespace Gpupo\CommonSdk\Traits;
 
-use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\Common\Entity\CollectionAbstract;
+use Gpupo\CommonSdk\Entity\EntityAbstract;
 
 trait FactoryTrait
 {
@@ -22,7 +22,7 @@ trait FactoryTrait
     {
         if (
             $data instanceof CollectionAbstract
-            && !in_array(EntityAbstract::class, class_parents($className))
+            && !in_array(EntityAbstract::class, class_parents($className), true)
         ) {
             $data = $data->toArray();
         }
@@ -72,7 +72,7 @@ trait FactoryTrait
 
         foreach ($entityRepository as $class) {
             $data = self::resolvNeighborObject($class, $objectName);
-            if ( ! empty($data['found'])) {
+            if (!empty($data['found'])) {
                 return $data['found'];
             }
 
@@ -91,12 +91,12 @@ trait FactoryTrait
         $list[key($list)] = $objectName;
         $fullyQualified = implode('\\', $list);
 
-        if ( ! class_exists($fullyQualified)) {
+        if (!class_exists($fullyQualified)) {
             $error .= $fullyQualified;
             $fullyQualified .= '\\' . $objectName;
         }
 
-        if ( ! class_exists($fullyQualified)) {
+        if (!class_exists($fullyQualified)) {
             $error .= ' or ' . $fullyQualified;
         } else {
             $found = $fullyQualified;

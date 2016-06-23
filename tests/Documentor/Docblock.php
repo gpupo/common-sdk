@@ -32,7 +32,7 @@ class Docblock
 
     public function getResourcesDestinationPath($file)
     {
-        if ( ! empty($this->resourcesPath)) {
+        if (!empty($this->resourcesPath)) {
             $file = str_replace('\\', '_', $file);
             $dir = "{$this->resourcesPath}Documentation";
             $path = "$dir/{$file}";
@@ -68,7 +68,7 @@ class Docblock
 
         $this->renderTest($data);
 
-        if ( ! empty($json)) {
+        if (!empty($json)) {
             $this->renderJson($data, $json);
         }
     }
