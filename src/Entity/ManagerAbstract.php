@@ -94,13 +94,18 @@ abstract class ManagerAbstract extends ClientManagerAbstract
     /**
      * @return Gpupo\Common\Entity\Collection|null
      */
-    public function fetch($offset = 0, $limit = 50, array $parameters = [])
+    public function fetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch')
     {
         $pars = array_merge($this->fetchDefaultParameters(), $parameters, ['offset' => $offset, 'limit' => $limit]);
 
-        $response = $this->perform($this->factoryMap('fetch', $pars));
+        $response = $this->perform($this->factoryMap($route, $pars));
 
         return $this->fetchPrepare($this->processResponse($response));
+    }
+
+    public function fetchByRoute($route = 'fetch', $offset = 0, $limit = 50, array $parameters = [])
+    {
+        return $this->fetch($offset, $limit, $parameters, $route);
     }
 
     protected function factoryCollection(array $list)
