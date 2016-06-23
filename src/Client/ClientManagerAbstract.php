@@ -53,7 +53,7 @@ abstract class ClientManagerAbstract
      */
     protected function isDryRun()
     {
-        return ! empty($this->dryRun);
+        return !empty($this->dryRun);
     }
 
     /**
@@ -93,17 +93,17 @@ abstract class ClientManagerAbstract
      */
     public function factoryMap($operation, array $parameters = null)
     {
-        if ( ! is_array($this->maps)) {
+        if (!is_array($this->maps)) {
             throw new ManagerException('Maps missed!');
         }
 
-        if ( ! array_key_exists($operation, $this->maps)) {
+        if (!array_key_exists($operation, $this->maps)) {
             throw new ManagerException('Map [' . $operation . '] not found on ['
                 . $this->getEntityName() . ' Manager]');
         }
 
         $data = $this->maps[$operation];
-        if ( ! is_array($data)) {
+        if (!is_array($data)) {
             throw new ManagerException('Map MUST be array');
         }
 
@@ -172,7 +172,7 @@ abstract class ClientManagerAbstract
 
                 return $this->getClient()->$methodName($map->getResource(), $body);
             } catch (\Exception $exception) {
-                if ( ! $this->retry($exception, $attempt)) {
+                if (!$this->retry($exception, $attempt)) {
                     throw $this->exceptionHandler($exception, $map->getMethod(),
                         $map->getResource());
                 }

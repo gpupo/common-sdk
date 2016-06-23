@@ -16,7 +16,7 @@ namespace Gpupo\CommonSdk\Entity\Schema;
 use Gpupo\CommonSdk\Exception\SchemaException;
 
 // Hack for old php versions (<5.5) to use boolval()
-if ( ! function_exists('boolval')) {
+if (!function_exists('boolval')) {
     function boolval($val)
     {
         return (bool) $val;
@@ -29,7 +29,7 @@ class Tools
     {
         if (is_array($data) && array_key_exists($key, $data)) {
             $fill = $data[$key];
-            if (is_array($default) && ! is_array($fill)) {
+            if (is_array($default) && !is_array($fill)) {
                 $fill = [$key => $fill];
             }
         }
@@ -93,7 +93,7 @@ class Tools
 
     protected static function testNumber($key, $current, $value)
     {
-        if ($value === 'number' && ! is_numeric($current)) {
+        if ($value === 'number' && !is_numeric($current)) {
             self::returnInvalid($key, $current, $value);
         }
     }

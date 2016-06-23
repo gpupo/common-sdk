@@ -21,7 +21,7 @@ trait CacheTrait
 
     public function initCache($cacheItemPool)
     {
-        if ( ! empty($cacheItemPool)) {
+        if (!empty($cacheItemPool)) {
             return $this->setCacheItemPool($cacheItemPool);
         }
     }

@@ -36,7 +36,7 @@ class Map extends Collection
     {
         $route = $this->get('resource');
         $parameters = $this->getParameters();
-        if ( ! empty($parameters) && is_array($parameters)) {
+        if (!empty($parameters) && is_array($parameters)) {
             $route = $this->populatePlaceholders($route, $parameters);
         }
 

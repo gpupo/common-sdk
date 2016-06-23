@@ -36,7 +36,7 @@ trait LoggerTrait
 
     public function initLogger($logger)
     {
-        if ( ! empty($logger)) {
+        if (!empty($logger)) {
             return $this->setLogger($logger);
         }
     }

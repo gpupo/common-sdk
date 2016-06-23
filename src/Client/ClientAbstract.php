@@ -58,7 +58,7 @@ abstract class ClientAbstract extends BoardAbstract
         ] as $item) {
             if (is_array($item)) {
                 $list = array_merge($list, $item);
-            } elseif ( ! empty($item)) {
+            } elseif (!empty($item)) {
                 $list[] = $item;
             }
         }
@@ -86,7 +86,7 @@ abstract class ClientAbstract extends BoardAbstract
 
         $request = new Request();
 
-        if ( ! empty($method)) {
+        if (!empty($method)) {
             $request->setMethod($method);
         }
 
@@ -195,12 +195,12 @@ abstract class ClientAbstract extends BoardAbstract
 
     protected function normalizeResourceUri($resource)
     {
-        if ( ! is_array($resource)) {
+        if (!is_array($resource)) {
             return $resource;
         }
 
         foreach (['endpoint', 'url'] as $key) {
-            if (array_key_exists($key, $resource) && ! empty($resource[$key])) {
+            if (array_key_exists($key, $resource) && !empty($resource[$key])) {
                 return $resource[$key];
             }
         }

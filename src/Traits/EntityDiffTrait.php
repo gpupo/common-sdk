@@ -35,7 +35,7 @@ trait EntityDiffTrait
             }
         }
 
-        if ( ! empty($list)) {
+        if (!empty($list)) {
             return $list;
         }
 
@@ -44,7 +44,7 @@ trait EntityDiffTrait
 
     protected function attributesCompare(EntityInterface $entityA, EntityInterface $entityB, $atribute)
     {
-        if ( ! $entityA->schemaHasKey($atribute)) {
+        if (!$entityA->schemaHasKey($atribute)) {
             throw new InvalidArgumentException('Atributo inexistente!');
         }
 

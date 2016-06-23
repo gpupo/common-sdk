@@ -75,7 +75,7 @@ abstract class DriverAbstract extends Collection
 
     public function register()
     {
-        if ( ! empty($this->registerPath)) {
+        if (!empty($this->registerPath)) {
             try {
                 return $this->registerSaveToFile();
             } catch (\Exception $e) {

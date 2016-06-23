@@ -21,7 +21,7 @@ trait PoolTrait
 
     public function getPool()
     {
-        if ( ! $this->pool) {
+        if (!$this->pool) {
             $this->pool = new Pool();
         }
 

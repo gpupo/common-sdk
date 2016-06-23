@@ -61,7 +61,7 @@ abstract class EntityAbstract extends SchemaAbstract
      */
     public function __construct($data = null)
     {
-        if ( ! $this instanceof EntityInterface) {
+        if (!$this instanceof EntityInterface) {
             throw new \Exception('EntityInterface deve ser implementada');
         }
 
@@ -71,7 +71,7 @@ abstract class EntityAbstract extends SchemaAbstract
 
         $schema = $this->getSchema();
 
-        if ( ! empty($schema)) {
+        if (!empty($schema)) {
             parent::__construct($this->initSchema($this->getSchema(), $this->beforeConstruct($data)));
         }
 

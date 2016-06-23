@@ -42,7 +42,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     public function getLogger()
     {
-        if ( ! $this->logger) {
+        if (!$this->logger) {
             $channel = str_replace('\\', '.', get_called_class());
             $logger = new Logger($channel);
             $logger->pushHandler(new StreamHandler($this->getLoggerFilePath(), Logger::DEBUG));
