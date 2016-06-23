@@ -15,10 +15,20 @@ use Monolog\Logger;
 
 abstract class AbstractApplication extends Core
 {
+    protected function getLogFilePath()
+    {
+        return 'Resources/logs/main.log';
+    }
+
+    protected function getLogLevel()
+    {
+        return Logger::DEBUG;
+    }
+
     public function factoryLogger()
     {
         $logger = new Logger('bin');
-        $logger->pushHandler(new StreamHandler('Resources/logs/main.log', Logger::DEBUG));
+        $logger->pushHandler(new StreamHandler($this->getLogFilePath(), $this->getLogLevel()));
 
         return $logger;
     }
