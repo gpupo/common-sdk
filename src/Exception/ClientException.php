@@ -9,6 +9,9 @@
  */
 namespace Gpupo\CommonSdk\Exception;
 
-class RequestException extends RuntimeException
+use Gpupo\CommonSdk\Traits\ExceptionTrait;
+
+class ClientException extends \RuntimeException implements ExceptionInterface
 {
+    use ExceptionTrait;
 }

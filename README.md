@@ -26,32 +26,22 @@ Veja:
 
 MIT, see LICENSE.
 
-## Coisas para fazer:
-
-- [ ] Objeto ``Transport`` deve adotar padrão Driver, suportando outras bibliotecas além de ``cUrl``
-- [x] Testes devem suportar Mockups
-- [ ] ``Client\Oauth2`` deve oferecer funcionalidades para possibilitar a aquisição e renovação de tokens em processo antes de ``Request->exec()``;
-- [ ] Melhor a documentação dos objetos - utilizar [lista apontada pelo Scrutinizer](https://scrutinizer-ci.com/g/gpupo/common-sdk/issues/master)
-
 
 ---
 
 # Propriedades dos objetos (Testdox)
 
-<!--
-Comando para geração da lista:
-
-phpunit --testdox | grep -vi php |  sed "s/.*\[/-&/" | sed 's/.*Gpupo.*/&\'$'\n/g' | sed 's/.*Gpupo.*/&\'$'\n/g' | sed 's/Gpupo\\Tests\\CommonSdk\\/### /g'
-
--->
-A lista abaixo é gerada a partir da saída da execução dos testes:
-
+Error:         No code coverage driver is available
 
 ### Client\Client
 
 
 - [x] Url independente de configuracao
 - [x] Url baseado em configuracao
+- [x] Url evitando configuracao
+- [x] Acesso a objeto request
+- [x] Objeto request possui header
+- [x] Executa requisições post
 
 ### Client\Oauth2\Provider\GenericProvider
 
@@ -64,6 +54,11 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 - [x] Acesso a identificador padrao da entidade
 - [x] Acesso ao nome da entidade atual
 - [x] Valida dados obrigatórios
+- [x] Possui getter para acesso a foo
+- [x] Possui setter para definir foo
+- [x] Possui getter para acesso a bar
+- [x] Possui setter para definir bar
+- [x] Entidade é uma Coleção
 
 ### Entity\Manager
 
@@ -74,6 +69,13 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 - [x] Encontra diferenca entre entidades diferentes a partir de chaves selecionadas
 - [x] Falha ao tentar encontrar diferenca usando propriedade inexistente
 
+### Entity\Metadata\MetadataContainer
+
+
+- [x] É um objeto metadata container
+- [x] Possui objeto metadata
+- [x] Possui propriedade indicadora de quantidade de registros
+
 ### Entity\Schema\Tools
 
 
@@ -82,9 +84,14 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 - [x] Aborta com uso de dados invalidos
 - [x] Sucesso com uso de dados validos
 
+### Exception\Main
+
+
+- [x] A biblioteca possui uma lista de Exceções
+
 ### Transport
 
 
 - [x] Recebe objeto options
-- [x] Executa requisição a uma url informada
-- [x] Possui informações sobre a Última requisição
+- [x] Executa uma requisição para url informada
+

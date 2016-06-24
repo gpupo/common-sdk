@@ -22,9 +22,10 @@ class TransportTest extends TestCaseAbstract
     }
 
     /**
+     * @testdox Executa uma requisição para url informada
      * @depends testRecebeObjetoOptions
      */
-    public function testExecutaRequisiçãoAUmaUrlInformada(Transport $transport)
+    public function testExec(Transport $transport)
     {
         $transport->setUrl('https://github.com/');
         $data = $transport->exec();
@@ -34,9 +35,10 @@ class TransportTest extends TestCaseAbstract
     }
 
     /**
+     * @testdox Possui informações sobre a última requisição
      * @depends testExecutaRequisiçãoAUmaUrlInformada
      */
-    public function testPossuiInformaçõesSobreAÚltimaRequisição($transport)
+    public function testLastTransfer($transport)
     {
         $lastTransfer = $transport->getLastTransfer();
         $this->assertInstanceof("\Gpupo\Common\Entity\Collection", $lastTransfer);
