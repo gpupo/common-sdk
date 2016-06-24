@@ -47,7 +47,7 @@ class Request extends Collection
         $transport = $this->get('transport');
 
         if (!$transport instanceof Transport) {
-            throw new Exception\RequestException('Transport missed');
+            throw new Exception\ClientException('Transport missed');
         }
 
         return $transport;

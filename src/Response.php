@@ -10,7 +10,7 @@
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
-use Gpupo\CommonSdk\Exception\RequestException;
+use Gpupo\CommonSdk\Exception\ClientException;
 
 /**
  * @method getHttpStatusCode()
@@ -98,7 +98,7 @@ class Response extends Collection
                 $message = 'Unknow Error (' . $code . ')';
             }
 
-            throw new RequestException($message, $code);
+            throw new ClientException($message, $code);
         }
 
         return true;

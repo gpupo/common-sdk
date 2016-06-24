@@ -9,7 +9,7 @@
  */
 namespace Gpupo\CommonSdk\Client;
 
-use Gpupo\CommonSdk\Exception\RequestException;
+use Gpupo\CommonSdk\Exception\ClientException;
 use Gpupo\CommonSdk\Request;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Transport;
@@ -116,7 +116,7 @@ abstract class ClientAbstract extends BoardAbstract
             );
 
             return $response;
-        } catch (RequestException $e) {
+        } catch (ClientException $e) {
             $this->error('Execucao fracassada', [
                 'exception' => $e->toLog(),
                 'request'   => $request->toLog(),
