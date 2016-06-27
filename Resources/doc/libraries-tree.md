@@ -1,4 +1,4 @@
-#Tree of dependencies:
+## Árvore de dependências (libraries)
 ```
 sebastian/peek-and-poke 1.0.x-dev Proxy for accessing non-public attributes and methods of an object
 `--php >=5.6.0
@@ -96,7 +96,7 @@ phpunit/phpunit 5.4.6 The PHP Unit Testing framework.
 |  `--php >=5.6
 `--symfony/yaml ~2.1|~3.0
    `--php >=5.5.9
-gpupo/common 1.6.0 Common Objects
+gpupo/common 1.6.5 Common Objects
 |--doctrine/common ~2.5.1
 |  |--doctrine/annotations 1.*
 |  |  |--doctrine/lexer 1.*
@@ -171,3 +171,6 @@ codeclimate/php-test-reporter v0.3.2 PHP client for reporting test coverage to C
    |--php >=5.5.9
    `--symfony/polyfill-mbstring ~1.0
       `--php >=5.3.3
+
+```
+---
