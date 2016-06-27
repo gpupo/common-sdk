@@ -10,7 +10,6 @@
 namespace Gpupo\Tests\CommonSdk\Exception;
 
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
-use Gpupo\CommonSdk\Exception\RuntimeException;
 
 class MainTest extends TestCaseAbstract
 {
@@ -41,11 +40,10 @@ class MainTest extends TestCaseAbstract
             'Schema',
         ] as $i) {
             $list[] = [
-                '\Gpupo\CommonSdk\Exception\\'.$i.'Exception',
+                '\Gpupo\CommonSdk\Exception\\' . $i . 'Exception',
             ];
         }
 
         return $list;
     }
-
 }
