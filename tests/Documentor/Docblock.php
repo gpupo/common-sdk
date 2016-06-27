@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\Tests\CommonSdk\Documentor;
 
 use Gpupo\Common\Traits\SingletonTrait;
@@ -43,7 +44,7 @@ class Docblock
         $loader = new Twig_Loader_String();
         $twig = new Twig_Environment($loader);
 
-        return $twig->render(file_get_contents(__DIR__ . '/' . $template . '.twig'), $data);
+        return $twig->render(file_get_contents(__DIR__.'/'.$template.'.twig'), $data);
     }
 
     public function generate(array $data, $json = null)
@@ -51,8 +52,8 @@ class Docblock
         foreach ($data['schema'] as $item) {
             $case = $this->camelCase($item['name']);
             $data['methods'][] = [
-                'getter' => 'get' . $case,
-                'setter' => 'set' . $case,
+                'getter' => 'get'.$case,
+                'setter' => 'set'.$case,
                 'return' => $item['return'],
                 'name'   => $item['name'],
                 'type'   => $item['type'],

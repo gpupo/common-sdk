@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\CommonSdk\Entity\Schema;
 
 use Gpupo\CommonSdk\Exception\SchemaException;
@@ -50,9 +51,9 @@ class Tools
 
     protected static function returnInvalid($key, $current, $value)
     {
-        throw new SchemaException('Validation Fail:[' . $key
-            . '] should have value of type [' . $value
-            . '].Received:[' . $current . '].');
+        throw new SchemaException('Validation Fail:['.$key
+            .'] should have value of type ['.$value
+            .'].Received:['.$current.'].');
     }
 
     protected static function isEmptyValue($value, $required = false)
@@ -67,7 +68,7 @@ class Tools
         }
 
         foreach (['Integer', 'Number', 'String'] as $type) {
-            $testMethod = 'test' . $type;
+            $testMethod = 'test'.$type;
             try {
                 self::$testMethod($key, $current, $value);
             } catch (SchemaException $exception) {

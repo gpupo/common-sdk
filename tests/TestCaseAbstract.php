@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\Tests\CommonSdk;
 
 use Gpupo\CommonSdk\Entity\EntityAbstract;
@@ -33,7 +34,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     protected function getLoggerFilePath()
     {
-        return $this->getVarPath() . 'logs/tests.log';
+        return $this->getVarPath().'logs/tests.log';
     }
 
     public function getLogger()
@@ -55,7 +56,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             'message' => $message,
         ];
 
-        return $this->log('info', 'Test ' . $mode, $context);
+        return $this->log('info', 'Test '.$mode, $context);
     }
 
     public function markSkipped($message = '')
@@ -98,12 +99,12 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
      */
     public static function getResourcesPath()
     {
-        return getcwd() . '/Resources/';
+        return getcwd().'/Resources/';
     }
 
     public static function getVarPath()
     {
-        return getcwd() . '/var/';
+        return getcwd().'/var/';
     }
 
     protected function getResourceContent($file)
@@ -118,7 +119,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 
     protected function getResourceFilePath($file, $create = false)
     {
-        $path = static::getResourcesPath() . $file;
+        $path = static::getResourcesPath().$file;
 
         if (file_exists($path)) {
             return $path;
@@ -128,7 +129,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return $this->getResourceFilePath($file);
         }
 
-        throw new \InvalidArgumentException('File ' . $path . ' Not Exist');
+        throw new \InvalidArgumentException('File '.$path.' Not Exist');
     }
 
     protected function factoryResponseFromFixture($file, $httpStatusCode = 200)

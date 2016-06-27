@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\Tests\CommonSdk;
 
 abstract class FactoryTestAbstract extends TestCaseAbstract
@@ -35,7 +36,7 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
             return $this->markTestIncomplete();
         }
 
-        $method = 'create' . ucfirst($name);
+        $method = 'create'.ucfirst($name);
 
         return $this->assertFactoryWorks($objectExpected, $this->getFactory(), $method, $data);
     }

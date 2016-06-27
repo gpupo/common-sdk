@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\CommonSdk\Client;
 
 use Gpupo\CommonSdk\Exception\ManagerException;
@@ -94,8 +95,8 @@ abstract class ClientManagerAbstract
         }
 
         if (!array_key_exists($operation, $this->maps)) {
-            throw new ManagerException('Map [' . $operation . '] not found on ['
-                . $this->getEntityName() . ' Manager]');
+            throw new ManagerException('Map ['.$operation.'] not found on ['
+                .$this->getEntityName().' Manager]');
         }
 
         $data = $this->maps[$operation];
@@ -108,7 +109,7 @@ abstract class ClientManagerAbstract
 
     protected function exceptionHandler(\Exception $exception, $method, $resource)
     {
-        $text = $method . ' on ' . $resource . ' FAIL:' . $exception->getMessage();
+        $text = $method.' on '.$resource.' FAIL:'.$exception->getMessage();
 
         $this->log('critical', $text, ['code' => $exception->getCode()]);
 

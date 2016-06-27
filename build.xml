@@ -77,4 +77,18 @@
 ---
 </echo>
  </target>
+ <target name="box.phar" depends="box.check" unless="box.file.exists">
+   <get src="https://github.com/box-project/box2/releases/download/2.5.2/box-2.5.2.phar" dest="${basedir}/box.phar" skipexisting="false"/>
+ </target>
+ <target name="box.check">
+   <condition property="box.file.exists">
+     <available file="${basedir}/box.phar" type="file" />
+   </condition>
+ </target>
+ <target name="box.build" depends="box.phar" description="Build Phar">
+     <exec executable="php">
+         <arg value="${basedir}/box.phar"/>
+         <arg value="build"/>
+     </exec>
+ </target>
 </project>

@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\Tests\CommonSdk\Exception;
 
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
@@ -40,7 +41,7 @@ class MainTest extends TestCaseAbstract
             'Schema',
         ] as $i) {
             $list[] = [
-                '\Gpupo\CommonSdk\Exception\\' . $i . 'Exception',
+                '\Gpupo\CommonSdk\Exception\\'.$i.'Exception',
             ];
         }
 

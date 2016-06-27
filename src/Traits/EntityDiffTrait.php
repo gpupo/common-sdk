@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\CommonSdk\Traits;
 
 use Gpupo\CommonSdk\Entity\EntityInterface;
@@ -44,7 +45,7 @@ trait EntityDiffTrait
             throw new InvalidArgumentException('Atributo inexistente!');
         }
 
-        $method = 'get' . ucfirst($atribute);
+        $method = 'get'.ucfirst($atribute);
 
         return $entityA->$method() !== $entityB->$method();
     }
