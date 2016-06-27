@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
@@ -95,7 +96,7 @@ class Response extends Collection
             if (array_key_exists($code, static::$statusTexts)) {
                 $message = static::$statusTexts[$code];
             } else {
-                $message = 'Unknow Error (' . $code . ')';
+                $message = 'Unknow Error ('.$code.')';
             }
 
             throw new ClientException($message, $code);

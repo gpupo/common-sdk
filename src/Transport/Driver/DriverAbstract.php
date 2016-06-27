@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\CommonSdk\Transport\Driver;
 
 use Gpupo\Common\Entity\Collection;
@@ -45,14 +46,14 @@ abstract class DriverAbstract extends Collection
 
     protected function getRegisterFilename()
     {
-        $filename = $this->registerPath . '/request-' . date('Y-m-d-h-i-s') . '.txt';
+        $filename = $this->registerPath.'/request-'.date('Y-m-d-h-i-s').'.txt';
         touch($filename);
 
         if (file_exists($filename)) {
             return $filename;
         }
 
-        throw new RuntimeException('Impossivel registrar em ' . $this->registerPath);
+        throw new RuntimeException('Impossivel registrar em '.$this->registerPath);
     }
 
     /**
@@ -64,7 +65,7 @@ abstract class DriverAbstract extends Collection
             $data = json_encode($data, JSON_UNESCAPED_UNICODE);
         }
 
-        return '## ' . $title . ':' . "\n" . $data . "\n";
+        return '## '.$title.':'."\n".$data."\n";
     }
 
     abstract protected function registerSaveToFile();

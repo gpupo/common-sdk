@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\CommonSdk\Traits;
 
 use Gpupo\Common\Entity\CollectionAbstract;
@@ -42,7 +43,7 @@ trait FactoryTrait
         if ($command === 'factory') {
             return self::factory($objectName, current($args), next($args));
         } else {
-            throw new \BadMethodCallException('There is no method ' . $method);
+            throw new \BadMethodCallException('There is no method '.$method);
         }
     }
 
@@ -75,7 +76,7 @@ trait FactoryTrait
             $errors .= $data['error'];
         }
 
-        throw new \Exception('Class ' . $errors . ' not found');
+        throw new \Exception('Class '.$errors.' not found');
     }
 
     protected static function resolvNeighborObject($calledClass, $objectName)
@@ -89,11 +90,11 @@ trait FactoryTrait
 
         if (!class_exists($fullyQualified)) {
             $error .= $fullyQualified;
-            $fullyQualified .= '\\' . $objectName;
+            $fullyQualified .= '\\'.$objectName;
         }
 
         if (!class_exists($fullyQualified)) {
-            $error .= ' or ' . $fullyQualified;
+            $error .= ' or '.$fullyQualified;
         } else {
             $found = $fullyQualified;
         }

@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\CommonSdk\Transport\Driver;
 
 use Gpupo\Common\Entity\Collection;
@@ -133,7 +134,7 @@ class CurlDriver extends DriverAbstract
     protected function registerSaveToFile()
     {
         $filename = $this->getRegisterFilename();
-        $data = "\n\n#===\n" . $this->registerEncode('cUrl', $this->getLastTransfer());
+        $data = "\n\n#===\n".$this->registerEncode('cUrl', $this->getLastTransfer());
         $data .= $this->registerEncode('url', $this->get('url'), false);
         $data .= $this->registerEncode('header', implode("\n", $this->header), false);
         $body = $this->getBody();

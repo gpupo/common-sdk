@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\Tests\CommonSdk\Traits;
 
 trait EntityTrait
@@ -39,7 +40,7 @@ trait EntityTrait
             return self::createObject($className, $data);
         }
 
-        throw new \Exception($className . ' not found!', 1);
+        throw new \Exception($className.' not found!', 1);
     }
 
     public static function setUpEntityTest()
@@ -68,14 +69,14 @@ trait EntityTrait
 
     public function assertSchemaGetter($name, $type, $object, $expected)
     {
-        $getter = 'get' . $this->camelCase($name);
+        $getter = 'get'.$this->camelCase($name);
 
         if ($type === 'object') {
             return $this->assertInstanceOf('\Gpupo\Common\Entity\CollectionAbstract', $object->$getter());
         }
 
         if (!array_key_exists($name, $expected)) {
-            return $this->markSkipped('not found key ' . $name);
+            return $this->markSkipped('not found key '.$name);
         }
 
         $this->assertSame($expected[$name], $object->get($name));
@@ -86,8 +87,8 @@ trait EntityTrait
     public function assertSchemaSetter($name, $type, $object)
     {
         $case = $this->camelCase($name);
-        $setter = 'set' . $case;
-        $getter = 'get' . $case;
+        $setter = 'set'.$case;
+        $getter = 'get'.$case;
 
         if ($type !== 'object') {
             $this->assertSame('foo', $object->$setter('foo')->$getter());

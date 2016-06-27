@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Interfaces\OptionsInterface;
@@ -67,8 +68,8 @@ abstract class FactoryAbstract
         $key[0] = strtolower($key[0]);
 
         if (!array_key_exists($key, $list)) {
-            throw new \BadMethodCallException('Faltando Factory [' . $key
-                . '] no Schema [' . implode(' ', array_keys($list)) . ']');
+            throw new \BadMethodCallException('Faltando Factory ['.$key
+                .'] no Schema ['.implode(' ', array_keys($list)).']');
         }
 
         return $list[$key];
@@ -107,7 +108,7 @@ abstract class FactoryAbstract
     {
         if (!method_exists($schema['class'], $schema['method'])) {
             throw new Exception\InvalidArgumentException('Method ['
-                . $schema['class'] . '::' . $schema['method'] . '()] not found!');
+                .$schema['class'].'::'.$schema['method'].'()] not found!');
         }
 
         return forward_static_call([$schema['class'], $schema['method']], $data);
@@ -121,7 +122,7 @@ abstract class FactoryAbstract
 
         if (!class_exists($className)) {
             throw new Exception\InvalidArgumentException('Class ['
-                . $className . '] not found!');
+                .$className.'] not found!');
         }
 
         if (array_key_exists('method', $schema)) {

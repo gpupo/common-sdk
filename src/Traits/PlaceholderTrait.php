@@ -5,8 +5,9 @@
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * For more information, see <http://www.g1mr.com/common-sdk/>.
+ * For more information, see <http://www.g1mr.com/>.
  */
+
 namespace Gpupo\CommonSdk\Traits;
 
 trait PlaceholderTrait
@@ -15,8 +16,8 @@ trait PlaceholderTrait
     {
         foreach ($array as $key => $value) {
             $string = str_replace([
-                '{' . $key . '}',
-                '{' . strtoupper($key) . '}',
+                '{'.$key.'}',
+                '{'.strtoupper($key).'}',
             ], $value, $string);
         }
 
