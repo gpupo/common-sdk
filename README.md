@@ -1,35 +1,6 @@
-[![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gpupo/common-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gpupo/common-sdk/?branch=master)
-[![Codacy Badge](https://www.codacy.com/project/badge/323afbd6d88f4c4dbc4dec27810c70b9)](https://www.codacy.com/app/g/common-sdk)
-[![Code Climate](https://codeclimate.com/github/gpupo/common-sdk/badges/gpa.svg)](https://codeclimate.com/github/gpupo/common-sdk)
-[![Test Coverage](https://codeclimate.com/github/gpupo/common-sdk/badges/coverage.svg)](https://codeclimate.com/github/gpupo/common-sdk/coverage)
+# common-sdk
 
 Componente de uso comum entre SDKs para integração a partir de aplicações PHP com Restful webservices
-
-Veja:
-
-* [Composer Package](https://packagist.org/packages/gpupo/) on packagist.org
-* [gpupo/submarino-sdk](https://github.com/gpupo/submarino-sdk)  - B2W Marketplace ![Build Status](https://secure.travis-ci.org/gpupo/submarino-sdk.png?branch=master)
-* [gpupo/cnova-sdk](https://github.com/gpupo/cnova-sdk)  - Cnova Marketplace ![Build Status](https://secure.travis-ci.org/gpupo/cnova-sdk.png?branch=master)
-* [marketplace-bundle Composer Package](https://packagist.org/packages/gpupo/markethub-bundle) - Integração com Symfony2
-
-## Install
-
-    composer require gpupo/common-sdk
-
-## Contributors
-
-- [@gpupo](https://github.com/gpupo)
-- [All Contributors](https://github.com/gpupo/common/contributors)
-
-## License
-
-MIT, see LICENSE.
-
-
----
-
-# Propriedades dos objetos (Testdox)
 <!-- require -->
 
 ## Requisitos
@@ -67,8 +38,28 @@ Proibido:
 - Responsabilidade Assegurada
 
 <!-- //licence -->
+<!-- qa -->
 
-Error:         No code coverage driver is available
+---
+
+## Indicadores de qualidade
+
+[![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gpupo/common-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gpupo/common-sdk/?branch=master)
+[![Codacy Badge](https://www.codacy.com/project/badge/323afbd6d88f4c4dbc4dec27810c70b9)](https://www.codacy.com/app/g/common-sdk)
+[![Code Climate](https://codeclimate.com/github/gpupo/common-sdk/badges/gpa.svg)](https://codeclimate.com/github/gpupo/common-sdk)
+[![Test Coverage](https://codeclimate.com/github/gpupo/common-sdk/badges/coverage.svg)](https://codeclimate.com/github/gpupo/common-sdk/coverage)
+<!-- links -->
+
+---
+
+## Links
+
+* [Composer Package](https://packagist.org/packages/gpupo/) on packagist.org
+* [SDKs para o Ecommerce do Brasil](http://www.g1mr.com/common-sdk/)
+<!-- dev -->
+
+## Propriedades dos objetos
 
 ### CommonSdk\Client\Client
 
@@ -91,40 +82,40 @@ Error:         No code coverage driver is available
 - [x] Acesso a identificador padrao da entidade
 - [x] Acesso ao nome da entidade atual
 - [x] Valida dados obrigatórios
-- [x] Possui getter para acesso a foo 
-- [x] Possui setter para definir foo 
-- [x] Possui getter para acesso a bar 
-- [x] Possui setter para definir bar 
-- [x] Entidade é uma Coleção 
+- [x] Possui getter para acesso a foo
+- [x] Possui setter para definir foo
+- [x] Possui getter para acesso a bar
+- [x] Possui setter para definir bar
+- [x] Entidade é uma Coleção
 
 ### CommonSdk\Entity\Manager
 
 
 - [x] Factory collection
-- [x] Nao encontra diferenca entre entidades iguais 
-- [x] Encontra diferenca entre entidades diferentes 
-- [x] Encontra diferenca entre entidades diferentes a partir de chaves selecionadas 
-- [x] Falha ao tentar encontrar diferenca usando propriedade inexistente 
+- [x] Nao encontra diferenca entre entidades iguais
+- [x] Encontra diferenca entre entidades diferentes
+- [x] Encontra diferenca entre entidades diferentes a partir de chaves selecionadas
+- [x] Falha ao tentar encontrar diferenca usando propriedade inexistente
 
 ### CommonSdk\Entity\Metadata\MetadataContainer
 
 
-- [x] É um objeto metadata container 
-- [x] Possui objeto metadata 
-- [x] Possui propriedade indicadora de quantidade de registros 
+- [x] É um objeto metadata container
+- [x] Possui objeto metadata
+- [x] Possui propriedade indicadora de quantidade de registros
 
 ### CommonSdk\Entity\Schema\Tools
 
 
-- [x] Valida tipos de informacao 
-- [x] Normaliza tipos de informacao 
+- [x] Valida tipos de informacao
+- [x] Normaliza tipos de informacao
 - [x] Aborta com uso de dados invalidos
 - [x] Sucesso com uso de dados validos
 
 ### CommonSdk\Exception\Main
 
 
-- [x] A biblioteca possui uma lista de Exceções 
+- [x] A biblioteca possui uma lista de Exceções
 
 ### CommonSdk\Transport
 
@@ -152,7 +143,7 @@ monolog/monolog | 1.19.0 | Sends your logs to files, sockets, inboxes, databases
 myclabs/deep-copy | 1.5.1 | Create deep copies (clones) of your objects
 phpdocumentor/reflection-common | 1.0 | Common reflection classes used by phpdocumentor to reflect the code structure
 phpdocumentor/reflection-docblock | 3.1.0 | With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.
-phpdocumentor/type-resolver | 0.2 | 
+phpdocumentor/type-resolver | 0.2 |
 phpspec/prophecy | v1.6.1 | Highly opinionated mocking framework for PHP 5.3+
 phpunit/php-code-coverage | 4.0.0 | Library that provides collection, processing, and rendering functionality for PHP code coverage information.
 phpunit/php-file-iterator | 1.4.1 | FilterIterator implementation that filters files based on a list of suffixes.
@@ -184,5 +175,3 @@ symfony/stopwatch | v3.1.1 | Symfony Stopwatch Component
 symfony/yaml | v3.1.1 | Symfony Yaml Component
 twig/twig | v1.24.1 | Twig, the flexible, fast, and secure template language for PHP
 webmozart/assert | 1.0.2 | Assertions to validate method input/output with nice error messages.
-
-
