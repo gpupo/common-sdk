@@ -96,7 +96,7 @@ phpunit/phpunit 5.4.6 The PHP Unit Testing framework.
 |  `--php >=5.6
 `--symfony/yaml ~2.1|~3.0
    `--php >=5.5.9
-gpupo/common 1.6.5 Common Objects
+gpupo/common 1.6.6 Common Objects
 |--doctrine/common ~2.5.1
 |  |--doctrine/annotations 1.*
 |  |  |--doctrine/lexer 1.*
