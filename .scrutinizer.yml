@@ -10,7 +10,7 @@ build:
                     format: 'clover'
 filter:
     paths: [src/*]
-    excluded_paths: [tests/*, vendor/*, build/*, Resources/*]
+    excluded_paths: [README.md, tests/*, vendor/*, build/*, Resources/*]
 checks:
   php:
     code_rating: true

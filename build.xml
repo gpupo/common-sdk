@@ -28,7 +28,10 @@
  <target name="phpunit" description="Generate Reports">
   <mkdir dir="${basedir}/var/logs"/>
   <touch file="${basedir}/var/logs/test.log"/>
-  <exec executable="${basedir}/vendor/bin/phpunit" outputproperty="log"/>
+  <exec executable="${basedir}/vendor/bin/phpunit" outputproperty="log">
+    <arg value="-c"/>
+    <arg value="phpunit.xml.dist"/>
+   </exec>
   <echo message="${log}"/>
   <condition property="onSuccess">
     <matches pattern="OK" string="${log}"/>

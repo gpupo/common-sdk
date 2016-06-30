@@ -1,16 +1,29 @@
+
+<!-- main -->
+
 # common-sdk
 
 Componente de uso comum entre SDKs para integração a partir de aplicações PHP com Restful webservices
+
 <!-- require -->
 
-## Requisitos
+## Requisitos para uso
 
 * PHP >= *5.6*
 * [curl extension](http://php.net/manual/en/intro.curl.php)
+* [Composer Dependency Manager](http://getcomposer.org)
 
-<!-- //require -->
+Este componente **não é uma aplicação Stand Alone** e seu objetivo é ser utilizado como biblioteca.
+Sua implantação deve ser feita por desenvolvedores experientes.
 
-<!-- licence -->
+**Isto não é um Plugin!**
+
+As opções que funcionam no modo de comando apenas servem para depuração em modo de
+desenvolvimento.
+
+A documentação mais importante está nos testes unitários. Se você não consegue ler os testes unitários, eu recomendo que não utilize esta biblioteca.
+
+<!-- license -->
 
 ## Direitos autorais e de licença
 
@@ -31,16 +44,12 @@ Permitido:
 - Modificação
 - Distribuição
 - Sublicenciamento
-- Proibido
 
 Proibido:
 
 - Responsabilidade Assegurada
 
-<!-- //licence -->
-<!-- qa -->
-
----
+<!-- QA -->
 
 ## Indicadores de qualidade
 
@@ -49,6 +58,32 @@ Proibido:
 [![Codacy Badge](https://www.codacy.com/project/badge/323afbd6d88f4c4dbc4dec27810c70b9)](https://www.codacy.com/app/g/common-sdk)
 [![Code Climate](https://codeclimate.com/github/gpupo/common-sdk/badges/gpa.svg)](https://codeclimate.com/github/gpupo/common-sdk)
 [![Test Coverage](https://codeclimate.com/github/gpupo/common-sdk/badges/coverage.svg)](https://codeclimate.com/github/gpupo/common-sdk/coverage)
+
+<!-- thanks -->
+
+---
+
+## Agradecimentos
+
+* A todos os que [contribuiram com patchs](https://github.com/gpupo/common-sdk/contributors);
+* Aos que [fizeram sugestões importantes](https://github.com/gpupo/common-sdk/issues);
+* Aos desenvolvedores que criaram as [bibliotecas utilizadas neste componente](https://github.com/gpupo/common-sdk/blob/master/Resources/doc/libraries-list.md).
+
+ _- [Gilmar Pupo](http://www.g1mr.com/)_
+
+<!-- install -->
+
+---
+
+## Instalação
+
+Adicione o pacote ``common-sdk`` ao seu projeto utilizando [composer](http://getcomposer.org):
+
+    composer require gpupo/common-sdk
+
+<!-- console -->
+
+
 <!-- links -->
 
 ---
@@ -58,13 +93,23 @@ Proibido:
 * [Composer Package](https://packagist.org/packages/gpupo/) on packagist.org
 * [SDKs para o Ecommerce do Brasil](http://www.g1mr.com/common-sdk/)
 
-<!-- //links -->
+<!-- links-common -->
+
 
 <!-- dev -->
 
+
+<!-- todo -->
+
+
+<!-- dev-common -->
+
+
+---
+
 ## Propriedades dos objetos
 
-Error:         No code coverage driver is available
+<!-- testdox -->
 
 ### CommonSdk\Client\Client
 
@@ -129,6 +174,9 @@ Error:         No code coverage driver is available
 - [x] Executa uma requisição para url informada
 
 
+<!-- libraries-table -->
+
+
 ## Lista de dependências (libraries)
 
 Name | Version | Description
@@ -180,5 +228,9 @@ symfony/stopwatch | v3.1.1 | Symfony Stopwatch Component
 symfony/yaml | v3.1.1 | Symfony Yaml Component
 twig/twig | v1.24.1 | Twig, the flexible, fast, and secure template language for PHP
 webmozart/assert | 1.0.2 | Assertions to validate method input/output with nice error messages.
+
+
+
+<!-- footer-common -->
 
 
