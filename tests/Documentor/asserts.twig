@@ -3,6 +3,9 @@
     /**
      * @testdox Possui método ``{{ method.getter }}()`` para acessar {{ method.case }}
      * @dataProvider dataProviderObject
+     * @cover ::get
+     * @cover ::getSchema
+     * @small
      * @test
      */
     public function getter{{ method.case }}(EntityInterface $object, $expected = null)
@@ -13,6 +16,9 @@
     /**
      * @testdox Possui método ``{{ method.setter }}()`` que define {{ method.case }}
      * @dataProvider dataProviderObject
+     * @cover ::set
+     * @cover ::getSchema
+     * @small
      * @test
      */
     public function setter{{ method.case }}(EntityInterface $object, $expected = null)
