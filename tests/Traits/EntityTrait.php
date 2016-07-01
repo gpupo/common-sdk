@@ -98,14 +98,4 @@ trait EntityTrait
             $this->assertSame('foo', $object->$setter('foo')->$getter());
         }
     }
-
-    /**
-     * @testdox Entidade é uma Coleção
-     * @dataProvider dataProviderObject
-     * @test
-     */
-    public function entityObject($object, $expected = null)
-    {
-        return $this->assertInstanceOf('\Gpupo\Common\Entity\CollectionAbstract', $object);
-    }
 }

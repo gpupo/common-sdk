@@ -32,7 +32,10 @@ class {{ classShortName }}Test extends TestCaseAbstract
         parent::setUpBeforeClass();
     }
 
-    public function dataProviderObject()
+    /**
+     * @return \{{class}}
+     */
+    public function dataProvider{{ classShortName }}()
     {
 
     {{ expected|raw }}
