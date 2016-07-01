@@ -81,6 +81,14 @@ class Docblock
 
     protected function renderTest(array $data)
     {
+        $array = explode('\\', $data['class']);
+        $data['classShortName'] = end($array);
+        $data['objectShortName'] = lcFirst($data['classShortName']);
+        array_pop($array);
+        $data['classNamespace'] = implode("\\", $array);
+        $data['mainNamespace'] = $array[1];
+        $array[2]='Tests\\'.$array[2];
+        $data['testNamespace'] = implode("\\", $array);
         $dest = $this->getResourcesDestinationPath("testCase_{$data['class']}.php");
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);

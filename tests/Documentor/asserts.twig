@@ -8,9 +8,9 @@
      * @small
      * @test
      */
-    public function getter{{ method.case }}(EntityInterface $object, $expected = null)
+    public function get{{ method.case }}({{ classShortName }} ${{ objectShortName }}, $expected = null)
     {
-        $this->assertSchemaGetter('{{ method.name }}', '{{ method.type }}', $object, $expected);
+        $this->assertSchemaGetter('{{ method.name }}', '{{ method.type }}', ${{ objectShortName }}, $expected);
     }
 
     /**
@@ -21,8 +21,8 @@
      * @small
      * @test
      */
-    public function setter{{ method.case }}(EntityInterface $object, $expected = null)
+    public function set{{ method.case }}({{ classShortName }} ${{ objectShortName }}, $expected = null)
     {
-        $this->assertSchemaSetter('{{ method.name }}', '{{ method.type }}', $object);
+        $this->assertSchemaSetter('{{ method.name }}', '{{ method.type }}', ${{ objectShortName }});
     }
     {% endfor %}
