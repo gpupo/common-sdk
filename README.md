@@ -139,7 +139,6 @@ Adicione o pacote ``common-sdk`` ao seu projeto utilizando [composer](http://get
 - [x] Possui setter para definir foo 
 - [x] Possui getter para acesso a bar 
 - [x] Possui setter para definir bar 
-- [x] Entidade é uma Coleção 
 
 ### CommonSdk\Entity\Manager
 

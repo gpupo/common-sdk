@@ -34,6 +34,13 @@ abstract class ClientManagerAbstract
         if ($client) {
             $this->client = $client;
         }
+
+        $this->setUp();
+    }
+
+    protected function setUp()
+    {
+
     }
 
     public function getClient()
