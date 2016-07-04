@@ -1,26 +1,23 @@
----
 engines:
   duplication:
     enabled: true
     config:
       languages:
-      - ruby
-      - javascript
-      - python
-      - php
+        - php
   fixme:
     enabled: true
   phpmd:
     enabled: true
+    config:
+      file_extensions:
+          - php
+      rulesets: "cleancode, codesize controversial, design, naming, unusedcode"
 ratings:
   paths:
-  - "**.inc"
-  - "**.js"
-  - "**.jsx"
-  - "**.module"
   - "**.php"
-  - "**.py"
-  - "**.rb"
 exclude_paths:
 - tests/*
 - Resources/*
+- bin/*
+- vendor/*
+- var/*

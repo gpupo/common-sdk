@@ -19,6 +19,7 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 use Monolog\Handler\StreamHandler;
+use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use SebastianBergmann\PeekAndPoke\Proxy;
 
@@ -47,6 +48,13 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             $channel = str_replace('\\', '.', get_called_class());
             $logger = new Logger($channel);
             $logger->pushHandler(new StreamHandler($this->getLoggerFilePath(), Logger::DEBUG));
+
+            $verbose = $this->getConstant('VERBOSE');
+
+            if (!empty($verbose)) {
+                $logger->pushHandler(new ErrorLogHandler(0, Logger::INFO));
+            }
+
             $this->setLogger($logger);
         }
 
