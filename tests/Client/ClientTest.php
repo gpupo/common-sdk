@@ -22,8 +22,10 @@ class ClientTest extends TestCaseAbstract
     public function testUrlIndependenteDeConfiguracao()
     {
         $client = new Client();
-        $this->assertSame('/sku',
-        $client->getResourceUri('/sku'));
+        $this->assertSame(
+            '/sku',
+            $client->getResourceUri('/sku')
+        );
     }
 
     public function testUrlBaseadoEmConfiguracao()
@@ -31,8 +33,10 @@ class ClientTest extends TestCaseAbstract
         $client = new Client([
             'base_url' => 'https://foo.com',
         ]);
-        $this->assertSame('https://foo.com/sku',
-        $client->getResourceUri('/sku'));
+        $this->assertSame(
+            'https://foo.com/sku',
+            $client->getResourceUri('/sku')
+        );
 
         return $client;
     }
@@ -43,10 +47,12 @@ class ClientTest extends TestCaseAbstract
     public function testUrlEvitandoConfiguracao($client)
     {
         $url = 'https://bar.com/hi';
-        $this->assertSame($url,
+        $this->assertSame(
+            $url,
             $client->getResourceUri([
                 'endpoint' => 'https://bar.com/hi',
-            ]));
+            ])
+        );
 
         $this->assertSame($url, $client->getResourceUri(['url' => $url]));
 

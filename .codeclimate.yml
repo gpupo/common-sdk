@@ -12,6 +12,10 @@ engines:
       file_extensions:
           - php
       rulesets: "cleancode, codesize controversial, design, naming, unusedcode"
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: "PSR1,PSR2"    
 ratings:
   paths:
   - "**.php"

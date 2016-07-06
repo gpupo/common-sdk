@@ -113,7 +113,8 @@ abstract class ClientAbstract extends BoardAbstract
             $response->setLogger($this->getLogger());
             $response->validate();
 
-            $this->debug('Client Execution',
+            $this->debug(
+                'Client Execution',
                 [
                     'request'  => $request->toLog(),
                     'response' => $response->toLog(),

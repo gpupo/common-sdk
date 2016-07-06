@@ -14,6 +14,8 @@
 
 namespace Gpupo\Tests\CommonSdk\Traits;
 
+use Gpupo\Common\Entity\CollectionAbstract;
+
 trait EntityTrait
 {
     private static $fullyQualifiedObject;
@@ -76,7 +78,7 @@ trait EntityTrait
         $getter = 'get'.$this->camelCase($name);
 
         if ($type === 'object') {
-            return $this->assertInstanceOf('\Gpupo\Common\Entity\CollectionAbstract', $object->$getter());
+            return $this->assertInstanceOf(CollectionAbstract::class, $object->$getter());
         }
 
         if (!array_key_exists($name, $expected)) {
@@ -97,5 +99,19 @@ trait EntityTrait
         if ($type !== 'object') {
             $this->assertSame('foo', $object->$setter('foo')->$getter());
         }
+    }
+
+    /**
+     * @testdox Possui métodos especiais para output de informações
+     * @test
+     */
+    public function commonOutput()
+    {
+        $new = static::createObject(self::$fullyQualifiedObject, []);
+        $object = $this->proxy($new);
+        $object->setRequiredSchema([]);
+        $this->assertTrue(is_array($object->toLog()));
+        $this->assertTrue(is_array($object->toArray()));
+        $this->assertInternalType('string', $object->__toString());
     }
 }

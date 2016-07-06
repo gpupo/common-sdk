@@ -27,8 +27,10 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
 
     protected function assertFactoryWorks($objectExpected, $factory, $method, array $data = null)
     {
-        return $this->assertInstanceOf($objectExpected,
-            $this->createObject($factory, $method, $data));
+        return $this->assertInstanceOf(
+            $objectExpected,
+            $this->createObject($factory, $method, $data)
+        );
     }
 
     /**

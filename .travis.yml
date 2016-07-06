@@ -14,6 +14,8 @@ matrix:
 branches:
   except:
     - /^psr.*$/
+    - /^dev.*$/
+    - /^topic.*$/
 script: ant travis
 notifications:
   email: false

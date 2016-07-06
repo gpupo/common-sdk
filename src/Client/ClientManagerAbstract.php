@@ -40,7 +40,6 @@ abstract class ClientManagerAbstract
 
     protected function setUp()
     {
-
     }
 
     public function getClient()
@@ -181,8 +180,11 @@ abstract class ClientManagerAbstract
                 return $this->getClient()->$methodName($map->getResource(), $body);
             } catch (\Exception $exception) {
                 if (!$this->retry($exception, $attempt)) {
-                    throw $this->exceptionHandler($exception, $map->getMethod(),
-                        $map->getResource());
+                    throw $this->exceptionHandler(
+                        $exception,
+                        $map->getMethod(),
+                        $map->getResource()
+                    );
                 }
             }
         }
