@@ -18,8 +18,8 @@ use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\Tests\CommonSdk\Documentor\Docblock;
-use Monolog\Handler\StreamHandler;
 use Monolog\Handler\ErrorLogHandler;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use SebastianBergmann\PeekAndPoke\Proxy;
 
@@ -172,7 +172,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
      *
      * @param EntityInterface $entity [description]
      */
-    public static function displayClassDocumentation(EntityAbstract $entity)
+    public static function displayClassDocumentation($entity)
     {
         global $argv;
 
@@ -180,6 +180,14 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
             return false;
         }
 
-        echo Docblock::getInstance()->setResourcesPath(static::getResourcesPath())->generate($entity->toDocBLock(), json_encode($entity->toArray(), JSON_PRETTY_PRINT));
+        $docblock = Docblock::getInstance();
+        $docblock->setResourcesPath(static::getVarPath());
+
+        if ($entity instanceof EntityAbstract) {
+            $json = json_encode($entity->toArray(), JSON_PRETTY_PRINT);
+            echo $docblock->generate($entity->toDocBLock(), $json);
+        } else {
+            echo $docblock->generate();
+        }
     }
 }

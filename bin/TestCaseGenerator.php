@@ -2,7 +2,7 @@
 <?php
 
 /*
- * This file is part of gpupo/netshoes-sdk
+ * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <g@g1mr.com>
  * For the information of copyright and license you should read the file
  * LICENSE which is distributed with this source code.

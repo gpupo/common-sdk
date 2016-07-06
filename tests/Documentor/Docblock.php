@@ -35,7 +35,7 @@ class Docblock
     {
         if (!empty($this->resourcesPath)) {
             $file = str_replace('\\', '_', $file);
-            $dir = "{$this->resourcesPath}Documentation";
+            $dir = "{$this->resourcesPath}autodoc";
             $path = "$dir/{$file}";
             touch($path);
 
@@ -51,7 +51,7 @@ class Docblock
         return $twig->render(file_get_contents(__DIR__.'/'.$template.'.twig'), $data);
     }
 
-    public function generate(array $data, $json = null)
+    public function generate(array $data = [], $json = null)
     {
         foreach ($data['schema'] as $item) {
             $case = $this->camelCase($item['name']);
@@ -85,16 +85,16 @@ class Docblock
         $data['classShortName'] = end($array);
         $data['objectShortName'] = lcFirst($data['classShortName']);
         array_pop($array);
-        $data['classNamespace'] = implode("\\", $array);
+        $data['classNamespace'] = implode('\\', $array);
         $data['mainNamespace'] = $array[1];
-        $array[0]= $array[0] . '\\Tests';
-        $data['testNamespace'] = implode("\\", $array);
+        $array[0] = $array[0].'\\Tests';
+        $data['testNamespace'] = implode('\\', $array);
         $dest = $this->getResourcesDestinationPath("testCase_{$data['class']}.php");
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
 
         if ($dest) {
-            echo 'Test Case file generated: ' . $dest. "\n";
+            echo 'Test Case file generated: '.$dest."\n";
             file_put_contents($dest, $this->render($data, 'testCase'));
         }
     }
@@ -105,7 +105,7 @@ class Docblock
 
         if ($dest) {
             file_put_contents($dest, $json);
-            echo 'Json file generated: ' . $dest. "\n";
+            echo 'Json file generated: '.$dest."\n";
         }
     }
 

@@ -22,7 +22,7 @@
         "phpunit/phpunit": "^5.4",
         "psr/log": "^1.0",
         "gpupo/cache": "*",
-        "gpupo/common": "*",
+        "gpupo/common": "^1.7.0",
         "twig/twig": "*",
         "monolog/monolog": "*",
         "sebastian/peek-and-poke": "1.0.x@dev",

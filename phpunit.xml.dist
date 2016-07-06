@@ -28,7 +28,7 @@
     <php>
         <const name="CLIENT_ID" value=""/>
         <const name="ACCESS_TOKEN" value=""/>
-        <const name="VERBOSE" value="true"/>
+        <const name="VERBOSE" value=""/>
         <const name="REGISTER_PATH" value=""/>
     </php>
     <logging>

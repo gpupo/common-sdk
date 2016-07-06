@@ -70,10 +70,13 @@ abstract class SchemaAbstract extends CollectionAbstract
         foreach ($schema as $key => $value) {
             if ($value === 'collection') {
                 $schema[$key] = $this->factoryCollection(
-                    Tools::getInitValue($data, $key, []));
+                    Tools::getInitValue($data, $key, [])
+                );
             } elseif ($value === 'object') {
-                $schema[$key] = $this->factoryNeighborObject(ucfirst($key),
-                Tools::getInitValue($data, $key, []));
+                $schema[$key] = $this->factoryNeighborObject(
+                    ucfirst($key),
+                    Tools::getInitValue($data, $key, [])
+                );
             } elseif ($value === 'array') {
                 $schema[$key] = Tools::getInitValue($data, $key, []);
             } elseif (in_array($value, ['string', 'integer', 'number', 'boolean'], true)) {
