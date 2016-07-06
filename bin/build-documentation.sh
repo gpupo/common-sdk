@@ -9,7 +9,7 @@ sed 's/Gpupo\\Tests\\/### /g' > Resources/doc/testdox.md;
 cat Resources/doc/libraries-list.md | sed 's/  * / | /g' | sed 's/e0 / | /g' > Resources/doc/libraries-table.md;
 
 echo '' > README.md;
-names='main require license QA thanks install console links links-common dev todo dev-common testdox libraries-table footer-common'
+names='main require license QA thanks install usage console links links-common dev todo dev-common testdox libraries-table footer-common'
 for name in $names
 do
   touch Resources/doc/${name}.md;
