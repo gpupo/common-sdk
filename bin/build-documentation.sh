@@ -4,7 +4,8 @@
 
 if [ $# -eq 0 ]
   then
-    echo "No arguments supplied"
+    echo "No arguments supplied";
+    exit 1;
 fi
 
 PROJECT_NAME=$1;
@@ -29,6 +30,8 @@ do
   cat Resources/doc/${name}.md >> README.md;
   printf "\n"  >>  README.md;
 done
+
+git commit -am 'Automatic documentation';
 
 echo "Build wiki for [${PROJECT_NAME}] project";
 
