@@ -24,7 +24,7 @@ class {{ classShortName }}Test extends TestCaseAbstract
 {
     use EntityTrait;
 
-    const QUALIFIED = '{{class}}';
+    const QUALIFIED = {{ classShortName }}::class;
 
     public static function setUpBeforeClass()
     {

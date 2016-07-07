@@ -85,9 +85,9 @@ trait EntityTrait
             return $this->markSkipped('not found key '.$name);
         }
 
-        $this->assertSame($expected[$name], $object->get($name));
+        $this->assertSame($expected[$name], $object->get($name), 'assert Schema Setter simple');
 
-        $this->assertSame($expected[$name], $object->$getter());
+        $this->assertSame($expected[$name], $object->$getter(), 'assert Schema Setter magical');
     }
 
     public function assertSchemaSetter($name, $type, $object)
@@ -97,7 +97,7 @@ trait EntityTrait
         $getter = 'get'.$case;
 
         if ($type !== 'object') {
-            $this->assertSame('foo', $object->$setter('foo')->$getter());
+            $this->assertSame('foo', $object->$setter('foo')->$getter(), 'assertSchemaSetter');
         }
     }
 
