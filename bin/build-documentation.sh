@@ -4,8 +4,12 @@
 
 if [ $# -eq 0 ]
   then
-    echo "No arguments supplied"
+    echo "No arguments supplied";
+    exit 1;
 fi
+
+if [ $1 -ge 5 ]; then echo "Project Name missed!" ; exit 2;
+
 
 PROJECT_NAME=$1;
 
@@ -30,10 +34,12 @@ do
   printf "\n"  >>  README.md;
 done
 
+git commit -am 'Automatic documentation';
+
 echo "Build wiki for [${PROJECT_NAME}] project";
 
 if [ ! -d "var/wiki" ]; then
-  git clone --depth=1  git@github.com:${PROJECT_NAME}.wiki.git var/wiki
+  git clone --depth=1  git@github.com:${PROJECT_NAME}.wiki.git var/wiki || exit 1;
 fi
 
 cd var/wiki
