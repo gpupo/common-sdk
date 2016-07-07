@@ -18,4 +18,5 @@ git merge --squash branchA
 git commit
 git branch -D  branchA branchB branchTEMP  ${CURRENT}
 git push origin master:master;
+git push alternative master:master;
 git checkout -b ${CURRENT}

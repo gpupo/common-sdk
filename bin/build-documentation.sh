@@ -8,7 +8,7 @@ if [ $# -eq 0 ]
     exit 1;
 fi
 
-if [ $1 -ge 5 ]; then echo "Project Name missed!" ; exit 2;
+if [ $1 -ge 5 ]; then echo "Project Name missed!" ; exit 2; fi;
 
 
 PROJECT_NAME=$1;
