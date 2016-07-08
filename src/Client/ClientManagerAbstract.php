@@ -32,7 +32,7 @@ abstract class ClientManagerAbstract
     public function __construct(ClientInterface $client = null)
     {
         if ($client) {
-            $this->client = $client;
+            $this->setClient($client);
         }
 
         $this->setUp();
@@ -40,6 +40,13 @@ abstract class ClientManagerAbstract
 
     protected function setUp()
     {
+    }
+
+    public function setClient(ClientInterface $client)
+    {
+        $this->client = $client;
+
+        return $this;
     }
 
     public function getClient()
