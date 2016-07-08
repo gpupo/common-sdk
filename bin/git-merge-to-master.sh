@@ -8,7 +8,7 @@ git checkout -b "${CURRENT}-`date +"%m-%d-%y-%s"`";
 git checkout -b branchB
 git checkout master
 git checkout -b branchA
-git merge -s ours branchB
+git merge --no-edit -s ours branchB
 git branch branchTEMP
 git reset --hard branchB
 git reset --soft branchTEMP
