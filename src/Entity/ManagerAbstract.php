@@ -21,6 +21,7 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
+use Gpupo\CommonSdk\FactoryAbstract;
 
 abstract class ManagerAbstract extends ClientManagerAbstract
 {
@@ -143,4 +144,10 @@ abstract class ManagerAbstract extends ClientManagerAbstract
     {
         return $this->factoryNeighborObject($this->getEntityName(), $data);
     }
+
+    protected function factorySubManager(FactoryAbstract $factory, $name)
+    {
+        return $factory->factoryManager($name)->setClient($this->getClient());
+    }
+
 }
