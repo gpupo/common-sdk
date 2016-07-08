@@ -2,23 +2,13 @@
 # @Date:   2016-06-24T09:45:16-03:00
 # @Modified at 2016-06-24T09:45:37-03:00
 
-if [ $# -eq 0 ]
-  then
-    echo "No arguments supplied";
-    exit 1;
-fi
+source "$(dirname $0)/init.sh";
 
-if [ $1 -ge 5 ]; then echo "Project Name missed!" ; exit 2; fi;
-
-
-PROJECT_NAME=$1;
-
-echo "Build documentation for [${PROJECT_NAME}] project";
+h1 "Build documentation for [${PROJECT_NAME}] project";
 
 cat build/logs/testdox.txt | grep -vi php |  sed "s/.*\[/-&/" | \
 sed 's/.*Gpupo.*/&\'$'\n/g' | sed 's/.*Gpupo.*/&\'$'\n/g' |\
 sed 's/Gpupo\\Tests\\/### /g' > Resources/doc/testdox.md;
-
 cat Resources/doc/libraries-list.md | sed 's/  * / | /g' | sed 's/e0 / | /g' > Resources/doc/libraries-table.md;
 
 echo '' > README.md;
@@ -26,15 +16,12 @@ names='main require license QA thanks install usage console links links-common d
 for name in $names
 do
   touch Resources/doc/${name}.md;
-  printf '<!-- '  >>  README.md;
-  printf "$name"  >>  README.md;
-  printf ' -->'  >>  README.md;
   printf "\n\n"  >>  README.md;
   cat Resources/doc/${name}.md >> README.md;
   printf "\n"  >>  README.md;
 done
 
-git commit -am 'Automatic documentation';
+git commit --amend --no-edit;
 
 echo "Build wiki for [${PROJECT_NAME}] project";
 
@@ -42,14 +29,22 @@ if [ ! -d "var/wiki" ]; then
   git clone --depth=1  git@github.com:${PROJECT_NAME}.wiki.git var/wiki || exit 1;
 fi
 
+if ! git remote | grep alternative > /dev/null; then
+  git remote add alternative git@bitbucket.org:${PROJECT_NAME}].git/wiki
+fi
+
 cd var/wiki
 git checkout --orphan auto
 rm -f ./*.md;
 cp ../../Resources/doc/* .
 cp _Sidebar.md Home.md;
+
+echo "Documentation for [${PROJECT_NAME}] created by gpupo/common-sdk on `date +"%m-%d-%y-%s"`" >> _Footer.md
+
 git add *.md
-git commit -am 'auto'
+git commit -am "Documentation for [${PROJECT_NAME}] created by gpupo/common-sdk";
 git push -f origin auto:master
+git push -f alternative auto:master
 git fetch -f origin master:master
 git checkout master
 git branch -D auto
