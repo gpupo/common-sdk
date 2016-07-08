@@ -29,6 +29,7 @@
         <a href="{{ site.github.repository_url }}" class="button fork"><strong>Source Code</strong></a>
         <div class="downloads">
           <ul>
+            <li><a href="{{ site.github.wiki_url }}" class="button">Wiki</a></li>
             <li><a href="{{ site.github.releases_url }}" class="button">Releases</a></li>
             <li><a href="{{ site.github.zip_url }}" class="button">Downloads</a></li>
           </ul>
@@ -42,18 +43,13 @@
           {{ content }}
       </section>
       <footer>
-
-        <div class=badges>
-            <img title="Stable Version" src="https://poser.pugx.org/gpupo/{{ site.github.project_title }}/v/stable">
-            <img title="Total de downloads" src="https://poser.pugx.org/gpupo/{{ site.github.project_title }}/downloads">
-            <img title="License" src="https://poser.pugx.org/gpupo/{{ site.github.project_title }}/license">
-        </div>
-
-        <ul class=coverage>
-          <li class="button"><a href="{{ site.github.wiki_url }}">Wiki</a></li>
-          <li class="button"><a href="coverage/">Coverage</a></li>
-          <li class="button"><a href="coverage/testdox.html">Testdox</a></li>
-        </ul>
+        <p>
+          <a href="{{ site.github.releases_url }}/latest"><img title="Stable Version" src="https://poser.pugx.org/gpupo/{{ site.github.project_title }}/v/stable"></a>
+          <a href="https://packagist.org/packages/gpupo/{{ site.github.project_title }}"><img title="Total de downloads" src="https://poser.pugx.org/gpupo/{{ site.github.project_title }}/downloads"></a>
+        </p>
+        <p class=coverage>
+          <a href="coverage/">Coverage</a> | <a href="coverage/testdox.html">Testdox</a>
+        </p>
 
         <p>
           <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EK6F2WRKG7GNN&amp;item_name={{ site.github.project_title }}">
@@ -62,8 +58,7 @@
         </p>
 
         <p>Project <a href="{{ site.github.url }}">{{ site.github.project_title }}</a> is created by <a href="{{ site.github.owner_url }}">@{{ site.github.owner_name }}</a></p>
-        <p><small>Hosted on GitHub Pages</p>
-        <p><small> Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+        <p><small>Hosted on GitHub Pages, original Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
