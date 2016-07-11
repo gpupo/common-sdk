@@ -14,6 +14,7 @@
 
 namespace Gpupo\CommonSdk\Traits;
 
+use Gpupo\CommonSdk\Entity\CollectionAbstract;
 use Gpupo\CommonSdk\Entity\EntityInterface;
 use Gpupo\CommonSdk\Exception\InvalidArgumentException;
 
@@ -31,7 +32,7 @@ trait EntityDiffTrait
     {
         $list = [];
         foreach ($this->attributesResolv($entityA, $attributes) as $atribute) {
-            if ($this->attributesCompare($entityA, $entityB, $atribute)) {
+            if (true === $this->attributesCompare($entityA, $entityB, $atribute)) {
                 $list[] = $atribute;
             }
         }
@@ -51,7 +52,19 @@ trait EntityDiffTrait
 
         $method = 'get'.ucfirst($atribute);
 
-        return $entityA->$method() !== $entityB->$method();
+        $data = [
+            'a' => $entityA->$method(),
+            'b' => $entityB->$method(),
+        ];
+
+        if ($data['a'] instanceof CollectionAbstract) {
+            $data['a'] = $data['a']->toJson();
+            $data['b'] = $data['b']->toJson();
+        }
+
+        $data['isDiff'] = ($data['a'] !== $data['b']);
+
+        return  $data['isDiff'];
     }
 
     protected function attributesResolv(EntityInterface $entityA, array $attributes = null)
