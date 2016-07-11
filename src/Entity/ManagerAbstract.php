@@ -147,7 +147,13 @@ abstract class ManagerAbstract extends ClientManagerAbstract
 
     protected function factorySubManager(FactoryAbstract $factory, $name)
     {
-        return $factory->factoryManager($name)->setClient($this->getClient());
+        $subManager = $factory->factoryManager($name)->setClient($this->getClient());
+
+        if ($this->isDryRun()) {
+            $subManager->setDryRun($this->getDryRun());
+        }
+
+        return $subManager;
     }
 
 }
