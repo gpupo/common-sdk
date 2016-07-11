@@ -16,6 +16,7 @@ namespace Gpupo\CommonSdk\Console;
 
 use Gpupo\Common\Console\AbstractApplication as Core;
 use Monolog\Handler\StreamHandler;
+use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 
 abstract class AbstractApplication extends Core
@@ -30,10 +31,14 @@ abstract class AbstractApplication extends Core
         return Logger::DEBUG;
     }
 
-    public function factoryLogger()
+    public function factoryLogger($channel = 'bin', $verbose = null)
     {
-        $logger = new Logger('bin');
+        $logger = new Logger($channel);
         $logger->pushHandler(new StreamHandler($this->getLogFilePath(), $this->getLogLevel()));
+
+        if (!empty($verbose)) {
+            $logger->pushHandler(new ErrorLogHandler(0, Logger::INFO));
+        }
 
         return $logger;
     }

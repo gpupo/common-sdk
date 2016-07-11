@@ -86,7 +86,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
     }
 
     /**
-     * @return Gpupo\Common\Entity\CollectionAbstract|null
+     * @return Gpupo\Common\Entity\CollectionAbstract|null|false
      */
     protected function fetchPrepare($data)
     {
