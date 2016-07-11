@@ -17,11 +17,11 @@ namespace Gpupo\CommonSdk\Entity;
 use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Client\ClientManagerAbstract;
 use Gpupo\CommonSdk\Exception\ManagerException;
+use Gpupo\CommonSdk\FactoryAbstract;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
-use Gpupo\CommonSdk\FactoryAbstract;
 
 abstract class ManagerAbstract extends ClientManagerAbstract
 {
@@ -155,5 +155,4 @@ abstract class ManagerAbstract extends ClientManagerAbstract
 
         return $subManager;
     }
-
 }

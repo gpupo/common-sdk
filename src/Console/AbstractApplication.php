@@ -15,8 +15,8 @@
 namespace Gpupo\CommonSdk\Console;
 
 use Gpupo\Common\Console\AbstractApplication as Core;
-use Monolog\Handler\StreamHandler;
 use Monolog\Handler\ErrorLogHandler;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 abstract class AbstractApplication extends Core
