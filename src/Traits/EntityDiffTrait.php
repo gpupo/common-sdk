@@ -28,8 +28,12 @@ trait EntityDiffTrait
      * @param array           $attributes Lista de propriedades para comparação.
      *                                    Se não informado todos os atributos declarados em getSchema() serão utilizados
      */
-    public function attributesDiff(EntityInterface $entityA, EntityInterface $entityB, array $attributes = null)
+    public function attributesDiff(EntityInterface $entityA, EntityInterface $entityB = null, array $attributes = null)
     {
+        if (empty($entityB)) {
+            return $this->attributesResolv($entityA, $attributes);
+        }
+
         $list = [];
         foreach ($this->attributesResolv($entityA, $attributes) as $atribute) {
             if (true === $this->attributesCompare($entityA, $entityB, $atribute)) {
