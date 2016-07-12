@@ -6,6 +6,12 @@ source "$(dirname $0)/init.sh";
 
 h1 "Build documentation for [${PROJECT_NAME}] project";
 
+pushd Resources/doc;
+STRING="s~{project.name}~${PROJECT_NAME}~g";
+find . -type f -print0 |  xargs -0 perl -i.bak -pe $STRING
+find . -name "*.bak" -type f -delete
+popd
+
 cat build/logs/testdox.txt | grep -vi php |  sed "s/.*\[/-&/" | \
 sed 's/.*Gpupo.*/&\'$'\n/g' | sed 's/.*Gpupo.*/&\'$'\n/g' |\
 sed 's/Gpupo\\Tests\\/### /g' > Resources/doc/testdox.md;
