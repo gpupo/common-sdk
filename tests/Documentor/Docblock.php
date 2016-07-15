@@ -71,8 +71,7 @@ class Docblock
             $this->renderJson($data, $json);
         }
 
-
-        return $this->renderTest($data);
+        return  $this->renderTest($data);
     }
 
     protected function camelCase($name)
@@ -93,14 +92,15 @@ class Docblock
         $dest = $this->getResourcesDestinationPath("testCase_{$data['class']}.php");
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
-        $content = $this->render($data, 'testCase');
+        $data['filename'] = 'tests/'.$data['classShortName'].'Test.php';
+        $data['content'] = $this->render($data, 'testCase');
 
         if ($dest) {
             echo 'Test Case file generated: '.$dest."\n";
-            //file_put_contents($dest, $content);
+            //file_put_contents($dest, $data['content']);
         }
 
-        return $content;
+        return $data;
     }
 
     protected function renderJson(array $data, $json)
