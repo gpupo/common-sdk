@@ -21,6 +21,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
+use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 
 $app = new Application("common-sdk");
 
@@ -34,9 +35,32 @@ $opts = [
 
 $app->appendCommand('tests:implement', 'Implement a test', $opts)
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app, $opts) {
+
         $list = $app->processInputParameters($opts, $input, $output);
 
-        
+        $class  = new \ReflectionClass($list['class']);
+        $output->writeln($class->getName() . ' => '. $class->getFileName());
+
+        $test  = new \ReflectionClass($list['test-class']);
+        $output->writeln($test->getName() . ' => <comment>'. $test->getFileName().'</>');
+
+        $docblock = Docblock::getInstance();
+        $methods = [];
+        foreach ($class->getMethods() as $m) {
+
+            if ($m->class === $class->getName()) {
+                $methods[] = $m->name;
+            }
+        }
+
+        $content =  $docblock->generate([
+            'class'     => $class->getName(),
+            'entity'    => false,
+            'methods'   => $methods,
+            'schema'    => [],
+        ]);
+
+        $output->writeln($content);
 });
 
 $app->appendCommand('class:finder', 'Find classes')

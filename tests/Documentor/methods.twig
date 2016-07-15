@@ -1,7 +1,7 @@
 /**
  * @coversDefaultClass \{{class}}
  *
-{% for method in methods %}
+{% for method in magic_methods %}
  * @method {{ method.return }} {{ method.getter }}()    Acesso a {{ method.name }}
  * @method {{ method.setter }}({{ method.return }} ${{method.name}})    Define {{ method.name }}
 {% endfor %}
