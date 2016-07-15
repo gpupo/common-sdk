@@ -74,11 +74,6 @@ class CurlDriver extends DriverAbstract
         return $this;
     }
 
-    public function getMethod()
-    {
-        return strtoupper($this->get('method', 'GET'));
-    }
-
     protected function execPost()
     {
         $this->setOption(CURLOPT_POST, true);
@@ -87,9 +82,8 @@ class CurlDriver extends DriverAbstract
         return $this;
     }
 
-    protected function execPut()
+    protected function writeBody()
     {
-        $this->setOption(CURLOPT_PUT, true);
         $pointer = fopen('php://temp/maxmemory:512000', 'w+');
 
         if (!$pointer) {
@@ -106,6 +100,20 @@ class CurlDriver extends DriverAbstract
         return $this;
     }
 
+    protected function execPut()
+    {
+        $this->setOption(CURLOPT_PUT, true);
+
+        return $this->writeBody();
+    }
+
+    protected function execPatch()
+    {
+        $this->execPut()->setOption(CURLOPT_CUSTOMREQUEST, 'PATCH');
+
+        return $this;
+    }
+
     public function exec()
     {
         switch ($this->getMethod()) {
@@ -114,6 +122,9 @@ class CurlDriver extends DriverAbstract
                 break;
             case 'PUT':
                 $this->execPut();
+                break;
+            case 'PATCH':
+                $this->execPatch();
                 break;
         }
 
@@ -135,17 +146,18 @@ class CurlDriver extends DriverAbstract
         return curl_close($this->curl);
     }
 
-    protected function registerSaveToFile()
+    public function dataToRegister()
     {
-        $filename = $this->getRegisterFilename();
-        $data = "\n\n#===\n".$this->registerEncode('cUrl', $this->getLastTransfer());
+        $data = $this->registerEncode('at', date('d/m/Y hhi:s'), false);
         $data .= $this->registerEncode('url', $this->get('url'), false);
+        $data .= $this->registerEncode('method', $this->getMethod(), false);
         $data .= $this->registerEncode('header', implode("\n", $this->header), false);
         $body = $this->getBody();
         if (!empty($body)) {
             $data .= $this->registerEncode('Body', $body, false);
         }
+        $data .= "---\n\n";
 
-        return file_put_contents($filename, $data, FILE_TEXT);
+        return $data;
     }
 }
