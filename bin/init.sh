@@ -15,7 +15,8 @@ fi
 
 PROJECT_NAME=$1;
 
-if [ $PROJECT_NAME -lt 7 ]
+size=${#PROJECT_NAME}
+if [ $size -lt 7 ]
   then
     echo "Project Name missed!";
     exit 2;
