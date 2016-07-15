@@ -14,6 +14,7 @@
 
 namespace Gpupo\CommonSdk\Console;
 
+use Exception;
 use Gpupo\Common\Console\AbstractApplication as Core;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
@@ -23,7 +24,7 @@ abstract class AbstractApplication extends Core
 {
     protected function getLogFilePath()
     {
-        return 'Resources/logs/main.log';
+        return 'var/logs/main.log';
     }
 
     protected function getLogLevel()
@@ -41,5 +42,19 @@ abstract class AbstractApplication extends Core
         }
 
         return $logger;
+    }
+
+    public function appendCommand($name, $description, array $definition = [])
+    {
+        return $this->register($name)
+            ->setDescription($description)
+            ->setDefinition($this->factoryDefinition($definition));
+    }
+
+    public function showException(Exception $e, OutputInterface $output, $description = 'Erro')
+    {
+        $output->writeln('<error>'.$description.'</error>');
+        $output->writeln('Message: <comment>'.$e->getMessage().'</comment>');
+        $output->writeln('Error Code: <comment>'.$e->getCode().'</comment>');
     }
 }
