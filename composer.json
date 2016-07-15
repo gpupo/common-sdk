@@ -28,6 +28,7 @@
         "sebastian/peek-and-poke": "1.0.x@dev",
         "codeclimate/php-test-reporter": "@dev"
     },
+    "bin": ["bin/common-sdk"],
     "config": {
         "preferred-install": "dist"
     },
