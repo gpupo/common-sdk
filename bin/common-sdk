@@ -37,11 +37,8 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app, $opts) {
 
         $list = $app->processInputParameters($opts, $input, $output);
-
         $class  = new \ReflectionClass($list['class']);
-        //$output->writeln($class->getName() . ' => '. $class->getFileName());
 
-        $test  = new \ReflectionClass($list['test-class']);
         $docblock = Docblock::getInstance();
         $methods = [];
         foreach ($class->getMethods() as $m) {
@@ -52,16 +49,19 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
             }
         }
 
-        $content =  $docblock->generate([
+        if(empty($methods)) {
+            return $output->writeln('<error>No methods for '.$class->getName().'</>');
+        }
+
+        $test = $docblock->generate([
             'class'     => $class->getName(),
             'entity'    => false,
             'methods'   => $methods,
             'schema'    => [],
         ]);
 
-        $output->writeln('Generate <comment>'. $test->getFileName().'</>');
-        file_put_contents($test->getFileName(), $content, FILE_TEXT);
-        //$output->writeln($content);
+        $output->writeln('Generate <comment>'. $test['filename'] . '</>');
+        file_put_contents($test['filename'], $test['content'], FILE_TEXT);
 });
 
 $app->appendCommand('class:finder', 'Find classes')
