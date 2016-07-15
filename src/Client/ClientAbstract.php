@@ -195,6 +195,19 @@ abstract class ClientAbstract extends BoardAbstract
         return $this->post($resource, $body, 'PUT');
     }
 
+    /**
+     * Executa uma requisição PATCH, Facade para post().
+     *
+     * @param string       $resource Url de Endpoint
+     * @param string|array $body     Valores do Request
+     *
+     * @return Response
+     */
+    public function patch($resource, $body)
+    {
+        return $this->post($resource, $body, 'PATCH');
+    }
+
     protected function normalizeResourceUri($resource)
     {
         if (!is_array($resource)) {
