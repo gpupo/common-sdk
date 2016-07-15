@@ -39,17 +39,16 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
         $list = $app->processInputParameters($opts, $input, $output);
 
         $class  = new \ReflectionClass($list['class']);
-        $output->writeln($class->getName() . ' => '. $class->getFileName());
+        //$output->writeln($class->getName() . ' => '. $class->getFileName());
 
         $test  = new \ReflectionClass($list['test-class']);
-        $output->writeln($test->getName() . ' => <comment>'. $test->getFileName().'</>');
-
         $docblock = Docblock::getInstance();
         $methods = [];
         foreach ($class->getMethods() as $m) {
-
             if ($m->class === $class->getName()) {
-                $methods[] = $m->name;
+                 if (false === strpos($m->name, '__')) {
+                     $methods[] = $m->name;
+                 }
             }
         }
 
@@ -60,7 +59,9 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
             'schema'    => [],
         ]);
 
-        $output->writeln($content);
+        $output->writeln('Generate <comment>'. $test->getFileName().'</>');
+        file_put_contents($test->getFileName(), $content, FILE_TEXT);
+        //$output->writeln($content);
 });
 
 $app->appendCommand('class:finder', 'Find classes')
