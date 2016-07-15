@@ -26,6 +26,7 @@ trait DocumentationTrait
         $data = [
             'description' => property_exists($this, 'description') ? $this->description : false,
             'class'       => get_called_class(),
+            'entity'      => true,
             'schema'      => [],
         ];
 

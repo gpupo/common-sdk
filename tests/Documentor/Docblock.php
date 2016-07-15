@@ -55,7 +55,7 @@ class Docblock
     {
         foreach ($data['schema'] as $item) {
             $case = $this->camelCase($item['name']);
-            $data['methods'][] = [
+            $data['magic_methods'][] = [
                 'getter' => 'get'.$case,
                 'setter' => 'set'.$case,
                 'return' => $item['return'],
@@ -67,11 +67,12 @@ class Docblock
 
         $data['block'] = $this->renderDocBlock($data);
 
-        $this->renderTest($data);
-
         if (!empty($json)) {
             $this->renderJson($data, $json);
         }
+
+
+        return $this->renderTest($data);
     }
 
     protected function camelCase($name)
@@ -92,11 +93,14 @@ class Docblock
         $dest = $this->getResourcesDestinationPath("testCase_{$data['class']}.php");
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
+        $content = $this->render($data, 'testCase');
 
         if ($dest) {
             echo 'Test Case file generated: '.$dest."\n";
-            file_put_contents($dest, $this->render($data, 'testCase'));
+            //file_put_contents($dest, $content);
         }
+
+        return $content;
     }
 
     protected function renderJson(array $data, $json)

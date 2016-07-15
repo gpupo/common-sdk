@@ -1,6 +1,19 @@
     {% for method in methods %}
 
     /**
+     * @testdox ``{{ method }}()``
+     * @cover ::{{ method }}
+     * @test
+     */
+    public function {{ method }}()
+    {
+        $this->markIncomplete('{{ method }}() need implementation!');
+    }
+    {% endfor %}
+
+    {% for method in magic_methods %}
+
+    /**
      * @testdox Possui método ``{{ method.getter }}()`` para acessar {{ method.case }}
      * @dataProvider dataProvider{{ classShortName }}
      * @cover ::get
