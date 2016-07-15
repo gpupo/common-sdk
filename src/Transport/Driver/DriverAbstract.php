@@ -33,10 +33,16 @@ abstract class DriverAbstract extends Collection
     }
 
     abstract public function exec();
-    abstract public function getMethod();
     abstract public function setUrl($url);
     abstract public function setHeader(array $list);
     abstract public function setOption($option, $value);
+
+    public function getMethod()
+    {
+        $string = $this->get('method');
+
+        return strtoupper(empty($string) ? 'GET' : $string);
+    }
 
     /**
      * Permite o registro de cada requisição em arquivo.
@@ -50,7 +56,7 @@ abstract class DriverAbstract extends Collection
 
     protected function getRegisterFilename()
     {
-        $filename = $this->registerPath.'/request-'.date('Y-m-d-h-i-s').'.txt';
+        $filename = $this->registerPath.'/requests-'.$this->getMethod().'.log';
         touch($filename);
 
         if (file_exists($filename)) {
@@ -58,6 +64,15 @@ abstract class DriverAbstract extends Collection
         }
 
         throw new RuntimeException('Impossivel registrar em '.$this->registerPath);
+    }
+
+    abstract public function dataToRegister();
+
+    protected function registerSaveToFile()
+    {
+        $filename = $this->getRegisterFilename();
+
+        return file_put_contents($filename, $this->dataToRegister(), FILE_APPEND | FILE_TEXT);
     }
 
     /**
@@ -69,10 +84,8 @@ abstract class DriverAbstract extends Collection
             $data = json_encode($data, JSON_UNESCAPED_UNICODE);
         }
 
-        return '## '.$title.':'."\n".$data."\n";
+        return '* '.$title.':'.$data."\n";
     }
-
-    abstract protected function registerSaveToFile();
 
     public function register()
     {
