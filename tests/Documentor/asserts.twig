@@ -3,9 +3,10 @@
     /**
      * @testdox ``{{ method }}()``
      * @cover ::{{ method }}
+     * @dataProvider dataProvider{{ classShortName }}
      * @test
      */
-    public function {{ method }}()
+    public function {{ method }}({{ classShortName }} ${{ objectShortName }})
     {
         $this->markIncomplete('{{ method }}() need implementation!');
     }

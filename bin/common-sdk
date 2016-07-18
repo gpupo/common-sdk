@@ -61,6 +61,12 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
         ]);
 
         $output->writeln('Generate <comment>'. $test['filename'] . '</>');
+
+        if (!is_dir($test['testDirectory'])) {
+            mkdir($test['testDirectory'], 0777, true);
+            $output->writeln('Directory <comment>'. $test['testDirectory'] . '</> created');
+        }
+
         file_put_contents($test['filename'], $test['content'], FILE_TEXT);
 });
 

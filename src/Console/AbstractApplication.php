@@ -16,6 +16,7 @@ namespace Gpupo\CommonSdk\Console;
 
 use Exception;
 use Gpupo\Common\Console\AbstractApplication as Core;
+use Symfony\Component\Console\Output\OutputInterface;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;

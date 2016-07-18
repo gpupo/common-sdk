@@ -18,6 +18,8 @@ use Gpupo\CommonSdk\Entity\EntityInterface;
 
 trait FinderTrait
 {
+    abstract protected function all();
+
     public function findById($id)
     {
         foreach ($this->all() as $item) {
