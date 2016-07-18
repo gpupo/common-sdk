@@ -91,10 +91,10 @@ class Docblock
         $data['testNamespace'] = implode('\\', $array);
         array_shift($array);
         array_shift($array);
-        $data['testDirectory'] = 'tests/'. implode('/', $array);
+        $data['testDirectory'] = 'tests/'.implode('/', $array);
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
-        $data['filename'] = $data['testDirectory'].'/'. $data['classShortName'].'Test.php';
+        $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php';
         $data['content'] = $this->render($data, 'testCase');
 
         return $data;
