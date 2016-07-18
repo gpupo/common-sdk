@@ -43,7 +43,7 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
         $methods = [];
         foreach ($class->getMethods() as $m) {
             if ($m->class === $class->getName()) {
-                 if (false === strpos($m->name, '__')) {
+                 if (false === strpos($m->name, '__') && !in_array($m->name,['toLog'])) {
                      $methods[] = $m->name;
                  }
             }
@@ -111,15 +111,9 @@ $app->appendCommand('class:finder', 'Find classes')
         }
 
         $output->writeln("\nTests to implement\n");
-        foreach ($tests as $t) {
-            $output->writeln($t);
-        }
 
-
-        $output->writeln("\nRun:\n");
         foreach ($tests as $class => $test) {
-
-
+            $output->writeln($class);
             $command = $app->find('tests:implement');
             $t = new ArrayInput([
                'command'    => 'tests:implement',
@@ -131,7 +125,6 @@ $app->appendCommand('class:finder', 'Find classes')
             } catch (\Exception $e) {
                 $output->writeln('<error>'.$e->getMessage().'</>');
             }
-            //$output->writeln(__DIR__ .  '/common-sdk tests:implement --class="'.$class.'" --test-class="'.$test.'"');
         }
     });
 
