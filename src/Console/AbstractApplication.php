@@ -23,6 +23,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractApplication extends Core
 {
+    protected $configAlias = [
+        'env'   => 'version',
+    ];
+
     protected function getLogFilePath()
     {
         return 'var/logs/main.log';
