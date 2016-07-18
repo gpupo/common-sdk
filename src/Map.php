@@ -24,6 +24,10 @@ class Map extends Collection
 {
     public function __construct(array $elements = [], array $parameters = null)
     {
+        if (2 > count($elements)) {
+            throw new \Exception("Map require elements");
+        }
+
         $data = [
             'method'     => $elements[0],
             'resource'   => $elements[1],
