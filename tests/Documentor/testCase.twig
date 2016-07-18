@@ -44,7 +44,7 @@ class {{ classShortName }}Test extends TestCaseAbstract
     {{ expected|raw }}
         return $this->dataProviderEntitySchema(self::QUALIFIED, $expected);
 {% else %}
-        return new {{ classShortName }}();
+        return [[new {{ classShortName }}()]];
 {% endif %}
     }
     {{ asserts|raw }}

@@ -89,16 +89,13 @@ class Docblock
         $data['mainNamespace'] = $array[1];
         $array[0] = $array[0].'\\Tests';
         $data['testNamespace'] = implode('\\', $array);
-        $dest = $this->getResourcesDestinationPath("testCase_{$data['class']}.php");
+        array_shift($array);
+        array_shift($array);
+        $data['testDirectory'] = 'tests/'. implode('/', $array);
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
-        $data['filename'] = 'tests/'.$data['classShortName'].'Test.php';
+        $data['filename'] = $data['testDirectory'].'/'. $data['classShortName'].'Test.php';
         $data['content'] = $this->render($data, 'testCase');
-
-        if ($dest) {
-            echo 'Test Case file generated: '.$dest."\n";
-            //file_put_contents($dest, $data['content']);
-        }
 
         return $data;
     }
