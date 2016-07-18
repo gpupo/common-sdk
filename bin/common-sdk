@@ -13,6 +13,10 @@ namespace Gpupo\CommonSdk\Console;
 
 require 'vendor/autoload.php';
 
+if (!class_exists('\Gpupo\CommonSdk\Console\Application')) {
+    require __DIR__ . '/../vendor/autoload.php';
+}
+
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use RegexIterator;
