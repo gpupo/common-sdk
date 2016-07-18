@@ -22,9 +22,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Gpupo\Tests\CommonSdk\Documentor\Docblock;
+use Symfony\Component\Console\Input\ArrayInput;
 
 $app = new Application("common-sdk");
-
 
 $app->findConfig(['./']);
 
@@ -118,7 +118,20 @@ $app->appendCommand('class:finder', 'Find classes')
 
         $output->writeln("\nRun:\n");
         foreach ($tests as $class => $test) {
-            $output->writeln(__DIR__ .  '/common-sdk tests:implement --class="'.$class.'" --test-class="'.$test.'"');
+
+
+            $command = $app->find('tests:implement');
+            $t = new ArrayInput([
+               'command'    => 'tests:implement',
+               '--class'      => $class,
+               '--test-class' => $test,
+            ]);
+            try {
+                $command->run($t, $output);
+            } catch (\Exception $e) {
+                $output->writeln('<error>'.$e->getMessage().'</>');
+            }
+            //$output->writeln(__DIR__ .  '/common-sdk tests:implement --class="'.$class.'" --test-class="'.$test.'"');
         }
     });
 
