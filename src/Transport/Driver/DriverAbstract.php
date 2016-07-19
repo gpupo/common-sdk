@@ -44,6 +44,11 @@ abstract class DriverAbstract extends Collection
         return strtoupper(empty($string) ? 'GET' : $string);
     }
 
+    public function getBody()
+    {
+        return $this->get('body');
+    }
+
     /**
      * Permite o registro de cada requisição em arquivo.
      *
@@ -66,13 +71,15 @@ abstract class DriverAbstract extends Collection
         throw new RuntimeException('Impossivel registrar em '.$this->registerPath);
     }
 
-    abstract public function dataToRegister();
-
-    protected function registerSaveToFile()
+    protected function registerSaveToFile($data = null)
     {
+        if (empty($data)) {
+            return;
+        }
+
         $filename = $this->getRegisterFilename();
 
-        return file_put_contents($filename, $this->dataToRegister(), FILE_APPEND | FILE_TEXT);
+        return file_put_contents($filename, $data, FILE_APPEND | FILE_TEXT);
     }
 
     /**
@@ -87,11 +94,11 @@ abstract class DriverAbstract extends Collection
         return '* '.$title.':'.$data."\n";
     }
 
-    public function register()
+    public function register($data = null)
     {
         if (!empty($this->registerPath)) {
             try {
-                return $this->registerSaveToFile();
+                return $this->registerSaveToFile($data);
             } catch (\Exception $e) {
                 $this->containerLog['err'][] = $e->getMessage();
 
