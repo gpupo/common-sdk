@@ -96,49 +96,21 @@ phpunit/phpunit 5.4.6 The PHP Unit Testing framework.
 |  `--php >=5.6
 `--symfony/yaml ~2.1|~3.0
    `--php >=5.5.9
-gpupo/common 1.6.6 Common Objects
-|--doctrine/common ~2.5.1
-|  |--doctrine/annotations 1.*
-|  |  |--doctrine/lexer 1.*
-|  |  |  `--php >=5.3.2
-|  |  `--php >=5.3.2
-|  |--doctrine/cache 1.*
-|  |  `--php ~5.5|~7.0
-|  |--doctrine/collections 1.*
-|  |  `--php >=5.3.2
-|  |--doctrine/inflector 1.*
-|  |  `--php >=5.3.2
-|  |--doctrine/lexer 1.*
-|  |  `--php >=5.3.2
-|  `--php >=5.3.2
+gpupo/common 1.7.3 Common Objects
 `--php ^5.6 || ^7.0
-psr/log 1.0.0 Common interface for logging libraries
 gpupo/cache 1.3.0 Caching library that implements PSR-6
 |--gpupo/common *
-|  |--doctrine/common ~2.5.1
-|  |  |--doctrine/annotations 1.*
-|  |  |  |--doctrine/lexer 1.*
-|  |  |  |  `--php >=5.3.2
-|  |  |  `--php >=5.3.2
-|  |  |--doctrine/cache 1.*
-|  |  |  `--php ~5.5|~7.0
-|  |  |--doctrine/collections 1.*
-|  |  |  `--php >=5.3.2
-|  |  |--doctrine/inflector 1.*
-|  |  |  `--php >=5.3.2
-|  |  |--doctrine/lexer 1.*
-|  |  |  `--php >=5.3.2
-|  |  `--php >=5.3.2
 |  `--php ^5.6 || ^7.0
 |--php ^5.6 || ^7.0
 `--psr/cache 1.0.0
    `--php >=5.3.0
 twig/twig v1.24.1 Twig, the flexible, fast, and secure template language for PHP
 `--php >=5.2.7
-monolog/monolog 1.19.0 Sends your logs to files, sockets, inboxes, databases and various web services
+psr/log 1.0.0 Common interface for logging libraries
+monolog/monolog 1.20.0 Sends your logs to files, sockets, inboxes, databases and various web services
 |--php >=5.3.0
 `--psr/log ~1.0
-symfony/console v3.1.1 Symfony Console Component
+symfony/console v3.1.2 Symfony Console Component
 |--php >=5.5.9
 `--symfony/polyfill-mbstring ~1.0
    `--php >=5.3.3
