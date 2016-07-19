@@ -133,30 +133,40 @@ class CurlDriver extends DriverAbstract
             'httpStatusCode' => $this->getInfo(CURLINFO_HTTP_CODE),
         ];
 
-        $this->close();
+        $this->close($data);
 
         return $data;
     }
 
-    protected function close()
+    protected function close($data = null)
     {
         $this->lastTransfer = new Collection(curl_getinfo($this->curl));
-        $this->register();
+        $this->register($this->dataToRegister($data));
 
         return curl_close($this->curl);
     }
 
-    public function dataToRegister()
+    protected function dataToRegister($array)
     {
-        $data = $this->registerEncode('at', date('d/m/Y hhi:s'), false);
-        $data .= $this->registerEncode('url', $this->get('url'), false);
-        $data .= $this->registerEncode('method', $this->getMethod(), false);
-        $data .= $this->registerEncode('header', implode("\n", $this->header), false);
+        $data = "\n.......start.......\n"
+        .$this->registerEncode('at', date('d/m/Y hhi:s'), false)
+        .$this->registerEncode('url', $this->get('url'), false)
+        .$this->registerEncode('method', $this->getMethod(), false)
+        .$this->registerEncode('header', implode("\n", $this->header), false);
+
         $body = $this->getBody();
+
         if (!empty($body)) {
             $data .= $this->registerEncode('Body', $body, false);
         }
-        $data .= "---\n\n";
+
+        $data .= $this->registerEncode('transfer', $this->getLastTransfer(), false)
+        ."---\n\n* Response\n";
+
+        foreach ($array as $k => $v) {
+            $data .= $this->registerEncode($k, $v, false);
+        }
+        $data .= "\n.......end.......\n";
 
         return $data;
     }
