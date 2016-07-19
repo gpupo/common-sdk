@@ -50,5 +50,4 @@ class ResponseTest extends TestCaseAbstract
     {
         $this->markIncomplete('getData() need implementation!');
     }
-    
 }
