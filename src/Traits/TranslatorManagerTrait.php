@@ -35,13 +35,9 @@ trait TranslatorManagerTrait
 
     public function translatorUpdate(TranslatorDataCollection $data, TranslatorDataCollection $existent = null)
     {
-        $entity = $this->factoryTranslatorByForeign($data)->translateFrom();
-
-        if (!empty($existent)) {
-            $previous = $this->factoryTranslatorByForeign($existent)->translateFrom();
-        }
-
-        return $this->update($entity, empty($existent) ? null : $previous);
+        return $this->update($this->factoryTranslatorByForeign($data)
+            ->translateFrom(), empty($existent) ? null : $this
+            ->factoryTranslatorByForeign($existent)->translateFrom());
     }
 
     public function translatorFetch()
