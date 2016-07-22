@@ -21,16 +21,12 @@ use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use SebastianBergmann\PeekAndPoke\Proxy;
+use Gpupo\Tests\CommonSdk\Traits\ProxyTrait;
 
 abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 {
     use LoggerTrait;
-
-    protected function proxy($class)
-    {
-        return new Proxy($class);
-    }
+    use ProxyTrait;
 
     public function assertHttpStatusCodeSuccess($code, $context = null)
     {
