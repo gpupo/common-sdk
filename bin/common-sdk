@@ -29,7 +29,6 @@ use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 use Symfony\Component\Console\Input\ArrayInput;
 
 $app = new Application("common-sdk");
-
 $app->findConfig(['./']);
 
 $opts = [
@@ -105,10 +104,23 @@ $app->appendCommand('class:finder', 'Find classes')
 
         $tests = [];
 
+
+        $mode = (null !== $app->getConfig('namespace')) ? $app->getConfig('namespace')['mode'] : 'component';
+
         foreach ($fqcns as $item) {
             $output->writeln($item);
 
-            $testCase = '\\'.str_replace('Gpupo\\', 'Gpupo\\Tests\\', $item).'Test';
+            $ex = explode('\\', $item);
+
+            if ('bundle' === $mode) {
+                $f = $ex[0].'\\'.$ex[1].'\\';
+                $t = $f.'Tests\\';
+            } else {
+                $f = $ex[0].'\\';
+                $t = $f.'Tests\\';
+            }
+
+            $testCase = '\\'.str_replace($f, $t, $item).'Test';
             if (!class_exists($testCase) && false === strpos($item, 'Abstract') && false === strpos($item, 'Command')) {
                 $tests[$item] = $testCase;
             }
@@ -117,7 +129,7 @@ $app->appendCommand('class:finder', 'Find classes')
         $output->writeln("\nTests to implement\n");
 
         foreach ($tests as $class => $test) {
-            $output->writeln($class);
+            $output->writeln($class.' => '.$test);
             $command = $app->find('tests:implement');
             $t = new ArrayInput([
                'command'    => 'tests:implement',
