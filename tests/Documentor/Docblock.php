@@ -89,11 +89,10 @@ class Docblock
         $data['classNamespace'] = implode('\\', $array);
         $data['mainNamespace'] = $array[1];
 
-
         if ('bundle' === $data['config']['namespace']['mode']) {
             $array[1] = $array[1].'\\Tests';
             array_shift($array);
-            $data['testDirectory'] = 'src/'.str_replace('\\', '/',implode('/', $array));
+            $data['testDirectory'] = 'src/'.str_replace('\\', '/', implode('/', $array));
         } else {
             $array[0] = $array[0].'\\Tests';
             array_shift($array);
@@ -109,7 +108,7 @@ class Docblock
         $data['testAbstract'] = empty($data['config']['manespace']['testcase']) ? '\PHPUnit_Framework_TestCase' : $data['config']['manespace']['testcase'];
 
         if (false === strpos($data['testcase'], 'TestCaseAbstract')) {
-            $data['testcase'] . ' as TestCaseAbstract';
+            $data['testcase'].' as TestCaseAbstract';
         }
 
         return $data;
