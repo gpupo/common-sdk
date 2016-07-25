@@ -85,17 +85,32 @@ class Docblock
         $data['classShortName'] = end($array);
         $data['objectShortName'] = lcFirst($data['classShortName']);
         array_pop($array);
+
         $data['classNamespace'] = implode('\\', $array);
         $data['mainNamespace'] = $array[1];
-        $array[0] = $array[0].'\\Tests';
+
+
+        if ('bundle' === $data['config']['namespace']['mode']) {
+            $array[1] = $array[1].'\\Tests';
+            array_shift($array);
+            $data['testDirectory'] = 'src/'.str_replace('\\', '/',implode('/', $array));
+        } else {
+            $array[0] = $array[0].'\\Tests';
+            array_shift($array);
+            array_shift($array);
+            $data['testDirectory'] = 'tests/'.implode('/', $array);
+        }
+
         $data['testNamespace'] = implode('\\', $array);
-        array_shift($array);
-        array_shift($array);
-        $data['testDirectory'] = 'tests/'.implode('/', $array);
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
         $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php';
         $data['content'] = $this->render($data, 'testCase');
+        $data['testAbstract'] = empty($data['config']['manespace']['testcase']) ? '\PHPUnit_Framework_TestCase' : $data['config']['manespace']['testcase'];
+
+        if (false === strpos($data['testcase'], 'TestCaseAbstract')) {
+            $data['testcase'] . ' as TestCaseAbstract';
+        }
 
         return $data;
     }

@@ -29,7 +29,6 @@ use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 use Symfony\Component\Console\Input\ArrayInput;
 
 $app = new Application("common-sdk");
-$app->findConfig(['./']);
 
 $opts = [
     ['key' => 'class'],
@@ -61,6 +60,9 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
             'entity'    => false,
             'methods'   => $methods,
             'schema'    => [],
+            'config'    => [
+                'namespace' => $app->getConfig('namespace'),
+            ],
         ]);
 
         $output->writeln('Generate <comment>'. $test['filename'] . '</>');
