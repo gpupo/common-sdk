@@ -22,5 +22,4 @@ trait ProxyTrait
     {
         return new Proxy($class);
     }
-
 }
