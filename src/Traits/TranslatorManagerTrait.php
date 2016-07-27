@@ -40,10 +40,10 @@ trait TranslatorManagerTrait
             ->factoryTranslatorByForeign($existent)->translateFrom());
     }
 
-    public function translatorFetch()
+    public function translatorFetch($offset = 0, $limit = 50, array $parameters = [])
     {
         $dataCollection = new TranslatorDataCollection();
-        $collection = $this->fetch();
+        $collection = $this->fetch($offset, $limit, $parameters);
 
         if (0 < $collection->count()) {
             foreach ($collection as $entity) {
