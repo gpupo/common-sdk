@@ -16,10 +16,14 @@ namespace Gpupo\CommonSdk\Traits;
 
 trait LoadTrait
 {
-    protected function loadArrayFromFile($filename)
+    protected function loadArrayFromFile($filename, array $env = [])
     {
         if (true !== file_exists($filename)) {
-            return [];
+            return ['not_found' => $filename];
+        }
+
+        foreach ($env as $k => $v) {
+            $$k = $v;
         }
 
         $array = include $filename;
@@ -28,6 +32,6 @@ trait LoadTrait
             return [];
         }
 
-        return $array;
+        return array_merge($env, $array);
     }
 }
