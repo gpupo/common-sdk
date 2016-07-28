@@ -81,6 +81,13 @@ class Docblock
 
     protected function renderTest(array $data)
     {
+        $conf = $data['config']['namespace'];
+        $mode = 'default';
+
+        if (array_key_exists('mode', $conf)) {
+            $mode = $conf['mode'];
+        }
+
         $array = explode('\\', $data['class']);
         $data['classShortName'] = end($array);
         $data['objectShortName'] = lcFirst($data['classShortName']);
@@ -89,26 +96,28 @@ class Docblock
         $data['classNamespace'] = implode('\\', $array);
         $data['mainNamespace'] = $array[1];
 
-        if ('bundle' === $data['config']['namespace']['mode']) {
-            $array[1] = $array[1].'\\Tests';
+        $array[0] = $array[0].'\\Tests';
+        if ('bundle' === $mode) {
             array_shift($array);
-            $data['testDirectory'] = 'src/'.str_replace('\\', '/', implode('/', $array));
         } else {
-            $array[0] = $array[0].'\\Tests';
             array_shift($array);
             array_shift($array);
-            $data['testDirectory'] = 'tests/'.implode('/', $array);
         }
-
+        $data['testDirectory'] = 'tests/'.implode('/', $array);
         $data['testNamespace'] = implode('\\', $array);
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
         $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php';
         $data['content'] = $this->render($data, 'testCase');
-        $data['testAbstract'] = empty($data['config']['manespace']['testcase']) ? '\PHPUnit_Framework_TestCase' : $data['config']['manespace']['testcase'];
+
+        if (array_key_exists('testcase', $conf)) {
+            $tc = $conf['testcase'];
+        }
+
+        $data['testcase'] = empty($tc) ? '\PHPUnit_Framework_TestCase' : $tc;
 
         if (false === strpos($data['testcase'], 'TestCaseAbstract')) {
-            $data['testcase'].' as TestCaseAbstract';
+            $data['testcase'] .= ' as TestCaseAbstract';
         }
 
         return $data;

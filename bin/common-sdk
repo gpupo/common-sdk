@@ -39,6 +39,7 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app, $opts) {
 
         $list = $app->processInputParameters($opts, $input, $output);
+
         $class  = new \ReflectionClass($list['class']);
 
         $docblock = Docblock::getInstance();
@@ -55,13 +56,21 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
             return $output->writeln('<error>No methods for '.$class->getName().'</>');
         }
 
+        $schema = [];
+
+        if ($class->hasmethod('toDocBlock')) {
+            $object = new $list['class']();
+            $doc = $object->toDocBlock();
+            $schema = $doc['schema'];
+        }
+
         $test = $docblock->generate([
             'class'     => $class->getName(),
             'entity'    => false,
             'methods'   => $methods,
-            'schema'    => [],
+            'schema'    => $schema,
             'config'    => [
-                'namespace' => $app->getConfig('namespace'),
+                'namespace' => (array) $app->getConfig('namespace'),
             ],
         ]);
 
