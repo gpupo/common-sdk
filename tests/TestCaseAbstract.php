@@ -18,6 +18,7 @@ use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\Tests\CommonSdk\Documentor\Docblock;
+use Gpupo\Tests\CommonSdk\Traits\AssertTrait;
 use Gpupo\Tests\CommonSdk\Traits\ProxyTrait;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
@@ -27,11 +28,7 @@ abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
 {
     use LoggerTrait;
     use ProxyTrait;
-
-    public function assertHttpStatusCodeSuccess($code, $context = null)
-    {
-        $this->assertContains($code, [200, 204], $context);
-    }
+    use AssertTrait;
 
     protected function getLoggerFilePath()
     {
