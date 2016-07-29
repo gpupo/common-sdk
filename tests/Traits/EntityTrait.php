@@ -81,11 +81,16 @@ trait EntityTrait
             return $this->assertInstanceOf(CollectionAbstract::class, $object->$getter());
         }
 
-        if (!is_array($expected) || !array_key_exists($name, $expected)) {
-            return $this->markTestSkipped('not found key '.$name);
+        if ($type === 'datetime') {
+            return;
+        }
+
+        if (!array_key_exists($name, $expected)) {
+            return $this->markSkipped('not found key '.$name);
         }
 
         $this->assertSame($expected[$name], $object->get($name), 'assert Schema Setter simple');
+
         $this->assertSame($expected[$name], $object->$getter(), 'assert Schema Setter magical');
     }
 
@@ -95,8 +100,27 @@ trait EntityTrait
         $setter = 'set'.$case;
         $getter = 'get'.$case;
 
-        if ($type !== 'object') {
+        if ($type === 'object') {
+            //implement
+        } elseif ($type === 'datetime') {
+            $s = '2016-06-30T13:36:58+00:00';
+            $this->assertSame($s, $object->$setter($s)->$getter(), 'assertSchemaSetter');
+        } else {
             $this->assertSame('foo', $object->$setter('foo')->$getter(), 'assertSchemaSetter');
         }
+    }
+
+    /**
+     * @testdox Possui métodos especiais para output de informações
+     * @test
+     */
+    public function commonOutput()
+    {
+        $new = static::createObject(self::$fullyQualifiedObject, []);
+        $object = $this->proxy($new);
+        $object->setRequiredSchema([]);
+        $this->assertTrue(is_array($object->toLog()));
+        $this->assertTrue(is_array($object->toArray()));
+        $this->assertInternalType('string', $object->__toString());
     }
 }

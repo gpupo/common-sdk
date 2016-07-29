@@ -71,7 +71,7 @@ class Tools
             return true;
         }
 
-        foreach (['Integer', 'Number', 'String'] as $type) {
+        foreach (['Integer', 'Number', 'String', 'Datetime'] as $type) {
             $testMethod = 'test'.$type;
             try {
                 self::$testMethod($key, $current, $value);
@@ -102,6 +102,13 @@ class Tools
     protected static function testString($key, $current, $value)
     {
         if ($value === 'string' && strlen($current) < 1) {
+            self::returnInvalid($key, $current, $value);
+        }
+    }
+
+    protected static function testDatetime($key, $current, $value)
+    {
+        if ($value === 'datetime' && strlen($current) < 10) {
             self::returnInvalid($key, $current, $value);
         }
     }
