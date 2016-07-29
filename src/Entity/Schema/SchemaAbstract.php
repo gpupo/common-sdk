@@ -79,7 +79,7 @@ abstract class SchemaAbstract extends CollectionAbstract
                 );
             } elseif ($value === 'array') {
                 $schema[$key] = Tools::getInitValue($data, $key, []);
-            } elseif (in_array($value, ['string', 'integer', 'number', 'boolean'], true)) {
+            } elseif (in_array($value, ['string', 'integer', 'number', 'boolean', 'datetime'], true)) {
                 $schema[$key] = Tools::normalizeType(Tools::getInitValue($data, $key), $value);
             }
         }
