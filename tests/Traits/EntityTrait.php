@@ -110,17 +110,4 @@ trait EntityTrait
         }
     }
 
-    /**
-     * @testdox Possui métodos especiais para output de informações
-     * @test
-     */
-    public function commonOutput()
-    {
-        $new = static::createObject(self::$fullyQualifiedObject, []);
-        $object = $this->proxy($new);
-        $object->setRequiredSchema([]);
-        $this->assertTrue(is_array($object->toLog()));
-        $this->assertTrue(is_array($object->toArray()));
-        $this->assertInternalType('string', $object->__toString());
-    }
 }
