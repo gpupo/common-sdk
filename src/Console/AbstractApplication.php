@@ -16,11 +16,11 @@ namespace Gpupo\CommonSdk\Console;
 
 use Exception;
 use Gpupo\Common\Console\AbstractApplication as Core;
+use Gpupo\CommonSchema\TranslatorDataCollection;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Symfony\Component\Console\Output\OutputInterface;
-use Gpupo\CommonSchema\TranslatorDataCollection;
 
 abstract class AbstractApplication extends Core
 {
@@ -74,7 +74,6 @@ abstract class AbstractApplication extends Core
             'merchant', 'orderNumber', 'acceptedOffer', 'orderDate',
             'customer', 'billingAddress', 'quantity', 'freight', 'total',
         ], 49, true);
-
     }
 
     public function jsonLoadFromFile($filename)

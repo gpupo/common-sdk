@@ -109,5 +109,4 @@ trait EntityTrait
             $this->assertSame('foo', $object->$setter('foo')->$getter(), 'assertSchemaSetter');
         }
     }
-
 }
