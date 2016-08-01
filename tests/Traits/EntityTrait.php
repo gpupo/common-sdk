@@ -15,6 +15,7 @@
 namespace Gpupo\Tests\CommonSdk\Traits;
 
 use Gpupo\Common\Entity\CollectionAbstract;
+use Gpupo\Tests\CommonSdk\Entity\MockupData;
 
 trait EntityTrait
 {
@@ -59,10 +60,13 @@ trait EntityTrait
 
     protected function dataProviderEntitySchema($className, array $data = null)
     {
-        return [[
-            static::createObject($className, $data),
-            $data,
-        ]];
+        if (empty($data)) {
+            $data = MockupData::create($className);
+        }
+
+        $object = static::createObject($className, $data);
+
+        return [[$object, $data]];
     }
 
     /**
