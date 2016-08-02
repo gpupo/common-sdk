@@ -27,13 +27,13 @@ class MockupData
 
         foreach ($object->getSchema() as $k => $v) {
             if ('object' === $v || 'array' === $v) {
-                $x = [];
+                $x = $data;
             } elseif ('number' === $v) {
-                $x = rand(99, 99999) / rand(2, 222);
+                $x = (float) rand(99, 99999) / rand(2, 222);
             } elseif ('integer' === $v) {
-                $x = rand(99, 99999);
+                $x = intval(rand(99, 99999));
             } else {
-                $x = uniqid();
+                $x = sha1($k.uniqid());
             }
 
             $data[$k] = $x;
