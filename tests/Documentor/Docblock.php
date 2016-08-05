@@ -107,7 +107,7 @@ class Docblock
         $data['testNamespace'] = implode('\\', $array);
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
-        $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php';
+        $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php~';
         $data['content'] = $this->render($data, 'testCase');
 
         if (array_key_exists('testcase', $conf)) {
