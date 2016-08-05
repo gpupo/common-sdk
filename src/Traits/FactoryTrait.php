@@ -101,6 +101,11 @@ trait FactoryTrait
         }
 
         if (!class_exists($fullyQualified)) {
+            $error .= $fullyQualified;
+            $fullyQualified .= 'Collection';
+        }
+
+        if (!class_exists($fullyQualified)) {
             $error .= ' or '.$fullyQualified;
         } else {
             $found = $fullyQualified;
