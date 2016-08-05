@@ -30,4 +30,15 @@ abstract class CollectionAbstract extends Common
 
         parent::__construct($list);
     }
+
+    public function toLog()
+    {
+        $data = [];
+
+        foreach ($this->all() as $i) {
+            $data[] = $i->toLog();
+        }
+
+        return $data;
+    }
 }
