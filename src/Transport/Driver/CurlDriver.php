@@ -149,7 +149,7 @@ class CurlDriver extends DriverAbstract
     protected function dataToRegister($array)
     {
         $data = "\n.......start.......\n"
-        .$this->registerEncode('at', date('d/m/Y hhi:s'), false)
+        .$this->registerEncode('at', date('Y-m-d H:i:s'), false)
         .$this->registerEncode('url', $this->get('url'), false)
         .$this->registerEncode('method', $this->getMethod(), false)
         .$this->registerEncode('header', implode("\n", $this->header), false);
