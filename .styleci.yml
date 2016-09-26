@@ -9,6 +9,7 @@ enabled:
   - align_double_arrow
 disabled:
   - unalign_double_arrow
+  - phpdoc_type_to_var
 
 
 finder:
