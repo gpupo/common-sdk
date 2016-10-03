@@ -70,12 +70,11 @@ abstract class SchemaAbstract extends CollectionAbstract
         foreach ($schema as $key => $value) {
             if ($value === 'collection') {
                 $iv = $ov = Tools::getInitValue($data, $key, []);
-
-                if('s' === substr($key, -1)) {
+                if ('s' === substr($key, -1)) {
                     try {
                         $iv = [];
                         foreach ($ov as $y) {
-                            $iv[] = $this->factoryNeighborObject(rtrim($key, "s"), $y);
+                            $iv[] = $this->factoryNeighborObject(ucfirst(rtrim($key, "s")), $y);
                         }
                     } catch (\Exception $e) {
                         $iv = $ov;
