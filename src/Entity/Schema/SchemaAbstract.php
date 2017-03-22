@@ -2,14 +2,14 @@
 
 /*
  * This file is part of gpupo/common-sdk
- * Created by Gilmar Pupo <g@g1mr.com>
+ * Created by Gilmar Pupo <contact@gpupo.com>
  * For the information of copyright and license you should read the file
  * LICENSE which is distributed with this source code.
  * Para a informação dos direitos autorais e de licença você deve ler o arquivo
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <http://www.g1mr.com/>.
+ * For more information, see <https://www.gpupo.com/>.
  */
 
 namespace Gpupo\CommonSdk\Entity\Schema;
@@ -74,7 +74,7 @@ abstract class SchemaAbstract extends CollectionAbstract
                     try {
                         $iv = [];
                         foreach ($ov as $y) {
-                            $iv[] = $this->factoryNeighborObject(ucfirst(rtrim($key, "s")), $y);
+                            $iv[] = $this->factoryNeighborObject(ucfirst(rtrim($key, 's')), $y);
                         }
                     } catch (\Exception $e) {
                         $iv = $ov;

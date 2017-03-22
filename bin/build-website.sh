@@ -6,7 +6,7 @@
 source "$(dirname $0)/init.sh";
 
 h1 "Build Website for [${PROJECT_NAME}]"
-mkdir -pv var/build/ _layouts build/logs/report;
+mkdir -pv var/build/coverage _layouts build/logs/report;
 
 git commit -a --amend --no-edit;
 
