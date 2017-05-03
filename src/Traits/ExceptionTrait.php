@@ -33,6 +33,8 @@ trait ExceptionTrait
         return [
             'message' => $this->getMessage(),
             'code'    => $this->getCode(),
+            'file'    => $this->getFile(),
+            'line'    => $this->getLine(),
         ];
     }
 
