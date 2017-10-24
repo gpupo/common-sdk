@@ -45,7 +45,7 @@ rm -f ./*.md;
 cp ../../Resources/doc/* .
 cp _Sidebar.md Home.md;
 
-printf "\n\nDocumentation for **${PROJECT_NAME}** created by [gpupo/common-sdk](http://www.g1mr.com/common-sdk/) | `date +"%m-%d-%y"`" >> _Footer.md
+printf "\n\nDocumentation for **${PROJECT_NAME}** created by [gpupo/common-sdk](https://opensource.gpupo.com/common-sdk/) | `date +"%m-%d-%y"`" >> _Footer.md
 
 git add *.md
 git commit -am "Documentation for [${PROJECT_NAME}] created by gpupo/common-sdk";

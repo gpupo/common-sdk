@@ -72,7 +72,7 @@ Proibido:
 * Aos que [fizeram sugestões importantes](https://github.com/gpupo/common-sdk/issues);
 * Aos desenvolvedores que criaram as [bibliotecas utilizadas neste componente](https://github.com/gpupo/common-sdk/blob/master/Resources/doc/libraries-list.md).
 
- _- [Gilmar Pupo](http://www.g1mr.com/)_
+ _- [Gilmar Pupo](https://opensource.gpupo.com/)_
 
 
 
@@ -97,7 +97,7 @@ Adicione o pacote ``common-sdk`` ao seu projeto utilizando [composer](http://get
 ## Links
 
 * [Composer Package](https://packagist.org/packages/gpupo/) on packagist.org
-* [SDKs para o Ecommerce do Brasil](http://www.g1mr.com/common-sdk/)
+* [SDKs para o Ecommerce do Brasil](https://opensource.gpupo.com/common-sdk/)
 
 
 
