@@ -23,8 +23,9 @@ use Gpupo\Tests\CommonSdk\Traits\ProxyTrait;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use PHPUnit\Framework\TestCase;
 
-abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
+abstract class TestCaseAbstract extends TestCase
 {
     use LoggerTrait;
     use ProxyTrait;
