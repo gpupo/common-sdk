@@ -142,11 +142,7 @@ abstract class ClientManagerAbstract
      */
     protected function retry(\Exception $exception, $attempt)
     {
-        if ($attempt === 1 && $exception->getCode() >= 500) {
-            return true;
-        }
-
-        return false;
+        return $attempt === 1 && $exception->getCode() >= 500;
     }
 
     protected function perform(Map $map, $body = null)
