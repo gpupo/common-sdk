@@ -24,7 +24,9 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-abstract class TestCaseAbstract extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase as TestCaseCore;
+
+abstract class TestCaseAbstract extends TestCaseCore
 {
     use LoggerTrait;
     use ProxyTrait;
