@@ -17,6 +17,7 @@ namespace Gpupo\Tests\CommonSdk\Documentor;
 use Gpupo\Common\Traits\SingletonTrait;
 use Twig_Environment;
 use Twig_Loader_String;
+use PHPUnit\Framework\TestCase;
 
 class Docblock
 {
@@ -114,7 +115,7 @@ class Docblock
             $tc = $conf['testcase'];
         }
 
-        $data['testcase'] = empty($tc) ? '\PHPUnit_Framework_TestCase' : $tc;
+        $data['testcase'] = empty($tc) ? 'TestCase' : $tc;
 
         if (false === strpos($data['testcase'], 'TestCaseAbstract')) {
             $data['testcase'] .= ' as TestCaseAbstract';
