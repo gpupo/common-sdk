@@ -1,6 +1,6 @@
 ## Requisitos para uso
 
-* PHP >= *5.6*
+* PHP >= *7.1*
 * [curl extension](http://php.net/manual/en/intro.curl.php)
 * [Composer Dependency Manager](http://getcomposer.org)
 
