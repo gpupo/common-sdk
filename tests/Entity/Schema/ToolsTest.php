@@ -32,7 +32,7 @@ class ToolsTest extends TestCaseAbstract
      */
     public function testNormalizaTiposDeInformacao($value, $type, $expected)
     {
-        $this->assertTrue(Tools::normalizeType($value, $type) === $expected);
+        $this->assertSame($expected, Tools::normalizeType($value, $type));
     }
 
     /**
