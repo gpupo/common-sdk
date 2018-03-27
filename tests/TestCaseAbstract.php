@@ -97,7 +97,7 @@ abstract class TestCaseAbstract extends TestCaseCore
     {
         $value = $this->getConstant($name);
 
-        return empty($value) ? false : true;
+        return ! empty($value);
     }
 
     /**
