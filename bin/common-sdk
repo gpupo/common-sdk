@@ -32,14 +32,12 @@ $app = new Application("common-sdk");
 
 $opts = [
     ['key' => 'class'],
-    ['key' => 'test-class'],
 ];
 
 $app->appendCommand('tests:implement', 'Implement a test', $opts)
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app, $opts) {
 
         $list = $app->processInputParameters($opts, $input, $output);
-
         $class  = new \ReflectionClass($list['class']);
 
         $docblock = Docblock::getInstance();
@@ -58,15 +56,21 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
 
         $schema = [];
 
+        $entityInterface = false;
         if ($class->hasmethod('toDocBlock')) {
+            $entityInterface = true;
             $object = new $list['class']();
             $doc = $object->toDocBlock();
             $schema = $doc['schema'];
+
+        } else {
+            $discovery = $docblock->discovery($class);
+            $schema = $discovery['schema'];
         }
 
         $test = $docblock->generate([
             'class'     => $class->getName(),
-            'entity'    => false,
+            'entity'    => $entityInterface,
             'methods'   => $methods,
             'schema'    => $schema,
             'config'    => [
@@ -145,7 +149,6 @@ $app->appendCommand('class:finder', 'Find classes')
             $t = new ArrayInput([
                'command'    => 'tests:implement',
                '--class'      => $class,
-               '--test-class' => $test,
             ]);
             try {
                 $command->run($t, $output);

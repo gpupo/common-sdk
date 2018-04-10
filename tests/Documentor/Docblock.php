@@ -15,9 +15,8 @@
 namespace Gpupo\Tests\CommonSdk\Documentor;
 
 use Gpupo\Common\Traits\SingletonTrait;
-use Twig_Environment;
-use Twig_Loader_String;
-use PHPUnit\Framework\TestCase;
+use phpDocumentor\Reflection\DocBlockFactory;
+use ReflectionClass;
 
 class Docblock
 {
@@ -46,10 +45,51 @@ class Docblock
 
     protected function render($data, $template)
     {
-        $loader = new Twig_Loader_String();
-        $twig = new Twig_Environment($loader);
+        $loader = new \Twig_Loader_Filesystem(__DIR__);
+        $twig = new \Twig_Environment($loader, [
+            'cache' => 'var/cache/',
+        ]);
 
-        return $twig->render(file_get_contents(__DIR__.'/'.$template.'.twig'), $data);
+        return $twig->render($template.'.twig', $data);
+    }
+
+    public function discovery(ReflectionClass $reflect)
+    {
+        $props   = $reflect->getProperties();
+        $data = [
+            'class' => $reflect->getName(),
+            'config' => [
+                'namespace' => [
+                    $reflect->getNamespaceName(),
+                ],
+            ]
+        ];
+
+        foreach($props as $prop) {
+            $factory  = DocBlockFactory::createInstance();
+            $docblock = $factory->create($prop->getDocComment());
+            $var = $docblock->getTagsByName('var');
+            $type = 'undefined';
+
+            if (is_array($var)) {
+                if (is_array($var)) {
+                    $var = current($var);
+                }
+
+                if ($var instanceof \phpDocumentor\Reflection\DocBlock\Tags\Var_) {
+                    $type = $var->__toString();
+                }
+            }
+
+            $data['schema'][] = [
+                'name' => $prop->name,
+                'return' => $type,
+                'type' => $type,
+                'summary' => $docblock->getSummary(),
+            ];
+        }
+
+        return $data;
     }
 
     public function generate(array $data = [], $json = null)
@@ -60,6 +100,7 @@ class Docblock
                 'getter' => 'get'.$case,
                 'setter' => 'set'.$case,
                 'return' => $item['return'],
+                'summary' => '',
                 'name'   => $item['name'],
                 'type'   => $item['type'],
                 'case'   => $case,
@@ -98,17 +139,16 @@ class Docblock
         $data['mainNamespace'] = $array[1];
 
         $array[0] = $array[0].'\\Tests';
-        if ('bundle' === $mode) {
-            array_shift($array);
-        } else {
-            array_shift($array);
+        array_shift($array);
+        if ('simple' === $mode) {
             array_shift($array);
         }
+
         $data['testDirectory'] = 'tests/'.implode('/', $array);
         $data['testNamespace'] = implode('\\', $array);
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
-        $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php~';
+        $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php';
         $data['content'] = $this->render($data, 'testCase');
 
         if (array_key_exists('testcase', $conf)) {
