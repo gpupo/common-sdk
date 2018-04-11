@@ -1,12 +1,13 @@
     {% for method in methods %}
 
     /**
-     * @testdox Have a method ``{{ method }}()``.{% spaceless %}{{method.summary}}{% endspaceless %}
+     * @testdox Have a method ``{{ method }}()`` {% spaceless %}{{method.summary}}{% endspaceless %}.
      * @cover ::{{ method }}
      * @dataProvider dataProvider{{ classShortName }}
      * @test
      *
-     * @param {{ classShortName }} ${{ objectShortName }}
+     * @param {{ classShortName }} ${{ objectShortName }} Main Object
+     * @param array $expected Fixture data
      */
     public function test{{ method | capitalize }}({{ classShortName }} ${{ objectShortName }}, array $expected)
     {
@@ -17,26 +18,34 @@
     {% for method in magic_methods %}
 
     /**
-     * @testdox Have a getter ``{{ method.getter }}()`` to get {{ method.case }}
+     * @testdox Have a getter ``{{ method.getter }}()`` to get ``{{ method.case }}``
      * @dataProvider dataProvider{{ classShortName }}
      * @cover ::{{ method.getter }}
      * @small
      * @test
+     *
+     * @param {{ classShortName }} ${{ objectShortName }} Main Object
+     * @param array $expected Fixture data
      */
     public function testGet{{ method.case }}({{ classShortName }} ${{ objectShortName }}, array $expected)
     {
-        $this->assertSchemaGetter('{{ method.name }}', '{{ method.type }}', ${{ objectShortName }}, $expected);
+        ${{ objectShortName }}->{{ method.setter }}($expected['{{ method.name }}']);
+        $this->assertSame($expected['{{ method.name }}'], ${{ objectShortName }}->{{ method.getter }}());
     }
 
     /**
-     * @testdox Have a setter ``{{ method.setter }}()`` to set {{ method.case }}
+     * @testdox Have a setter ``{{ method.setter }}()`` to set ``{{ method.case }}``
      * @dataProvider dataProvider{{ classShortName }}
      * @cover ::{{ method.setter }}
      * @small
      * @test
+     *
+     * @param {{ classShortName }} ${{ objectShortName }} Main Object
+     * @param array $expected Fixture data
      */
     public function testSet{{ method.case }}({{ classShortName }} ${{ objectShortName }}, array $expected)
     {
-        $this->assertSchemaSetter('{{ method.name }}', '{{ method.type }}', ${{ objectShortName }});
+        ${{ objectShortName }}->{{ method.setter }}($expected['{{ method.name }}']);
+        $this->assertSame($expected['{{ method.name }}'], ${{ objectShortName }}->{{ method.getter }}());
     }
     {% endfor %}

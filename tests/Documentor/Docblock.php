@@ -96,10 +96,25 @@ class Docblock
             $case = $this->camelCase($item['name']);
             $getter = 'get'.$case;
             $setter = 'set'.$case;
+
+            $fixture = '"'.trim(str_replace(['null|'], '', $item['return'])).'"';
+            if (strpos($item['return'], 'DateTime') !== false) {
+                $fixture = 'new \DateTime()';
+            } elseif (strpos($item['return'], 'bool') !== false) {
+                $fixture = true;
+            } elseif (strpos($item['return'], 'integer') !== false) {
+                $fixture = rand();
+            } elseif (strpos($item['return'], 'array') !== false) {
+                $fixture = '["foo"=>"bar"]';
+            } elseif (strpos($item['return'], 'undefined') !== false || strpos($item['return'], 'string') !== false) {
+                $fixture = '"'.substr(md5(mt_rand()), 0, 7).'"';
+            }
+
             $data['magic_methods'][] = [
                 'getter' => $getter,
                 'setter' => $setter,
                 'return' => $item['return'],
+                'fixture' => $fixture,
                 'summary' => $item['summary'],
                 'name'   => $item['name'],
                 'type'   => $item['type'],

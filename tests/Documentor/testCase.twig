@@ -45,11 +45,11 @@ class {{ testShortName }} extends CoreTestCase
 {% else %}
         $expected = [
         {% for method in magic_methods %}
-         "{{ method.name }}" => "{{ method.return }}",
+         "{{ method.name }}" => {{ method.fixture|raw }},
         {% endfor %}
         ];
         $object = new {{ classShortName }}();
-        return [[$object, $$expected]];
+        return [[$object, $expected]];
 {% endif %}
     }
     {{ asserts|raw }}

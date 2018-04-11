@@ -86,6 +86,11 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
         }
 
         file_put_contents($test['filename'], $test['content'], FILE_TEXT);
+
+
+        $output->writeln('Try run <comment>bin/phpunit  --no-log --filter='. $test['testShortName'] . '</>');
+
+
 });
 
 $app->appendCommand('class:finder', 'Find classes')
