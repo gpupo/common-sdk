@@ -22,7 +22,7 @@
         "psr/log": "^1.0",
         "gpupo/cache": "*",
         "gpupo/common": "^2.0.2",
-        "twig/twig": "*",
+        "twig/twig": "^2.0",
         "monolog/monolog": "*",
         "sebastian/peek-and-poke": "1.0.x@dev",
         "codeclimate/php-test-reporter": "@dev",
@@ -36,5 +36,10 @@
         "preferred-install": "dist"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    }
 }

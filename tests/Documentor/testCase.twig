@@ -19,7 +19,7 @@ use App\Tests\TestCase as CoreTestCase;
 use {{class}};
 
 {{ block|trim }}
-class {{ classShortName }}Test extends CoreTestCase
+class {{ testShortName }} extends CoreTestCase
 {
 {% if entity %}
     use EntityTrait;
@@ -35,7 +35,7 @@ class {{ classShortName }}Test extends CoreTestCase
 {% endif %}
 
     /**
-     * @return \{{class}}
+     * @return {{classShortName}}
      */
     public function dataProvider{{ classShortName }}()
     {

@@ -2,8 +2,8 @@
  * @coversDefaultClass \{{class}}
  *
 {% for method in magic_methods %}
- * @method {{ method.return }} {{ method.getter }}()   A {{ method.name }} acessor. {{method.summary}}
- * @method {{ method.setter }}({{ method.return }} ${{method.name}})    A {{ method.name }} setter
+ * @method {{ method.return }} {{ method.getter }}()   A ${{ method.name }} acessor. {{method.summary}}
+ * @method {{ method.setter }}({{ method.return }} ${{method.name}})    A ${{ method.name }} setter
 {% endfor %}
  *
  */

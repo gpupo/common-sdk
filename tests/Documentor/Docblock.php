@@ -46,9 +46,7 @@ class Docblock
     protected function render($data, $template)
     {
         $loader = new \Twig_Loader_Filesystem(__DIR__);
-        $twig = new \Twig_Environment($loader, [
-            'cache' => 'var/cache/',
-        ]);
+        $twig = new \Twig_Environment($loader, []);
 
         return $twig->render($template.'.twig', $data);
     }
@@ -96,15 +94,23 @@ class Docblock
     {
         foreach ($data['schema'] as $item) {
             $case = $this->camelCase($item['name']);
+            $getter = 'get'.$case;
+            $setter = 'set'.$case;
             $data['magic_methods'][] = [
-                'getter' => 'get'.$case,
-                'setter' => 'set'.$case,
+                'getter' => $getter,
+                'setter' => $setter,
                 'return' => $item['return'],
-                'summary' => '',
+                'summary' => $item['summary'],
                 'name'   => $item['name'],
                 'type'   => $item['type'],
                 'case'   => $case,
             ];
+
+            foreach([$getter, $setter] as $m) {
+                if (($key = array_search($m, $data['methods'])) !== false) {
+                    unset($data['methods'][$key]);
+                }
+            }
         }
 
         $data['block'] = $this->renderDocBlock($data);
@@ -139,16 +145,28 @@ class Docblock
         $data['mainNamespace'] = $array[1];
 
         $array[0] = $array[0].'\\Tests';
+
+        $testNamespace = implode('\\', $array);
         array_shift($array);
         if ('simple' === $mode) {
             array_shift($array);
         }
 
         $data['testDirectory'] = 'tests/'.implode('/', $array);
-        $data['testNamespace'] = implode('\\', $array);
+        $data['testNamespace'] = $testNamespace;
+        $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'] .'Test.php';
+        $data['testShortName'] = $data['classShortName'] . 'Test';
+
+        if (file_exists($data['filename'])) {
+            $data['testShortName'] = $data['classShortName'] .  'GeneratedTest';
+            $data['filename'] = $data['testDirectory'].'/'.$data['testShortName'] .'.php';
+        }
+
+
+
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);
-        $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php';
+
         $data['content'] = $this->render($data, 'testCase');
 
         if (array_key_exists('testcase', $conf)) {
