@@ -102,7 +102,7 @@ class Docblock
                 $fixture = 'new \DateTime()';
             } elseif (strpos($item['return'], 'bool') !== false) {
                 $fixture = true;
-            } elseif (strpos($item['return'], 'integer') !== false) {
+            } elseif (strpos($item['return'], 'int') !== false) {
                 $fixture = rand();
             } elseif (strpos($item['return'], 'array') !== false) {
                 $fixture = '["foo"=>"bar"]';

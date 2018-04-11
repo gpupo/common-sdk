@@ -49,6 +49,7 @@ class {{ testShortName }} extends CoreTestCase
         {% endfor %}
         ];
         $object = new {{ classShortName }}();
+        
         return [[$object, $expected]];
 {% endif %}
     }
