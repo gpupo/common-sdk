@@ -32,6 +32,7 @@ $app = new Application("common-sdk");
 
 $opts = [
     ['key' => 'class'],
+    ['key' => 'ignore-superclass', 'options' => ['y', 'n'], 'default' =>'y'],
 ];
 
 $app->appendCommand('tests:implement', 'Implement a test', $opts)
@@ -43,10 +44,14 @@ $app->appendCommand('tests:implement', 'Implement a test', $opts)
         $docblock = Docblock::getInstance();
         $methods = [];
         foreach ($class->getMethods() as $m) {
-            if ($m->class === $class->getName()) {
+            if ($m->class === $class->getName() || 'y' !== $list['ignore-superclass']) {
                  if (false === strpos($m->name, '__') && !in_array($m->name,['toLog'])) {
                      $methods[] = $m->name;
                  }
+            } else {
+                if ($output->isVerbose()) {
+                    $output->writeln('Ignore method: '.$m->name. ' of ' . $m->class);
+                }
             }
         }
 
