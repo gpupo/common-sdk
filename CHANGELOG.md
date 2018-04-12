@@ -2,6 +2,10 @@
 VERSION 3  IMPROVE TEST GENERATOR
 =================================
 
+   Version 3.2 - Add option to include superclass methods in the generated test
+      12/04/2018 13:13  3.2.0  initial release
+         f325b9b Add option to include superclass methods in the generated test
+
    Version 3.1 - Improve Test Generator
       11/04/2018 13:46  3.1.2  Fix @var int
          991a087 fix int @var
