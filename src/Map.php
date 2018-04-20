@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk;
@@ -18,7 +21,7 @@ use Gpupo\Common\Entity\Collection;
 
 /**
  * @method string getMethod()
- * @method array getParameters()
+ * @method array  getParameters()
  */
 class Map extends Collection
 {
@@ -29,8 +32,8 @@ class Map extends Collection
         }
 
         $data = [
-            'method'     => $elements[0],
-            'resource'   => $elements[1],
+            'method' => $elements[0],
+            'resource' => $elements[1],
             'parameters' => $parameters,
         ];
 
@@ -43,24 +46,6 @@ class Map extends Collection
         $parameters = $this->getParameters();
         if (!empty($parameters) && is_array($parameters)) {
             $route = $this->populatePlaceholders($route, $parameters);
-        }
-
-        return $route;
-    }
-
-    protected function placeHolderValueEmpty($value)
-    {
-        return empty($value) && $value !== 0 && $value !== '0';
-    }
-
-    protected function populatePlaceholders($route, $parameters)
-    {
-        foreach ($parameters as $key => $value) {
-            if ($this->placeHolderValueEmpty($value)) {
-                $route = str_replace('&'.$key.'={'.$key.'}', '', $route);
-            } else {
-                $route = str_replace('{'.$key.'}', $value, $route);
-            }
         }
 
         return $route;
@@ -80,5 +65,23 @@ class Map extends Collection
         if (is_array($parameters) && array_key_exists('mode', $parameters)) {
             return $parameters['mode'];
         }
+    }
+
+    protected function placeHolderValueEmpty($value)
+    {
+        return empty($value) && 0 !== $value && '0' !== $value;
+    }
+
+    protected function populatePlaceholders($route, $parameters)
+    {
+        foreach ($parameters as $key => $value) {
+            if ($this->placeHolderValueEmpty($value)) {
+                $route = str_replace('&'.$key.'={'.$key.'}', '', $route);
+            } else {
+                $route = str_replace('{'.$key.'}', $value, $route);
+            }
+        }
+
+        return $route;
     }
 }

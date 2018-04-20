@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk;
@@ -33,9 +36,8 @@ class RequestTest extends TestCaseAbstract
      * @testdox ``getBody()``
      * @cover ::getBody
      * @dataProvider dataProviderRequest
-     * @test
      */
-    public function getBody(Request $request)
+    public function testGetBody(Request $request)
     {
         $this->markIncomplete('getBody() need implementation!');
     }
@@ -44,9 +46,8 @@ class RequestTest extends TestCaseAbstract
      * @testdox ``getHeader()``
      * @cover ::getHeader
      * @dataProvider dataProviderRequest
-     * @test
      */
-    public function getHeader(Request $request)
+    public function testGetHeader(Request $request)
     {
         $this->markIncomplete('getHeader() need implementation!');
     }
@@ -55,9 +56,8 @@ class RequestTest extends TestCaseAbstract
      * @testdox ``setTransport()``
      * @cover ::setTransport
      * @dataProvider dataProviderRequest
-     * @test
      */
-    public function setTransport(Request $request)
+    public function testSetTransport(Request $request)
     {
         $this->markIncomplete('setTransport() need implementation!');
     }
@@ -66,9 +66,8 @@ class RequestTest extends TestCaseAbstract
      * @testdox ``getTransport()``
      * @cover ::getTransport
      * @dataProvider dataProviderRequest
-     * @test
      */
-    public function getTransport(Request $request)
+    public function testGetTransport(Request $request)
     {
         $this->markIncomplete('getTransport() need implementation!');
     }
@@ -77,9 +76,8 @@ class RequestTest extends TestCaseAbstract
      * @testdox ``exec()``
      * @cover ::exec
      * @dataProvider dataProviderRequest
-     * @test
      */
-    public function exec(Request $request)
+    public function testExec(Request $request)
     {
         $this->markIncomplete('exec() need implementation!');
     }

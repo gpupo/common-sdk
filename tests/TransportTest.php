@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,19 +11,25 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Transport;
+use Gpupo\CommonSdk\Transport\Driver\CurlDriver;
 
+/**
+ * @coversNothing
+ */
 class TransportTest extends TestCaseAbstract
 {
     public function testRecebeObjetoOptions()
     {
-        $transport = new Transport(new Collection([]));
+        $transport = new Transport(new Collection(['sslVersion' => 'bar']));
+        $this->assertInstanceof(CurlDriver::class, $transport);
 
         return $transport;
     }
@@ -42,11 +50,13 @@ class TransportTest extends TestCaseAbstract
     /**
      * @testdox Possui informações sobre a última requisição
      * @depends testExecutaRequisiçãoAUmaUrlInformada
+     *
+     * @param mixed $transport
      */
     public function testLastTransfer($transport)
     {
         $lastTransfer = $transport->getLastTransfer();
-        $this->assertInstanceof("\Gpupo\Common\Entity\Collection", $lastTransfer);
+        $this->assertInstanceof('\\Gpupo\\Common\\Entity\\Collection', $lastTransfer);
         $this->assertSame('https://github.com/', $lastTransfer->get('url'));
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Entity\Metadata;
@@ -18,13 +21,23 @@ use Gpupo\Common\Entity\CollectionAbstract;
 
 abstract class MetadataContainerAbstract extends CollectionAbstract
 {
-    abstract protected function getKey();
-
-    abstract protected function factoryEntity(array $data);
-
     protected $Metadata;
 
     protected $raw;
+
+    public function __construct($data = null)
+    {
+        $this->raw = $data;
+
+        $this->factoryMetadata($data);
+
+        $list = $this->dataPiece($this->getKey(), $data);
+        if (!empty($list)) {
+            foreach ($list as $entityData) {
+                $this->add($this->factoryEntity($entityData));
+            }
+        }
+    }
 
     public function getMetadata()
     {
@@ -35,6 +48,10 @@ abstract class MetadataContainerAbstract extends CollectionAbstract
     {
         return $this->raw;
     }
+
+    abstract protected function getKey();
+
+    abstract protected function factoryEntity(array $data);
 
     protected function normalizeMetas($metas)
     {
@@ -53,11 +70,12 @@ abstract class MetadataContainerAbstract extends CollectionAbstract
     {
         if ($data instanceof CollectionAbstract) {
             return $data->get($piece);
-        } elseif (is_array($data) && array_key_exists($piece, $data)) {
-            return $data[$piece];
-        } else {
-            return [];
         }
+        if (is_array($data) && array_key_exists($piece, $data)) {
+            return $data[$piece];
+        }
+
+        return [];
     }
 
     protected function cutMetadata($raw)
@@ -76,19 +94,5 @@ abstract class MetadataContainerAbstract extends CollectionAbstract
         $this->Metadata = new Metadata($data);
 
         return true;
-    }
-
-    public function __construct($data = null)
-    {
-        $this->raw = $data;
-
-        $this->factoryMetadata($data);
-
-        $list = $this->dataPiece($this->getKey(), $data);
-        if (!empty($list)) {
-            foreach ($list as $entityData) {
-                $this->add($this->factoryEntity($entityData));
-            }
-        }
     }
 }

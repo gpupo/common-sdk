@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk\Documentor;
@@ -36,35 +39,27 @@ class Docblock
         if (!empty($this->resourcesPath)) {
             $file = str_replace('\\', '_', $file);
             $dir = "{$this->resourcesPath}autodoc";
-            $path = "$dir/{$file}";
+            $path = "${dir}/{$file}";
             touch($path);
 
             return $path;
         }
     }
 
-    protected function render($data, $template)
-    {
-        $loader = new \Twig_Loader_Filesystem(__DIR__);
-        $twig = new \Twig_Environment($loader, []);
-
-        return $twig->render($template.'.twig', $data);
-    }
-
     public function discovery(ReflectionClass $reflect)
     {
-        $props   = $reflect->getProperties();
+        $props = $reflect->getProperties();
         $data = [
             'class' => $reflect->getName(),
             'config' => [
                 'namespace' => [
                     $reflect->getNamespaceName(),
                 ],
-            ]
+            ],
         ];
 
-        foreach($props as $prop) {
-            $factory  = DocBlockFactory::createInstance();
+        foreach ($props as $prop) {
+            $factory = DocBlockFactory::createInstance();
             $docblock = $factory->create($prop->getDocComment());
             $var = $docblock->getTagsByName('var');
             $type = 'undefined';
@@ -98,15 +93,15 @@ class Docblock
             $setter = 'set'.$case;
 
             $fixture = '"'.trim(str_replace(['null|'], '', $item['return'])).'"';
-            if (strpos($item['return'], 'DateTime') !== false) {
+            if (false !== strpos($item['return'], 'DateTime')) {
                 $fixture = 'new \DateTime()';
-            } elseif (strpos($item['return'], 'bool') !== false) {
+            } elseif (false !== strpos($item['return'], 'bool')) {
                 $fixture = true;
-            } elseif (strpos($item['return'], 'int') !== false) {
+            } elseif (false !== strpos($item['return'], 'int')) {
                 $fixture = rand();
-            } elseif (strpos($item['return'], 'array') !== false) {
+            } elseif (false !== strpos($item['return'], 'array')) {
                 $fixture = '["foo"=>"bar"]';
-            } elseif (strpos($item['return'], 'undefined') !== false || strpos($item['return'], 'string') !== false) {
+            } elseif (false !== strpos($item['return'], 'undefined') || false !== strpos($item['return'], 'string')) {
                 $fixture = '"'.substr(md5(mt_rand()), 0, 7).'"';
             }
 
@@ -116,13 +111,13 @@ class Docblock
                 'return' => $item['return'],
                 'fixture' => $fixture,
                 'summary' => $item['summary'],
-                'name'   => $item['name'],
-                'type'   => $item['type'],
-                'case'   => $case,
+                'name' => $item['name'],
+                'type' => $item['type'],
+                'case' => $case,
             ];
 
-            foreach([$getter, $setter] as $m) {
-                if (($key = array_search($m, $data['methods'])) !== false) {
+            foreach ([$getter, $setter] as $m) {
+                if (false !== ($key = array_search($m, $data['methods'], true))) {
                     unset($data['methods'][$key]);
                 }
             }
@@ -135,6 +130,14 @@ class Docblock
         }
 
         return  $this->renderTest($data);
+    }
+
+    protected function render($data, $template)
+    {
+        $loader = new \Twig_Loader_Filesystem(__DIR__);
+        $twig = new \Twig_Environment($loader, []);
+
+        return $twig->render($template.'.twig', $data);
     }
 
     protected function camelCase($name)
@@ -153,7 +156,7 @@ class Docblock
 
         $array = explode('\\', $data['class']);
         $data['classShortName'] = end($array);
-        $data['objectShortName'] = lcFirst($data['classShortName']);
+        $data['objectShortName'] = lcfirst($data['classShortName']);
         array_pop($array);
 
         $data['classNamespace'] = implode('\\', $array);
@@ -169,15 +172,13 @@ class Docblock
 
         $data['testDirectory'] = 'tests/'.implode('/', $array);
         $data['testNamespace'] = $testNamespace;
-        $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'] .'Test.php';
-        $data['testShortName'] = $data['classShortName'] . 'Test';
+        $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php';
+        $data['testShortName'] = $data['classShortName'].'Test';
 
         if (file_exists($data['filename'])) {
-            $data['testShortName'] = $data['classShortName'] .  'GeneratedTest';
-            $data['filename'] = $data['testDirectory'].'/'.$data['testShortName'] .'.php';
+            $data['testShortName'] = $data['classShortName'].'GeneratedTest';
+            $data['filename'] = $data['testDirectory'].'/'.$data['testShortName'].'.php';
         }
-
-
 
         $data['asserts'] = $this->renderAsserts($data);
         $data['expected'] = $this->renderExpected($data);

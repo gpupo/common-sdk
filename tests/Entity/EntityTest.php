@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk\Entity;
@@ -46,11 +49,6 @@ class EntityTest extends TestCaseAbstract
         ]];
     }
 
-    protected function factory()
-    {
-        return new Entity(['foo' => 'hello']);
-    }
-
     public function testAcessoAIdentificadorPadraoDaEntidade()
     {
         $entity = $this->factory();
@@ -65,17 +63,18 @@ class EntityTest extends TestCaseAbstract
         $this->assertSame('Gpupo\CommonSdk\Entity\Entity', $entity->getCalledEntityName(true));
     }
 
-    /**
-     * @expectedException \Gpupo\CommonSdk\Exception\SchemaException
-     */
     public function testValidaDadosObrigatórios()
     {
+        $this->expectException(\Gpupo\CommonSdk\Exception\SchemaException::class);
+
         $entity = new Entity(['foo' => '']);
         $entity->toJson();
     }
 
     /**
      * @dataProvider dataProviderObject
+     *
+     * @param null|mixed $expected
      */
     public function testPossuiGetterParaAcessoAFoo(EntityInterface $object, $expected = null)
     {
@@ -84,6 +83,8 @@ class EntityTest extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderObject
+     *
+     * @param null|mixed $expected
      */
     public function testPossuiSetterParaDefinirFoo(EntityInterface $object, $expected = null)
     {
@@ -92,6 +93,8 @@ class EntityTest extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderObject
+     *
+     * @param null|mixed $expected
      */
     public function testPossuiGetterParaAcessoABar(EntityInterface $object, $expected = null)
     {
@@ -100,9 +103,16 @@ class EntityTest extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderObject
+     *
+     * @param null|mixed $expected
      */
     public function testPossuiSetterParaDefinirBar(EntityInterface $object, $expected = null)
     {
         $this->assertSchemaSetter('bar', 'number', $object);
+    }
+
+    protected function factory()
+    {
+        return new Entity(['foo' => 'hello']);
     }
 }

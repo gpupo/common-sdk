@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk;
@@ -33,9 +36,8 @@ class ResponseTest extends TestCaseAbstract
      * @testdox ``validate()``
      * @cover ::validate
      * @dataProvider dataProviderResponse
-     * @test
      */
-    public function validate(Response $response)
+    public function testValidate(Response $response)
     {
         $this->markIncomplete('validate() need implementation!');
     }
@@ -44,9 +46,8 @@ class ResponseTest extends TestCaseAbstract
      * @testdox ``getData()``
      * @cover ::getData
      * @dataProvider dataProviderResponse
-     * @test
      */
-    public function getData(Response $response)
+    public function testGetData(Response $response)
     {
         $this->markIncomplete('getData() need implementation!');
     }

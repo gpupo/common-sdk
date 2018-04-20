@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk\Client\Oauth2\Provider;
@@ -17,13 +20,16 @@ namespace Gpupo\Tests\CommonSdk\Client\Oauth2\Provider;
 use Gpupo\CommonSdk\Client\Oauth2\Provider\GenericProvider;
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
 
+/**
+ * @coversNothing
+ */
 class GenericProviderTest extends TestCaseAbstract
 {
     public function testAcessoAUrlDeAutorizacao()
     {
         $provider = new GenericProvider(
             [
-                'clientId'  => 'lambda',
+                'clientId' => 'lambda',
                 'authorize' => 'https://foo/bar?client_id={clientId}',
             ]
         );

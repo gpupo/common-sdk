@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Traits;
@@ -21,16 +24,6 @@ trait TranslatorManagerTrait
     public function factoryTranslator(array $data = [])
     {
         throw new \Exception('factoryTranslator() deve ser implementado!');
-    }
-
-    protected function factoryTranslatorByNative($entity)
-    {
-        return $this->factoryTranslator(['native' => $entity]);
-    }
-
-    protected function factoryTranslatorByForeign(TranslatorDataCollection $entity)
-    {
-        return $this->factoryTranslator(['foreign' => $entity]);
     }
 
     public function translatorUpdate(TranslatorDataCollection $data, TranslatorDataCollection $existent = null)
@@ -63,5 +56,15 @@ trait TranslatorManagerTrait
         }
 
         return $this->factoryTranslator(['native' => $collection])->translateTo();
+    }
+
+    protected function factoryTranslatorByNative($entity)
+    {
+        return $this->factoryTranslator(['native' => $entity]);
+    }
+
+    protected function factoryTranslatorByForeign(TranslatorDataCollection $entity)
+    {
+        return $this->factoryTranslator(['foreign' => $entity]);
     }
 }

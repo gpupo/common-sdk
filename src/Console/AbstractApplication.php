@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Console;
@@ -27,16 +30,6 @@ abstract class AbstractApplication extends Core
     protected $configAlias = [
         'env' => 'version',
     ];
-
-    protected function getLogFilePath()
-    {
-        return 'var/logs/main.log';
-    }
-
-    protected function getLogLevel()
-    {
-        return Logger::DEBUG;
-    }
 
     public function factoryLogger($channel = 'bin', $verbose = null)
     {
@@ -93,5 +86,15 @@ abstract class AbstractApplication extends Core
         file_put_contents($filename, $json);
 
         return $output->writeln('Arquivo <info>'.$filename.'</info> gerado.');
+    }
+
+    protected function getLogFilePath()
+    {
+        return 'var/logs/main.log';
+    }
+
+    protected function getLogLevel()
+    {
+        return Logger::DEBUG;
     }
 }

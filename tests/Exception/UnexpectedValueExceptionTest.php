@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk\Exception;
@@ -34,9 +37,8 @@ class UnexpectedValueExceptionTest extends TestCaseAbstract
      * @testdox ``setMessage()``
      * @cover ::setMessage
      * @dataProvider dataProviderUnexpectedValueException
-     * @test
      */
-    public function setMessage(UnexpectedValueException $unexpectedValueException)
+    public function testSetMessage(UnexpectedValueException $unexpectedValueException)
     {
         $this->markIncomplete('setMessage() need implementation!');
     }
@@ -45,9 +47,8 @@ class UnexpectedValueExceptionTest extends TestCaseAbstract
      * @testdox ``toLog()``
      * @cover ::toLog
      * @dataProvider dataProviderUnexpectedValueException
-     * @test
      */
-    public function toLog(UnexpectedValueException $unexpectedValueException)
+    public function testToLog(UnexpectedValueException $unexpectedValueException)
     {
         $this->markIncomplete('toLog() need implementation!');
     }
@@ -56,9 +57,8 @@ class UnexpectedValueExceptionTest extends TestCaseAbstract
      * @testdox ``addMessagePrefix()``
      * @cover ::addMessagePrefix
      * @dataProvider dataProviderUnexpectedValueException
-     * @test
      */
-    public function addMessagePrefix(UnexpectedValueException $unexpectedValueException)
+    public function testAddMessagePrefix(UnexpectedValueException $unexpectedValueException)
     {
         $this->markIncomplete('addMessagePrefix() need implementation!');
     }

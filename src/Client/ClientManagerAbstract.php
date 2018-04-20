@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Client;
@@ -55,19 +58,11 @@ abstract class ClientManagerAbstract
     }
 
     /**
-     * @return Gpupo\CommonSdk\Response|null|true
+     * @return null|Gpupo\CommonSdk\Response|true
      */
     public function getDryRun()
     {
         return $this->dryRun;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isDryRun()
-    {
-        return !empty($this->dryRun);
     }
 
     /**
@@ -92,11 +87,6 @@ abstract class ClientManagerAbstract
         $this->dryRun = $response;
 
         return $this;
-    }
-
-    protected function execute(Map $map, $body = null)
-    {
-        return $this->perform($map, $body);
     }
 
     /**
@@ -124,6 +114,19 @@ abstract class ClientManagerAbstract
         return new Map($data, $parameters);
     }
 
+    /**
+     * @return bool
+     */
+    protected function isDryRun()
+    {
+        return !empty($this->dryRun);
+    }
+
+    protected function execute(Map $map, $body = null)
+    {
+        return $this->perform($map, $body);
+    }
+
     protected function exceptionHandler(\Exception $exception, $method, $resource)
     {
         $text = $method.' on '.$resource.' FAIL:'.$exception->getMessage();
@@ -142,7 +145,7 @@ abstract class ClientManagerAbstract
      */
     protected function retry(\Exception $exception, $attempt)
     {
-        return $attempt === 1 && $exception->getCode() >= 500;
+        return 1 === $attempt && $exception->getCode() >= 500;
     }
 
     protected function perform(Map $map, $body = null)
@@ -151,7 +154,8 @@ abstract class ClientManagerAbstract
 
         if (empty($dryRun)) {
             return $this->performReturn($this->performReal($map, $body), 'Real', $map);
-        } elseif ($dryRun instanceof Response) {
+        }
+        if ($dryRun instanceof Response) {
             return $this->performReturn($dryRun, 'Mockup', $map);
         }
 
@@ -162,7 +166,7 @@ abstract class ClientManagerAbstract
     {
         $this->log('debug', 'ClientManager:Perform', [
             'mode' => $mode,
-            'map'  => $map->toLog(),
+            'map' => $map->toLog(),
         ]);
 
         return $return;
@@ -175,12 +179,13 @@ abstract class ClientManagerAbstract
         $attempt = 0;
         while ($attempt <= 5) {
             ++$attempt;
+
             try {
                 if ($map->getMode()) {
                     $this->getClient()->setMode($map->getMode());
                 }
 
-                return $this->getClient()->$methodName($map->getResource(), $body);
+                return $this->getClient()->{$methodName}($map->getResource(), $body);
             } catch (\Exception $exception) {
                 if (!$this->retry($exception, $attempt)) {
                     throw $this->exceptionHandler(

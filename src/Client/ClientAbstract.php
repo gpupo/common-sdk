@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Client;
@@ -23,19 +26,6 @@ abstract class ClientAbstract extends BoardAbstract
 {
     protected $mode;
 
-    abstract protected function renderAuthorization();
-
-    protected function renderContentType()
-    {
-        if ($this->getMode() === 'form') {
-            $this->setMode(false);
-
-            return 'Content-Type: application/x-www-form-urlencoded';
-        }
-
-        return 'Content-Type: application/json;charset=UTF-8';
-    }
-
     public function setMode($mode)
     {
         $this->mode = $mode;
@@ -44,6 +34,125 @@ abstract class ClientAbstract extends BoardAbstract
     public function getMode()
     {
         return $this->mode;
+    }
+
+    public function factoryRequest($resource, $method = '', $destroyCache = false)
+    {
+        if ($destroyCache) {
+            $this->destroyCache($resource);
+        }
+
+        $request = new Request();
+
+        if (!empty($method)) {
+            $request->setMethod($method);
+        }
+
+        $request->setTransport($this->factoryTransport())
+            ->setHeader($this->renderHeader())
+            ->setUrl($this->getResourceUri($resource));
+
+        return $request;
+    }
+
+    public function get($resource, $ttl = null)
+    {
+        $request = $this->factoryRequest($resource);
+
+        if ($ttl && $this->hasCacheItemPool()) {
+            $key = $this->factoryCacheKey($resource);
+            $cacheItem = $this->getCacheItemPool()->getItem($key);
+
+            if ($cacheItem->exists()) {
+                $response = $cacheItem->get();
+
+                return $response;
+            }
+
+            $response = $this->exec($request);
+            if (true === $ttl) {
+                $ttl = $this->getOptions()->get('cacheTTL', 3600);
+                $cacheItem->set($response, $ttl);
+                $this->getCacheItemPool()->save($cacheItem);
+            }
+
+            return $response;
+        }
+
+        return $this->exec($request);
+    }
+
+    /**
+     * Executa uma requisição POST ou PUT.
+     *
+     * @param string       $resource Url de Endpoint
+     * @param array|string $body     Valores do Request
+     * @param string       $name     POST por default mas também pode ser usado para PUT
+     *
+     * @return Response
+     */
+    public function post($resource, $body, $name = 'POST')
+    {
+        return $this->exec($this->factoryPostRequest($resource, $body, $name));
+    }
+
+    /**
+     * Executa uma requisição PUT, Facade para post().
+     *
+     * @param string       $resource Url de Endpoint
+     * @param array|string $body     Valores do Request
+     *
+     * @return Response
+     */
+    public function put($resource, $body)
+    {
+        return $this->post($resource, $body, 'PUT');
+    }
+
+    /**
+     * Executa uma requisição PATCH, Facade para post().
+     *
+     * @param string       $resource Url de Endpoint
+     * @param array|string $body     Valores do Request
+     *
+     * @return Response
+     */
+    public function patch($resource, $body)
+    {
+        return $this->post($resource, $body, 'PATCH');
+    }
+
+    public function getResourceUri($resource)
+    {
+        $base = $this->getOptions()->get('base_url');
+
+        if (empty($base) || is_array($resource)) {
+            return $this->normalizeResourceUri($resource);
+        }
+
+        $endpoint = $this->fillPlaceholdersWithOptions($base, ['version', 'protocol']);
+
+        if ('http' === substr($resource, 0, 4)) {
+            return $resource;
+        }
+        if ('/' !== $resource[0]) {
+            $endpoint .= '/';
+        }
+
+        return $endpoint.$resource;
+    }
+
+    abstract protected function renderAuthorization();
+
+    protected function renderContentType()
+    {
+        if ('form' === $this->getMode()) {
+            $this->setMode(false);
+
+            return 'Content-Type: application/x-www-form-urlencoded';
+        }
+
+        return 'Content-Type: application/json;charset=UTF-8';
     }
 
     /**
@@ -79,25 +188,6 @@ abstract class ClientAbstract extends BoardAbstract
         return $transport;
     }
 
-    public function factoryRequest($resource, $method = '', $destroyCache = false)
-    {
-        if ($destroyCache) {
-            $this->destroyCache($resource);
-        }
-
-        $request = new Request();
-
-        if (!empty($method)) {
-            $request->setMethod($method);
-        }
-
-        $request->setTransport($this->factoryTransport())
-            ->setHeader($this->renderHeader())
-            ->setUrl($this->getResourceUri($resource));
-
-        return $request;
-    }
-
     /**
      * Executa a chamada http.
      *
@@ -116,7 +206,7 @@ abstract class ClientAbstract extends BoardAbstract
             $this->debug(
                 'Client Execution',
                 [
-                    'request'  => $request->toLog(),
+                    'request' => $request->toLog(),
                     'response' => $response->toLog(),
                 ]
             );
@@ -125,37 +215,10 @@ abstract class ClientAbstract extends BoardAbstract
         } catch (ClientException $e) {
             $this->error('Execucao fracassada', [
                 'exception' => $e->toLog(),
-                'request'   => $request->toLog(),
+                'request' => $request->toLog(),
             ]);
 
             throw $e;
-        }
-    }
-
-    public function get($resource, $ttl = null)
-    {
-        $request = $this->factoryRequest($resource);
-
-        if ($ttl && $this->hasCacheItemPool()) {
-            $key = $this->factoryCacheKey($resource);
-            $cacheItem = $this->getCacheItemPool()->getItem($key);
-
-            if ($cacheItem->exists()) {
-                $response = $cacheItem->get();
-
-                return $response;
-            }
-
-            $response = $this->exec($request);
-            if ($ttl === true) {
-                $ttl = $this->getOptions()->get('cacheTTL', 3600);
-                $cacheItem->set($response, $ttl);
-                $this->getCacheItemPool()->save($cacheItem);
-            }
-
-            return $response;
-        } else {
-            return $this->exec($request);
         }
     }
 
@@ -166,46 +229,6 @@ abstract class ClientAbstract extends BoardAbstract
         }
 
         return $this->factoryRequest($resource, $name, true)->setBody($body);
-    }
-
-    /**
-     * Executa uma requisição POST ou PUT.
-     *
-     * @param string       $resource Url de Endpoint
-     * @param string|array $body     Valores do Request
-     * @param string       $name     POST por default mas também pode ser usado para PUT
-     *
-     * @return Response
-     */
-    public function post($resource, $body, $name = 'POST')
-    {
-        return $this->exec($this->factoryPostRequest($resource, $body, $name));
-    }
-
-    /**
-     * Executa uma requisição PUT, Facade para post().
-     *
-     * @param string       $resource Url de Endpoint
-     * @param string|array $body     Valores do Request
-     *
-     * @return Response
-     */
-    public function put($resource, $body)
-    {
-        return $this->post($resource, $body, 'PUT');
-    }
-
-    /**
-     * Executa uma requisição PATCH, Facade para post().
-     *
-     * @param string       $resource Url de Endpoint
-     * @param string|array $body     Valores do Request
-     *
-     * @return Response
-     */
-    public function patch($resource, $body)
-    {
-        return $this->post($resource, $body, 'PATCH');
     }
 
     protected function normalizeResourceUri($resource)
@@ -221,24 +244,5 @@ abstract class ClientAbstract extends BoardAbstract
         }
 
         return false;
-    }
-
-    public function getResourceUri($resource)
-    {
-        $base = $this->getOptions()->get('base_url');
-
-        if (empty($base) || is_array($resource)) {
-            return $this->normalizeResourceUri($resource);
-        }
-
-        $endpoint = $this->fillPlaceholdersWithOptions($base, ['version', 'protocol']);
-
-        if (substr($resource, 0, 4) === 'http') {
-            return $resource;
-        } elseif ($resource[0] !== '/') {
-            $endpoint .= '/';
-        }
-
-        return $endpoint.$resource;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Transport\Driver;
@@ -18,7 +21,7 @@ use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Exception\RuntimeException;
 
 /**
- * @method setMethod(string $string)
+ * @method        setMethod(string $string)
  * @method string getBody()
  */
 abstract class DriverAbstract extends Collection
@@ -33,8 +36,11 @@ abstract class DriverAbstract extends Collection
     }
 
     abstract public function exec();
+
     abstract public function setUrl($url);
+
     abstract public function setHeader(array $list);
+
     abstract public function setOption($option, $value);
 
     public function getMethod()
@@ -57,6 +63,19 @@ abstract class DriverAbstract extends Collection
     public function setRegisterPath($path)
     {
         $this->registerPath = $path;
+    }
+
+    public function register($data = null)
+    {
+        if (!empty($this->registerPath)) {
+            try {
+                return $this->registerSaveToFile($data);
+            } catch (\Exception $e) {
+                $this->containerLog['err'][] = $e->getMessage();
+
+                return false;
+            }
+        }
     }
 
     protected function getRegisterFilename()
@@ -84,26 +103,15 @@ abstract class DriverAbstract extends Collection
 
     /**
      * @param string $title
+     * @param mixed  $data
+     * @param mixed  $encode
      */
     protected function registerEncode($title, $data, $encode = true)
     {
-        if ($encode === true) {
+        if (true === $encode) {
             $data = json_encode($data, JSON_UNESCAPED_UNICODE);
         }
 
         return '* '.$title.':'.$data."\n";
-    }
-
-    public function register($data = null)
-    {
-        if (!empty($this->registerPath)) {
-            try {
-                return $this->registerSaveToFile($data);
-            } catch (\Exception $e) {
-                $this->containerLog['err'][] = $e->getMessage();
-
-                return false;
-            }
-        }
     }
 }

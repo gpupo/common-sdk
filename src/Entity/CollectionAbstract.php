@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Entity;
@@ -18,8 +21,6 @@ use Gpupo\Common\Entity\CollectionAbstract as Common;
 
 abstract class CollectionAbstract extends Common
 {
-    abstract public function factoryElement($data);
-
     public function __construct(array $elements = [])
     {
         $list = [];
@@ -30,6 +31,8 @@ abstract class CollectionAbstract extends Common
 
         parent::__construct($list);
     }
+
+    abstract public function factoryElement($data);
 
     public function toLog()
     {

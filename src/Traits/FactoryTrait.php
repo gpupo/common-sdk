@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Traits;
@@ -19,6 +22,32 @@ use Gpupo\CommonSdk\Entity\EntityAbstract;
 
 trait FactoryTrait
 {
+    public static function __callStatic($method, $args)
+    {
+        $command = substr($method, 0, 7);
+        $objectName = substr($method, 7);
+
+        if ('factory' === $command) {
+            return self::factory($objectName, current($args), next($args));
+        }
+
+        throw new \BadMethodCallException('There is no method '.$method);
+    }
+
+    /**
+     * @param string     $objectName
+     * @param null|mixed $data
+     */
+    public static function factory($objectName, $data = null)
+    {
+        $object = self::getFullyQualifiedNeighborObject(
+            get_called_class(),
+            $objectName
+        );
+
+        return new $object($data);
+    }
+
     protected function factoryNewElement($className, $data)
     {
         if ($data instanceof CollectionAbstract
@@ -40,33 +69,9 @@ trait FactoryTrait
         return $this->factoryNewElement($className, $data);
     }
 
-    public static function __callStatic($method, $args)
-    {
-        $command = substr($method, 0, 7);
-        $objectName = substr($method, 7);
-
-        if ($command === 'factory') {
-            return self::factory($objectName, current($args), next($args));
-        } else {
-            throw new \BadMethodCallException('There is no method '.$method);
-        }
-    }
-
-    /**
-     * @param string $objectName
-     */
-    public static function factory($objectName, $data = null)
-    {
-        $object = self::getFullyQualifiedNeighborObject(
-            get_called_class(),
-            $objectName
-        );
-
-        return new $object($data);
-    }
-
     /**
      * @param string $calledClass
+     * @param mixed  $objectName
      */
     protected static function getFullyQualifiedNeighborObject($calledClass, $objectName)
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk\Entity;
@@ -18,17 +21,11 @@ use Gpupo\CommonSdk\Entity\Entity;
 use Gpupo\CommonSdk\Entity\Manager;
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
 
+/**
+ * @coversNothing
+ */
 class ManagerTest extends TestCaseAbstract
 {
-    protected function getMethod($name)
-    {
-        $class = new \ReflectionClass('\Gpupo\CommonSdk\Entity\Manager');
-        $method = $class->getMethod($name);
-        $method->setAccessible(true);
-
-        return $method;
-    }
-
     public function testFactoryCollection()
     {
         $factoryCollection = $this->getMethod('FactoryCollection');
@@ -41,6 +38,8 @@ class ManagerTest extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderEntityData
+     *
+     * @param mixed $dataA
      */
     public function testNaoEncontraDiferencaEntreEntidadesIguais($dataA)
     {
@@ -54,6 +53,9 @@ class ManagerTest extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderEntityData
+     *
+     * @param mixed $dataA
+     * @param mixed $dataB
      */
     public function testEncontraDiferencaEntreEntidadesDiferentes($dataA, $dataB)
     {
@@ -67,6 +69,9 @@ class ManagerTest extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderEntityData
+     *
+     * @param mixed $dataA
+     * @param mixed $dataB
      */
     public function testEncontraDiferencaEntreEntidadesDiferentesAPartirDeChavesSelecionadas($dataA, $dataB)
     {
@@ -82,10 +87,14 @@ class ManagerTest extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderEntityData
-     * @expectedException \InvalidArgumentException
+     *
+     * @param mixed $dataA
+     * @param mixed $dataB
      */
     public function testFalhaAoTentarEncontrarDiferencaUsandoPropriedadeInexistente($dataA, $dataB)
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $entityA = new Entity($dataA);
         $entityB = new Entity($dataB);
 
@@ -102,5 +111,14 @@ class ManagerTest extends TestCaseAbstract
                 ['foo' => 'world', 'bar' => 2],
             ],
         ];
+    }
+
+    protected function getMethod($name)
+    {
+        $class = new \ReflectionClass('\Gpupo\CommonSdk\Entity\Manager');
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+
+        return $method;
     }
 }

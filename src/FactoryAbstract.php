@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk;
@@ -31,21 +34,9 @@ abstract class FactoryAbstract
 
     protected $client;
 
-    abstract public function getNamespace();
-
-    /**
-     * @return array
-     */
-    abstract protected function getSchema($namespace = null);
-
     public function __construct(array $options = [], LoggerInterface $logger = null)
     {
         $this->setup($options, $logger);
-    }
-
-    protected function magicCreate($suplement, $input)
-    {
-        return $this->delegate($suplement, $input);
     }
 
     public function setup(array $options = [], LoggerInterface $logger = null)
@@ -57,26 +48,13 @@ abstract class FactoryAbstract
         return $this;
     }
 
+    abstract public function getNamespace();
+
     abstract public function setClient(array $clientOptions = []);
 
     public function getDelegateSchema($key)
     {
         return $this->resolvSchema($this->getSchema($this->getNamespace()), $key);
-    }
-
-    /**
-     * Encontra as configurações para criação de objeto, implementadas (array) em getSchema();.
-     */
-    protected function resolvSchema(array $list, $key)
-    {
-        $key[0] = strtolower($key[0]);
-
-        if (!array_key_exists($key, $list)) {
-            throw new \BadMethodCallException('Faltando Factory ['.$key
-                .'] no Schema ['.implode(' ', array_keys($list)).']');
-        }
-
-        return $list[$key];
     }
 
     public function getClient()
@@ -106,6 +84,35 @@ abstract class FactoryAbstract
         }
 
         return $manager;
+    }
+
+    /**
+     * @param null|mixed $namespace
+     *
+     * @return array
+     */
+    abstract protected function getSchema($namespace = null);
+
+    protected function magicCreate($suplement, $input)
+    {
+        return $this->delegate($suplement, $input);
+    }
+
+    /**
+     * Encontra as configurações para criação de objeto, implementadas (array) em getSchema();.
+     *
+     * @param mixed $key
+     */
+    protected function resolvSchema(array $list, $key)
+    {
+        $key[0] = strtolower($key[0]);
+
+        if (!array_key_exists($key, $list)) {
+            throw new \BadMethodCallException('Faltando Factory ['.$key
+                .'] no Schema ['.implode(' ', array_keys($list)).']');
+        }
+
+        return $list[$key];
     }
 
     protected function forwardCallForMethod($schema, $data)

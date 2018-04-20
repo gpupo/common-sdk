@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Transport\Driver;
@@ -24,21 +27,6 @@ class CurlDriver extends DriverAbstract
     protected $curl;
 
     protected $lastTransfer;
-
-    public function getLastTransfer()
-    {
-        return $this->lastTransfer;
-    }
-
-    public function setOption($option, $value)
-    {
-        return curl_setopt($this->curl, $option, $value);
-    }
-
-    public function getInfo($option = 0)
-    {
-        return curl_getinfo($this->curl, $option);
-    }
 
     /**
      * @see http://php.net/manual/pt_BR/function.curl-setopt.php
@@ -57,6 +45,21 @@ class CurlDriver extends DriverAbstract
         parent::__construct([]);
     }
 
+    public function getLastTransfer()
+    {
+        return $this->lastTransfer;
+    }
+
+    public function setOption($option, $value)
+    {
+        return curl_setopt($this->curl, $option, $value);
+    }
+
+    public function getInfo($option = 0)
+    {
+        return curl_getinfo($this->curl, $option);
+    }
+
     public function setHeader(array $list)
     {
         $this->header = $list;
@@ -72,6 +75,33 @@ class CurlDriver extends DriverAbstract
         $this->setOption(CURLOPT_URL, $url);
 
         return $this;
+    }
+
+    public function exec()
+    {
+        switch ($this->getMethod()) {
+            case 'POST':
+                $this->execPost();
+
+                break;
+            case 'PUT':
+                $this->execPut();
+
+                break;
+            case 'PATCH':
+                $this->execPatch();
+
+                break;
+        }
+
+        $data = [
+            'responseRaw' => curl_exec($this->curl),
+            'httpStatusCode' => $this->getInfo(CURLINFO_HTTP_CODE),
+        ];
+
+        $this->close($data);
+
+        return $data;
     }
 
     protected function execPost()
@@ -112,30 +142,6 @@ class CurlDriver extends DriverAbstract
         $this->execPut()->setOption(CURLOPT_CUSTOMREQUEST, 'PATCH');
 
         return $this;
-    }
-
-    public function exec()
-    {
-        switch ($this->getMethod()) {
-            case 'POST':
-                $this->execPost();
-                break;
-            case 'PUT':
-                $this->execPut();
-                break;
-            case 'PATCH':
-                $this->execPatch();
-                break;
-        }
-
-        $data = [
-            'responseRaw'    => curl_exec($this->curl),
-            'httpStatusCode' => $this->getInfo(CURLINFO_HTTP_CODE),
-        ];
-
-        $this->close($data);
-
-        return $data;
     }
 
     protected function close($data = null)

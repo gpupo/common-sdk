@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Entity;
@@ -30,16 +33,6 @@ abstract class ManagerAbstract extends ClientManagerAbstract
     use MagicCommandTrait;
 
     protected $entity;
-
-    protected function magicCommandCallList()
-    {
-        return ['save'];
-    }
-
-    protected function magicSave($suplement, $input)
-    {
-        return $this->save($input, $suplement);
-    }
 
     public function save(EntityInterface $entity, $route = 'save')
     {
@@ -64,11 +57,6 @@ abstract class ManagerAbstract extends ClientManagerAbstract
      */
     abstract public function update(EntityInterface $entity, EntityInterface $existent);
 
-    protected function processResponse(Response $response)
-    {
-        return $response->getData();
-    }
-
     public function findById($itemId)
     {
         try {
@@ -80,25 +68,12 @@ abstract class ManagerAbstract extends ClientManagerAbstract
         }
     }
 
-    protected function fetchDefaultParameters()
-    {
-        return [];
-    }
-
     /**
-     * @return Gpupo\Common\Entity\CollectionAbstract|null|false
-     */
-    protected function fetchPrepare($data)
-    {
-        if (empty($data)) {
-            return;
-        }
-
-        return $data;
-    }
-
-    /**
-     * @return Gpupo\Common\Entity\Collection|null
+     * @param mixed $offset
+     * @param mixed $limit
+     * @param mixed $route
+     *
+     * @return null|Gpupo\Common\Entity\Collection
      */
     public function fetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch')
     {
@@ -112,6 +87,40 @@ abstract class ManagerAbstract extends ClientManagerAbstract
     public function fetchByRoute($route = 'fetch', $offset = 0, $limit = 50, array $parameters = [])
     {
         return $this->fetch($offset, $limit, $parameters, $route);
+    }
+
+    protected function magicCommandCallList()
+    {
+        return ['save'];
+    }
+
+    protected function magicSave($suplement, $input)
+    {
+        return $this->save($input, $suplement);
+    }
+
+    protected function processResponse(Response $response)
+    {
+        return $response->getData();
+    }
+
+    protected function fetchDefaultParameters()
+    {
+        return [];
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return null|false|Gpupo\Common\Entity\CollectionAbstract
+     */
+    protected function fetchPrepare($data)
+    {
+        if (empty($data)) {
+            return;
+        }
+
+        return $data;
     }
 
     protected function factoryCollection(array $list)

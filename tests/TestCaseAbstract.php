@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk;
@@ -31,11 +34,6 @@ abstract class TestCaseAbstract extends TestCaseCore
     use ProxyTrait;
     use AssertTrait;
 
-    protected function getLoggerFilePath()
-    {
-        return $this->getVarPath().'logs/tests.log';
-    }
-
     public function getLogger()
     {
         if (!$this->logger) {
@@ -55,16 +53,6 @@ abstract class TestCaseAbstract extends TestCaseCore
         return $this->logger;
     }
 
-    protected function logMark($message, array $callers, $mode = 'skipped')
-    {
-        $context = [
-            'test'    => $callers[1]['function'],
-            'message' => $message,
-        ];
-
-        return $this->log('info', 'Test '.$mode, $context);
-    }
-
     public function markSkipped($message = '')
     {
         $this->logMark($message, debug_backtrace());
@@ -79,27 +67,6 @@ abstract class TestCaseAbstract extends TestCaseCore
         return $this->markTestIncomplete($message);
     }
 
-    protected function hasToken()
-    {
-        return $this->hasConstant('API_TOKEN');
-    }
-
-    protected function getConstant($name, $default = false)
-    {
-        if (defined($name)) {
-            return constant($name);
-        }
-
-        return $default;
-    }
-
-    protected function hasConstant($name)
-    {
-        $value = $this->getConstant($name);
-
-        return ! empty($value);
-    }
-
     /**
      * Caminho para o diretório de recursos.
      */
@@ -111,41 +78,6 @@ abstract class TestCaseAbstract extends TestCaseCore
     public static function getVarPath()
     {
         return getcwd().'/var/';
-    }
-
-    protected function getResourceContent($file)
-    {
-        return file_get_contents($this->getResourceFilePath($file));
-    }
-
-    protected function getResourceJson($file)
-    {
-        return json_decode($this->getResourceContent($file), true);
-    }
-
-    protected function getResourceFilePath($file, $create = false)
-    {
-        $path = static::getResourcesPath().$file;
-
-        if (file_exists($path)) {
-            return $path;
-        } elseif ($create) {
-            touch($path);
-
-            return $this->getResourceFilePath($file);
-        }
-
-        throw new \InvalidArgumentException('File '.$path.' Not Exist');
-    }
-
-    protected function factoryResponseFromFixture($file, $httpStatusCode = 200)
-    {
-        $response = new Response([
-            'httpStatusCode' => $httpStatusCode,
-            'responseRaw'    => $this->getResourceContent($file),
-        ]);
-
-        return $response;
     }
 
     /**
@@ -170,7 +102,7 @@ abstract class TestCaseAbstract extends TestCaseCore
     {
         global $argv;
 
-        if (count($argv) <= 1 || $argv[1] !== '--stderr') {
+        if (count($argv) <= 1 || '--stderr' !== $argv[1]) {
             return false;
         }
 
@@ -183,5 +115,77 @@ abstract class TestCaseAbstract extends TestCaseCore
         } else {
             echo $docblock->generate();
         }
+    }
+
+    protected function getLoggerFilePath()
+    {
+        return $this->getVarPath().'logs/tests.log';
+    }
+
+    protected function logMark($message, array $callers, $mode = 'skipped')
+    {
+        $context = [
+            'test' => $callers[1]['function'],
+            'message' => $message,
+        ];
+
+        return $this->log('info', 'Test '.$mode, $context);
+    }
+
+    protected function hasToken()
+    {
+        return $this->hasConstant('API_TOKEN');
+    }
+
+    protected function getConstant($name, $default = false)
+    {
+        if (defined($name)) {
+            return constant($name);
+        }
+
+        return $default;
+    }
+
+    protected function hasConstant($name)
+    {
+        $value = $this->getConstant($name);
+
+        return !empty($value);
+    }
+
+    protected function getResourceContent($file)
+    {
+        return file_get_contents($this->getResourceFilePath($file));
+    }
+
+    protected function getResourceJson($file)
+    {
+        return json_decode($this->getResourceContent($file), true);
+    }
+
+    protected function getResourceFilePath($file, $create = false)
+    {
+        $path = static::getResourcesPath().$file;
+
+        if (file_exists($path)) {
+            return $path;
+        }
+        if ($create) {
+            touch($path);
+
+            return $this->getResourceFilePath($file);
+        }
+
+        throw new \InvalidArgumentException('File '.$path.' Not Exist');
+    }
+
+    protected function factoryResponseFromFixture($file, $httpStatusCode = 200)
+    {
+        $response = new Response([
+            'httpStatusCode' => $httpStatusCode,
+            'responseRaw' => $this->getResourceContent($file),
+        ]);
+
+        return $response;
     }
 }

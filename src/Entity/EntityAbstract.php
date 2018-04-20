@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Entity;
@@ -23,39 +26,9 @@ abstract class EntityAbstract extends SchemaAbstract
     /**
      * Utilizado em entidades que possuem chave primária diferente de [id].
      *
-     * @type string
+     * @var string
      */
     protected $primaryKey;
-
-    /**
-     * Toda entidade deve possuir um Id
-     * mesmo que não possua o atributo Id em seu Schema.
-     * Quando este for o caso, getId() será um alias padronizado
-     * para acesso ao campo identificador da entidade.
-     */
-    public function getId()
-    {
-        if (empty($this->primaryKey)) {
-            return $this->get('id');
-        }
-
-        return $this->get($this->primaryKey);
-    }
-
-    /**
-     * Permite normalização de $data.
-     */
-    protected function beforeConstruct($data = null)
-    {
-        return $data;
-    }
-
-    /**
-     * Permite ação após construção.
-     */
-    protected function setUp()
-    {
-    }
 
     /**
      * @param array|EntityInterface $data
@@ -77,6 +50,28 @@ abstract class EntityAbstract extends SchemaAbstract
         }
 
         $this->setUp();
+    }
+
+    /**
+     * Permite ação após construção.
+     */
+    protected function setUp()
+    {
+    }
+
+    /**
+     * Toda entidade deve possuir um Id
+     * mesmo que não possua o atributo Id em seu Schema.
+     * Quando este for o caso, getId() será um alias padronizado
+     * para acesso ao campo identificador da entidade.
+     */
+    public function getId()
+    {
+        if (empty($this->primaryKey)) {
+            return $this->get('id');
+        }
+
+        return $this->get($this->primaryKey);
     }
 
     public function setPrevious(EntityInterface $previous)
@@ -104,5 +99,15 @@ abstract class EntityAbstract extends SchemaAbstract
 
             return $array;
         }
+    }
+
+    /**
+     * Permite normalização de $data.
+     *
+     * @param null|mixed $data
+     */
+    protected function beforeConstruct($data = null)
+    {
+        return $data;
     }
 }

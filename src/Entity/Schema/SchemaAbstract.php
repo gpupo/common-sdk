@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Entity\Schema;
@@ -35,6 +38,40 @@ abstract class SchemaAbstract extends CollectionAbstract
     protected $optionalSchema = [];
 
     abstract public function getSchema();
+
+    public function schemaKeys()
+    {
+        return array_keys($this->getSchema());
+    }
+
+    public function schemaHasKey($key)
+    {
+        return in_array($key, $this->schemaKeys(), true);
+    }
+
+    public function getCalledEntityName($fullyQualified = null)
+    {
+        $calledClass = get_called_class();
+
+        if ($fullyQualified) {
+            return $calledClass;
+        }
+
+        $list = explode('\\', $calledClass);
+
+        return end($list);
+    }
+
+    public function isValid()
+    {
+        try {
+            return $this->validate();
+        } catch (SchemaException $exception) {
+            $this->log('WARNING', 'Validation Fail', $exception->toLog());
+
+            return false;
+        }
+    }
 
     protected function setRequiredSchema(array $array = [])
     {
@@ -68,7 +105,7 @@ abstract class SchemaAbstract extends CollectionAbstract
     protected function initSchema(array $schema, $data)
     {
         foreach ($schema as $key => $value) {
-            if ($value === 'collection') {
+            if ('collection' === $value) {
                 $iv = $ov = Tools::getInitValue($data, $key, []);
                 if ('s' === substr($key, -1)) {
                     try {
@@ -82,12 +119,12 @@ abstract class SchemaAbstract extends CollectionAbstract
                 }
 
                 $schema[$key] = $this->factoryCollection($iv);
-            } elseif ($value === 'object') {
+            } elseif ('object' === $value) {
                 $schema[$key] = $this->factoryNeighborObject(
                     ucfirst($key),
                     Tools::getInitValue($data, $key, [])
                 );
-            } elseif ($value === 'array') {
+            } elseif ('array' === $value) {
                 $schema[$key] = Tools::getInitValue($data, $key, []);
             } elseif (in_array($value, ['string', 'integer', 'number', 'boolean', 'datetime'], true)) {
                 $schema[$key] = Tools::normalizeType(Tools::getInitValue($data, $key), $value);
@@ -95,16 +132,6 @@ abstract class SchemaAbstract extends CollectionAbstract
         }
 
         return $schema;
-    }
-
-    public function schemaKeys()
-    {
-        return array_keys($this->getSchema());
-    }
-
-    public function schemaHasKey($key)
-    {
-        return in_array($key, $this->schemaKeys(), true);
     }
 
     protected function validate()
@@ -119,29 +146,5 @@ abstract class SchemaAbstract extends CollectionAbstract
         }
 
         return true;
-    }
-
-    public function getCalledEntityName($fullyQualified = null)
-    {
-        $calledClass = get_called_class();
-
-        if ($fullyQualified) {
-            return $calledClass;
-        }
-
-        $list = explode('\\', $calledClass);
-
-        return end($list);
-    }
-
-    public function isValid()
-    {
-        try {
-            return $this->validate();
-        } catch (SchemaException $exception) {
-            $this->log('WARNING', 'Validation Fail', $exception->toLog());
-
-            return false;
-        }
     }
 }

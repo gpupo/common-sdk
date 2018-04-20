@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\Tests\CommonSdk\Traits;
@@ -58,6 +61,43 @@ trait EntityTrait
         }
     }
 
+    public function assertSchemaGetter($name, $type, $object, $expected)
+    {
+        $getter = 'get'.$this->camelCase($name);
+
+        if ('object' === $type) {
+            return $this->assertInstanceOf(CollectionAbstract::class, $object->{$getter}());
+        }
+
+        if ('datetime' === $type) {
+            return;
+        }
+
+        if (!array_key_exists($name, $expected)) {
+            return $this->markSkipped('not found key '.$name);
+        }
+
+        $this->assertSame($expected[$name], $object->get($name), 'assert Schema Setter simple');
+
+        $this->assertSame($expected[$name], $object->{$getter}(), 'assert Schema Setter magical');
+    }
+
+    public function assertSchemaSetter($name, $type, $object)
+    {
+        $case = $this->camelCase($name);
+        $setter = 'set'.$case;
+        $getter = 'get'.$case;
+
+        if ('object' === $type) {
+            //implement
+        } elseif ('datetime' === $type) {
+            $s = '2016-06-30T13:36:58+00:00';
+            $this->assertSame($s, $object->{$setter}($s)->{$getter}(), 'assertSchemaSetter');
+        } else {
+            $this->assertSame('foo', $object->{$setter}('foo')->{$getter}(), 'assertSchemaSetter');
+        }
+    }
+
     protected function dataProviderEntitySchema($className, array $data = null)
     {
         if (empty($data)) {
@@ -71,46 +111,11 @@ trait EntityTrait
 
     /**
      * @todo Reutilizar Tool
+     *
+     * @param mixed $string
      */
     private function camelCase($string)
     {
         return ucfirst($string);
-    }
-
-    public function assertSchemaGetter($name, $type, $object, $expected)
-    {
-        $getter = 'get'.$this->camelCase($name);
-
-        if ($type === 'object') {
-            return $this->assertInstanceOf(CollectionAbstract::class, $object->$getter());
-        }
-
-        if ($type === 'datetime') {
-            return;
-        }
-
-        if (!array_key_exists($name, $expected)) {
-            return $this->markSkipped('not found key '.$name);
-        }
-
-        $this->assertSame($expected[$name], $object->get($name), 'assert Schema Setter simple');
-
-        $this->assertSame($expected[$name], $object->$getter(), 'assert Schema Setter magical');
-    }
-
-    public function assertSchemaSetter($name, $type, $object)
-    {
-        $case = $this->camelCase($name);
-        $setter = 'set'.$case;
-        $getter = 'get'.$case;
-
-        if ($type === 'object') {
-            //implement
-        } elseif ($type === 'datetime') {
-            $s = '2016-06-30T13:36:58+00:00';
-            $this->assertSame($s, $object->$setter($s)->$getter(), 'assertSchemaSetter');
-        } else {
-            $this->assertSame('foo', $object->$setter('foo')->$getter(), 'assertSchemaSetter');
-        }
     }
 }

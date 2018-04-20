@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Traits;
@@ -36,25 +39,7 @@ namespace Gpupo\CommonSdk\Traits;
  */
 trait MagicCommandTrait
 {
-    public function getSchema()
-    {
-        return [];
-    }
-
     protected $magicCommands = [];
-
-    /**
-     *  @return array
-     */
-    protected function magicCommandCallList()
-    {
-        return $this->magicCommands;
-    }
-
-    protected function magicCommandCallAdd($name)
-    {
-        $this->magicCommands[] = $name;
-    }
 
     /**
      * Magic method that implements.
@@ -78,6 +63,24 @@ trait MagicCommandTrait
         throw new \BadMethodCallException('There is no method ['.$method.']');
     }
 
+    public function getSchema()
+    {
+        return [];
+    }
+
+    /**
+     *  @return array
+     */
+    protected function magicCommandCallList()
+    {
+        return $this->magicCommands;
+    }
+
+    protected function magicCommandCallAdd($name)
+    {
+        $this->magicCommands[] = $name;
+    }
+
     protected function magicCommandCall($mode, $method, $args)
     {
         $len = strlen($mode);
@@ -86,7 +89,7 @@ trait MagicCommandTrait
             $finalMethod = 'magic'.ucfirst($mode);
             $suplement = substr($method, $len);
 
-            return $this->$finalMethod($suplement, current($args));
+            return $this->{$finalMethod}($suplement, current($args));
         }
 
         return false;

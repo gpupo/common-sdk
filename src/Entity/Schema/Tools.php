@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of gpupo/common-sdk
  * Created by Gilmar Pupo <contact@gpupo.com>
@@ -9,7 +11,8 @@
  * LICENSE que é distribuído com este código-fonte.
  * Para obtener la información de los derechos de autor y la licencia debe leer
  * el archivo LICENSE que se distribuye con el código fuente.
- * For more information, see <https://www.gpupo.com/>.
+ * For more information, see <https://opensource.gpupo.com/>.
+ *
  */
 
 namespace Gpupo\CommonSdk\Entity\Schema;
@@ -42,15 +45,36 @@ class Tools
     {
         switch ($type) {
             case 'integer':
-                return intval($data);
+                return (int) $data;
             case 'boolean':
-                return boolval($data);
+                return (bool) $data;
             case 'number':
             case 'float':
-                return floatval($data);
+                return (float) $data;
             default:
                 return $data;
         }
+    }
+
+    public static function validate($key, $current, $value, $required = false, $prefix = '')
+    {
+        if (self::isEmptyValue($current, $required)) {
+            return true;
+        }
+
+        foreach (['Integer', 'Number', 'String', 'Datetime'] as $type) {
+            $testMethod = 'test'.$type;
+
+            try {
+                self::$testMethod($key, $current, $value);
+            } catch (SchemaException $exception) {
+                $exception->addMessagePrefix($prefix);
+
+                throw $exception;
+            }
+        }
+
+        return true;
     }
 
     protected static function returnInvalid($key, $current, $value)
@@ -65,50 +89,30 @@ class Tools
         return ($required) ? false : empty($value);
     }
 
-    public static function validate($key, $current, $value, $required = false, $prefix = '')
-    {
-        if (self::isEmptyValue($current, $required)) {
-            return true;
-        }
-
-        foreach (['Integer', 'Number', 'String', 'Datetime'] as $type) {
-            $testMethod = 'test'.$type;
-            try {
-                self::$testMethod($key, $current, $value);
-            } catch (SchemaException $exception) {
-                $exception->addMessagePrefix($prefix);
-
-                throw $exception;
-            }
-        }
-
-        return true;
-    }
-
     protected static function testInteger($key, $current, $value)
     {
-        if ($value === 'integer' && intval($current) !== $current) {
+        if ('integer' === $value && (int) $current !== $current) {
             self::returnInvalid($key, $current, $value);
         }
     }
 
     protected static function testNumber($key, $current, $value)
     {
-        if ($value === 'number' && !is_numeric($current)) {
+        if ('number' === $value && !is_numeric($current)) {
             self::returnInvalid($key, $current, $value);
         }
     }
 
     protected static function testString($key, $current, $value)
     {
-        if ($value === 'string' && strlen($current) < 1) {
+        if ('string' === $value && strlen($current) < 1) {
             self::returnInvalid($key, $current, $value);
         }
     }
 
     protected static function testDatetime($key, $current, $value)
     {
-        if ($value === 'datetime' && strlen($current) < 10) {
+        if ('datetime' === $value && strlen($current) < 10) {
             self::returnInvalid($key, $current, $value);
         }
     }
