@@ -2,6 +2,10 @@
 VERSION 3  IMPROVE TEST GENERATOR
 =================================
 
+   Version 3.3 - Dependency update
+      20/04/2018 18:29  3.3.0  initial release
+         225cbd0 Update php-cs-fixer config
+
    Version 3.2 - Add option to include superclass methods in the generated test
       12/04/2018 13:13  3.2.0  initial release
          f325b9b Add option to include superclass methods in the generated test
