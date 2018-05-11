@@ -1,4 +1,11 @@
 
+VERSION 4  NEXT GENERATION OF SDKS :)
+=====================================
+
+   Version 4.0 - Next generation of SDKs :)
+      11/05/2018 12:37  4.0.0  initial release
+         eb99a6d Update dependencies
+
 VERSION 3  IMPROVE TEST GENERATOR
 =================================
 
