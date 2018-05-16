@@ -68,6 +68,14 @@ abstract class ManagerAbstract extends ClientManagerAbstract
         }
     }
 
+    public function rawFetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'):? Collection
+    {
+        $pars = array_merge($this->fetchDefaultParameters(), $parameters, ['offset' => $offset, 'limit' => $limit]);
+        $response = $this->perform($this->factoryMap($route, $pars));
+
+        return $this->processResponse($response);
+    }
+
     /**
      * @param mixed $offset
      * @param mixed $limit
@@ -75,13 +83,9 @@ abstract class ManagerAbstract extends ClientManagerAbstract
      *
      * @return null|Gpupo\Common\Entity\Collection
      */
-    public function fetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch')
+    public function fetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'):? Collection
     {
-        $pars = array_merge($this->fetchDefaultParameters(), $parameters, ['offset' => $offset, 'limit' => $limit]);
-
-        $response = $this->perform($this->factoryMap($route, $pars));
-
-        return $this->fetchPrepare($this->processResponse($response));
+        return $this->fetchPrepare($this->rawFetch($offset, $limit, $parameters, $route));
     }
 
     public function fetchByRoute($route = 'fetch', $offset = 0, $limit = 50, array $parameters = [])

@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk\Client;
 
 use Gpupo\CommonSdk\Exception\ClientException;
+use Gpupo\CommonSdk\Exception\RequestException;
 use Gpupo\CommonSdk\Request;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Transport;
@@ -218,7 +219,15 @@ abstract class ClientAbstract extends BoardAbstract
                 'request' => $request->toLog(),
             ]);
 
-            throw $e;
+            $data = $response->getData();
+            throw new RequestException(sprintf(
+                'Type: %s, Message: %s, Status: %d, Method:%s, URI: %s',
+                $data->get('error'),
+                $data->get('message'),
+                $data->get('status'),
+                $request->get('method'),
+                $request->get('url')
+            ), $data->get('status'), $e);
         }
     }
 
