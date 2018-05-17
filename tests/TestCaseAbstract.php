@@ -27,12 +27,15 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase as TestCaseCore;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 abstract class TestCaseAbstract extends TestCaseCore
 {
     use LoggerTrait;
     use ProxyTrait;
     use AssertTrait;
+
+    private $output;
 
     public function getLogger()
     {
@@ -117,6 +120,15 @@ abstract class TestCaseAbstract extends TestCaseCore
         }
     }
 
+    protected function getOutput(): ConsoleOutput
+    {
+        if (empty($this->output)) {
+            $this->output = new ConsoleOutput();
+        }
+
+        return $this->output;
+    }
+
     protected function getLoggerFilePath()
     {
         return $this->getVarPath().'logs/tests.log';
@@ -167,6 +179,8 @@ abstract class TestCaseAbstract extends TestCaseCore
     {
         $path = static::getResourcesPath().$file;
 
+        $this->getOutput()->writeln(sprintf('Load Filename <fg=green>%s</>', $path));
+
         if (file_exists($path)) {
             return $path;
         }
@@ -175,6 +189,8 @@ abstract class TestCaseAbstract extends TestCaseCore
 
             return $this->getResourceFilePath($file);
         }
+
+        $this->getOutput()->writeln(sprintf('Filename <fg=red>%s</> not exist!', $path));
 
         throw new \InvalidArgumentException('File '.$path.' Not Exist');
     }

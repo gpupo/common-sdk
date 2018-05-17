@@ -69,7 +69,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
         }
     }
 
-    public function rawFetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'):? Collection
+    public function rawFetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'): ?Collection
     {
         $pars = array_merge($this->fetchDefaultParameters(), $parameters, ['offset' => $offset, 'limit' => $limit]);
         $response = $this->perform($this->factoryMap($route, $pars));
@@ -84,7 +84,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
      *
      * @return null|Gpupo\Common\Entity\CollectionInterface
      */
-    public function fetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'):? CollectionInterface
+    public function fetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'): ?CollectionInterface
     {
         return $this->fetchPrepare($this->rawFetch($offset, $limit, $parameters, $route));
     }

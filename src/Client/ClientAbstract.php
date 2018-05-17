@@ -220,6 +220,7 @@ abstract class ClientAbstract extends BoardAbstract
             ]);
 
             $data = $response->getData();
+
             throw new RequestException(sprintf(
                 'Type: %s, Message: %s, Status: %d, Method:%s, URI: %s',
                 $data->get('error'),

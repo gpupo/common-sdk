@@ -30,7 +30,11 @@ class MetadataTest extends TestCaseAbstract
      */
     public function dataProviderMetadata()
     {
-        return [[new Metadata()]];
+        $data = [
+            'offset' => 5,
+        ];
+
+        return [[new Metadata($data), $data]];
     }
 
     /**
@@ -38,28 +42,8 @@ class MetadataTest extends TestCaseAbstract
      * @cover ::getOffset
      * @dataProvider dataProviderMetadata
      */
-    public function testGetOffset(Metadata $metadata)
+    public function testGetOffset(Metadata $metadata, array $data)
     {
-        $this->markIncomplete('getOffset() need implementation!');
-    }
-
-    /**
-     * @testdox ``getLimit()``
-     * @cover ::getLimit
-     * @dataProvider dataProviderMetadata
-     */
-    public function testGetLimit(Metadata $metadata)
-    {
-        $this->markIncomplete('getLimit() need implementation!');
-    }
-
-    /**
-     * @testdox ``getTotalRows()``
-     * @cover ::getTotalRows
-     * @dataProvider dataProviderMetadata
-     */
-    public function testGetTotalRows(Metadata $metadata)
-    {
-        $this->markIncomplete('getTotalRows() need implementation!');
+        $this->assertSame($data['offset'], $metadata->getOffset());
     }
 }
