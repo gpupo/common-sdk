@@ -43,13 +43,6 @@ abstract class TestCaseAbstract extends TestCaseCore
             $channel = str_replace('\\', '.', get_called_class());
             $logger = new Logger($channel);
             $logger->pushHandler(new StreamHandler($this->getLoggerFilePath(), Logger::DEBUG));
-
-            $verbose = $this->getConstant('VERBOSE');
-
-            if (!empty($verbose)) {
-                $logger->pushHandler(new ErrorLogHandler(0, Logger::INFO));
-            }
-
             $this->setLogger($logger);
         }
 
@@ -129,6 +122,15 @@ abstract class TestCaseAbstract extends TestCaseCore
         return $this->output;
     }
 
+    protected function output(string $string)
+    {
+        $verbose = $this->getConstant('VERBOSE');
+
+        if (!empty($verbose)) {
+            return $this->getOutput()->writeln($string);
+        }
+    }
+
     protected function getLoggerFilePath()
     {
         return $this->getVarPath().'logs/tests.log';
@@ -179,7 +181,7 @@ abstract class TestCaseAbstract extends TestCaseCore
     {
         $path = static::getResourcesPath().$file;
 
-        $this->getOutput()->writeln(sprintf('Load Filename <fg=green>%s</>', $path));
+        $this->output(sprintf('Load Filename <fg=green>%s</>', $path));
 
         if (file_exists($path)) {
             return $path;
@@ -190,7 +192,7 @@ abstract class TestCaseAbstract extends TestCaseCore
             return $this->getResourceFilePath($file);
         }
 
-        $this->getOutput()->writeln(sprintf('Filename <fg=red>%s</> not exist!', $path));
+        $this->output(sprintf('Filename <fg=red>%s</> not exist!', $path));
 
         throw new \InvalidArgumentException('File '.$path.' Not Exist');
     }
