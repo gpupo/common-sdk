@@ -2,6 +2,15 @@
 VERSION 4  NEXT GENERATION OF SDKS :)
 =====================================
 
+   Version 4.1 - Add Console Output
+      17/05/2018 20:47  4.1.0  initial release
+         cf32fe5 Output just in verbose mode
+         0fb5ad6 Add Console Output
+         9f69c5b Fix typing
+         77b5b91 Improve Request Error Log
+         b32f628 implement generic CS file
+         135f316 Remove Client/Oauth2
+
    Version 4.0 - Next generation of SDKs :)
       11/05/2018 12:37  4.0.0  initial release
          eb99a6d Update dependencies
