@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk\Entity;
 
 use Gpupo\Common\Entity\Collection;
+use Gpupo\Common\Entity\CollectionInterface;
 use Gpupo\CommonSdk\Client\ClientManagerAbstract;
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\FactoryAbstract;
@@ -81,9 +82,9 @@ abstract class ManagerAbstract extends ClientManagerAbstract
      * @param mixed $limit
      * @param mixed $route
      *
-     * @return null|Gpupo\Common\Entity\Collection
+     * @return null|Gpupo\Common\Entity\CollectionInterface
      */
-    public function fetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'):? Collection
+    public function fetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'):? CollectionInterface
     {
         return $this->fetchPrepare($this->rawFetch($offset, $limit, $parameters, $route));
     }
