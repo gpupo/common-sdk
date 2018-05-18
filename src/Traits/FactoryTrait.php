@@ -93,12 +93,20 @@ trait FactoryTrait
 
     protected static function resolvNeighborObject($calledClass, $objectName)
     {
+        if (false !== strpos($objectName, '_')) {
+            $explode = explode('_', $objectName);
+            $normalized = array_map('ucfirst', $explode);
+            $objectName = implode('', $normalized);
+        }
+
         $error = '';
         $found = false;
         $list = explode('\\', $calledClass);
         end($list);
         $list[key($list)] = $objectName;
         $fullyQualified = implode('\\', $list);
+
+
 
         if (!class_exists($fullyQualified)) {
             $error .= $fullyQualified;
