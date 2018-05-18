@@ -39,7 +39,7 @@ abstract class ClientAbstract extends BoardAbstract
 
     public function factoryRequest($resource, $method = '', $destroyCache = false)
     {
-        if ($destroyCache) {
+        if (false !== $destroyCache) {
             $this->destroyCache($resource);
         }
 
@@ -60,21 +60,26 @@ abstract class ClientAbstract extends BoardAbstract
     {
         $request = $this->factoryRequest($resource);
 
-        if ($ttl && $this->hasCacheItemPool()) {
-            $key = $this->factoryCacheKey($resource);
-            $cacheItem = $this->getCacheItemPool()->getItem($key);
+        //Cache
+        if (true === $ttl && $this->hasSimpleCache()) {
+            $cacheId = $this->simpleCacheGenerateId($resource);
 
-            if ($cacheItem->exists()) {
-                $response = $cacheItem->get();
+            if ($this->getSimpleCache()->has($cacheId)) {
+                $response = $this->getSimpleCache()->get($cacheId);
 
                 return $response;
             }
 
             $response = $this->exec($request);
             if (true === $ttl) {
-                $ttl = $this->getOptions()->get('cacheTTL', 3600);
-                $cacheItem->set($response, $ttl);
-                $this->getCacheItemPool()->save($cacheItem);
+                $this->getSimpleCache()->set($cacheId, $response, $this->getOptions()->get('cacheTTL', 3600));
+
+
+                dump( $this->getOptions());
+                $jsonFile = sprintf('var/cache/get-%s.json', $cacheId);
+                $fp = fopen($jsonFile, 'w');
+                fwrite($fp, $response->get('responseRaw'));
+                fclose($fp);
             }
 
             return $response;

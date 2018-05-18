@@ -185,7 +185,21 @@ abstract class ClientManagerAbstract
                     $this->getClient()->setMode($map->getMode());
                 }
 
-                return $this->getClient()->{$methodName}($map->getResource(), $body);
+                if ('get' === $methodName) {
+                    //set the cache TTL
+                    $parameter = true;
+                } else {
+                    $parameter = $body;
+                }
+
+                $result = $this->getClient()->{$methodName}($map->getResource(), $parameter);
+                $this->log('debug', 'ClientManager:performReal', [
+                    'delegated-to' => sprintf('$this->getClient()->%s()', $methodName),
+                    'map'   => $map->getResource(),
+                    'body'  => $body,
+                ]);
+
+                return $result;
             } catch (\Exception $exception) {
                 if (!$this->retry($exception, $attempt)) {
                     throw $this->exceptionHandler(

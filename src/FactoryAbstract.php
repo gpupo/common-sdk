@@ -24,6 +24,9 @@ use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
+use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
+
 
 abstract class FactoryAbstract
 {
@@ -31,18 +34,20 @@ abstract class FactoryAbstract
     use OptionsTrait;
     use LoggerTrait;
     use MagicCommandTrait;
+    use SimpleCacheAwareTrait;
 
     protected $client;
 
-    public function __construct(array $options = [], LoggerInterface $logger = null)
+    public function __construct(array $options = [], LoggerInterface $logger = null, CacheInterface $cache = null)
     {
-        $this->setup($options, $logger);
+        $this->setup($options, $logger, $cache);
     }
 
-    public function setup(array $options = [], LoggerInterface $logger = null)
+    public function setup(array $options = [], LoggerInterface $logger = null, CacheInterface $cache = null)
     {
         $this->setOptions($options);
         $this->initLogger($logger);
+        $this->initSimpleCache($cache);
         $this->magicCommandCallAdd('create');
 
         return $this;

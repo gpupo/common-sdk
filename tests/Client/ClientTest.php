@@ -19,6 +19,9 @@ namespace Gpupo\Tests\CommonSdk\Client;
 
 use Gpupo\CommonSdk\Client\Client;
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
+use Symfony\Component\Cache\Simple\FilesystemCache;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 /**
  * @coversNothing
@@ -36,9 +39,12 @@ class ClientTest extends TestCaseAbstract
 
     public function testUrlBaseadoEmConfiguracao()
     {
+        $cache = new FilesystemCache();
+        $logger = new Logger('test');
+
         $client = new Client([
             'base_url' => 'https://foo.com',
-        ]);
+        ], $logger, $cache);
         $this->assertSame(
             'https://foo.com/sku',
             $client->getResourceUri('/sku')

@@ -19,32 +19,34 @@ namespace Gpupo\CommonSdk\Client;
 
 use Gpupo\Common\Traits\OptionsTrait;
 use Gpupo\Common\Traits\SingletonTrait;
+use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
 use Gpupo\CommonSdk\Traits\CacheTrait;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\PlaceholderTrait;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 abstract class BoardAbstract
 {
     use LoggerTrait;
-    use CacheTrait;
+    use SimpleCacheAwareTrait;
     use SingletonTrait;
     use OptionsTrait;
     use PlaceholderTrait;
 
-    public function __construct($options = [], LoggerInterface $logger = null, CacheItemPoolInterface $cacheItemPool = null)
+    public function __construct($options = [], LoggerInterface $logger = null, CacheInterface $cache = null)
     {
         $this->setOptions($options);
         $this->initLogger($logger);
-        $this->initCache($cacheItemPool);
+        $this->initSimpleCache($cache);
     }
 
     protected function destroyCache($resource)
     {
-        if ($this->hasCacheItemPool()) {
-            $key = $this->factoryCacheKey($resource);
-            $this->getCacheItemPool()->deleteItens([$key]);
+        if ($this->hasSimpleCache()) {
+            $key = $this->simpleCacheGenerateId($resource);
+            $this->getSimpleCache()->delete($key);
         }
 
         return $this;
