@@ -2,6 +2,10 @@
 VERSION 4  NEXT GENERATION OF SDKS :)
 =====================================
 
+   Version 4.2 - Refactory Cache System
+      18/05/2018 17:20  4.2.0  initial release
+         edb1249 Refactory Cache System
+
    Version 4.1 - Add Console Output
       17/05/2018 20:47  4.1.0  initial release
          cf32fe5 Output just in verbose mode
