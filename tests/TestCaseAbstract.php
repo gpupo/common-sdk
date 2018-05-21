@@ -23,7 +23,6 @@ use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 use Gpupo\Tests\CommonSdk\Traits\AssertTrait;
 use Gpupo\Tests\CommonSdk\Traits\ProxyTrait;
-use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase as TestCaseCore;

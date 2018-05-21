@@ -73,9 +73,6 @@ abstract class ClientAbstract extends BoardAbstract
             $response = $this->exec($request);
             if (true === $ttl) {
                 $this->getSimpleCache()->set($cacheId, $response, $this->getOptions()->get('cacheTTL', 3600));
-
-
-                dump( $this->getOptions());
                 $jsonFile = sprintf('var/cache/get-%s.json', $cacheId);
                 $fp = fopen($jsonFile, 'w');
                 fwrite($fp, $response->get('responseRaw'));

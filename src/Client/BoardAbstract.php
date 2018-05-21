@@ -17,13 +17,11 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Client;
 
+use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
 use Gpupo\Common\Traits\OptionsTrait;
 use Gpupo\Common\Traits\SingletonTrait;
-use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
-use Gpupo\CommonSdk\Traits\CacheTrait;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\PlaceholderTrait;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 

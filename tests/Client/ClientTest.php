@@ -19,9 +19,8 @@ namespace Gpupo\Tests\CommonSdk\Client;
 
 use Gpupo\CommonSdk\Client\Client;
 use Gpupo\Tests\CommonSdk\TestCaseAbstract;
-use Symfony\Component\Cache\Simple\FilesystemCache;
 use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 
 /**
  * @coversNothing

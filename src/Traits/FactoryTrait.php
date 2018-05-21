@@ -106,22 +106,23 @@ trait FactoryTrait
         $list[key($list)] = $objectName;
         $fullyQualified = implode('\\', $list);
 
+        $acceptedClasses = [
+            $fullyQualified,
+            sprintf('%sCollection', $fullyQualified),
+            sprintf('%s\%sCollection', $fullyQualified, $objectName),
+            sprintf('%s\Collection', $fullyQualified, $objectName),
+        ];
 
+        foreach ($acceptedClasses as $try) {
+            if (class_exists($try)) {
+                $found = $try;
 
-        if (!class_exists($fullyQualified)) {
-            $error .= $fullyQualified;
-            $fullyQualified .= '\\'.$objectName;
+                break;
+            }
         }
 
-        if (!class_exists($fullyQualified)) {
-            $error .= $fullyQualified;
-            $fullyQualified .= 'Collection';
-        }
-
-        if (!class_exists($fullyQualified)) {
-            $error .= ' or '.$fullyQualified;
-        } else {
-            $found = $fullyQualified;
+        if (false === $found) {
+            $error = "Class not found. \n\t Searched: \n\t- ".implode("\n\t- ", $acceptedClasses)."\n";
         }
 
         return ['error' => $error, 'found' => $found];

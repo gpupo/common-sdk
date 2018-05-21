@@ -195,8 +195,8 @@ abstract class ClientManagerAbstract
                 $result = $this->getClient()->{$methodName}($map->getResource(), $parameter);
                 $this->log('debug', 'ClientManager:performReal', [
                     'delegated-to' => sprintf('$this->getClient()->%s()', $methodName),
-                    'map'   => $map->getResource(),
-                    'body'  => $body,
+                    'map' => $map->getResource(),
+                    'body' => $body,
                 ]);
 
                 return $result;

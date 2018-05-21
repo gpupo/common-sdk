@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Interfaces\OptionsInterface;
+use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
 use Gpupo\Common\Traits\OptionsTrait;
 use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSdk\Entity\EntityAbstract;
@@ -25,8 +26,6 @@ use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
-use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
-
 
 abstract class FactoryAbstract
 {
