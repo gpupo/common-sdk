@@ -2,6 +2,11 @@
 VERSION 4  NEXT GENERATION OF SDKS :)
 =====================================
 
+   Version 4.3 - Expand resolvNeighborObject names
+      21/05/2018 12:39  4.3.0  initial release
+         fcf8ebc Improve resolvNeighborObject
+         f7d26e6 Normalize underscore property
+
    Version 4.2 - Refactory Cache System
       18/05/2018 17:20  4.2.0  initial release
          edb1249 Refactory Cache System
