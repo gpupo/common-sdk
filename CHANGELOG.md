@@ -3,6 +3,8 @@ VERSION 4  NEXT GENERATION OF SDKS :)
 =====================================
 
    Version 4.3 - Expand resolvNeighborObject names
+      21/05/2018 20:15  4.3.2  Fix simple class name
+         045626d Fix Simple class name
       21/05/2018 13:37  4.3.1  New feature, fixture public/private
          e248efd New feature, fixture public/private
       21/05/2018 12:39  4.3.0  initial release
