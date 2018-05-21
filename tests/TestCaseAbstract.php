@@ -185,6 +185,11 @@ abstract class TestCaseAbstract extends TestCaseCore
         if (file_exists($path)) {
             return $path;
         }
+
+        if (false !== strpos($file, 'private')) {
+            return $this->getResourceFilePath(str_replace('private', 'public', $file), $create);
+        }
+
         if ($create) {
             touch($path);
 
