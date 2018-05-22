@@ -3,6 +3,10 @@ VERSION 4  NEXT GENERATION OF SDKS :)
 =====================================
 
    Version 4.3 - Expand resolvNeighborObject names
+      22/05/2018 20:02  4.3.5  Resource Trait
+         24e7277 Fix typo
+         d6c01d2 Refactory Resources methods
+         dcec517 Add Container Interface
       22/05/2018 14:33  4.3.4  Fix build
          f6ecd72 Fix build
       22/05/2018 13:26  4.3.3  Auto Test simplify
