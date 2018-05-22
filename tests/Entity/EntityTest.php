@@ -32,7 +32,6 @@ class EntityTest extends TestCaseAbstract
     public static function setUpBeforeClass()
     {
         static::setFullyQualifiedObject('\Gpupo\CommonSdk\Entity\Entity');
-        static::setUpEntityTest();
         parent::setUpBeforeClass();
     }
 
