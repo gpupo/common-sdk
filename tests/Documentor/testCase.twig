@@ -12,10 +12,14 @@ namespace {{testNamespace}};
 {% if entity %}
 use Gpupo\CommonSdk\Entity\EntityInterface;
 use Gpupo\Tests\CommonSdk\Traits\EntityTrait;
+{% endif %}
+
+{% if testcase %}
 use {{testcase}} as CoreTestCase;
 {% else %}
-use App\Tests\TestCase as CoreTestCase;
+use PHPUnit\Framework\TestCase as CoreTestCase;
 {% endif %}
+
 use {{class}};
 
 {{ block|trim }}
@@ -49,7 +53,7 @@ class {{ testShortName }} extends CoreTestCase
         {% endfor %}
         ];
         $object = new {{ classShortName }}();
-        
+
         return [[$object, $expected]];
 {% endif %}
     }

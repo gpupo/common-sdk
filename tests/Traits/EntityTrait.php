@@ -34,7 +34,6 @@ trait EntityTrait
     public static function setFullyQualifiedObject($name)
     {
         self::$fullyQualifiedObject = $name;
-        self::setUpEntityTest();
     }
 
     public static function createObject($className, array $data = null)
@@ -51,14 +50,6 @@ trait EntityTrait
         }
 
         throw new \Exception($className.' not found!', 1);
-    }
-
-    public static function setUpEntityTest()
-    {
-        $object = self::factoryFullyQualifiedObject();
-        if ($object) {
-            self::displayClassDocumentation($object);
-        }
     }
 
     public function assertSchemaGetter($name, $type, $object, $expected)
