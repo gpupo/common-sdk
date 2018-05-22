@@ -26,7 +26,7 @@ abstract class CollectionAbstract extends Common
         $list = [];
 
         foreach ($elements as $data) {
-            $list[] = $this->factoryElement($data);
+            $list[] = $wthis->factoryElement($data);
         }
 
         parent::__construct($list);

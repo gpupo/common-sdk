@@ -27,12 +27,14 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase as TestCaseCore;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Gpupo\CommonSdk\Traits\ResourcesTrait;
 
 abstract class TestCaseAbstract extends TestCaseCore
 {
     use LoggerTrait;
     use ProxyTrait;
     use AssertTrait;
+    use ResourcesTrait;
 
     private $output;
 
@@ -166,40 +168,6 @@ abstract class TestCaseAbstract extends TestCaseCore
         return !empty($value);
     }
 
-    protected function getResourceContent($file)
-    {
-        return file_get_contents($this->getResourceFilePath($file));
-    }
-
-    protected function getResourceJson($file)
-    {
-        return json_decode($this->getResourceContent($file), true);
-    }
-
-    protected function getResourceFilePath($file, $create = false)
-    {
-        $path = static::getResourcesPath().$file;
-
-        $this->output(sprintf('Load Filename <fg=green>%s</>', $path));
-
-        if (file_exists($path)) {
-            return $path;
-        }
-
-        if (false !== strpos($file, 'private')) {
-            return $this->getResourceFilePath(str_replace('private', 'public', $file), $create);
-        }
-
-        if ($create) {
-            touch($path);
-
-            return $this->getResourceFilePath($file);
-        }
-
-        $this->output(sprintf('Filename <fg=red>%s</> not exist!', $path));
-
-        throw new \InvalidArgumentException('File '.$path.' Not Exist');
-    }
 
     protected function factoryResponseFromFixture($file, $httpStatusCode = 200)
     {

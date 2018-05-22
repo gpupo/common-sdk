@@ -21,5 +21,8 @@ interface EntityInterface
 {
     public function getSchema();
 
+    public function get($key);
+
     public function getId();
+
 }
