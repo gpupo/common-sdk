@@ -105,7 +105,7 @@ class Tools
 
     protected static function testString($key, $current, $value)
     {
-        if ('string' === $value && strlen($current) < 1) {
+        if ('string' === $value && strlen((string) $current) < 1) {
             self::returnInvalid($key, $current, $value);
         }
     }
