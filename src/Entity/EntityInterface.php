@@ -24,5 +24,4 @@ interface EntityInterface
     public function get($key);
 
     public function getId();
-
 }

@@ -102,7 +102,7 @@ class Docblock
             } elseif (false !== strpos($item['return'], 'array')) {
                 $fixture = '["foo"=>"bar"]';
             } elseif (false !== strpos($item['return'], 'undefined') || false !== strpos($item['return'], 'string')) {
-                $fixture = '"'.substr(md5((string)mt_rand()), 0, 7).'"';
+                $fixture = '"'.substr(md5((string) mt_rand()), 0, 7).'"';
             }
 
             $data['magic_methods'][] = [
@@ -168,11 +168,10 @@ class Docblock
         array_shift($array);
         if ('simple' === $mode) {
             array_shift($array);
-
         }
 
         array_shift($array);
-        
+
         $data['testDirectory'] = 'tests/'.implode('/', $array);
         $data['testNamespace'] = $testNamespace;
         $data['filename'] = $data['testDirectory'].'/'.$data['classShortName'].'Test.php';

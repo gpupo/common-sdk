@@ -17,9 +17,8 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Entity\Schema;
 
-use Gpupo\CommonSdk\Exception\SchemaException;
-use Gpupo\Common\Entity\CollectionInterface;
 use Gpupo\CommonSdk\Entity\CollectionContainerInterface;
+use Gpupo\CommonSdk\Exception\SchemaException;
 
 class Tools
 {
@@ -41,7 +40,7 @@ class Tools
             case 'integer':
                 return (int) $data;
             case 'boolean':
-                return (boolean) $data;
+                return (bool) $data;
             case 'number':
             case 'float':
                 return (float) $data;
@@ -69,6 +68,27 @@ class Tools
         }
 
         return true;
+    }
+
+    public static function getRecursiveSchema($object)
+    {
+        $schema = $object->getSchema();
+        foreach ($schema as $key => $value) {
+            $current = $object->get($key);
+            if ($current instanceof CollectionContainerInterface) {
+                if (0 < $current->count()) {
+                    $subObject = $current->first();
+                } else {
+                    $subObject = $current->factoryElement([]);
+                }
+
+                $schema[$key] = [self::getRecursiveSchema($subObject)];
+            } elseif (method_exists($current, 'getSchema')) {
+                $schema[$key] = self::getRecursiveSchema($current);
+            }
+        }
+
+        return $schema;
     }
 
     protected static function returnInvalid($key, $current, $value)
@@ -109,27 +129,5 @@ class Tools
         if ('datetime' === $value && strlen($current) < 10) {
             self::returnInvalid($key, $current, $value);
         }
-    }
-
-    public static function getRecursiveSchema($object)
-    {
-        $schema = $object->getSchema();
-        foreach ($schema as $key => $value) {
-            $current = $object->get($key);
-            if ($current instanceof CollectionContainerInterface) {
-
-                if (0 < $current->count()) {
-                    $subObject = $current->first();
-                } else {
-                    $subObject = $current->factoryElement([]);
-                }
-
-                $schema[$key] = [self::getRecursiveSchema($subObject)];
-            } elseif (method_exists($current, 'getSchema')) {
-                $schema[$key] = self::getRecursiveSchema($current);
-            }
-        }
-
-        return $schema;
     }
 }

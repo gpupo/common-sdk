@@ -20,6 +20,7 @@ namespace Gpupo\Tests\CommonSdk;
 use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
+use Gpupo\CommonSdk\Traits\ResourcesTrait;
 use Gpupo\Tests\CommonSdk\Documentor\Docblock;
 use Gpupo\Tests\CommonSdk\Traits\AssertTrait;
 use Gpupo\Tests\CommonSdk\Traits\ProxyTrait;
@@ -27,7 +28,6 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase as TestCaseCore;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Gpupo\CommonSdk\Traits\ResourcesTrait;
 
 abstract class TestCaseAbstract extends TestCaseCore
 {
@@ -167,7 +167,6 @@ abstract class TestCaseAbstract extends TestCaseCore
 
         return !empty($value);
     }
-
 
     protected function factoryResponseFromFixture($file, $httpStatusCode = 200)
     {

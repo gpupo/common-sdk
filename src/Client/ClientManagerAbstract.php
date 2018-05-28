@@ -115,7 +115,7 @@ abstract class ClientManagerAbstract
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     protected function isDryRun()
     {
