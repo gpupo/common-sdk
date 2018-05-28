@@ -3,6 +3,9 @@ VERSION 4  NEXT GENERATION OF SDKS :)
 =====================================
 
    Version 4.3 - Expand resolvNeighborObject names
+      28/05/2018 13:11  4.3.7  Add level 2 to parent search class
+         9d1e066 Add level 2 to parent search class
+         c82f399 Fix Bool type
       23/05/2018 11:39  4.3.6  Fix strict
          1bb5488 Fix strict
       22/05/2018 20:02  4.3.5  Resource Trait
