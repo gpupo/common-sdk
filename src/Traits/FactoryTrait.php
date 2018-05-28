@@ -76,8 +76,9 @@ trait FactoryTrait
     protected static function getFullyQualifiedNeighborObject($calledClass, $objectName)
     {
         $errors = '';
-        $entityRepository = [$calledClass];
-        $entityRepository[] = get_parent_class($calledClass);
+        $entityRepository = ['main' => $calledClass];
+        $entityRepository['lv1'] = get_parent_class($calledClass);
+        $entityRepository['lv2'] = get_parent_class($entityRepository['lv1']);
 
         foreach ($entityRepository as $class) {
             $data = self::resolvNeighborObject($class, $objectName);
@@ -88,7 +89,7 @@ trait FactoryTrait
             $errors .= $data['error'];
         }
 
-        throw new \Exception('Class '.$errors.' not found');
+        throw new \Exception(sprintf('Class %s not found. Searched on %s', $errors, implode("\n", $entityRepository)));
     }
 
     protected static function resolvNeighborObject($calledClass, $objectName)
