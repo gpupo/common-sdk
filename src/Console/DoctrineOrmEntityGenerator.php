@@ -37,9 +37,28 @@ class DoctrineOrmEntityGenerator
     public function saveDataToSchema($key, $value, array $data)
     {
         $file = sprintf('Resources/schema/v2/%s.yaml', $key);
-        $content = sprintf("# %s \n# generated at %s\n", $key, date('r')).Yaml::dump($data, 8);
+        $content = sprintf("# common-schema %s $ generated at %s\n", $key, date('Y-m-d')).Yaml::dump($data, 8);
 
         return $this->save($file, $content);
+    }
+
+    protected function removePlural($string)
+    {
+        return rtrim($string, 's');
+    }
+
+    protected function processClassNames($object, $class)
+    {
+        $target = $class;
+
+        if ($object instanceof CollectionInterface) {
+            $target = get_class($object->factoryElement([]));
+        }
+
+        return [
+            'to' => str_replace('ArrayCollection', 'ORM\Entity', $target),
+            'repository' => str_replace('ArrayCollection', 'ORM\Repository', $target).'Repository',
+        ];
     }
 
     public function saveDataDoctrineMetadata($object)
@@ -47,19 +66,27 @@ class DoctrineOrmEntityGenerator
         $class = get_class($object);
         $explode = explode('\\', $class);
 
-        $abstractList = ['People', 'Thing'];
+        $abstractList = [
+            // 'People',
+            // 'Thing',
+            // 'Organization',
+        ];
 
-        if (in_array($explode[3], $abstractList, true)) {
+        $subnamespace = $explode[3];
+        if (in_array($subnamespace, $abstractList, true)) {
+            $this->output->writeln(sprintf('Namespace <fg=yellow> %s </> is abstract. Ignoring <bg=black> %s </>', $subnamespace, $class));
             return;
         }
 
-        $toClass = str_replace('ArrayCollection', 'ORM\Entity', $class);
-        $repositoryClass = str_replace('ArrayCollection', 'ORM\Repository', $class).'Repository';
+        $this->output->writeln(sprintf(" - Calculating metadata for <bg=black> %s </> ...", $class));
+
+        $classNames = $this->processClassNames($object, $class);
+
         $table = $object->getTableName();
         $doctrine = [
                 'type' => 'entity',
                 'table' => $table,
-                'repositoryClass' => $repositoryClass,
+                'repositoryClass' => $classNames['repository'],
                 'id' => [
                     'id' => ['type' => 'integer', 'generator' => ['strategy' => 'AUTO']],
                 ],
@@ -69,18 +96,65 @@ class DoctrineOrmEntityGenerator
             if ('id' === $key) {
                 continue;
             }
-            $doctrine['fields'][$key] = $this->generateDoctrineField($key, $value);
+            if ('object' === $value) {
+                $this->output->writeln(sprintf("   * Calculating <fg=yellow> association mapping </> for <fg=yellow> %s </> ...", $key));
+
+                $normalizedKey = $this->removePlural($key);
+                $this->output->writeln(sprintf("     [Normalized Key is <fg=blue>%s</>]", $normalizedKey));
+                $meta = $this->generateDoctrineObject($object, $key, $value);
+                $doctrine[$meta['associationMappingType']][$normalizedKey] = $meta['spec'];
+                $this->output->writeln(sprintf("     [Association type is <fg=blue>%s</>]", $meta['associationMappingType']));
+            } else {
+                $this->output->writeln(sprintf("   * Calculating metadata field <bg=blue> %s </> ...", $key));
+                $doctrine['fields'][$key] = $this->generateDoctrineField($key, $value);
+            }
+
             $this->recursiveSaveDataDoctrineMetadata($object->get($key));
         }
+
+        //Extensions
+        $doctrine['gedmo'] = [
+            'soft_deleteable' => [
+                'field_name' => 'deletedAt',
+                'time_aware' => false,
+                'hard_delete' => true,
+            ],
+        ];
+
+        $doctrine['fields']['createdAt'] = [
+            'type' => 'datetime',
+            'nullable' => true,
+            'gedmo' => [
+                'timestampable' => [
+                    'on' => 'create',
+                ],
+            ],
+        ];
+
+        $doctrine['fields']['updatedAt'] = [
+            'type' => 'datetime',
+            'nullable' => true,
+            'gedmo' => [
+                'timestampable' => [
+                    'on' => 'update',
+                ],
+            ],
+        ];
+
+        $doctrine['fields']['deletedAt'] = [
+            'type' => 'datetime',
+            'nullable' => true,
+        ];
+
 
         $doctrine['lifecycleCallbacks'] = [
                 'prePersist' => [],
                 'postPersist' => [],
             ];
 
-        $entity = [$toClass => $doctrine];
-        $file = sprintf('config/yaml/%s.dcm.yml', str_replace('\\', '.', $toClass));
-        $content = sprintf("# %s metadata\n# generated at %s\n", $key, date('r')).Yaml::dump($entity, 8, 2);
+        $entity = [$classNames['to'] => $doctrine];
+        $file = sprintf('config/yaml/%s.dcm.yml', str_replace('\\', '.', $classNames['to']));
+        $content = sprintf("# %s metadata\n# generated at %s\n", $key, date('Y-m-d')).Yaml::dump($entity, 8, 2);
 
         return $this->save($file, $content);
     }
@@ -88,10 +162,11 @@ class DoctrineOrmEntityGenerator
     public function recursiveSaveDataDoctrineMetadata($object)
     {
         if (!is_object($object)) {
+            //String or Array
             return;
         }
         if ($object instanceof CollectionInterface) {
-            return $this->recursiveSaveDataDoctrineMetadata($object->first());
+            return $this->recursiveSaveDataDoctrineMetadata($object->factoryElement([]));
         }
 
         if (!$object instanceof EntityInterface) {
@@ -113,6 +188,43 @@ class DoctrineOrmEntityGenerator
         $this->output->writeln(sprintf('Generated <fg=green> %s </> file', $file));
     }
 
+    protected function generateDoctrineObject($object, $key, $value)
+    {
+        $normalizedKey = $this->removePlural($key);
+        $targetObject = $object->get($key);
+        $targetEntity = get_class($targetObject);
+
+        if ($targetObject instanceof CollectionInterface) {
+            $associationMappingType = $targetObject->getAssociationMappingType();
+        } else {
+            $associationMappingType = 'oneToOne';
+        }
+
+
+
+        $classNames = $this->processClassNames($targetObject, $targetEntity);
+            $spec = [
+                'targetEntity' => $classNames['to'],
+                'options' => [],
+            ];
+
+            if ('oneToOne' !== $associationMappingType) {
+                $spec = array_merge($spec, [
+                    'mappedBy' => $normalizedKey,
+                    'joinColumn' => [
+                        'name'  => sprintf('%s_id', $normalizedKey),
+                        'referencedColumnName' => 'id',
+                    ],
+                ]);
+            }
+
+
+        return [
+            'associationMappingType' => $associationMappingType,
+            'spec' => $spec,
+        ];
+    }
+
     protected function generateDoctrineField($key, $value)
     {
         switch ($value) {
@@ -128,13 +240,6 @@ class DoctrineOrmEntityGenerator
                 case 'datetime':
                     $spec = [
                         'type' => 'datetime',
-                        'options' => [],
-                    ];
-
-                    break;
-                case 'object':
-                    $spec = [
-                        'type' => 'manyToMany',
                         'options' => [],
                     ];
 
@@ -174,7 +279,7 @@ class DoctrineOrmEntityGenerator
                     break;
             }
 
-        $spec['options']['comment'] = '';
+        //$spec['options']['comment'] = '';
 
         return $spec;
     }
