@@ -113,38 +113,38 @@ class DoctrineOrmEntityGenerator
         }
 
         //Extensions
-        $doctrine['gedmo'] = [
-            'soft_deleteable' => [
-                'field_name' => 'deletedAt',
-                'time_aware' => false,
-                'hard_delete' => true,
-            ],
-        ];
-
-        $doctrine['fields']['createdAt'] = [
-            'type' => 'datetime',
-            'nullable' => true,
-            'gedmo' => [
-                'timestampable' => [
-                    'on' => 'create',
-                ],
-            ],
-        ];
-
-        $doctrine['fields']['updatedAt'] = [
-            'type' => 'datetime',
-            'nullable' => true,
-            'gedmo' => [
-                'timestampable' => [
-                    'on' => 'update',
-                ],
-            ],
-        ];
-
-        $doctrine['fields']['deletedAt'] = [
-            'type' => 'datetime',
-            'nullable' => true,
-        ];
+        // $doctrine['gedmo'] = [
+        //     'soft_deleteable' => [
+        //         'field_name' => 'deletedAt',
+        //         'time_aware' => false,
+        //         'hard_delete' => true,
+        //     ],
+        // ];
+        //
+        // $doctrine['fields']['createdAt'] = [
+        //     'type' => 'datetime',
+        //     'nullable' => true,
+        //     'gedmo' => [
+        //         'timestampable' => [
+        //             'on' => 'create',
+        //         ],
+        //     ],
+        // ];
+        //
+        // $doctrine['fields']['updatedAt'] = [
+        //     'type' => 'datetime',
+        //     'nullable' => true,
+        //     'gedmo' => [
+        //         'timestampable' => [
+        //             'on' => 'update',
+        //         ],
+        //     ],
+        // ];
+        //
+        // $doctrine['fields']['deletedAt'] = [
+        //     'type' => 'datetime',
+        //     'nullable' => true,
+        // ];
 
 
         $doctrine['lifecycleCallbacks'] = [
