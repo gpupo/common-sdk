@@ -2,6 +2,13 @@
 VERSION 4  NEXT GENERATION OF SDKS :)
 =====================================
 
+   Version 4.4 - Add DoctrineOrmEntityGenerator
+      30/05/2018 17:25  4.4.0  initial release
+         3d8b6ef Disable gedmo fields
+         ba7d4eb add Gedmo doctrine extensions
+         d41ed38 Add doctrine extensions yaml auto generate
+         6719362 Add DoctrineOrmEntityGenerator
+
    Version 4.3 - Expand resolvNeighborObject names
       28/05/2018 13:11  4.3.7  Add level 2 to parent search class
          9d1e066 Add level 2 to parent search class
