@@ -1,4 +1,11 @@
 
+VERSION 5  MAJOR VERSION 4
+==========================
+
+   Version 5.0 - Major version 4
+      14/06/2018 11:46  5.0.0  initial release
+         65b37a4 Major version 4
+
 VERSION 4  NEXT GENERATION OF SDKS :)
 =====================================
 
