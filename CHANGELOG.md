@@ -3,6 +3,8 @@ VERSION 4  NEXT GENERATION OF SDKS :)
 =====================================
 
    Version 4.4 - Add DoctrineOrmEntityGenerator
+      14/06/2018 10:26  4.4.1  add >=
+         970feba add >=
       30/05/2018 17:25  4.4.0  initial release
          3d8b6ef Disable gedmo fields
          ba7d4eb add Gedmo doctrine extensions
