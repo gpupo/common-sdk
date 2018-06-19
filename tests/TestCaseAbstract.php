@@ -167,12 +167,21 @@ abstract class TestCaseAbstract extends TestCaseCore
 
         return !empty($value);
     }
+    protected function factoryResponseFromArray(array $array, $httpStatusCode = 200)
+    {
+        return $this->factoryResponseFromRawJson(json_encode($array), $httpStatusCode);
+    }
 
     protected function factoryResponseFromFixture($file, $httpStatusCode = 200)
     {
+        return $this->factoryResponseFromRawJson($this->getResourceContent($file), $httpStatusCode);
+    }
+
+    protected function factoryResponseFromRawJson($string, $httpStatusCode = 200)
+    {
         $response = new Response([
             'httpStatusCode' => $httpStatusCode,
-            'responseRaw' => $this->getResourceContent($file),
+            'responseRaw' => $string,
         ]);
 
         return $response;

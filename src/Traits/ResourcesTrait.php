@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Traits;
 
+use Symfony\Component\Yaml\Yaml;
+
 trait ResourcesTrait
 {
     public static function getResourcesPath()
@@ -32,6 +34,11 @@ trait ResourcesTrait
     protected function getResourceJson($file)
     {
         return json_decode($this->getResourceContent($file), true);
+    }
+
+    protected function getResourceYaml($file)
+    {
+        return Yaml::parseFile($this->getResourceFilePath($file));
     }
 
     protected function getResourceFilePath($file, $create = false)
