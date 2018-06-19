@@ -3,6 +3,10 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 5.0 - Major version 4
+      19/06/2018 15:15  4.4.3  Add factoryResponseFromArray
+         2cb6b96 add docker compose config
+         d44fc2a custom loadArrayFromFile
+         262beef Add factoryResponseFromArray
       14/06/2018 11:49  4.4.2  Major version 4
          28e7856 Release of new version 5.0.0
          65b37a4 Major version 4
