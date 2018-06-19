@@ -19,20 +19,22 @@ namespace Gpupo\CommonSdk\Traits;
 
 trait LoadTrait
 {
-    protected function loadArrayFromFile($filename, array $env = [])
+    protected function loadArrayFromFile($filename, array $env = [], $merge = true)
     {
         if (true !== file_exists($filename)) {
             return ['not_found' => $filename];
         }
-
         foreach ($env as $k => $v) {
             ${$k} = $v;
         }
 
         $array = include $filename;
-
         if (!is_array($array)) {
             return [];
+        }
+
+        if (true !== $merge) {
+            return $array;
         }
 
         return array_merge($env, $array);
