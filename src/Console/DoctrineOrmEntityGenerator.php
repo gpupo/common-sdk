@@ -42,25 +42,6 @@ class DoctrineOrmEntityGenerator
         return $this->save($file, $content);
     }
 
-    protected function removePlural($string)
-    {
-        return rtrim($string, 's');
-    }
-
-    protected function processClassNames($object, $class)
-    {
-        $target = $class;
-
-        if ($object instanceof CollectionInterface) {
-            $target = get_class($object->factoryElement([]));
-        }
-
-        return [
-            'to' => str_replace('ArrayCollection', 'ORM\Entity', $target),
-            'repository' => str_replace('ArrayCollection', 'ORM\Repository', $target).'Repository',
-        ];
-    }
-
     public function saveDataDoctrineMetadata($object)
     {
         $class = get_class($object);
@@ -75,10 +56,11 @@ class DoctrineOrmEntityGenerator
         $subnamespace = $explode[3];
         if (in_array($subnamespace, $abstractList, true)) {
             $this->output->writeln(sprintf('Namespace <fg=yellow> %s </> is abstract. Ignoring <bg=black> %s </>', $subnamespace, $class));
+
             return;
         }
 
-        $this->output->writeln(sprintf(" - Calculating metadata for <bg=black> %s </> ...", $class));
+        $this->output->writeln(sprintf(' - Calculating metadata for <bg=black> %s </> ...', $class));
 
         $classNames = $this->processClassNames($object, $class);
 
@@ -97,15 +79,15 @@ class DoctrineOrmEntityGenerator
                 continue;
             }
             if ('object' === $value) {
-                $this->output->writeln(sprintf("   * Calculating <fg=yellow> association mapping </> for <fg=yellow> %s </> ...", $key));
+                $this->output->writeln(sprintf('   * Calculating <fg=yellow> association mapping </> for <fg=yellow> %s </> ...', $key));
 
                 $normalizedKey = $this->removePlural($key);
-                $this->output->writeln(sprintf("     [Normalized Key is <fg=blue>%s</>]", $normalizedKey));
+                $this->output->writeln(sprintf('     [Normalized Key is <fg=blue>%s</>]', $normalizedKey));
                 $meta = $this->generateDoctrineObject($object, $key, $value);
                 $doctrine[$meta['associationMappingType']][$normalizedKey] = $meta['spec'];
-                $this->output->writeln(sprintf("     [Association type is <fg=blue>%s</>]", $meta['associationMappingType']));
+                $this->output->writeln(sprintf('     [Association type is <fg=blue>%s</>]', $meta['associationMappingType']));
             } else {
-                $this->output->writeln(sprintf("   * Calculating metadata field <bg=blue> %s </> ...", $key));
+                $this->output->writeln(sprintf('   * Calculating metadata field <bg=blue> %s </> ...', $key));
                 $doctrine['fields'][$key] = $this->generateDoctrineField($key, $value);
             }
 
@@ -146,7 +128,6 @@ class DoctrineOrmEntityGenerator
         //     'nullable' => true,
         // ];
 
-
         $doctrine['lifecycleCallbacks'] = [
                 'prePersist' => [],
                 'postPersist' => [],
@@ -182,6 +163,25 @@ class DoctrineOrmEntityGenerator
         }
     }
 
+    protected function removePlural($string)
+    {
+        return rtrim($string, 's');
+    }
+
+    protected function processClassNames($object, $class)
+    {
+        $target = $class;
+
+        if ($object instanceof CollectionInterface) {
+            $target = get_class($object->factoryElement([]));
+        }
+
+        return [
+            'to' => str_replace('ArrayCollection', 'ORM\Entity', $target),
+            'repository' => str_replace('ArrayCollection', 'ORM\Repository', $target).'Repository',
+        ];
+    }
+
     protected function save($file, $content)
     {
         file_put_contents($file, $content);
@@ -200,24 +200,21 @@ class DoctrineOrmEntityGenerator
             $associationMappingType = 'oneToOne';
         }
 
-
-
         $classNames = $this->processClassNames($targetObject, $targetEntity);
-            $spec = [
+        $spec = [
                 'targetEntity' => $classNames['to'],
                 'options' => [],
             ];
 
-            if ('oneToOne' !== $associationMappingType) {
-                $spec = array_merge($spec, [
+        if ('oneToOne' !== $associationMappingType) {
+            $spec = array_merge($spec, [
                     'mappedBy' => $normalizedKey,
                     'joinColumn' => [
-                        'name'  => sprintf('%s_id', $normalizedKey),
+                        'name' => sprintf('%s_id', $normalizedKey),
                         'referencedColumnName' => 'id',
                     ],
                 ]);
-            }
-
+        }
 
         return [
             'associationMappingType' => $associationMappingType,
@@ -276,6 +273,7 @@ class DoctrineOrmEntityGenerator
                     break;
                 default:
                     throw new \Exception(sprintf('Type %s not found', $value));
+
                     break;
             }
 

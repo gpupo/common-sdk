@@ -1,7 +1,7 @@
 <?php
 
 $workspace = explode('/', __DIR__);
-$projectName = end($workspace);
+$projectName = 'common-sdk';
 $template = <<<'EOF'
 This file is part of gpupo/%s
 Created by Gilmar Pupo <contact@gpupo.com>

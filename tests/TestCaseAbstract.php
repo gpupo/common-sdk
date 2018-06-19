@@ -167,6 +167,7 @@ abstract class TestCaseAbstract extends TestCaseCore
 
         return !empty($value);
     }
+
     protected function factoryResponseFromArray(array $array, $httpStatusCode = 200)
     {
         return $this->factoryResponseFromRawJson(json_encode($array), $httpStatusCode);
