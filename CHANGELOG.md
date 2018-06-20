@@ -3,6 +3,7 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 5.0 - Major version 4
+      20/06/2018 09:05  4.4.4  Add download method to client
       19/06/2018 15:15  4.4.3  Add factoryResponseFromArray
          2cb6b96 add docker compose config
          d44fc2a custom loadArrayFromFile

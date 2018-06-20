@@ -5,11 +5,9 @@ os:
 php:
   - 7.2
   - nightly
-  - hhvm
 matrix:
   allow_failures:
     - php: nightly
-    - php: hhvm
 branches:
   except:
     - /^psr.*$/
