@@ -54,16 +54,14 @@ class DoctrineOrmEntityGenerator
         ];
 
         $subnamespace = $explode[3];
+        $lastname = end($explode);
         if (in_array($subnamespace, $abstractList, true)) {
             $this->output->writeln(sprintf('Namespace <fg=yellow> %s </> is abstract. Ignoring <bg=black> %s </>', $subnamespace, $class));
 
             return;
         }
-
-        $this->output->writeln(sprintf(' - Calculating metadata for <bg=black> %s </> ...', $class));
-
+        //$this->output->writeln(sprintf(' - Calculating metadata for <bg=black> %s </> ...', $class));
         $classNames = $this->processClassNames($object, $class);
-
         $table = $object->getTableName();
         $doctrine = [
                 'type' => 'entity',
@@ -79,54 +77,26 @@ class DoctrineOrmEntityGenerator
                 continue;
             }
             if ('object' === $value) {
-                $this->output->writeln(sprintf('   * Calculating <fg=yellow> association mapping </> for <fg=yellow> %s </> ...', $key));
-
+                //$this->output->writeln(sprintf('   * Calculating <fg=yellow> association mapping </> for <fg=yellow> %s </> ...', $key));
                 $normalizedKey = $this->removePlural($key);
-                $this->output->writeln(sprintf('     [Normalized Key is <fg=blue>%s</>]', $normalizedKey));
-                $meta = $this->generateDoctrineObject($object, $key, $value);
-                $doctrine[$meta['associationMappingType']][$normalizedKey] = $meta['spec'];
-                $this->output->writeln(sprintf('     [Association type is <fg=blue>%s</>]', $meta['associationMappingType']));
+
+                $meta = $this->generateDoctrineObject($object, $key, $value, $lastname);
+
+                if ('manyToMany' === $meta['associationMappingType']) {
+                    $propertyKey = $normalizedKey.'s';
+                } else {
+                    $propertyKey = $normalizedKey;
+                }
+
+                $doctrine[$meta['associationMappingType']][$propertyKey] = $meta['spec'];
+                $this->output->writeln(sprintf('     - Key is <bg=black;fg=white> %s </> and Association type is <bg=white;fg=blue> %s </>', $propertyKey, $meta['associationMappingType']));
             } else {
-                $this->output->writeln(sprintf('   * Calculating metadata field <bg=blue> %s </> ...', $key));
+                //$this->output->writeln(sprintf('   * Calculating metadata field <bg=blue> %s </> ...', $key));
                 $doctrine['fields'][$key] = $this->generateDoctrineField($key, $value);
             }
 
             $this->recursiveSaveDataDoctrineMetadata($object->get($key));
         }
-
-        //Extensions
-        // $doctrine['gedmo'] = [
-        //     'soft_deleteable' => [
-        //         'field_name' => 'deletedAt',
-        //         'time_aware' => false,
-        //         'hard_delete' => true,
-        //     ],
-        // ];
-        //
-        // $doctrine['fields']['createdAt'] = [
-        //     'type' => 'datetime',
-        //     'nullable' => true,
-        //     'gedmo' => [
-        //         'timestampable' => [
-        //             'on' => 'create',
-        //         ],
-        //     ],
-        // ];
-        //
-        // $doctrine['fields']['updatedAt'] = [
-        //     'type' => 'datetime',
-        //     'nullable' => true,
-        //     'gedmo' => [
-        //         'timestampable' => [
-        //             'on' => 'update',
-        //         ],
-        //     ],
-        // ];
-        //
-        // $doctrine['fields']['deletedAt'] = [
-        //     'type' => 'datetime',
-        //     'nullable' => true,
-        // ];
 
         $doctrine['lifecycleCallbacks'] = [
                 'prePersist' => [],
@@ -135,7 +105,8 @@ class DoctrineOrmEntityGenerator
 
         $entity = [$classNames['to'] => $doctrine];
         $file = sprintf('config/yaml/%s.dcm.yml', str_replace('\\', '.', $classNames['to']));
-        $content = sprintf("# %s metadata\n# generated at %s\n", $key, date('Y-m-d')).Yaml::dump($entity, 8, 2);
+
+        $content = sprintf("# %s metadata\n", $key).Yaml::dump($entity, 8, 2);
 
         return $this->save($file, $content);
     }
@@ -185,17 +156,20 @@ class DoctrineOrmEntityGenerator
     protected function save($file, $content)
     {
         file_put_contents($file, $content);
-        $this->output->writeln(sprintf('Generated <fg=green> %s </> file', $file));
+        $this->output->writeln(sprintf('Generated <fg=green> %s </>', $file));
     }
 
-    protected function generateDoctrineObject($object, $key, $value)
+    protected function generateDoctrineObject($object, $key, $value, $lastname)
     {
+        $lastname = strtolower($lastname);
         $normalizedKey = $this->removePlural($key);
         $targetObject = $object->get($key);
         $targetEntity = get_class($targetObject);
+        $plural = $normalizedKey.'s';
 
         if ($targetObject instanceof CollectionInterface) {
             $associationMappingType = $targetObject->getAssociationMappingType();
+
         } else {
             $associationMappingType = 'oneToOne';
         }
@@ -206,13 +180,23 @@ class DoctrineOrmEntityGenerator
                 'options' => [],
             ];
 
-        if ('oneToOne' !== $associationMappingType) {
+
+        if ('manyToMany' === $associationMappingType) {
             $spec = array_merge($spec, [
-                    'mappedBy' => $normalizedKey,
-                    'joinColumn' => [
-                        'name' => sprintf('%s_id', $normalizedKey),
-                        'referencedColumnName' => 'id',
-                    ],
+                    'joinTable' => [
+                        'name' => sprintf('cs_pivot_%s_to_%s', $lastname, $plural),
+                        'joinColumns' => [
+                            sprintf('%s_id', $normalizedKey) => [
+                                'referencedColumnName' => 'id',
+                            ],
+                        ],
+                        'inverseJoinColumns' => [
+                            sprintf('%s_id', $normalizedKey) => [
+                                'referencedColumnName' => 'id',
+                                'unique' => true,
+                            ],
+                        ],
+                    ]
                 ]);
         }
 
