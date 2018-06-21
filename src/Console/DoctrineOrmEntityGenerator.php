@@ -22,9 +22,12 @@ use Gpupo\CommonSchema\ArrayCollection\Thing\EntityInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Yaml\Yaml;
+use Gpupo\Common\Tools\StringTool;
+use Gpupo\Common\Entity\Collection;
 
 class DoctrineOrmEntityGenerator
 {
+    private $container;
     protected $input;
     protected $output;
 
@@ -32,12 +35,13 @@ class DoctrineOrmEntityGenerator
     {
         $this->input = $input;
         $this->output = $output;
+        $this->container = new Collection();
     }
 
     public function saveDataToSchema($key, $value, array $data)
     {
         $file = sprintf('Resources/schema/v2/%s.yaml', $key);
-        $content = sprintf("# common-schema %s $ generated at %s\n", $key, date('Y-m-d')).Yaml::dump($data, 8);
+        $content = sprintf("# common-schema %s\n", $key).Yaml::dump($data, 8);
 
         return $this->save($file, $content);
     }
@@ -78,22 +82,26 @@ class DoctrineOrmEntityGenerator
             }
             if ('object' === $value) {
                 //$this->output->writeln(sprintf('   * Calculating <fg=yellow> association mapping </> for <fg=yellow> %s </> ...', $key));
-                $normalizedKey = $this->removePlural($key);
-
-                $meta = $this->generateDoctrineObject($object, $key, $value, $lastname);
-
-                if ('manyToMany' === $meta['associationMappingType']) {
-                    $propertyKey = $normalizedKey.'s';
+                $meta = $this->generateDoctrineObject($object, $classNames, $key, $value, $lastname);
+                if (in_array($meta['associationMappingType'], ['oneToMany', 'manyToMany'], true)) {
+                    $propertyKey = StringTool::normalizeToPlural($key);
                 } else {
-                    $propertyKey = $normalizedKey;
+                    $propertyKey = StringTool::normalizeToSingular($key);
                 }
-
                 $doctrine[$meta['associationMappingType']][$propertyKey] = $meta['spec'];
+
                 $this->output->writeln(sprintf('     - Key is <bg=black;fg=white> %s </> and Association type is <bg=white;fg=blue> %s </>', $propertyKey, $meta['associationMappingType']));
             } else {
                 //$this->output->writeln(sprintf('   * Calculating metadata field <bg=blue> %s </> ...', $key));
                 $doctrine['fields'][$key] = $this->generateDoctrineField($key, $value);
             }
+
+            $manyToOne = $this->getManyToOne($classNames['to']);
+
+            if ($manyToOne) {
+                $doctrine['manyToOne'] = $manyToOne;
+            }
+
 
             $this->recursiveSaveDataDoctrineMetadata($object->get($key));
         }
@@ -105,8 +113,9 @@ class DoctrineOrmEntityGenerator
 
         $entity = [$classNames['to'] => $doctrine];
         $file = sprintf('config/yaml/%s.dcm.yml', str_replace('\\', '.', $classNames['to']));
-
         $content = sprintf("# %s metadata\n", $key).Yaml::dump($entity, 8, 2);
+
+
 
         return $this->save($file, $content);
     }
@@ -134,11 +143,6 @@ class DoctrineOrmEntityGenerator
         }
     }
 
-    protected function removePlural($string)
-    {
-        return rtrim($string, 's');
-    }
-
     protected function processClassNames($object, $class)
     {
         $target = $class;
@@ -159,13 +163,21 @@ class DoctrineOrmEntityGenerator
         $this->output->writeln(sprintf('Generated <fg=green> %s </>', $file));
     }
 
-    protected function generateDoctrineObject($object, $key, $value, $lastname)
+    protected function setManyToOne($target, $childSpec)
+    {
+        $this->container->set(StringTool::normalizeToSlug($target), $childSpec);
+    }
+
+    protected function getManyToOne($target)
+    {
+        return $this->container->get(StringTool::normalizeToSlug($target));
+    }
+
+    protected function generateDoctrineObject($object, $classNames, $key, $value, $lastname)
     {
         $lastname = strtolower($lastname);
-        $normalizedKey = $this->removePlural($key);
         $targetObject = $object->get($key);
         $targetEntity = get_class($targetObject);
-        $plural = $normalizedKey.'s';
 
         if ($targetObject instanceof CollectionInterface) {
             $associationMappingType = $targetObject->getAssociationMappingType();
@@ -174,31 +186,50 @@ class DoctrineOrmEntityGenerator
             $associationMappingType = 'oneToOne';
         }
 
-        $classNames = $this->processClassNames($targetObject, $targetEntity);
+        $targetClassNames = $this->processClassNames($targetObject, $targetEntity);
         $spec = [
-                'targetEntity' => $classNames['to'],
-                'options' => [],
+                'targetEntity' => $targetClassNames['to'],
+                'options' => [
+                ],
             ];
 
-
-        if ('manyToMany' === $associationMappingType) {
+        if ('oneToMany' === $associationMappingType) {
             $spec = array_merge($spec, [
-                    'joinTable' => [
-                        'name' => sprintf('cs_pivot_%s_to_%s', $lastname, $plural),
-                        'joinColumns' => [
-                            sprintf('%s_id', $normalizedKey) => [
-                                'referencedColumnName' => 'id',
+                'mappedBy' => StringTool::normalizeToSingular($lastname),
+            ]);
+
+            //add Many To one
+            $childSpec = [];
+            $childSpec[$lastname] = [
+                'targetEntity' => $classNames['to'],
+                'inversedBy' => StringTool::normalizeToPlural($key),
+                'joinColumn' => [
+                    'name'  => sprintf('%s_id', StringTool::normalizeToSingular($lastname)),
+                    'referencedColumnName'  => 'id',
+                ],
+            ];
+
+            $this->setManyToOne($spec['targetEntity'], $childSpec);
+
+        } elseif ('manyToMany' === $associationMappingType) {
+                $spec = array_merge($spec, [
+                        'joinTable' => [
+                            'name' => sprintf('cs_pivot_%s_to_%s', $lastname, StringTool::normalizeToPlural($key)),
+                            'joinColumns' => [
+                                sprintf('%s_id', StringTool::normalizeToSingular($key)) => [
+                                    'referencedColumnName' => 'id',
+                                ],
                             ],
-                        ],
-                        'inverseJoinColumns' => [
-                            sprintf('%s_id', $normalizedKey) => [
-                                'referencedColumnName' => 'id',
-                                'unique' => true,
+                            'inverseJoinColumns' => [
+                                sprintf('%s_id', StringTool::normalizeToSingular($key)) => [
+                                    'referencedColumnName' => 'id',
+                                    'unique' => true,
+                                ],
                             ],
-                        ],
-                    ]
-                ]);
+                        ]
+                    ]);
         }
+
 
         return [
             'associationMappingType' => $associationMappingType,
