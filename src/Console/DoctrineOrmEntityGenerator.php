@@ -17,19 +17,19 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Console;
 
+use Gpupo\Common\Entity\Collection;
+use Gpupo\Common\Tools\StringTool;
 use Gpupo\CommonSchema\ArrayCollection\Thing\CollectionInterface;
 use Gpupo\CommonSchema\ArrayCollection\Thing\EntityInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Yaml\Yaml;
-use Gpupo\Common\Tools\StringTool;
-use Gpupo\Common\Entity\Collection;
 
 class DoctrineOrmEntityGenerator
 {
-    private $container;
     protected $input;
     protected $output;
+    private $container;
 
     public function __construct(ArgvInput $input, ConsoleOutput $output)
     {
@@ -102,7 +102,6 @@ class DoctrineOrmEntityGenerator
                 $doctrine['manyToOne'] = $manyToOne;
             }
 
-
             $this->recursiveSaveDataDoctrineMetadata($object->get($key));
         }
 
@@ -114,8 +113,6 @@ class DoctrineOrmEntityGenerator
         $entity = [$classNames['to'] => $doctrine];
         $file = sprintf('config/yaml/%s.dcm.yml', str_replace('\\', '.', $classNames['to']));
         $content = sprintf("# %s metadata\n", $key).Yaml::dump($entity, 8, 2);
-
-
 
         return $this->save($file, $content);
     }
@@ -181,7 +178,6 @@ class DoctrineOrmEntityGenerator
 
         if ($targetObject instanceof CollectionInterface) {
             $associationMappingType = $targetObject->getAssociationMappingType();
-
         } else {
             $associationMappingType = 'oneToOne';
         }
@@ -189,6 +185,7 @@ class DoctrineOrmEntityGenerator
         $targetClassNames = $this->processClassNames($targetObject, $targetEntity);
         $spec = [
                 'targetEntity' => $targetClassNames['to'],
+                'cascade' => ['persist', 'remove'],
                 'options' => [
                 ],
             ];
@@ -204,32 +201,31 @@ class DoctrineOrmEntityGenerator
                 'targetEntity' => $classNames['to'],
                 'inversedBy' => StringTool::normalizeToPlural($key),
                 'joinColumn' => [
-                    'name'  => sprintf('%s_id', StringTool::normalizeToSingular($lastname)),
-                    'referencedColumnName'  => 'id',
+                    'name' => sprintf('%s_id', StringTool::normalizeToSingular($lastname)),
+                    'referencedColumnName' => 'id',
                 ],
             ];
 
             $this->setManyToOne($spec['targetEntity'], $childSpec);
-
         } elseif ('manyToMany' === $associationMappingType) {
-                $spec = array_merge($spec, [
-                        'joinTable' => [
-                            'name' => sprintf('cs_pivot_%s_to_%s', $lastname, StringTool::normalizeToPlural($key)),
-                            'joinColumns' => [
-                                sprintf('%s_id', StringTool::normalizeToSingular($key)) => [
-                                    'referencedColumnName' => 'id',
-                                ],
-                            ],
-                            'inverseJoinColumns' => [
-                                sprintf('%s_id', StringTool::normalizeToSingular($key)) => [
-                                    'referencedColumnName' => 'id',
-                                    'unique' => true,
-                                ],
-                            ],
-                        ]
-                    ]);
+            $spec = array_merge($spec, [
+                'cascade' => ['persist'],
+                'joinTable' => [
+                    'name' => sprintf('cs_pivot_%s_to_%s', $lastname, StringTool::normalizeToPlural($key)),
+                    'joinColumns' => [
+                        sprintf('%s_id', StringTool::normalizeToSingular($key)) => [
+                            'referencedColumnName' => 'id',
+                        ],
+                    ],
+                    'inverseJoinColumns' => [
+                        sprintf('%s_id', StringTool::normalizeToSingular($key)) => [
+                            'referencedColumnName' => 'id',
+                            'unique' => true,
+                        ],
+                    ],
+                ],
+            ]);
         }
-
 
         return [
             'associationMappingType' => $associationMappingType,

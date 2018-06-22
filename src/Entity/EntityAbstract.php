@@ -101,6 +101,21 @@ abstract class EntityAbstract extends SchemaAbstract
         }
     }
 
+    public function hasValues()
+    {
+        foreach (parent::toArray() as $value) {
+            if (is_array($value)) {
+                //implement
+            }
+
+            if (!empty($value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Permite normalização de $data.
      *
