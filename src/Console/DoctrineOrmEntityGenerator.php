@@ -102,6 +102,8 @@ class DoctrineOrmEntityGenerator
                 $doctrine['manyToOne'] = $manyToOne;
             }
 
+            $doctrine['uniqueConstraints'] = $object->getUniqueConstraints();
+
             $this->recursiveSaveDataDoctrineMetadata($object->get($key));
         }
 
@@ -254,7 +256,7 @@ class DoctrineOrmEntityGenerator
                     break;
                 case 'number':
                     $spec = [
-                        'type' => 'decimal',
+                        'type' => 'float',
                         'precision' => 10,
                         'scale' => 2,
                         'options' => [],

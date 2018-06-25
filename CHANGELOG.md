@@ -3,6 +3,13 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 5.0 - Major version 4
+      25/06/2018 11:19  4.4.5  'Change doctrine types, support uniqueConstraints'
+         eae9c58 fix phpunit config
+         93713bb fix cs file
+         fe4a222 remove codeclimate
+         7262a66 Add has values to Entities
+         8926b4b Refactory oneToMany sintaxe
+         47a3b1d Improve DoctrineOrmEntityGenerator
       20/06/2018 09:05  4.4.4  Add download method to client
       19/06/2018 15:15  4.4.3  Add factoryResponseFromArray
          2cb6b96 add docker compose config

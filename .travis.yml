@@ -8,11 +8,9 @@ php:
 matrix:
   allow_failures:
     - php: nightly
-branches:
-  except:
-    - /^psr.*$/
-    - /^dev.*$/
-    - /^topic.*$/
-script: ant travis
+before_script:
+  - composer self-update
+  - composer install --prefer-dist
+script: vendor/bin/phpunit
 notifications:
   email: false
