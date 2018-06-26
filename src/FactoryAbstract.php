@@ -144,14 +144,20 @@ abstract class FactoryAbstract
             return $this->forwardCallForMethod($schema, $data);
         }
 
-        $entity = new $className($data);
+        if (empty($data)) {
+            $entity = new $className();
+        } else {
+            $entity = new $className($data);
+        }
 
         return $this->decoratorEntity($entity);
     }
 
-    protected function decoratorEntity(EntityAbstract $entity)
+    protected function decoratorEntity($entity)
     {
-        $entity->setLogger($this->getLogger());
+        if ($entity instanceof EntityAbstract) {
+            $entity->setLogger($this->getLogger());
+        }
 
         return $entity;
     }

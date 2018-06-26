@@ -34,6 +34,11 @@ abstract class CollectionAbstract extends Common
 
     abstract public function factoryElement($data);
 
+    public function factoryElementAndAdd($data)
+    {
+        $this->add($this->factoryElement($data));
+    }
+
     public function toLog()
     {
         $data = [];

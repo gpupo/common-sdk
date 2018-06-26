@@ -64,6 +64,7 @@ class AbstractGenerator
                 case 'datetime':
                     $spec = [
                         'type' => 'datetime',
+                        'nullable' => true,
                         'options' => [],
                     ];
 
