@@ -39,37 +39,7 @@ class MapTest extends TestCaseAbstract
      */
     public function testGetResource(Map $map)
     {
-        $this->markIncomplete('getResource() need implementation!');
-    }
-
-    /**
-     * @testdox ``placeHolderValueEmpty()``
-     * @cover ::placeHolderValueEmpty
-     * @dataProvider dataProviderMap
-     */
-    public function testPlaceHolderValueEmpty(Map $map)
-    {
-        $this->markIncomplete('placeHolderValueEmpty() need implementation!');
-    }
-
-    /**
-     * @testdox ``populatePlaceholders()``
-     * @cover ::populatePlaceholders
-     * @dataProvider dataProviderMap
-     */
-    public function testPopulatePlaceholders(Map $map)
-    {
-        $this->markIncomplete('populatePlaceholders() need implementation!');
-    }
-
-    /**
-     * @testdox ``toLog()``
-     * @cover ::toLog
-     * @dataProvider dataProviderMap
-     */
-    public function testToLog(Map $map)
-    {
-        $this->markIncomplete('toLog() need implementation!');
+        $this->assertSame('/foo', $map->getResource());
     }
 
     /**
@@ -79,6 +49,6 @@ class MapTest extends TestCaseAbstract
      */
     public function testGetMode(Map $map)
     {
-        $this->markIncomplete('getMode() need implementation!');
+        $this->assertSame(null, $map->getMode());
     }
 }

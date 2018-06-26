@@ -20,6 +20,7 @@ namespace Gpupo\CommonSdk\Traits;
 use Gpupo\CommonSdk\Entity\CollectionAbstract;
 use Gpupo\CommonSdk\Entity\EntityInterface;
 use Gpupo\CommonSdk\Exception\InvalidArgumentException;
+use Gpupo\CommonSdk\Entity\Schema\Tools;
 
 trait EntityDiffTrait
 {
@@ -79,7 +80,7 @@ trait EntityDiffTrait
         if (empty($attributes)) {
             $list = [];
             foreach ($entityA->getSchema() as $key => $value) {
-                if ('object' !== $value) {
+                if (false === Tools::isObjectType($value)) {
                     $list[] = $key;
                 }
             }

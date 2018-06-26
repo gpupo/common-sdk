@@ -119,7 +119,7 @@ abstract class SchemaAbstract extends CollectionAbstract
                 }
 
                 $schema[$key] = $this->factoryCollection($iv);
-            } elseif ('object' === $value) {
+            } elseif (Tools::isObjectType($value)) {
                 $schema[$key] = $this->factoryNeighborObject(
                     ucfirst($key),
                     Tools::getInitValue($data, $key, [])

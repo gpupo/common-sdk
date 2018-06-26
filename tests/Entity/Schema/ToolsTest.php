@@ -70,4 +70,25 @@ class ToolsTest extends TestCaseAbstract
             ['1.81', 'float', 1.81],
         ];
     }
+
+    public function testIdentifyObjectType()
+    {
+        foreach([
+            'object',
+            'manyToOne',
+            'manyToMany',
+            'oneToOne',
+            'oneToOneBidirectional',
+            'oneToOneUnidirectional',
+            'oneToOneSelfReferencing',
+            'oneToMany',
+        ] as $value) {
+            $this->assertTrue(Tools::isObjectType($value));
+        }
+
+        $this->assertFalse(Tools::isObjectType('string'));
+        $this->assertFalse(Tools::isObjectType('array'));
+        $this->assertFalse(Tools::isObjectType('int'));
+        $this->assertFalse(Tools::isObjectType('bool'));
+    }
 }

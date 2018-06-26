@@ -31,7 +31,7 @@ trait DocumentationTrait
             return 'float';
         }
 
-        if ('object' === $returnType) {
+        if (Tools::isObjectType($returnType)) {
             $method = 'get'.ucfirst($name);
             $className = get_class($this->{$method}());
 

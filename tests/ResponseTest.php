@@ -29,17 +29,9 @@ class ResponseTest extends TestCaseAbstract
      */
     public function dataProviderResponse()
     {
-        return [[new Response([])]];
-    }
-
-    /**
-     * @testdox ``validate()``
-     * @cover ::validate
-     * @dataProvider dataProviderResponse
-     */
-    public function testValidate(Response $response)
-    {
-        $this->markIncomplete('validate() need implementation!');
+        return [[new Response([
+            'responseRaw' => '{"foo":"bar"}'
+        ])]];
     }
 
     /**
@@ -49,6 +41,6 @@ class ResponseTest extends TestCaseAbstract
      */
     public function testGetData(Response $response)
     {
-        $this->markIncomplete('getData() need implementation!');
+        $this->assertSame(['foo'=>'bar'], $response->getData()->toArray());
     }
 }

@@ -22,6 +22,24 @@ use Gpupo\CommonSdk\Exception\SchemaException;
 
 class Tools
 {
+    public static function isObjectType($type): bool
+    {
+        if (in_array($type, [
+            'object',
+            'manyToOne',
+            'manyToMany',
+            'oneToOne',
+            'oneToOneBidirectional',
+            'oneToOneUnidirectional',
+            'oneToOneSelfReferencing',
+            'oneToMany',
+        ])) {
+            return true;
+        }
+
+        return false;
+    }
+
     public static function getInitValue($data, $key, $default = '')
     {
         if (is_array($data) && array_key_exists($key, $data)) {
