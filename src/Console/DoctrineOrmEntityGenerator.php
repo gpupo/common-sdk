@@ -52,7 +52,9 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
 
         $recursiveTodo = [];
 
-        $this->output->writeln("\n".$classNames['to']);
+        if ($this->output->isVerbose()) {
+            $this->output->writeln("\n".$classNames['to']);
+        }
 
         foreach ($object->getSchema() as $key => $value) {
             if ('id' === $key) {
@@ -67,11 +69,9 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
                 }
                 $doctrine[$meta['associationMappingType']][$propertyKey] = $meta['spec'];
 
-                // if('oneToOneBidirectional' === $value) {
-                //     $fields[$key] = $this->getFieldDescription($key, $value);
-                // }
-
-                // $this->output->writeln(sprintf('     - Key is <bg=black;fg=white> %s </> and Association type is <bg=white;fg=blue> %s </>', $propertyKey, $meta['associationMappingType']));
+                if ($this->output->isVerbose()) {
+                    $this->output->writeln(sprintf('     - Key is <bg=black;fg=white> %s </> and Association type is <bg=white;fg=blue> %s </>', $propertyKey, $meta['associationMappingType']));
+                }
             } else {
                 $fields[$key] = $this->getFieldDescription($key, $value);
             }
@@ -156,14 +156,21 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
     protected function setOneToOne($target, $childSpec)
     {
         $key = $this->factoryContainerKey('oneToOne', $target);
-        $this->output->writeln(sprintf('     - set <bg=black;fg=white> %s </>', $key));
+
+        if ($this->output->isVerbose()) {
+            $this->output->writeln(sprintf('     - set <bg=black;fg=white> %s </>', $key));
+        }
+
         $this->container->set($key, $childSpec);
     }
 
     protected function getOneToOne($target)
     {
         $key = $this->factoryContainerKey('oneToOne', $target);
-        $this->output->writeln(sprintf('     - get <bg=black;fg=white> %s </>', $key));
+
+        if ($this->output->isVerbose()) {
+            $this->output->writeln(sprintf('     - get <bg=black;fg=white> %s </>', $key));
+        }
 
         return $this->container->get($this->factoryContainerKey('oneToOne', $target));
     }
