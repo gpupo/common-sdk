@@ -3,6 +3,10 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 5.0 - Major version 4
+      27/06/2018 11:06  4.4.6  add factoryElementAndAdd
+         51f1825 Verbose filter
+         14f93b7 Add factoryElementAndAdd
+         8779279 Add one to one bidirectional
       25/06/2018 11:19  4.4.5  'Change doctrine types, support uniqueConstraints'
          eae9c58 fix phpunit config
          93713bb fix cs file
