@@ -29,7 +29,7 @@ class RequestTest extends TestCaseAbstract
      */
     public function dataProviderRequest()
     {
-        return [[new Request(['status_code' => 200, 'body'=> 'bar=foo'])]];
+        return [[new Request(['status_code' => 200, 'body' => 'bar=foo'])]];
     }
 
     /**

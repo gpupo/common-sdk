@@ -33,7 +33,7 @@ class Tools
             'oneToOneUnidirectional',
             'oneToOneSelfReferencing',
             'oneToMany',
-        ])) {
+        ], true)) {
             return true;
         }
 

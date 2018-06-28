@@ -19,8 +19,8 @@ namespace Gpupo\CommonSdk\Traits;
 
 use Gpupo\CommonSdk\Entity\CollectionAbstract;
 use Gpupo\CommonSdk\Entity\EntityInterface;
-use Gpupo\CommonSdk\Exception\InvalidArgumentException;
 use Gpupo\CommonSdk\Entity\Schema\Tools;
+use Gpupo\CommonSdk\Exception\InvalidArgumentException;
 
 trait EntityDiffTrait
 {

@@ -49,6 +49,6 @@ class MapTest extends TestCaseAbstract
      */
     public function testGetMode(Map $map)
     {
-        $this->assertSame(null, $map->getMode());
+        $this->assertNull($map->getMode());
     }
 }

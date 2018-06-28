@@ -18,12 +18,10 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk\Console;
 
 use Gpupo\Common\Entity\Collection;
-use Gpupo\Common\Tools\StringTool;
 use Gpupo\CommonSchema\ArrayCollection\Thing\CollectionInterface;
 use Gpupo\CommonSchema\ArrayCollection\Thing\EntityInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Yaml\Yaml;
 
 class AbstractGenerator
 {
@@ -41,6 +39,29 @@ class AbstractGenerator
     public function debug()
     {
         //dump($this->container);
+    }
+
+    public function recursiveSave($object)
+    {
+        if (!is_object($object)) {
+            //String or Array
+            return;
+        }
+        if ($object instanceof CollectionInterface) {
+            return $this->recursiveSave($object->factoryElement([]));
+        }
+
+        if (!$object instanceof EntityInterface) {
+            die(sprintf('Class %s must implement %s', get_class($object), EntityInterface::class));
+        }
+
+        $this->saveDataDoctrineMetadata($object);
+
+        foreach ($object as $prop) {
+            if (is_object($prop)) {
+                $this->recursiveSave($prop);
+            }
+        }
     }
 
     protected function save($file, $content)
@@ -74,6 +95,7 @@ class AbstractGenerator
                         'type' => 'float',
                         'precision' => 10,
                         'scale' => 2,
+                        'nullable' => true,
                         'options' => [],
                     ];
 
@@ -81,6 +103,7 @@ class AbstractGenerator
                 case 'integer':
                     $spec = [
                         'type' => 'bigint',
+                        'nullable' => true,
                         'options' => [],
                     ];
 
@@ -88,6 +111,7 @@ class AbstractGenerator
                 case 'array':
                     $spec = [
                         'type' => 'array',
+                        'nullable' => true,
                         'options' => [],
                     ];
 
@@ -95,6 +119,7 @@ class AbstractGenerator
                 case 'boolean':
                     $spec = [
                         'type' => 'boolean',
+                        'nullable' => true,
                         'options' => [],
                     ];
 
@@ -113,28 +138,5 @@ class AbstractGenerator
             }
 
         return $spec;
-    }
-
-    public function recursiveSave($object)
-    {
-        if (!is_object($object)) {
-            //String or Array
-            return;
-        }
-        if ($object instanceof CollectionInterface) {
-            return $this->recursiveSave($object->factoryElement([]));
-        }
-
-        if (!$object instanceof EntityInterface) {
-            die(sprintf('Class %s must implement %s', get_class($object), EntityInterface::class));
-        }
-
-        $this->saveDataDoctrineMetadata($object);
-
-        foreach ($object as $prop) {
-            if (is_object($prop)) {
-                $this->recursiveSave($prop);
-            }
-        }
     }
 }

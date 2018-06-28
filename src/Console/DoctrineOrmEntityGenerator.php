@@ -17,14 +17,10 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Console;
 
-use Gpupo\Common\Entity\Collection;
 use Gpupo\Common\Tools\StringTool;
 use Gpupo\CommonSchema\ArrayCollection\Thing\CollectionInterface;
-use Gpupo\CommonSchema\ArrayCollection\Thing\EntityInterface;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Yaml\Yaml;
 use Gpupo\CommonSdk\Entity\Schema\Tools;
+use Symfony\Component\Yaml\Yaml;
 
 class DoctrineOrmEntityGenerator extends AbstractGenerator
 {
@@ -78,8 +74,6 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
             }
 
             $recursiveTodo[] = $object->get($key);
-
-
         }
 
         $doctrine['uniqueConstraints'] = $object->getUniqueConstraints();
@@ -87,7 +81,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
         ksort($fields);
         $doctrine['fields'] = $fields;
 
-        foreach([
+        foreach ([
             'oneToOne' => $classNames['to'],
             'manyToOne' => $classNames['to'],
         ] as $mode => $modeTo) {
@@ -113,11 +107,11 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
 
         $this->save($file, $content);
 
-        foreach($recursiveTodo as $todo) {
-             $this->recursiveSave($todo);
+        foreach ($recursiveTodo as $todo) {
+            $this->recursiveSave($todo);
         }
 
-            return true;
+        return true;
     }
 
     protected function processClassNames($object, $class)
@@ -139,7 +133,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
 
     protected function factoryContainerKey($prefix, $target)
     {
-        return $prefix . '_' . StringTool::normalizeToSlug($target);
+        return $prefix.'_'.StringTool::normalizeToSlug($target);
     }
 
     protected function setManyToOne($target, $childSpec)
@@ -196,6 +190,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
         $method = sprintf('generateAssociation%sSpec', ucfirst($associationMappingType));
 
         $classNames['origin'] = $targetClassNames;
+
         return [
             'associationMappingType' => $associationMappingType,
             'spec' => $this->{$method}($this->generateAssociationGenericSpec($targetClassNames), $lastname, $classNames, $key, $value),
@@ -277,6 +272,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
         //add Many To one
         $childSpec = [];
         $childSpec[$lastname] = [
+            'cascade' => ['persist'],
             'targetEntity' => $classNames['to'],
             'inversedBy' => StringTool::normalizeToPlural($key),
             'joinColumn' => [

@@ -30,7 +30,7 @@ class ResponseTest extends TestCaseAbstract
     public function dataProviderResponse()
     {
         return [[new Response([
-            'responseRaw' => '{"foo":"bar"}'
+            'responseRaw' => '{"foo":"bar"}',
         ])]];
     }
 
@@ -41,6 +41,6 @@ class ResponseTest extends TestCaseAbstract
      */
     public function testGetData(Response $response)
     {
-        $this->assertSame(['foo'=>'bar'], $response->getData()->toArray());
+        $this->assertSame(['foo' => 'bar'], $response->getData()->toArray());
     }
 }

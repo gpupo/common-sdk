@@ -50,6 +50,8 @@ class TransportTest extends TestCaseAbstract
     /**
      * @testdox Possui informações sobre a última requisição
      * @depends testExec
+     *
+     * @param mixed $transport
      */
     public function testLastTransfer($transport)
     {

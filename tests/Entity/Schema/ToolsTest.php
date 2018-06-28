@@ -73,7 +73,7 @@ class ToolsTest extends TestCaseAbstract
 
     public function testIdentifyObjectType()
     {
-        foreach([
+        foreach ([
             'object',
             'manyToOne',
             'manyToMany',
