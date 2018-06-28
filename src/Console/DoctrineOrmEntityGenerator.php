@@ -62,6 +62,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
             }
             if (Tools::isObjectType($value)) {
                 $meta = $this->generateDoctrineObject($object, $classNames, $key, $value, $lastname);
+
                 if (in_array($meta['associationMappingType'], ['oneToMany', 'manyToMany'], true)) {
                     $propertyKey = StringTool::normalizeToPlural($key);
                 } else {
@@ -185,6 +186,10 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
             $associationMappingType = $targetObject->getAssociationMappingType();
         } else {
             $associationMappingType = 'oneToOne';
+        }
+
+        if ($this->output->isVeryVerbose()) {
+            $this->output->writeln(sprintf('$targetObject instanceof CollectionInterface: %d', (int) ($targetObject instanceof CollectionInterface)));
         }
 
         $targetClassNames = $this->processClassNames($targetObject, $targetEntity);

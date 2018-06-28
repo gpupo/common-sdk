@@ -110,9 +110,9 @@ trait FactoryTrait
         $acceptedClasses = [
             $fullyQualified,
             sprintf('%sCollection', $fullyQualified),
-            sprintf('%s\%s', $fullyQualified, $objectName),
             sprintf('%s\%sCollection', $fullyQualified, $objectName),
             sprintf('%s\Collection', $fullyQualified, $objectName),
+            sprintf('%s\%s', $fullyQualified, $objectName),
         ];
 
         foreach ($acceptedClasses as $try) {
