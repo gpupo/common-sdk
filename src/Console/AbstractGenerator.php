@@ -78,6 +78,7 @@ class AbstractGenerator
                         'type' => 'string',
                         'lenght' => 50,
                         'unique' => false,
+                        'nullable' => true,
                         'options' => [],
                     ];
 
