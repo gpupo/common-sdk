@@ -112,11 +112,11 @@ class Response extends Collection
         return true;
     }
 
-    public function getData()
+    public function getData($collectionClass = Collection::class)
     {
         $data = (array) json_decode($this->get('responseRaw'), true);
 
-        return new Collection($data, true);
+        return new $collectionClass($data, true);
     }
 
     public function toLog()
