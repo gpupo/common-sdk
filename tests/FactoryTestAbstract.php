@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 namespace Gpupo\Tests\CommonSdk;
+
 use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\AccessToken;
 use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Item as ORMClient;
 
@@ -42,19 +43,6 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
         return $this->assertFactoryWorks($objectExpected, $this->getFactory(), $method, $data);
     }
 
-    protected function createObject($factory, $method, $data = null)
-    {
-        return $factory->{$method}($data);
-    }
-
-    protected function assertFactoryWorks($objectExpected, $factory, $method, array $data = null)
-    {
-        return $this->assertInstanceOf(
-            $objectExpected,
-            $this->createObject($factory, $method, $data)
-        );
-    }
-
     public function testSetApplicationAPIClient()
     {
         $factory = $this->getFactory();
@@ -72,5 +60,18 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
         $this->assertSame(777, $factory->getOptions()->getClientId(), 'factory client id');
         $this->assertSame('bar', $factory->getOptions()->getAccessToken(), 'factory token');
         $this->assertSame('bar', $factory->getClient()->getOptions()->getAccessToken(), 'client token');
+    }
+
+    protected function createObject($factory, $method, $data = null)
+    {
+        return $factory->{$method}($data);
+    }
+
+    protected function assertFactoryWorks($objectExpected, $factory, $method, array $data = null)
+    {
+        return $this->assertInstanceOf(
+            $objectExpected,
+            $this->createObject($factory, $method, $data)
+        );
     }
 }

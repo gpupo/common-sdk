@@ -21,12 +21,12 @@ use Gpupo\Common\Interfaces\OptionsInterface;
 use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
 use Gpupo\Common\Traits\OptionsTrait;
 use Gpupo\Common\Traits\SingletonTrait;
+use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Item as ORMClient;
 use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
-use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Item as ORMClient;
 
 abstract class FactoryAbstract
 {
@@ -73,11 +73,6 @@ abstract class FactoryAbstract
         return $this->resolvSchema($this->getSchema($this->getNamespace()), $key);
     }
 
-    protected function rebuildClient(): void
-    {
-        $this->setClient($this->getOptions()->toArray());
-    }
-
     public function getClient()
     {
         if (!$this->client) {
@@ -105,6 +100,11 @@ abstract class FactoryAbstract
         }
 
         return $manager;
+    }
+
+    protected function rebuildClient(): void
+    {
+        $this->setClient($this->getOptions()->toArray());
     }
 
     /**
