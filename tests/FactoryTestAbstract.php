@@ -58,16 +58,18 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
     public function testSetApplicationAPIClient()
     {
         $factory = $this->getFactory();
+        $current_client_id = $factory->getOptions()->get('client_id');
         $current_token = $factory->getOptions()->getAccessToken();
+        $this->assertSame($current_client_id, $factory->getClient()->getOptions()->getClientId());
         $this->assertSame($current_token, $factory->getClient()->getOptions()->getAccessToken());
         $ormClient = new ORMClient();
-
+        $ormClient->setClientId(777);
         $accessToken = new AccessToken();
         $accessToken->setAccessToken('bar');
-
         $ormClient->setAccessToken($accessToken);
         $factory->setApplicationAPIClient($ormClient);
 
+        $this->assertSame(777, $factory->getOptions()->getClientId(), 'factory client id');
         $this->assertSame('bar', $factory->getOptions()->getAccessToken(), 'factory token');
         $this->assertSame('bar', $factory->getClient()->getOptions()->getAccessToken(), 'client token');
     }
