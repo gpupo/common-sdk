@@ -16,6 +16,8 @@ declare(strict_types=1);
  */
 
 namespace Gpupo\Tests\CommonSdk;
+use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\AccessToken;
+use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Item as ORMClient;
 
 abstract class FactoryTestAbstract extends TestCaseAbstract
 {
@@ -51,5 +53,22 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
             $objectExpected,
             $this->createObject($factory, $method, $data)
         );
+    }
+
+    public function testSetApplicationAPIClient()
+    {
+        $factory = $this->getFactory();
+        $current_token = $factory->getOptions()->getAccessToken();
+        $this->assertSame($current_token, $factory->getClient()->getOptions()->getAccessToken());
+        $ormClient = new ORMClient();
+
+        $accessToken = new AccessToken();
+        $accessToken->setAccessToken('bar');
+
+        $ormClient->setAccessToken($accessToken);
+        $factory->setApplicationAPIClient($ormClient);
+
+        $this->assertSame('bar', $factory->getOptions()->getAccessToken(), 'factory token');
+        $this->assertSame('bar', $factory->getClient()->getOptions()->getAccessToken(), 'client token');
     }
 }

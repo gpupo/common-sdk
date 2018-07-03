@@ -26,6 +26,7 @@ use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
+use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Item as ORMClient;
 
 abstract class FactoryAbstract
 {
@@ -52,6 +53,12 @@ abstract class FactoryAbstract
         return $this;
     }
 
+    public function setApplicationAPIClient(ORMClient $ormClient): void
+    {
+        $this->getOptions()->set('access_token', $ormClient->getAccessToken()->getAccessToken());
+        $this->rebuildClient();
+    }
+
     abstract public function getNamespace();
 
     abstract public function setClient(array $clientOptions = []);
@@ -61,10 +68,15 @@ abstract class FactoryAbstract
         return $this->resolvSchema($this->getSchema($this->getNamespace()), $key);
     }
 
+    protected function rebuildClient(): void
+    {
+        $this->setClient($this->getOptions()->toArray());
+    }
+
     public function getClient()
     {
         if (!$this->client) {
-            $this->setClient($this->getOptions()->toArray());
+            $this->rebuildClient();
         }
 
         return $this->client;
