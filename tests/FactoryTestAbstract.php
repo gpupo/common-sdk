@@ -46,21 +46,54 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
     public function testSetApplicationAPIClient()
     {
         $factory = $this->getFactory();
-        $current_client_id = $factory->getOptions()->get('client_id');
-        $current_token = $factory->getOptions()->get('access_token');
-        $this->assertSame($current_client_id, $factory->getClient()->getOptions()->get('client_id'));
-        $this->assertSame($current_token, $factory->getClient()->getOptions()->get('access_token'));
+
+        $origin = [
+            'client_id' => $factory->getOptions()->get('client_id'),
+            'access_token' =>  $factory->getOptions()->get('access_token'),
+        ];
+
+        $manager = $factory->factoryManager('generic');
+
+        $objects = [
+             $factory,
+             $factory->getClient(),
+             $manager,
+             $manager->getClient(),
+        ];
+
+        $this->assertSameOptions($objects, $origin);
+
+        $expected = [
+            'client_id' => 'UJDH1112224444',
+            'access_token' =>  888838,
+        ];
+
         $ormClient = new ORMClient();
-        $ormClient->setClientId(777);
+        $ormClient->setClientId($expected['client_id']);
         $accessToken = new AccessToken();
-        $accessToken->setAccessToken('bar');
+        $accessToken->setAccessToken($expected['access_token']);
         $ormClient->setAccessToken($accessToken);
         $factory->setApplicationAPIClient($ormClient);
 
-        $this->assertSame(777, $factory->getOptions()->get('client_id'), 'factory client id');
-        $this->assertSame('bar', $factory->getOptions()->get('access_token'), 'factory token');
-        $this->assertSame('bar', $factory->getClient()->getOptions()->get('access_token'), 'client token');
+        $manager = $factory->factoryManager('generic');
+        $objects = [
+             $factory,
+             $factory->getClient(),
+             $manager,
+             $manager->getClient(),
+        ];
+
+        $this->assertSameOptions($objects, $expected);
     }
+
+    protected function assertSameOptions(array $objects, $expected)
+    {
+        foreach($objects as $obj) {
+            $this->assertSame($expected['client_id'], $obj->getOptions()->get('client_id'), get_class($obj));
+            $this->assertSame($expected['access_token'], $obj->getOptions()->get('access_token'), get_class($obj));
+        }
+    }
+
 
     protected function createObject($factory, $method, $data = null)
     {

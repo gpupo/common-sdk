@@ -26,12 +26,15 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
+use Gpupo\Common\Interfaces\OptionsInterface;
+use Gpupo\Common\Traits\OptionsTrait;
 
-abstract class ManagerAbstract extends ClientManagerAbstract
+abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsInterface
 {
     use FactoryTrait;
     use EntityDiffTrait;
     use MagicCommandTrait;
+    use OptionsTrait;
 
     protected $entity;
 
@@ -58,7 +61,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract
      */
     public function update(EntityInterface $entity, EntityInterface $existent)
     {
-        
+
     }
 
     public function findById($itemId)
