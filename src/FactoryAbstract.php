@@ -73,10 +73,15 @@ abstract class FactoryAbstract
         return $this->resolvSchema($this->getSchema($this->getNamespace()), $key);
     }
 
+    protected function hasClient(): bool
+    {
+        return ($this->client instanceof Client);
+    }
+
     public function getClient()
     {
-        if (!$this->client) {
-            $this->rebuildClient();
+        if (!$this->hasClient()) {
+            $this->buildClient();
         }
 
         return $this->client;
@@ -102,9 +107,14 @@ abstract class FactoryAbstract
         return $manager;
     }
 
-    protected function rebuildClient(): void
+    protected function buildClient(): void
     {
         $this->setClient($this->getOptions()->toArray());
+    }
+
+    protected function rebuildClient(): void
+    {
+        $this->client->receiveOptions($this->getOptions());
     }
 
     /**
