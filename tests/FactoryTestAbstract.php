@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace Gpupo\Tests\CommonSdk;
 
 use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\AccessToken;
-use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Item as ORMClient;
+use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Client as ORMClient;
 
 abstract class FactoryTestAbstract extends TestCaseAbstract
 {
@@ -47,9 +47,9 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
     {
         $factory = $this->getFactory();
         $current_client_id = $factory->getOptions()->get('client_id');
-        $current_token = $factory->getOptions()->getAccessToken();
-        $this->assertSame($current_client_id, $factory->getClient()->getOptions()->getClientId());
-        $this->assertSame($current_token, $factory->getClient()->getOptions()->getAccessToken());
+        $current_token = $factory->getOptions()->get('access_token');
+        $this->assertSame($current_client_id, $factory->getClient()->getOptions()->get('client_id'));
+        $this->assertSame($current_token, $factory->getClient()->getOptions()->get('access_token'));
         $ormClient = new ORMClient();
         $ormClient->setClientId(777);
         $accessToken = new AccessToken();
@@ -57,9 +57,9 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
         $ormClient->setAccessToken($accessToken);
         $factory->setApplicationAPIClient($ormClient);
 
-        $this->assertSame(777, $factory->getOptions()->getClientId(), 'factory client id');
-        $this->assertSame('bar', $factory->getOptions()->getAccessToken(), 'factory token');
-        $this->assertSame('bar', $factory->getClient()->getOptions()->getAccessToken(), 'client token');
+        $this->assertSame(777, $factory->getOptions()->get('client_id'), 'factory client id');
+        $this->assertSame('bar', $factory->getOptions()->get('access_token'), 'factory token');
+        $this->assertSame('bar', $factory->getClient()->getOptions()->get('access_token'), 'client token');
     }
 
     protected function createObject($factory, $method, $data = null)

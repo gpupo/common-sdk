@@ -56,7 +56,10 @@ abstract class ManagerAbstract extends ClientManagerAbstract
      *   }
      * </code>
      */
-    abstract public function update(EntityInterface $entity, EntityInterface $existent);
+    public function update(EntityInterface $entity, EntityInterface $existent)
+    {
+        
+    }
 
     public function findById($itemId)
     {

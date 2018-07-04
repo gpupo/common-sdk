@@ -15,29 +15,28 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\CommonSdk\Client;
+namespace Gpupo\CommonSdk;
 
-/**
- * @codeCoverageIgnore
- */
-final class Client extends ClientAbstract implements ClientInterface
+use Gpupo\CommonSdk\Client\Client;
+
+final class Factory extends FactoryAbstract
 {
-    public function getDefaultOptions()
+    public function setClient(array $clientOptions = [])
     {
-        return [
-            'client_id' => false,
-            'client_secret' => false,
-            'access_token' => false,
-            'user_id' => false,
-            'refresh_token' => false,
-            'verbose' => true,
-            'cacheTTL' => 3600,
-            'offset' => 0,
-            'limit' => 0,
-        ];
+        $this->client = new Client($clientOptions, $this->getLogger(), $this->getSimpleCache());
     }
 
-    protected function renderAuthorization()
+    public function getNamespace()
     {
+        return  '\\'.__NAMESPACE__.'\Entity\\';
+    }
+
+    protected function getSchema($namespace = null)
+    {
+        return [
+            'generic' => [
+                'manager' => sprintf('%sGenericManager', $namespace),
+            ],
+        ];
     }
 }
