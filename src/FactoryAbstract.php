@@ -21,7 +21,7 @@ use Gpupo\Common\Interfaces\OptionsInterface;
 use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
 use Gpupo\Common\Traits\OptionsTrait;
 use Gpupo\Common\Traits\SingletonTrait;
-use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Item as ORMClient;
+use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Client as ORMClient;
 use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
