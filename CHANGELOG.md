@@ -2,6 +2,25 @@
 VERSION 5  MAJOR VERSION 4
 ==========================
 
+   Version 4.5 - Add custom collection class
+      05/07/2018 17:07  4.5.0  initial release
+         e783c8b Update dependency version
+         53e8efc Improve tests
+         30e62eb remove final word
+         8f2e293 Test client existence
+         fbb95e4 add tests
+         65af420 Add tests
+         6e6f6db Fix looping
+         44dcdfd Refactory Client Name
+         a532912 add custom collection class
+         1333bbf Apply CS
+         df3820c Improve tests
+         edd74fa Define options by Orm Client
+         4ab7ecd rebuild client
+         56f0be7 nullable
+         4ef3af3 Apply CS Rules
+         e4e4453 Fix Collection first
+
    Version 5.0 - Major version 4
       27/06/2018 11:06  4.4.6  add factoryElementAndAdd
          51f1825 Verbose filter
