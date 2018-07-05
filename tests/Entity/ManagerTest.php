@@ -31,9 +31,9 @@ class ManagerTest extends TestCaseAbstract
         $factoryCollection = $this->getMethod('FactoryCollection');
         $manager = new Manager();
 
-        $collection = $factoryCollection->invokeArgs($manager, [['foo' => 'bar']]);
+        $collection = $factoryCollection->invokeArgs($manager, [['key' => 'bar']]);
 
-        $this->assertSame('bar', $collection->getFoo());
+        $this->assertSame('bar', $collection->getKey());
     }
 
     /**
@@ -64,7 +64,7 @@ class ManagerTest extends TestCaseAbstract
 
         $manager = new Manager();
 
-        $this->assertSame(['foo', 'bar'], $manager->attributesDiff($entityA, $entityB));
+        $this->assertSame(['key', 'value'], $manager->attributesDiff($entityA, $entityB));
     }
 
     /**
@@ -80,7 +80,7 @@ class ManagerTest extends TestCaseAbstract
 
         $manager = new Manager();
 
-        foreach (['foo', 'bar'] as $key) {
+        foreach (['key', 'value'] as $key) {
             $this->assertSame([$key], $manager->attributesDiff($entityA, $entityB, [$key]));
         }
     }
@@ -107,8 +107,8 @@ class ManagerTest extends TestCaseAbstract
     {
         return [
             [
-                ['foo' => 'hello', 'bar' => 1],
-                ['foo' => 'world', 'bar' => 2],
+                ['key' => 'hello', 'value' => 1],
+                ['key' => 'world', 'value' => 2],
             ],
         ];
     }

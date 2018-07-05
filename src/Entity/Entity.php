@@ -26,23 +26,23 @@ final class Entity extends EntityAbstract implements EntityInterface
 {
     /**
      * {@inheritdoc}
-     * Necessário para identificar foo como chave primária, mas se esta
+     * Necessário para identificar key como chave primária, mas se esta
      *  entidade possuísse propriedade [id] isto seria desnecessário.
      *
      * @var string
      */
-    protected $primaryKey = 'foo';
+    protected $primaryKey = 'key';
 
     public function setUp()
     {
-        $this->setRequiredSchema(['foo']);
+        $this->setRequiredSchema(['key']);
     }
 
     public function getSchema()
     {
         return  [
-            'foo' => 'string',
-            'bar' => 'number',
+            'key' => 'string',
+            'value' => 'string',
         ];
     }
 }

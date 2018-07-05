@@ -19,6 +19,7 @@ namespace Gpupo\Tests\CommonSdk;
 
 use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\AccessToken;
 use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Client as ORMClient;
+use Gpupo\Common\Entity\Collection;
 
 abstract class FactoryTestAbstract extends TestCaseAbstract
 {
@@ -47,11 +48,14 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
     {
         $factory = $this->getFactory();
 
+        $this->assertSame($factory->getOptions()->get('access_token'), $factory->getClient()->getOptions()->get('access_token'), 'Primal values');
+
         $origin = [
             'client_id' => $factory->getOptions()->get('client_id'),
             'access_token' =>  $factory->getOptions()->get('access_token'),
         ];
 
+        // dump($this->getFactory()->getOptions(), $origin, $this->getFactory()->getClient()->getOptions());
         $manager = $factory->factoryManager('generic');
 
         $objects = [
@@ -61,11 +65,11 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
              $manager->getClient(),
         ];
 
-        $this->assertSameOptions($objects, $origin);
+        $this->assertSameOptions($objects, $origin, 'PRE');
 
         $expected = [
-            'client_id' => 'UJDH1112224444',
-            'access_token' =>  888838,
+            'client_id' => 'MODIFIED-'.$origin['client_id'],
+            'access_token' =>  'MODIFIED-'.$origin['access_token'],
         ];
 
         $ormClient = new ORMClient();
@@ -83,14 +87,20 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
              $manager->getClient(),
         ];
 
-        $this->assertSameOptions($objects, $expected);
+        $this->assertSameOptions($objects, $expected, 'POS');
     }
 
-    protected function assertSameOptions(array $objects, $expected)
+    protected function assertSameOptions(array $objects, $expected, $mode = '')
     {
+        $i = 0;
         foreach($objects as $obj) {
-            $this->assertSame($expected['client_id'], $obj->getOptions()->get('client_id'), get_class($obj));
-            $this->assertSame($expected['access_token'], $obj->getOptions()->get('access_token'), get_class($obj));
+
+            ++$i;
+
+            $options = $obj->getOptions();
+            $this->assertInstanceOf(Collection::class, $options);
+            $this->assertSame($expected['client_id'], $options->get('client_id'), sprintf('Test#%s %s client_id of %s', $i, $mode, get_class($obj)));
+            $this->assertSame($expected['access_token'], $options->get('access_token'), sprintf('Test#%s %s access_token of %s', $i, $mode, get_class($obj)));
         }
     }
 

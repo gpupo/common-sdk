@@ -27,6 +27,7 @@ use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
+use Gpupo\CommonSdk\Client\ClientInterface;
 
 abstract class FactoryAbstract
 {
@@ -80,7 +81,7 @@ abstract class FactoryAbstract
 
     protected function hasClient(): bool
     {
-        return ($this->client instanceof Client);
+        return ($this->client instanceof ClientInterface);
     }
 
     public function getClient()
@@ -114,7 +115,9 @@ abstract class FactoryAbstract
 
     protected function buildClient(): void
     {
-        $this->setClient($this->getOptions()->toArray());
+        $array = $this->getOptions()->toArray();
+        $array['tag'] = 'build';
+        $this->setClient($array);
     }
 
     protected function rebuildClient(): void

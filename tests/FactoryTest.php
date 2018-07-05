@@ -19,6 +19,7 @@ namespace Gpupo\Tests\CommonSdk;
 
 use Gpupo\CommonSdk\Client\Client;
 use Gpupo\CommonSdk\Entity\GenericManager;
+use Gpupo\CommonSdk\Entity\Entity;
 use Gpupo\CommonSdk\Factory;
 use Gpupo\Tests\CommonSdk\FactoryTestAbstract;
 
@@ -81,6 +82,7 @@ class FactoryTest extends FactoryTestAbstract
     public function dataProviderObjetos()
     {
         return [
+            [Entity::class, 'generic', []],
         ];
     }
 

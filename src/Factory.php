@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk;
 
 use Gpupo\CommonSdk\Client\Client;
+use Gpupo\CommonSdk\Entity\Entity;
 
 class Factory extends FactoryAbstract
 {
@@ -36,6 +37,7 @@ class Factory extends FactoryAbstract
         return [
             'generic' => [
                 'manager' => sprintf('%sGenericManager', $namespace),
+                'class'  => Entity::class,
             ],
         ];
     }

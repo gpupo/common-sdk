@@ -38,8 +38,8 @@ class EntityTest extends TestCaseAbstract
     public function dataProviderObject()
     {
         $expected = [
-            'foo' => 'hello',
-            'bar' => 1.2,
+            'key' => 'hello',
+            'value' => 1.2,
         ];
 
         return [[
@@ -66,7 +66,7 @@ class EntityTest extends TestCaseAbstract
     {
         $this->expectException(\Gpupo\CommonSdk\Exception\SchemaException::class);
 
-        $entity = new Entity(['foo' => '']);
+        $entity = new Entity(['key' => '']);
         $entity->toJson();
     }
 
@@ -77,7 +77,7 @@ class EntityTest extends TestCaseAbstract
      */
     public function testPossuiGetterParaAcessoAFoo(EntityInterface $object, $expected = null)
     {
-        $this->assertSchemaGetter('foo', 'string', $object, $expected);
+        $this->assertSchemaGetter('key', 'string', $object, $expected);
     }
 
     /**
@@ -87,7 +87,7 @@ class EntityTest extends TestCaseAbstract
      */
     public function testPossuiSetterParaDefinirFoo(EntityInterface $object, $expected = null)
     {
-        $this->assertSchemaSetter('foo', 'string', $object);
+        $this->assertSchemaSetter('key', 'string', $object);
     }
 
     /**
@@ -97,7 +97,7 @@ class EntityTest extends TestCaseAbstract
      */
     public function testPossuiGetterParaAcessoABar(EntityInterface $object, $expected = null)
     {
-        $this->assertSchemaGetter('bar', 'number', $object, $expected);
+        $this->assertSchemaGetter('value', 'number', $object, $expected);
     }
 
     /**
@@ -107,11 +107,11 @@ class EntityTest extends TestCaseAbstract
      */
     public function testPossuiSetterParaDefinirBar(EntityInterface $object, $expected = null)
     {
-        $this->assertSchemaSetter('bar', 'number', $object);
+        $this->assertSchemaSetter('value', 'number', $object);
     }
 
     protected function factory()
     {
-        return new Entity(['foo' => 'hello']);
+        return new Entity(['key' => 'hello']);
     }
 }
