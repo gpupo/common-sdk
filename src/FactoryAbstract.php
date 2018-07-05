@@ -55,13 +55,18 @@ abstract class FactoryAbstract
 
     public function setApplicationAPIClient(ORMClient $ormClient): void
     {
-        $this->getOptions()->set('access_token', $ormClient->getAccessToken()->getAccessToken());
-        $this->getOptions()->set('refresh_token', $ormClient->getAccessToken()->getRefreshToken());
-        $this->getOptions()->set('user_id', $ormClient->getAccessToken()->getUserId());
         $this->getOptions()->set('client_id', $ormClient->getClientId());
         $this->getOptions()->set('client_secret', $ormClient->getClientSecret());
 
-        $this->rebuildClient();
+        if ($ormClient->hasAccessToken()) {
+            $this->getOptions()->set('access_token', $ormClient->getAccessToken()->getAccessToken());
+            $this->getOptions()->set('refresh_token', $ormClient->getAccessToken()->getRefreshToken());
+            $this->getOptions()->set('user_id', $ormClient->getAccessToken()->getUserId());
+        }
+
+        if($this->hasClient()) {
+            $this->rebuildClient();
+        }
     }
 
     abstract public function getNamespace();
