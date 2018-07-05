@@ -19,9 +19,9 @@ namespace Gpupo\CommonSdk;
 
 use Gpupo\CommonSdk\Client\Client;
 
-final class Factory extends FactoryAbstract
+class Factory extends FactoryAbstract
 {
-    public function setClient(array $clientOptions = [])
+    public function setClient(?array $clientOptions = [])
     {
         $this->client = new Client($clientOptions, $this->getLogger(), $this->getSimpleCache());
     }
