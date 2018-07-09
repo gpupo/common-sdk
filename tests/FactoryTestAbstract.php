@@ -29,7 +29,7 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderObjetos
-     *
+     * @large
      * @param mixed $objectExpected
      * @param mixed $name
      */
@@ -44,6 +44,9 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
         return $this->assertFactoryWorks($objectExpected, $this->getFactory(), $method, $data);
     }
 
+    /**
+     * @large
+     */
     public function testSetApplicationAPIClient()
     {
         $factory = $this->getFactory();
