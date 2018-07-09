@@ -17,9 +17,9 @@ declare(strict_types=1);
 
 namespace Gpupo\Tests\CommonSdk;
 
+use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\AccessToken;
 use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Client as ORMClient;
-use Gpupo\Common\Entity\Collection;
 
 abstract class FactoryTestAbstract extends TestCaseAbstract
 {
@@ -30,6 +30,7 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
     /**
      * @dataProvider dataProviderObjetos
      * @large
+     *
      * @param mixed $objectExpected
      * @param mixed $name
      */
@@ -55,7 +56,7 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
 
         $origin = [
             'client_id' => $factory->getOptions()->get('client_id'),
-            'access_token' =>  $factory->getOptions()->get('access_token'),
+            'access_token' => $factory->getOptions()->get('access_token'),
         ];
 
         // dump($this->getFactory()->getOptions(), $origin, $this->getFactory()->getClient()->getOptions());
@@ -72,7 +73,7 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
 
         $expected = [
             'client_id' => 'MODIFIED-'.$origin['client_id'],
-            'access_token' =>  'MODIFIED-'.$origin['access_token'],
+            'access_token' => 'MODIFIED-'.$origin['access_token'],
         ];
 
         $ormClient = new ORMClient();
@@ -96,8 +97,7 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
     protected function assertSameOptions(array $objects, $expected, $mode = '')
     {
         $i = 0;
-        foreach($objects as $obj) {
-
+        foreach ($objects as $obj) {
             ++$i;
 
             $options = $obj->getOptions();
@@ -106,7 +106,6 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
             $this->assertSame($expected['access_token'], $options->get('access_token'), sprintf('Test#%s %s access_token of %s', $i, $mode, get_class($obj)));
         }
     }
-
 
     protected function createObject($factory, $method, $data = null)
     {

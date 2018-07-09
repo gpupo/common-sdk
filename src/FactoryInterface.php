@@ -17,28 +17,6 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk;
 
-use Gpupo\CommonSdk\Client\Client;
-use Gpupo\CommonSdk\Entity\Entity;
-
-class Factory extends FactoryAbstract
+interface FactoryInterface
 {
-    public function setClient(?array $clientOptions = [])
-    {
-        $this->client = new Client($clientOptions, $this->getLogger(), $this->getSimpleCache());
-    }
-
-    public function getNamespace()
-    {
-        return  '\\'.__NAMESPACE__.'\Entity\\';
-    }
-
-    protected function getSchema($namespace = null)
-    {
-        return [
-            'generic' => [
-                'manager' => sprintf('%sGenericManager', $namespace),
-                'class' => Entity::class,
-            ],
-        ];
-    }
 }

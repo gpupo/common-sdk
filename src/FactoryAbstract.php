@@ -22,12 +22,12 @@ use Gpupo\Common\Tools\Cache\SimpleCacheAwareTrait;
 use Gpupo\Common\Traits\OptionsTrait;
 use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\Client as ORMClient;
+use Gpupo\CommonSdk\Client\ClientInterface;
 use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
-use Gpupo\CommonSdk\Client\ClientInterface;
 
 abstract class FactoryAbstract
 {
@@ -65,7 +65,7 @@ abstract class FactoryAbstract
             $this->getOptions()->set('user_id', $ormClient->getAccessToken()->getUserId());
         }
 
-        if($this->hasClient()) {
+        if ($this->hasClient()) {
             $this->rebuildClient();
         }
     }
@@ -77,11 +77,6 @@ abstract class FactoryAbstract
     public function getDelegateSchema($key)
     {
         return $this->resolvSchema($this->getSchema($this->getNamespace()), $key);
-    }
-
-    protected function hasClient(): bool
-    {
-        return ($this->client instanceof ClientInterface);
     }
 
     public function getClient()
@@ -111,6 +106,11 @@ abstract class FactoryAbstract
         }
 
         return $manager;
+    }
+
+    protected function hasClient(): bool
+    {
+        return $this->client instanceof ClientInterface;
     }
 
     protected function buildClient(): void

@@ -18,10 +18,9 @@ declare(strict_types=1);
 namespace Gpupo\Tests\CommonSdk;
 
 use Gpupo\CommonSdk\Client\Client;
-use Gpupo\CommonSdk\Entity\GenericManager;
 use Gpupo\CommonSdk\Entity\Entity;
+use Gpupo\CommonSdk\Entity\GenericManager;
 use Gpupo\CommonSdk\Factory;
-use Gpupo\Tests\CommonSdk\FactoryTestAbstract;
 
 /**
  * @coversNothing
