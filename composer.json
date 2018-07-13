@@ -29,7 +29,7 @@
     },
     "require-dev": {
         "symfony/var-dumper": "^4.1",
-        "gpupo/common-schema": "^4.2|dev-master",
+        "gpupo/common-schema": "^4.3|dev-master",
         "symfony/finder": "^4.1",
         "symfony/cache": "^4.1",
         "symfony/filesystem": "^4.1",
