@@ -2,6 +2,6 @@ version: '2'
 services:
     php-dev:
         container_name: php-dev
-        image: gpupo/container-orchestration:php-dev
+        image: gpupo/container-orchestration:php-dev-v1.4.5
         volumes:
             - ./:/var/www/app
