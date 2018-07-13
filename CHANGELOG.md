@@ -3,6 +3,11 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 4.5 - Add custom collection class
+      13/07/2018 09:56  4.5.1  Add Factory Interface
+         1fdd87d Upgrade dependency
+         e95efdb Update docker config
+         06861c3 Add interface
+         939ad68 add tag
       05/07/2018 17:07  4.5.0  initial release
          e783c8b Update dependency version
          53e8efc Improve tests
