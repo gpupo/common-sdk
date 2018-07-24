@@ -238,7 +238,7 @@ abstract class ClientAbstract extends BoardAbstract
                 $data->get('status'),
                 $request->get('method'),
                 $request->get('url')
-            ), $data->get('status'), $e);
+            ), (int) $data->get('status'), $e);
         }
     }
 
