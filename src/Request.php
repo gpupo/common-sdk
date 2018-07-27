@@ -71,4 +71,13 @@ class Request extends Collection
 
         return $transport->exec();
     }
+
+    public function toLog()
+    {
+        return [
+            'url' => $this->get('url'),
+            'method' => $this->get('method', 'GET'),
+            'body' => $this->getBody(),
+        ];
+    }
 }
