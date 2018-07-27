@@ -37,6 +37,8 @@ abstract class FactoryAbstract
     use MagicCommandTrait;
     use SimpleCacheAwareTrait;
 
+    protected $name = 'common-sdk';
+
     protected $client;
 
     public function __construct(array $options = [], LoggerInterface $logger = null, CacheInterface $cache = null)
@@ -47,7 +49,7 @@ abstract class FactoryAbstract
     public function setup(array $options = [], LoggerInterface $logger = null, CacheInterface $cache = null)
     {
         $this->setOptions($options);
-        $this->initLogger($logger);
+        $this->initLogger($logger, $this->name);
         $this->initSimpleCache($cache);
         $this->magicCommandCallAdd('create');
 

@@ -38,10 +38,14 @@ trait LoggerTrait
         return $this;
     }
 
-    public function initLogger($logger)
+    public function initLogger($logger, $channel = null): void
     {
         if (!empty($logger)) {
-            return $this->setLogger($logger);
+            if (!empty($channel)) {
+                $this->setLogger($logger->withName($channel));
+            }
+
+            $this->setLogger($channel);
         }
     }
 

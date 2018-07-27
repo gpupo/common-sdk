@@ -224,7 +224,7 @@ abstract class ClientAbstract extends BoardAbstract
 
             return $response;
         } catch (ClientException $e) {
-            $this->error('Execucao fracassada', [
+            $this->debug('Request fail', [
                 'exception' => $e->toLog(),
                 'request' => $request->toLog(),
             ]);
