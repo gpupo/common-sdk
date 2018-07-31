@@ -28,6 +28,7 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
+use Gpupo\CommonSchema\ArrayCollection\Thing\EntityInterface as ThingInterface;
 
 abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsInterface
 {
@@ -174,4 +175,14 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
 
         return $subManager;
     }
+
+    protected function tranformToOrm(ThingInterface $thing, string $string)
+    {
+        $class = sprintf('%s\\%s', $this->getClient()->getOptions()->get('common_schema_namespace'), $string);
+
+        return $thing->toOrm($class);
+    }
+
+
+
 }

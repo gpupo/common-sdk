@@ -27,6 +27,27 @@ abstract class ClientAbstract extends BoardAbstract
 {
     protected $mode;
 
+    protected $endpoint_domain = 'api.localhost';
+
+    public function getDefaultOptions()
+    {
+        return [
+            'client_id' => false,
+            'client_secret' => false,
+            'access_token' => false,
+            'user_id' => false,
+            'refresh_token' => false,
+            'users_url' => sprintf('https://%s/users', $this->endpoint_domain),
+            'base_url' => sprintf('https://%s', $this->endpoint_domain),
+            'oauth_url' => sprintf('https://%s/oauth', $this->endpoint_domain),
+            'common_schema_namespace' => '\\Gpupo\\CommonSchema\\ORM',
+            'verbose' => true,
+            'cacheTTL' => 3600,
+            'offset' => 0,
+            'limit' => 30,
+        ];
+    }
+
     public function setMode($mode)
     {
         $this->mode = $mode;

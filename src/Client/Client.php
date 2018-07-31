@@ -18,25 +18,10 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk\Client;
 
 /**
- * @codeCoverageIgnore
+ * @internal
  */
 final class Client extends ClientAbstract implements ClientInterface
 {
-    public function getDefaultOptions()
-    {
-        return [
-            'client_id' => false,
-            'client_secret' => false,
-            'access_token' => false,
-            'user_id' => false,
-            'refresh_token' => false,
-            'verbose' => true,
-            'cacheTTL' => 3600,
-            'offset' => 0,
-            'limit' => 0,
-        ];
-    }
-
     protected function renderAuthorization()
     {
     }

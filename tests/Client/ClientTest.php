@@ -31,7 +31,7 @@ class ClientTest extends TestCaseAbstract
     {
         $client = new Client();
         $this->assertSame(
-            '/sku',
+            'https://api.localhost/sku',
             $client->getResourceUri('/sku')
         );
     }
