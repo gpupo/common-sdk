@@ -127,7 +127,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
         return [
             'to' => str_replace('ArrayCollection', 'ORM\Entity', $target),
             'lastname' => end($explode),
-            'repository' => str_replace('ArrayCollection', 'ORM\Repository', $target).'Repository',
+            'repository' => str_replace('ArrayCollection', 'ORM\EntityRepository', $target).'Repository',
         ];
     }
 
