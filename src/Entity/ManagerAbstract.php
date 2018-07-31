@@ -21,6 +21,7 @@ use Gpupo\Common\Entity\Collection;
 use Gpupo\Common\Entity\CollectionInterface;
 use Gpupo\Common\Interfaces\OptionsInterface;
 use Gpupo\Common\Traits\OptionsTrait;
+use Gpupo\CommonSchema\ArrayCollection\Thing\EntityInterface as ThingInterface;
 use Gpupo\CommonSdk\Client\ClientManagerAbstract;
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\FactoryAbstract;
@@ -28,7 +29,6 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
-use Gpupo\CommonSchema\ArrayCollection\Thing\EntityInterface as ThingInterface;
 
 abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsInterface
 {
@@ -182,7 +182,4 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
 
         return $thing->toOrm($class);
     }
-
-
-
 }
