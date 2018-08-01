@@ -3,6 +3,15 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 4.5 - Add custom collection class
+      01/08/2018 16:08  4.5.2  Add to Orm feature
+         4c2cd4c Refactory Interface
+         741aa9c docker version
+         471d5da Update container
+         039e777 Add to orm
+         b64754f Add Entity prefix
+         5ac37ff Log improve
+         5bd953c Add custom channel
+         cc7af8b force int]
       13/07/2018 09:56  4.5.1  Add Factory Interface
          1fdd87d Upgrade dependency
          e95efdb Update docker config
