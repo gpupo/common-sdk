@@ -176,7 +176,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
         return $subManager;
     }
 
-    protected function tranformToOrm(ThingInterface $thing, string $string)
+    protected function factoryORM(ThingInterface $thing, string $string)
     {
         $class = sprintf('%s\\%s', $this->getClient()->getOptions()->get('common_schema_namespace'), $string);
 
