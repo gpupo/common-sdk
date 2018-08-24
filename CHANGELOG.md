@@ -3,6 +3,9 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 4.5 - Add custom collection class
+      24/08/2018 15:19  4.5.3  Remove dev-master
+         d112799 Remove dev-master
+         12cb257 Rename factoryORM
       01/08/2018 16:08  4.5.2  Add to Orm feature
          4c2cd4c Refactory Interface
          741aa9c docker version
