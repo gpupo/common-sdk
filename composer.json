@@ -19,22 +19,22 @@
     "require": {
         "php": "^7.2",
         "ext-curl": "*",
-        "symfony/console": "^4.1.2|dev-master",
+        "symfony/console": "^4.1.2",
         "monolog/monolog": "^1.23",
         "gpupo/common": "^4.2.2|dev-master",
         "twig/twig": "^2.4",
-        "symfony/cache": "^4.1.2|dev-master",
+        "symfony/cache": "^4.1.2",
         "psr/simple-cache": "^1.0",
         "gedmo/doctrine-extensions": "^2.4"
     },
     "require-dev": {
-        "symfony/var-dumper": "^4.1.2|dev-master",
+        "symfony/var-dumper": "^4.1.2",
         "gpupo/common-schema": "^4.3|dev-master",
-        "symfony/finder": "^4.1.2|dev-master",
-        "symfony/cache": "^4.1.2|dev-master",
-        "symfony/filesystem": "^4.1.2|dev-master",
+        "symfony/finder": "^4.1.2",
+        "symfony/cache": "^4.1.2",
+        "symfony/filesystem": "^4.1.2",
         "phpspec/prophecy": "~1.0",
-        "phpunit/phpunit": "^7.2|dev-master"
+        "phpunit/phpunit": "^7.3"
     },
     "bin": ["bin/common-sdk"],
     "config": {
