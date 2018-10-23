@@ -162,7 +162,10 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
 
     protected function factoryEntity($data = null)
     {
-        return $this->factoryNeighborObject($this->getEntityName(), $data);
+        $ent = $this->factoryNeighborObject($this->getEntityName(), $data);
+        $ent->set('expands', $data);
+
+        return $ent;
     }
 
     protected function factorySubManager(FactoryAbstract $factory, $name)
