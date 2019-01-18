@@ -15,7 +15,7 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Traits;
+namespace Gpupo\CommonSdk\Tests\Traits;
 
 use Gpupo\Common\Tools\Reflected;
 

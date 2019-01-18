@@ -15,10 +15,10 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Traits;
+namespace Gpupo\CommonSdk\Tests\Traits;
 
 use Gpupo\Common\Entity\CollectionAbstract;
-use Gpupo\Tests\CommonSdk\Entity\MockupData;
+use Gpupo\CommonSdk\Tests\Entity\MockupData;
 
 trait EntityTrait
 {

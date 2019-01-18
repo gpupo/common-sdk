@@ -15,10 +15,10 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Entity\Schema;
+namespace Gpupo\CommonSdk\Tests\Entity\Schema;
 
 use Gpupo\CommonSdk\Entity\Schema\Tools;
-use Gpupo\Tests\CommonSdk\TestCaseAbstract;
+use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 
 /**
  * @coversNothing

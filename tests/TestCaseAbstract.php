@@ -15,15 +15,15 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk;
+namespace Gpupo\CommonSdk\Tests;
 
 use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\ResourcesTrait;
-use Gpupo\Tests\CommonSdk\Documentor\Docblock;
-use Gpupo\Tests\CommonSdk\Traits\AssertTrait;
-use Gpupo\Tests\CommonSdk\Traits\ProxyTrait;
+use Gpupo\CommonSdk\Tests\Documentor\Docblock;
+use Gpupo\CommonSdk\Tests\Traits\AssertTrait;
+use Gpupo\CommonSdk\Tests\Traits\ProxyTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase as TestCaseCore;

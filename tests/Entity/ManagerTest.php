@@ -15,11 +15,11 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Entity;
+namespace Gpupo\CommonSdk\Tests\Entity;
 
 use Gpupo\CommonSdk\Entity\Entity;
 use Gpupo\CommonSdk\Entity\Manager;
-use Gpupo\Tests\CommonSdk\TestCaseAbstract;
+use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 
 /**
  * @coversNothing

@@ -15,10 +15,10 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Client;
+namespace Gpupo\CommonSdk\Tests\Client;
 
 use Gpupo\CommonSdk\Client\Client;
-use Gpupo\Tests\CommonSdk\TestCaseAbstract;
+use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 use Monolog\Logger;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 

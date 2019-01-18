@@ -15,9 +15,9 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Exception;
+namespace Gpupo\CommonSdk\Tests\Exception;
 
-use Gpupo\Tests\CommonSdk\TestCaseAbstract;
+use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 
 /**
  * @coversNothing

@@ -13,11 +13,11 @@
     "autoload": {
         "psr-4": {
             "Gpupo\\CommonSdk\\": "src",
-            "Gpupo\\Tests\\CommonSdk\\": "tests"
+            "Gpupo\\CommonSdk\\Tests\\": "tests"
         }
     },
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
         "ext-curl": "*",
         "gpupo/common": "^4.3|dev-master",
         "gedmo/doctrine-extensions": "^2.4"

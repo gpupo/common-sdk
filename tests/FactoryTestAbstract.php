@@ -15,7 +15,7 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk;
+namespace Gpupo\CommonSdk\Tests;
 
 use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSchema\ORM\Entity\Application\API\OAuth\Client\AccessToken;

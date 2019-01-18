@@ -15,10 +15,10 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Entity\Metadata;
+namespace Gpupo\CommonSdk\Tests\Entity\Metadata;
 
 use Gpupo\CommonSdk\Entity\Metadata\Metadata;
-use Gpupo\Tests\CommonSdk\TestCaseAbstract;
+use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 
 /**
  * @coversDefaultClass \Gpupo\CommonSdk\Entity\Metadata\Metadata

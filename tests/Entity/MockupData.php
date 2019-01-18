@@ -15,7 +15,7 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Entity;
+namespace Gpupo\CommonSdk\Tests\Entity;
 
 /**
  * @covers \Gpupo\CommonSdk\Entity\EntityAbstract

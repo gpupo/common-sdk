@@ -15,12 +15,12 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Entity;
+namespace Gpupo\CommonSdk\Tests\Entity;
 
 use Gpupo\CommonSdk\Entity\Entity;
 use Gpupo\CommonSdk\Entity\EntityInterface;
-use Gpupo\Tests\CommonSdk\TestCaseAbstract;
-use Gpupo\Tests\CommonSdk\Traits\EntityTrait;
+use Gpupo\CommonSdk\Tests\TestCaseAbstract;
+use Gpupo\CommonSdk\Tests\Traits\EntityTrait;
 
 /**
  * @covers \Gpupo\CommonSdk\Entity\EntityAbstract

@@ -15,10 +15,10 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk\Entity\Metadata;
+namespace Gpupo\CommonSdk\Tests\Entity\Metadata;
 
 use Gpupo\CommonSdk\Entity\Metadata\MetadataContainerAbstract;
-use Gpupo\Tests\CommonSdk\TestCaseAbstract;
+use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 
 abstract class MetadataContainerTestAbstract extends TestCaseAbstract
 {

@@ -15,7 +15,7 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk;
+namespace Gpupo\CommonSdk\Tests;
 
 use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Transport;

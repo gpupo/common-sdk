@@ -15,7 +15,7 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\Tests\CommonSdk;
+namespace Gpupo\CommonSdk\Tests;
 
 use Gpupo\CommonSdk\Response;
 
