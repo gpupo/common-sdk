@@ -1,15 +1,12 @@
-
-<!-- main -->
-
 # common-sdk
 
 Componente de uso comum entre SDKs
 
-<!-- require -->
+[![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
 
 ## Requisitos para uso
 
-* PHP >= *7.1*
+* PHP >= *7.3*
 * [curl extension](http://php.net/manual/en/intro.curl.php)
 * [Composer Dependency Manager](http://getcomposer.org)
 
@@ -23,7 +20,6 @@ desenvolvimento.
 
 A documentação mais importante está nos testes unitários. Se você não consegue ler os testes unitários, eu recomendo que não utilize esta biblioteca.
 
-<!-- license -->
 
 ## Direitos autorais e de licença
 
@@ -49,17 +45,6 @@ Proibido:
 
 - Responsabilidade Assegurada
 
-<!-- QA -->
-
-## Indicadores de qualidade
-
-[![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gpupo/common-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gpupo/common-sdk/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/97bf5441-1b04-4f1d-a946-c547c61a90f0/big.png)](https://insight.sensiolabs.com/projects/97bf5441-1b04-4f1d-a946-c547c61a90f0)
-
-<!-- thanks -->
-
----
 
 ## Agradecimentos
 
@@ -77,22 +62,7 @@ Proibido:
 
 Adicione o pacote ``common-sdk`` ao seu projeto utilizando [composer](http://getcomposer.org):
 
-    composer require gpupo/common-sdk "^3.0"
-
-<!-- console -->
-
-## Ferramentas de Console
-
-### Test Generator
-
-    vendor/bin/common-sdk tests:implement --class {FQN}
-
-exemplo:
-
-    vendor/bin/common-sdk tests:implement --class "App\Entity\Acl\OAuth\Client"
-
-
-<!-- links -->
+    composer require gpupo/common-sdk "^4.3"
 
 ---
 
