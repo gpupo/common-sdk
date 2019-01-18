@@ -23,7 +23,7 @@
         "gedmo/doctrine-extensions": "^2.4"
     },
     "require-dev": {
-        "gpupo/common-schema": "^4.3|dev-master",
+        "gpupo/common-schema": "^4.5.2|dev-master",
         "symfony/finder": "^4.2.2",
         "symfony/filesystem": "^4.2.2",
         "phpspec/prophecy": "~1.0",

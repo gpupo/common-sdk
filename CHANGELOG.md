@@ -2,6 +2,20 @@
 VERSION 5  MAJOR VERSION 4
 ==========================
 
+   Version 4.6 - Move codes to common
+      18/01/2019 17:37  4.6.0  initial release
+         6605c4e Update doc
+         a981a19 Add env file
+         2aa5774 Update Travis
+         c4f9c75 Refactory tests namespace
+         11fb101 Remove old CI files
+         99ac4c1 Remove build documentation
+         68e0dce migrate some code to common
+         c6b8753 update libs
+         8303738 Move Documentor to common
+         e632734 Add expands to fetched object
+         4dea44f Improve editor config
+
    Version 4.5 - Add custom collection class
       24/08/2018 15:19  4.5.3  Remove dev-master
          d112799 Remove dev-master
