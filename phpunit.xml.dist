@@ -29,10 +29,5 @@
         <const name="VERBOSE" value=""/>
         <const name="REGISTER_PATH" value=""/>
     </php>
-    <logging>
-      <log type="testdox-text" target="build/logs/testdox.txt"/>
-      <log type="testdox-html" target="build/logs/testdox.html"/>
-      <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
-      <log type="coverage-text" target=" Resources/doc/coverage.md" showUncoveredFiles="false"/>
-    </logging>
+
 </phpunit>
