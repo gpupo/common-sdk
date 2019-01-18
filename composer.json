@@ -20,7 +20,6 @@
         "php": "^7.2",
         "ext-curl": "*",
         "gpupo/common": "^4.3|dev-master",
-        "twig/twig": "^2.4",
         "gedmo/doctrine-extensions": "^2.4"
     },
     "require-dev": {

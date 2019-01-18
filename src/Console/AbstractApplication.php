@@ -27,35 +27,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractApplication extends Core
 {
-    protected $configAlias = [
-        'env' => 'version',
-    ];
-
-    public function factoryLogger($channel = 'bin', $verbose = null)
-    {
-        $logger = new Logger($channel);
-        $logger->pushHandler(new StreamHandler($this->getLogFilePath(), $this->getLogLevel()));
-
-        if (!empty($verbose)) {
-            $logger->pushHandler(new ErrorLogHandler(0, Logger::INFO));
-        }
-
-        return $logger;
-    }
-
-    public function appendCommand($name, $description, array $definition = [])
-    {
-        return $this->register($name)
-            ->setDescription($description)
-            ->setDefinition($this->factoryDefinition($definition));
-    }
-
-    public function showException(Exception $e, OutputInterface $output, $description = 'Erro')
-    {
-        $output->writeln('<error>'.$description.'</error>');
-        $output->writeln('Message: <comment>'.$e->getMessage().'</comment>');
-        $output->writeln('Error Code: <comment>'.$e->getCode().'</comment>');
-    }
 
     public function displayOrderList(TranslatorDataCollection $collection, OutputInterface $output)
     {
@@ -69,32 +40,5 @@ abstract class AbstractApplication extends Core
         ], 49, true);
     }
 
-    public function jsonLoadFromFile($filename)
-    {
-        if (!file_exists($filename)) {
-            throw new Exception('Filename '.$filename.' not exists!');
-        }
-
-        $string = file_get_contents($filename);
-
-        return json_decode($string, true);
-    }
-
-    public function jsonSaveToFile(array $array, $filename, OutputInterface $output)
-    {
-        $json = json_encode($array, JSON_PRETTY_PRINT);
-        file_put_contents($filename, $json);
-
-        return $output->writeln('Arquivo <info>'.$filename.'</info> gerado.');
-    }
-
-    protected function getLogFilePath()
-    {
-        return 'var/logs/main.log';
-    }
-
-    protected function getLogLevel()
-    {
-        return Logger::DEBUG;
-    }
+    
 }
