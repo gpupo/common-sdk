@@ -19,7 +19,7 @@
     "require": {
         "php": "^7.3",
         "ext-curl": "*",
-        "gpupo/common": "^4.7|dev-master",
+        "gpupo/common": "^4.7.1|dev-master",
         "doctrine/orm": "^2.6",
         "gedmo/doctrine-extensions": "^2.4"
     },

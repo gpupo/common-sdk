@@ -19,6 +19,8 @@ namespace Gpupo\CommonSdk\Tests\Traits;
 
 use Gpupo\Common\Entity\CollectionAbstract;
 use Gpupo\CommonSdk\Tests\Entity\MockupData;
+use Gpupo\CommonSdk\Entity\Entity;
+use Gpupo\CommonSdk\Entity\EntityInterface;
 
 trait EntityTrait
 {
@@ -80,7 +82,8 @@ trait EntityTrait
         $getter = 'get'.$case;
 
         if ('object' === $type) {
-            //implement
+            $s = new Entity();
+            $this->assertInstanceOf(EntityInterface::class, $object->{$setter}($s)->{$getter}());
         } elseif ('datetime' === $type) {
             $s = '2016-06-30T13:36:58+00:00';
             $this->assertSame($s, $object->{$setter}($s)->{$getter}(), 'assertSchemaSetter');
