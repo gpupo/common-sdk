@@ -23,7 +23,7 @@
         "gedmo/doctrine-extensions": "^2.4"
     },
     "require-dev": {
-      "gpupo/common-schema": "^4.5| dev-master",
+      "gpupo/common-schema": "^4.6|dev-master",
       "phpunit/phpunit": "^7.5",
       "phan/phan": "^1.0"
     },
