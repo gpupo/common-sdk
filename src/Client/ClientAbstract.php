@@ -158,7 +158,7 @@ abstract class ClientAbstract extends BoardAbstract
     {
         $base = $this->getOptions()->get('base_url');
 
-        if (empty($base) || is_array($resource)) {
+        if (empty($base) || \is_array($resource)) {
             return $this->normalizeResourceUri($resource);
         }
 
@@ -198,7 +198,7 @@ abstract class ClientAbstract extends BoardAbstract
             $this->renderAuthorization(),
             $this->renderContentType(),
         ] as $item) {
-            if (is_array($item)) {
+            if (\is_array($item)) {
                 $list = array_merge($list, $item);
             } elseif (!empty($item)) {
                 $list[] = $item;
@@ -265,7 +265,7 @@ abstract class ClientAbstract extends BoardAbstract
 
     protected function factoryPostRequest($resource, $body, $name = 'POST')
     {
-        if (is_array($body)) {
+        if (\is_array($body)) {
             $body = http_build_query($body);
         }
 
@@ -274,7 +274,7 @@ abstract class ClientAbstract extends BoardAbstract
 
     protected function normalizeResourceUri($resource)
     {
-        if (!is_array($resource)) {
+        if (!\is_array($resource)) {
             return $resource;
         }
 

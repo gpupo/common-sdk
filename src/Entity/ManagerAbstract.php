@@ -83,8 +83,6 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
         return $this->processResponse($response);
     }
 
-    /**
-     */
     public function fetch(int $offset = 0, int $limit = 50, array $parameters = [], string $route = 'fetch'): ?CollectionInterface
     {
         return $this->fetchPrepare($this->rawFetch($offset, $limit, $parameters, $route));
@@ -118,7 +116,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
     /**
      * @param mixed $data
      */
-    protected function fetchPrepare($data):? CollectionInterface
+    protected function fetchPrepare($data): ?CollectionInterface
     {
         if (empty($data)) {
             return null;
@@ -145,7 +143,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
     {
         $list = [];
         foreach ($data as $item) {
-            if (is_array($item)) {
+            if (\is_array($item)) {
                 $list[] = $this->factoryEntity($item);
             }
         }

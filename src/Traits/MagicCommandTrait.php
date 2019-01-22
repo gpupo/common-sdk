@@ -83,7 +83,7 @@ trait MagicCommandTrait
 
     protected function magicCommandCall($mode, $method, $args)
     {
-        $len = strlen($mode);
+        $len = \strlen($mode);
         $command = substr($method, 0, $len);
         if ($command === $mode) {
             $finalMethod = 'magic'.ucfirst($mode);

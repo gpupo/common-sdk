@@ -41,7 +41,7 @@ trait FactoryTrait
     public static function factory($objectName, $data = null)
     {
         $object = self::getFullyQualifiedNeighborObject(
-            get_called_class(),
+            \get_called_class(),
             $objectName
         );
 
@@ -51,7 +51,7 @@ trait FactoryTrait
     protected function factoryNewElement($className, $data)
     {
         if ($data instanceof CollectionAbstract
-            && !in_array(EntityAbstract::class, class_parents($className), true)
+            && !\in_array(EntityAbstract::class, class_parents($className), true)
         ) {
             $data = $data->toArray();
         }
@@ -62,7 +62,7 @@ trait FactoryTrait
     protected function factoryNeighborObject($objectName, $data)
     {
         $className = static::getFullyQualifiedNeighborObject(
-            get_called_class(),
+            \get_called_class(),
             $objectName
         );
 

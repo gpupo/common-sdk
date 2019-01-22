@@ -3,6 +3,10 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 4.6 - Move codes to common
+      22/01/2019 13:59  4.6.1  Fix Collection
+         06a9dc0 Add entity test
+         32aca25 Add Makefile
+         d9df05f Add hints
       18/01/2019 17:37  4.6.0  initial release
          6605c4e Update doc
          a981a19 Add env file

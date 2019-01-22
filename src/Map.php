@@ -27,7 +27,7 @@ class Map extends Collection
 {
     public function __construct(array $elements = [], array $parameters = null)
     {
-        if (2 > count($elements)) {
+        if (2 > \count($elements)) {
             throw new \Exception('Map require elements');
         }
 
@@ -44,7 +44,7 @@ class Map extends Collection
     {
         $route = $this->get('resource');
         $parameters = $this->getParameters();
-        if (!empty($parameters) && is_array($parameters)) {
+        if (!empty($parameters) && \is_array($parameters)) {
             $route = $this->populatePlaceholders($route, $parameters);
         }
 
@@ -62,7 +62,7 @@ class Map extends Collection
     {
         $parameters = $this->getParameters();
 
-        if (is_array($parameters) && array_key_exists('mode', $parameters)) {
+        if (\is_array($parameters) && array_key_exists('mode', $parameters)) {
             return $parameters['mode'];
         }
     }

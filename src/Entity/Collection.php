@@ -15,28 +15,12 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\CommonSdk\Traits;
+namespace Gpupo\CommonSdk\Entity;
 
-trait LoadTrait
+final class Collection extends CollectionAbstract
 {
-    protected function loadArrayFromFile($filename, array $env = [], $merge = true)
+    public function factoryElement($data)
     {
-        if (true !== file_exists($filename)) {
-            return ['not_found' => $filename];
-        }
-        foreach ($env as $k => $v) {
-            ${$k} = $v;
-        }
-
-        $array = include $filename;
-        if (!\is_array($array)) {
-            return [];
-        }
-
-        if (true !== $merge) {
-            return $array;
-        }
-
-        return array_merge($env, $array);
+        return new Entity($data);
     }
 }

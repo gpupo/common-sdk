@@ -33,7 +33,7 @@ trait DocumentationTrait
 
         if (Tools::isObjectType($returnType)) {
             $method = 'get'.ucfirst($name);
-            $className = get_class($this->{$method}());
+            $className = \get_class($this->{$method}());
 
             return $className;
         }
@@ -50,7 +50,7 @@ trait DocumentationTrait
     {
         $data = [
             'description' => property_exists($this, 'description') ? $this->description : false,
-            'class' => get_called_class(),
+            'class' => \get_called_class(),
             'entity' => true,
             'schema' => [],
         ];

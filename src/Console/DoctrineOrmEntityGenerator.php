@@ -26,7 +26,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
 {
     public function saveDataDoctrineMetadata($object)
     {
-        $class = get_class($object);
+        $class = \get_class($object);
         $explode = explode('\\', $class);
 
         $subnamespace = $explode[3];
@@ -59,7 +59,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
             if (Tools::isObjectType($value)) {
                 $meta = $this->generateDoctrineObject($object, $classNames, $key, $value, $lastname);
 
-                if (in_array($meta['associationMappingType'], ['oneToMany', 'manyToMany'], true)) {
+                if (\in_array($meta['associationMappingType'], ['oneToMany', 'manyToMany'], true)) {
                     $propertyKey = StringTool::normalizeToPlural($key);
                 } else {
                     $propertyKey = StringTool::normalizeToSingular($key);
@@ -119,7 +119,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
         $target = $class;
 
         if ($object instanceof CollectionInterface) {
-            $target = get_class($object->factoryElement([]));
+            $target = \get_class($object->factoryElement([]));
         }
 
         $explode = explode('\\', $target);
@@ -174,7 +174,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
     {
         $lastname = strtolower($lastname);
         $targetObject = $object->get($key);
-        $targetEntity = get_class($targetObject);
+        $targetEntity = \get_class($targetObject);
 
         if ($targetObject instanceof CollectionInterface) {
             $associationMappingType = $targetObject->getAssociationMappingType();

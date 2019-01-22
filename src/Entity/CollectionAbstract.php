@@ -40,7 +40,7 @@ abstract class CollectionAbstract extends Common implements CollectionInterface
         $this->add($this->factoryElement($data));
     }
 
-    public function toLog(): array;
+    public function toLog(): array
     {
         $data = [];
 

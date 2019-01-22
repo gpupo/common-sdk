@@ -46,12 +46,12 @@ abstract class SchemaAbstract extends CollectionAbstract
 
     public function schemaHasKey($key)
     {
-        return in_array($key, $this->schemaKeys(), true);
+        return \in_array($key, $this->schemaKeys(), true);
     }
 
     public function getCalledEntityName($fullyQualified = null)
     {
-        $calledClass = get_called_class();
+        $calledClass = \get_called_class();
 
         if ($fullyQualified) {
             return $calledClass;
@@ -82,12 +82,12 @@ abstract class SchemaAbstract extends CollectionAbstract
 
     protected function isRequired($key)
     {
-        return in_array($key, $this->requiredSchema, true);
+        return \in_array($key, $this->requiredSchema, true);
     }
 
     protected function isOptional($key)
     {
-        return in_array($key, $this->optionalSchema, true);
+        return \in_array($key, $this->optionalSchema, true);
     }
 
     protected function setOptionalSchema(array $array = [])
@@ -126,7 +126,7 @@ abstract class SchemaAbstract extends CollectionAbstract
                 );
             } elseif ('array' === $value) {
                 $schema[$key] = Tools::getInitValue($data, $key, []);
-            } elseif (in_array($value, ['string', 'integer', 'number', 'boolean', 'datetime'], true)) {
+            } elseif (\in_array($value, ['string', 'integer', 'number', 'boolean', 'datetime'], true)) {
                 $schema[$key] = Tools::normalizeType(Tools::getInitValue($data, $key), $value);
             }
         }

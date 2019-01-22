@@ -97,7 +97,7 @@ abstract class ClientManagerAbstract
      */
     public function factoryMap($operation, array $parameters = null)
     {
-        if (!is_array($this->maps)) {
+        if (!\is_array($this->maps)) {
             throw new ManagerException('Maps missed!');
         }
 
@@ -107,7 +107,7 @@ abstract class ClientManagerAbstract
         }
 
         $data = $this->maps[$operation];
-        if (!is_array($data)) {
+        if (!\is_array($data)) {
             throw new ManagerException('Map MUST be array');
         }
 

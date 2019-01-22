@@ -43,7 +43,7 @@ class AbstractGenerator
 
     public function recursiveSave($object)
     {
-        if (!is_object($object)) {
+        if (!\is_object($object)) {
             //String or Array
             return;
         }
@@ -52,13 +52,13 @@ class AbstractGenerator
         }
 
         if (!$object instanceof EntityInterface) {
-            die(sprintf('Class %s must implement %s', get_class($object), EntityInterface::class));
+            die(sprintf('Class %s must implement %s', \get_class($object), EntityInterface::class));
         }
 
         $this->saveDataDoctrineMetadata($object);
 
         foreach ($object as $prop) {
-            if (is_object($prop)) {
+            if (\is_object($prop)) {
                 $this->recursiveSave($prop);
             }
         }

@@ -24,7 +24,7 @@ class Tools
 {
     public static function isObjectType($type): bool
     {
-        if (in_array($type, [
+        if (\in_array($type, [
             'object',
             'manyToOne',
             'manyToMany',
@@ -42,9 +42,9 @@ class Tools
 
     public static function getInitValue($data, $key, $default = '')
     {
-        if (is_array($data) && array_key_exists($key, $data)) {
+        if (\is_array($data) && array_key_exists($key, $data)) {
             $fill = $data[$key];
-            if (is_array($default) && !is_array($fill)) {
+            if (\is_array($default) && !\is_array($fill)) {
                 $fill = [$key => $fill];
             }
         }
@@ -137,14 +137,14 @@ class Tools
 
     protected static function testString($key, $current, $value)
     {
-        if ('string' === $value && strlen((string) $current) < 1) {
+        if ('string' === $value && \strlen((string) $current) < 1) {
             self::returnInvalid($key, $current, $value);
         }
     }
 
     protected static function testDatetime($key, $current, $value)
     {
-        if ('datetime' === $value && strlen($current) < 10) {
+        if ('datetime' === $value && \strlen($current) < 10) {
             self::returnInvalid($key, $current, $value);
         }
     }

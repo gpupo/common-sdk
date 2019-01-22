@@ -17,17 +17,12 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Console;
 
-use Exception;
 use Gpupo\Common\Console\AbstractApplication as Core;
 use Gpupo\CommonSchema\TranslatorDataCollection;
-use Monolog\Handler\ErrorLogHandler;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractApplication extends Core
 {
-
     public function displayOrderList(TranslatorDataCollection $collection, OutputInterface $output)
     {
         if (0 === $collection->count()) {
@@ -39,6 +34,4 @@ abstract class AbstractApplication extends Core
             'customer', 'billingAddress', 'quantity', 'freight', 'total',
         ], 49, true);
     }
-
-    
 }

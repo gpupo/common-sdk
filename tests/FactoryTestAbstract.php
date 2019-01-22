@@ -102,8 +102,8 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
 
             $options = $obj->getOptions();
             $this->assertInstanceOf(Collection::class, $options);
-            $this->assertSame($expected['client_id'], $options->get('client_id'), sprintf('Test#%s %s client_id of %s', $i, $mode, get_class($obj)));
-            $this->assertSame($expected['access_token'], $options->get('access_token'), sprintf('Test#%s %s access_token of %s', $i, $mode, get_class($obj)));
+            $this->assertSame($expected['client_id'], $options->get('client_id'), sprintf('Test#%s %s client_id of %s', $i, $mode, \get_class($obj)));
+            $this->assertSame($expected['access_token'], $options->get('access_token'), sprintf('Test#%s %s access_token of %s', $i, $mode, \get_class($obj)));
         }
     }
 

@@ -19,11 +19,11 @@ namespace Gpupo\CommonSdk\Tests;
 
 use Gpupo\CommonSdk\Entity\EntityAbstract;
 use Gpupo\CommonSdk\Response;
-use Gpupo\CommonSdk\Traits\LoggerTrait;
-use Gpupo\CommonSdk\Traits\ResourcesTrait;
 use Gpupo\CommonSdk\Tests\Documentor\Docblock;
 use Gpupo\CommonSdk\Tests\Traits\AssertTrait;
 use Gpupo\CommonSdk\Tests\Traits\ProxyTrait;
+use Gpupo\CommonSdk\Traits\LoggerTrait;
+use Gpupo\CommonSdk\Traits\ResourcesTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase as TestCaseCore;
@@ -41,7 +41,7 @@ abstract class TestCaseAbstract extends TestCaseCore
     public function getLogger()
     {
         if (!$this->logger) {
-            $channel = str_replace('\\', '.', get_called_class());
+            $channel = str_replace('\\', '.', \get_called_class());
             $logger = new Logger($channel);
             $logger->pushHandler(new StreamHandler($this->getLoggerFilePath(), Logger::DEBUG));
             $this->setLogger($logger);
@@ -99,7 +99,7 @@ abstract class TestCaseAbstract extends TestCaseCore
     {
         global $argv;
 
-        if (count($argv) <= 1 || '--stderr' !== $argv[1]) {
+        if (\count($argv) <= 1 || '--stderr' !== $argv[1]) {
             return false;
         }
 
@@ -154,8 +154,8 @@ abstract class TestCaseAbstract extends TestCaseCore
 
     protected function getConstant($name, $default = false)
     {
-        if (defined($name)) {
-            return constant($name);
+        if (\defined($name)) {
+            return \constant($name);
         }
 
         return $default;
