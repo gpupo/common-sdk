@@ -31,7 +31,7 @@ trait ExceptionTrait
         $this->message = $string;
     }
 
-    public function toLog()
+    public function toLog(): array
     {
         return [
             'message' => $this->getMessage(),

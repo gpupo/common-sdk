@@ -86,7 +86,7 @@ abstract class EntityAbstract extends SchemaAbstract
         return $this->previous;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         if ($this->validate()) {
             $array = parent::toArray();

@@ -19,7 +19,7 @@ namespace Gpupo\CommonSdk\Exception;
 
 interface ExceptionInterface
 {
-    public function toLog();
+    public function toLog(): array;
 
     public function setMessage($string);
 

@@ -84,13 +84,8 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
     }
 
     /**
-     * @param mixed $offset
-     * @param mixed $limit
-     * @param mixed $route
-     *
-     * @return null|Gpupo\Common\Entity\CollectionInterface
      */
-    public function fetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'): ?CollectionInterface
+    public function fetch(int $offset = 0, int $limit = 50, array $parameters = [], string $route = 'fetch'): ?CollectionInterface
     {
         return $this->fetchPrepare($this->rawFetch($offset, $limit, $parameters, $route));
     }
@@ -122,13 +117,11 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
 
     /**
      * @param mixed $data
-     *
-     * @return null|false|Gpupo\Common\Entity\CollectionAbstract
      */
-    protected function fetchPrepare($data)
+    protected function fetchPrepare($data):? CollectionInterface
     {
         if (empty($data)) {
-            return;
+            return null;
         }
 
         return $data;

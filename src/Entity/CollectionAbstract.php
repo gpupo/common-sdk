@@ -18,8 +18,9 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk\Entity;
 
 use Gpupo\Common\Entity\CollectionAbstract as Common;
+use Gpupo\Common\Entity\CollectionInterface;
 
-abstract class CollectionAbstract extends Common
+abstract class CollectionAbstract extends Common implements CollectionInterface
 {
     public function __construct(array $elements = [])
     {
@@ -39,7 +40,7 @@ abstract class CollectionAbstract extends Common
         $this->add($this->factoryElement($data));
     }
 
-    public function toLog()
+    public function toLog(): array;
     {
         $data = [];
 

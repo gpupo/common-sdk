@@ -30,7 +30,7 @@ abstract class DriverAbstract extends Collection
 
     protected $containerLog = [];
 
-    public function toLog()
+    public function toLog(): array
     {
         return $this->containerLog;
     }

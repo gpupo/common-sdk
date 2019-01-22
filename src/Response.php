@@ -119,7 +119,7 @@ class Response extends Collection
         return new $collectionClass($data, true);
     }
 
-    public function toLog()
+    public function toLog(): array
     {
         return [
             'raw' => str_replace('"', '', $this->getResponseRaw()),

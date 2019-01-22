@@ -17,7 +17,9 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Entity;
 
-interface EntityInterface
+use Gpupo\Common\Entity\CollectionInterface;
+
+interface EntityInterface extends CollectionInterface
 {
     public function getSchema();
 

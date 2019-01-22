@@ -19,15 +19,13 @@
     "require": {
         "php": "^7.3",
         "ext-curl": "*",
-        "gpupo/common": "^4.3|dev-master",
+        "gpupo/common": "^4.7|dev-master",
         "gedmo/doctrine-extensions": "^2.4"
     },
     "require-dev": {
-        "gpupo/common-schema": "^4.5.2|dev-master",
-        "symfony/finder": "^4.2.2",
-        "symfony/filesystem": "^4.2.2",
-        "phpspec/prophecy": "~1.0",
-        "phpunit/phpunit": "^7.3"
+      "gpupo/common-schema": "^4.5| dev-master",
+      "phpunit/phpunit": "^7.5",
+      "phan/phan": "^1.0"
     },
     "bin": ["bin/common-sdk"],
     "config": {

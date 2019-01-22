@@ -72,7 +72,7 @@ class Request extends Collection
         return $transport->exec();
     }
 
-    public function toLog()
+    public function toLog(): array
     {
         return [
             'url' => $this->get('url'),
