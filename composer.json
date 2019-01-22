@@ -20,10 +20,11 @@
         "php": "^7.3",
         "ext-curl": "*",
         "gpupo/common": "^4.7|dev-master",
+        "doctrine/orm": "^2.6",
         "gedmo/doctrine-extensions": "^2.4"
     },
     "require-dev": {
-      "gpupo/common-schema": "^4.5.3|dev-master",
+      "gpupo/common-schema": "dev-master",
       "phpunit/phpunit": "^7.5",
       "phan/phan": "^1.0"
     },
