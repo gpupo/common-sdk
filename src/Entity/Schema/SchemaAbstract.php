@@ -37,7 +37,7 @@ abstract class SchemaAbstract extends CollectionAbstract
     protected $requiredSchema = [];
     protected $optionalSchema = [];
 
-    abstract public function getSchema();
+    abstract public function getSchema(): array;
 
     public function schemaKeys()
     {

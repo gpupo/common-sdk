@@ -21,7 +21,7 @@ use Gpupo\Common\Entity\CollectionInterface;
 
 interface EntityInterface extends CollectionInterface
 {
-    public function getSchema();
+    public function getSchema(): array;
 
     public function get($key);
 

@@ -41,7 +41,7 @@ trait DocumentationTrait
         return $returnType;
     }
 
-    abstract public function getSchema();
+    abstract public function getSchema(): array;
 
     /**
      * @internal

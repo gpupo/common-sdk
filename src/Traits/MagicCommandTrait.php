@@ -63,7 +63,7 @@ trait MagicCommandTrait
         throw new \BadMethodCallException('There is no method ['.$method.']');
     }
 
-    public function getSchema()
+    public function getSchema(): array
     {
         return [];
     }

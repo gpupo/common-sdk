@@ -38,7 +38,7 @@ final class Entity extends EntityAbstract implements EntityInterface
         $this->setRequiredSchema(['key']);
     }
 
-    public function getSchema()
+    public function getSchema(): array
     {
         return  [
             'key' => 'string',
