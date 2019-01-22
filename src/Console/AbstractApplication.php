@@ -19,7 +19,13 @@ namespace Gpupo\CommonSdk\Console;
 
 use Gpupo\Common\Console\AbstractApplication as Core;
 use Gpupo\CommonSchema\TranslatorDataCollection;
+use Monolog\Logger;
+use Symfony\Component\Cache\Simple\FilesystemCache;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Yaml\Yaml;
 
 abstract class AbstractApplication extends Core
 {
@@ -33,5 +39,37 @@ abstract class AbstractApplication extends Core
             'merchant', 'orderNumber', 'acceptedOffer', 'orderDate',
             'customer', 'billingAddress', 'quantity', 'freight', 'total',
         ], 49, true);
+    }
+
+    public function init(string $namespace, string $rootDirectory)
+    {
+        $cache = new FilesystemCache();
+        $input = new ArgvInput();
+        $output = new ConsoleOutput();
+
+        $logger = new Logger('console');
+        $config = getenv();
+
+        $localFilename = sprintf('%s/%s', $rootDirectory, $config['extra_file']);
+        if (file_exists($localFilename)) {
+            $data = Yaml::parseFile($localFilename);
+            if (\is_array($data)) {
+                $config = array_merge($config, $data);
+            }
+        }
+
+        $factory = $this->factorySdk($config, $logger, true, $cache);
+
+        $finder = new Finder();
+        $finder->files()->name('*Command.php')->notName('*Abstract*')->in(sprintf('%s/src/Console/Command', $rootDirectory));
+
+        foreach ($finder as $file) {
+            $class = str_replace('.php', '', $file->getRelativePathname());
+            $segments = explode('/', $class);
+            $class = $namespace.'\\'.implode('\\', $segments);
+            $this->add(new $class($factory));
+        }
+
+        $this->doRun($input, $output);
     }
 }

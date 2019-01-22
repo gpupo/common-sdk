@@ -18,9 +18,9 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk\Tests\Traits;
 
 use Gpupo\Common\Entity\CollectionAbstract;
-use Gpupo\CommonSdk\Tests\Entity\MockupData;
 use Gpupo\CommonSdk\Entity\Entity;
 use Gpupo\CommonSdk\Entity\EntityInterface;
+use Gpupo\CommonSdk\Tests\Entity\MockupData;
 
 trait EntityTrait
 {
