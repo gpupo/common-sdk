@@ -59,7 +59,6 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
             'access_token' => $factory->getOptions()->get('access_token'),
         ];
 
-        // dump($this->getFactory()->getOptions(), $origin, $this->getFactory()->getClient()->getOptions());
         $manager = $factory->factoryManager('generic');
 
         $objects = [
