@@ -3,6 +3,9 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 4.6 - Move codes to common
+      22/01/2019 14:42  4.6.2  Schema Hint
+         9c435a6 Add schema return
+         3410b46 Set common-schema version
       22/01/2019 13:59  4.6.1  Fix Collection
          06a9dc0 Add entity test
          32aca25 Add Makefile

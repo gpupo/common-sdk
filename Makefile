@@ -35,7 +35,7 @@ install:
 	composer install --prefer-dist
 
 ## Composer Update and register packages
-update:
+update: setup
 	rm -f *.lock
 	composer update --no-scripts -n
 	composer info > Resources/statistics/composer-packages.txt
