@@ -75,6 +75,22 @@ class EntityTest extends TestCaseAbstract
      *
      * @param null|mixed $expected
      */
+    public function testInterfaces(EntityInterface $object, $expected = null)
+    {
+        $this->assertIsString($object->getKey());
+        $this->assertIsFloat($object->getValue());
+        $this->assertIsArray($object->toArray());
+        $this->assertIsArray($object->toLog());
+        $this->assertIsString($object->toJson());
+        $this->assertInstanceof('\Gpupo\Common\Entity\CollectionInterface', $object);
+        $this->assertInstanceof('\Gpupo\Common\Entity\CollectionInterface', $object);
+    }
+
+    /**
+     * @dataProvider dataProviderObject
+     *
+     * @param null|mixed $expected
+     */
     public function testPossuiGetterParaAcessoAFoo(EntityInterface $object, $expected = null)
     {
         $this->assertSchemaGetter('key', 'string', $object, $expected);

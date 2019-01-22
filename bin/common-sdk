@@ -14,7 +14,7 @@ namespace Gpupo\CommonSdk\Console;
 require 'vendor/autoload.php';
 
 if (!class_exists('\Gpupo\CommonSdk\Console\Application')) {
-    require __DIR__ . '/../vendor/autoload.php';
+    require __DIR__ . '/../config/bootstrap.php';
 }
 
 use RecursiveIteratorIterator;

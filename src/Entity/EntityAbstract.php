@@ -101,7 +101,7 @@ abstract class EntityAbstract extends SchemaAbstract
         }
     }
 
-    public function hasValues()
+    public function hasValues(): bool
     {
         foreach (parent::toArray() as $value) {
             if (is_array($value)) {
