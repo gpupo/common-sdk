@@ -90,8 +90,10 @@ class ClientTest extends TestCaseAbstract
     public function testObjetoRequestPossuiHeader($client)
     {
         $request = $client->factoryRequest('/');
-
-        $this->assertContains('Content-Type: application/json;charset=UTF-8', $request->getHeader());
+        $headers = $request->getHeader();
+        $this->assertIsArray($headers);
+        $this->assertArrayHasKey('Accept', $headers);
+        $this->assertArrayHasKey('Content-Type', $headers);
     }
 
     /**
