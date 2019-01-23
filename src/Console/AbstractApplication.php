@@ -29,6 +29,8 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Handler\StreamHandler;
 
 abstract class AbstractApplication extends Core
 {
@@ -62,7 +64,13 @@ abstract class AbstractApplication extends Core
             }
         }
 
-        $factory = $this->factorySdk($config, new Logger('console'), new FilesystemCache());
+        $logger = new Logger('console');
+        $logger->pushHandler(new StreamHandler($this->getLogFilePath(), $this->getLogLevel()));
+        if ('true' === $config['APP_DEBUG']) {
+            $logger->pushHandler(new ErrorLogHandler(0, $this->getLogLevel()));
+        }
+
+        $factory = $this->factorySdk($config, $logger, new FilesystemCache());
 
         $finder = new Finder();
         $finder->files()->name('*Command.php')->notName('*Abstract*')->in(sprintf('%s/src/Console/Command', $rootDirectory));

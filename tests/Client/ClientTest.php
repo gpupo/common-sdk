@@ -21,6 +21,7 @@ use Gpupo\CommonSdk\Client\Client;
 use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 use Monolog\Logger;
 use Symfony\Component\Cache\Simple\FilesystemCache;
+use Gpupo\CommonSdk\Request;
 
 /**
  * @coversNothing
@@ -79,7 +80,7 @@ class ClientTest extends TestCaseAbstract
      */
     public function testAcessoAObjetoRequest($client)
     {
-        $this->assertInstanceOf('\Gpupo\CommonSdk\Request', $client->factoryRequest('/'));
+        $this->assertInstanceOf(Request::class, $client->factoryRequest('/'));
     }
 
     /**
