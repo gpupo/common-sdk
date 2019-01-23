@@ -27,20 +27,34 @@ use Gpupo\Common\Entity\Collection;
  */
 class Request extends Collection
 {
-    /**
-     * @return string
-     */
-    public function getBody()
+    public function getMethod():? string
+    {
+        return $this->get('method') ?: 'GET';
+    }
+
+    public function getBody():? string
     {
         return $this->get('body');
     }
 
-    /**
-     * @return array
-     */
-    public function getHeader()
+    public function getUrl():? string
+    {
+        return $this->get('url');
+    }
+
+    public function getHeader(): array
     {
         return $this->get('header');
+    }
+
+    public function buildHeader(): array
+    {
+        $list = [];
+        foreach($this->getHeader() as $key => $value) {
+            $list[] = sprintf('%s:%s', $key, $value);
+        }
+
+        return $list;
     }
 
     public function setTransport(Transport $transport)
@@ -64,9 +78,9 @@ class Request extends Collection
     public function exec()
     {
         $transport = $this->getTransport()
-            ->setUrl($this->get('url'))
-            ->setMethod($this->get('method', 'GET'))
-            ->setHeader($this->getHeader())
+            ->setUrl($this->getUrl())
+            ->setMethod($this->getMethod())
+            ->setHeader($this->buildHeader())
             ->setBody($this->getBody());
 
         return $transport->exec();
@@ -75,8 +89,9 @@ class Request extends Collection
     public function toLog(): array
     {
         return [
-            'url' => $this->get('url'),
-            'method' => $this->get('method', 'GET'),
+            'url' => $this->getUrl(),
+            'method' => $this->getMethod(),
+            'header' => $this->getHeader(),
             'body' => $this->getBody(),
         ];
     }

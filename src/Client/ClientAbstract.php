@@ -222,23 +222,16 @@ abstract class ClientAbstract extends BoardAbstract
      */
     protected function exec(Request $request): Response
     {
+        $this->log('debug', 'Client->exec->Request', $request->toLog());
         try {
             $data = $request->exec();
             $response = new Response($data);
-            $response->setLogger($this->getLogger());
+            $this->log('debug', 'Client->exec->Response', $response->toLog());
             $response->validate();
-
-            $this->debug(
-                'Client Execution',
-                [
-                    'request' => $request->toLog(),
-                    'response' => $response->toLog(),
-                ]
-            );
 
             return $response;
         } catch (ClientException $e) {
-            $this->debug('Request fail', [
+            $this->log('debug', 'Client->exec->Exception', [
                 'exception' => $e->toLog(),
                 'request' => $request->toLog(),
             ]);
