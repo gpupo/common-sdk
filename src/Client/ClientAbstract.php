@@ -58,7 +58,7 @@ abstract class ClientAbstract extends BoardAbstract
         return $this->mode;
     }
 
-    public function factoryRequest($resource, string $method = '', bool $destroyCache = false): Request
+    public function factoryRequest(string $resource, string $method = '', bool $destroyCache = false): Request
     {
         if (false !== $destroyCache) {
             $this->destroyCache($resource);
@@ -70,14 +70,15 @@ abstract class ClientAbstract extends BoardAbstract
             $request->setMethod($method);
         }
 
-        $request->setTransport($this->factoryTransport())
+        $request
+            ->setTransport($this->factoryTransport())
             ->setHeader($this->renderHeader())
             ->setUrl($this->getResourceUri($resource));
 
         return $request;
     }
 
-    public function downloadFile($resource, $filename = null)
+    public function downloadFile(string $resource, string $filename = null)
     {
         $request = $this->factoryRequest($resource);
         $data = $request->exec();
@@ -85,7 +86,7 @@ abstract class ClientAbstract extends BoardAbstract
         return file_put_contents($filename, $data['responseRaw']);
     }
 
-    public function get($resource, $ttl = null)
+    public function get(string $resource, int $ttl = null): Response
     {
         $request = $this->factoryRequest($resource);
 
@@ -121,9 +122,8 @@ abstract class ClientAbstract extends BoardAbstract
      * @param array|string $body     Valores do Request
      * @param string       $name     POST por default mas também pode ser usado para PUT
      *
-     * @return Response
      */
-    public function post($resource, $body, $name = 'POST')
+    public function post(string $resource, $body, string $name = 'POST'): Response
     {
         return $this->exec($this->factoryPostRequest($resource, $body, $name));
     }
@@ -134,9 +134,8 @@ abstract class ClientAbstract extends BoardAbstract
      * @param string       $resource Url de Endpoint
      * @param array|string $body     Valores do Request
      *
-     * @return Response
      */
-    public function put($resource, $body)
+    public function put(string $resource, $body): Response
     {
         return $this->post($resource, $body, 'PUT');
     }
@@ -147,9 +146,8 @@ abstract class ClientAbstract extends BoardAbstract
      * @param string       $resource Url de Endpoint
      * @param array|string $body     Valores do Request
      *
-     * @return Response
      */
-    public function patch($resource, $body)
+    public function patch(string $resource, $body): Response
     {
         return $this->post($resource, $body, 'PATCH');
     }
@@ -184,7 +182,7 @@ abstract class ClientAbstract extends BoardAbstract
             $this->setMode(false);
             $list['Content-Type'] = 'application/x-www-form-urlencoded';
         } else {
-            $list['Accept'] = 'application/json';
+            $list['Accept'] = 'application/json;charset=UTF-8';
             $list['Content-Type'] = 'application/json;charset=UTF-8';
         }
 
@@ -221,12 +219,8 @@ abstract class ClientAbstract extends BoardAbstract
 
     /**
      * Executa a chamada http.
-     *
-     * @param Request $request Objeto com a requisição
-     *
-     * @return Response Objeto com a resposta da requisição
      */
-    protected function exec(Request $request)
+    protected function exec(Request $request): Response
     {
         try {
             $data = $request->exec();

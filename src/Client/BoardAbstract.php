@@ -40,7 +40,7 @@ abstract class BoardAbstract
         $this->initSimpleCache($cache);
     }
 
-    protected function destroyCache($resource)
+    protected function destroyCache(string $resource)
     {
         if ($this->hasSimpleCache()) {
             $key = $this->simpleCacheGenerateId($resource);
@@ -50,7 +50,7 @@ abstract class BoardAbstract
         return $this;
     }
 
-    protected function fillPlaceholdersWithOptions($string, array $keys)
+    protected function fillPlaceholdersWithOptions(string $string, array $keys)
     {
         $array = [];
         foreach ($keys as $key) {
