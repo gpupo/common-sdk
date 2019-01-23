@@ -11,22 +11,9 @@
 
 namespace Gpupo\CommonSdk\Console;
 
-require 'vendor/autoload.php';
+require dirname(__DIR__).'/config/bootstrap.php';
 
-if (!class_exists('\Gpupo\CommonSdk\Console\Application')) {
-    require __DIR__ . '/../config/bootstrap.php';
-}
-
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
-use RegexIterator;
 use Gpupo\CommonSdk\Console\Application;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\ArrayInput;
 
 $app = new Application("common-sdk");
-
-$app->run();
+$app->init(__NAMESPACE__, dirname(__DIR__));

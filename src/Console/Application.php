@@ -17,6 +17,15 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Console;
 
+use Gpupo\CommonSdk\Factory;
+use Gpupo\CommonSdk\FactoryInterface;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
+
 final class Application extends AbstractApplication
 {
+    public function factorySdk(array $options, LoggerInterface $logger = null, CacheInterface $cache = null): FactoryInterface
+    {
+        return new Factory($options, $logger, $cache);
+    }
 }

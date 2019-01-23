@@ -2,6 +2,12 @@
 VERSION 5  MAJOR VERSION 4
 ==========================
 
+   Version 4.7 - Improve Commands
+      23/01/2019 10:42  4.7.0  initial release
+         22ca384 Add App init()
+         9876e46 Improve Schema Assertions
+         43ce1aa Add doctrine orm
+
    Version 4.6 - Move codes to common
       22/01/2019 14:42  4.6.2  Schema Hint
          9c435a6 Add schema return

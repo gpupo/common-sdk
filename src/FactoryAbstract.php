@@ -29,7 +29,7 @@ use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 
-abstract class FactoryAbstract
+abstract class FactoryAbstract implements FactoryInterface
 {
     use SingletonTrait;
     use OptionsTrait;
