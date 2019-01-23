@@ -70,7 +70,11 @@ abstract class AbstractApplication extends Core
         foreach ($finder as $file) {
             $class = str_replace('.php', '', $file->getRelativePathname());
             $segments = explode('/', $class);
-            $class = $namespace.'\\Command\\'.implode('\\', $segments);
+            $lastPart = implode('\\', $segments);
+            $class = $namespace.'\\'.$lastPart;
+            if (!class_exists($class)) {
+                $class = $namespace.'\\Command\\'.$lastPart;
+            }
             $this->add(new $class($factory));
         }
 
