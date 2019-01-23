@@ -29,7 +29,7 @@ abstract class ClientAbstract extends BoardAbstract
 
     protected $endpoint_domain = 'api.localhost';
 
-    public function getDefaultOptions()
+    public function getDefaultOptions(): array
     {
         return [
             'client_id' => false,
@@ -48,7 +48,7 @@ abstract class ClientAbstract extends BoardAbstract
         ];
     }
 
-    public function setMode($mode)
+    public function setMode($mode): void
     {
         $this->mode = $mode;
     }
@@ -58,7 +58,7 @@ abstract class ClientAbstract extends BoardAbstract
         return $this->mode;
     }
 
-    public function factoryRequest($resource, $method = '', $destroyCache = false)
+    public function factoryRequest($resource, string $method = '', bool $destroyCache = false): Request
     {
         if (false !== $destroyCache) {
             $this->destroyCache($resource);
@@ -154,7 +154,7 @@ abstract class ClientAbstract extends BoardAbstract
         return $this->post($resource, $body, 'PATCH');
     }
 
-    public function getResourceUri($resource)
+    public function getResourceUri($resource): string
     {
         $base = $this->getOptions()->get('base_url');
 
@@ -174,41 +174,40 @@ abstract class ClientAbstract extends BoardAbstract
         return $endpoint.$resource;
     }
 
-    abstract protected function renderAuthorization();
+    abstract protected function renderAuthorization(): array;
 
-    protected function renderContentType()
+    protected function renderContentType(): array
     {
+        $list = [];
+
         if ('form' === $this->getMode()) {
             $this->setMode(false);
-
-            return 'Content-Type: application/x-www-form-urlencoded';
+            $list['Content-Type'] = 'application/x-www-form-urlencoded';
+        } else {
+            $list['Accept'] = 'application/json';
+            $list['Content-Type'] = 'application/json;charset=UTF-8';
         }
 
-        return 'Content-Type: application/json;charset=UTF-8';
+        return $list;
     }
 
-    /**
-     * @return array
-     */
-    protected function renderHeader()
+    protected function renderHeader(): array
     {
         $list = [];
 
         foreach ([
-            $this->renderAuthorization(),
             $this->renderContentType(),
+            $this->renderAuthorization(),
         ] as $item) {
             if (\is_array($item)) {
                 $list = array_merge($list, $item);
-            } elseif (!empty($item)) {
-                $list[] = $item;
             }
         }
 
         return $list;
     }
 
-    protected function factoryTransport()
+    protected function factoryTransport(): Transport
     {
         $transport = new Transport($this->getOptions());
 
@@ -263,7 +262,7 @@ abstract class ClientAbstract extends BoardAbstract
         }
     }
 
-    protected function factoryPostRequest($resource, $body, $name = 'POST')
+    protected function factoryPostRequest($resource, $body, $name = 'POST'): Request
     {
         if (\is_array($body)) {
             $body = http_build_query($body);
