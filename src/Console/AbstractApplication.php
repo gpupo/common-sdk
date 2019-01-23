@@ -78,6 +78,15 @@ abstract class AbstractApplication extends Core
             $this->add(new $class($factory));
         }
 
+        $output->writeln([
+            '',
+            sprintf(':: <bg=green;options=bold> %s </>', $this->getName()),
+            '',
+            '<options=bold>Atenção!</> Esta aplicação é apenas uma ferramenta de apoio ao desenvolvedor e não deve ser usada no ambiente de produção!',
+            '',
+        ]);
+
         $this->doRun($input, $output);
+        $output->writeln('');
     }
 }
