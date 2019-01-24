@@ -32,11 +32,11 @@ class Factory extends FactoryAbstract
         return  '\\'.__NAMESPACE__.'\Entity\\';
     }
 
-    public function getSchema($namespace = null)
+    public function getSchema(): array
     {
         return [
             'generic' => [
-                'manager' => sprintf('%sGenericManager', $namespace),
+                'manager' => Entity\GenericManager::class,
                 'class' => Entity::class,
             ],
         ];
