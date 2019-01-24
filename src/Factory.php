@@ -19,6 +19,7 @@ namespace Gpupo\CommonSdk;
 
 use Gpupo\CommonSdk\Client\Client;
 use Gpupo\CommonSdk\Entity\Entity;
+use Gpupo\CommonSdk\Entity\GenericManager;
 
 class Factory extends FactoryAbstract
 {
@@ -36,7 +37,7 @@ class Factory extends FactoryAbstract
     {
         return [
             'generic' => [
-                'manager' => Entity\GenericManager::class,
+                'manager' => GenericManager::class,
                 'class' => Entity::class,
             ],
         ];

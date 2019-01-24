@@ -127,10 +127,6 @@ abstract class FactoryAbstract implements FactoryInterface
         $this->client->receiveOptions($this->getOptions());
     }
 
-    /**
-     * @param null|mixed $namespace
-     *
-     */
     abstract protected function getSchema(): array;
 
     protected function magicCreate($suplement, $input)

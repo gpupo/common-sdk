@@ -48,7 +48,7 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
     /**
      * @large
      */
-    public function testSetApplicationAPIClient()
+    public function testSetApplicationApiClient()
     {
         $factory = $this->getFactory();
 
