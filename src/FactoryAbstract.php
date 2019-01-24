@@ -130,9 +130,8 @@ abstract class FactoryAbstract implements FactoryInterface
     /**
      * @param null|mixed $namespace
      *
-     * @return array
      */
-    abstract protected function getSchema($namespace = null);
+    abstract protected function getSchema(): array;
 
     protected function magicCreate($suplement, $input)
     {
