@@ -26,22 +26,37 @@ trait ResourcesTrait
         return 'Resources/';
     }
 
-    protected function getResourceContent($file)
+    protected function resourceReadFile(string $file): string
     {
-        return file_get_contents($this->getResourceFilePath($file));
+        return file_get_contents($file);
     }
 
-    protected function getResourceJson($file)
+    protected function resourceDecodeJsonFile(string $file): array
     {
-        return json_decode($this->getResourceContent($file), true);
+        return json_decode($this->resourceReadFile($file), true);
     }
 
-    protected function getResourceYaml($file)
+    protected function resourceDecodeYamlFile(string $file): array
     {
-        return Yaml::parseFile($this->getResourceFilePath($file));
+        return Yaml::parseFile($file);
     }
 
-    protected function getResourceFilePath($file, $create = false)
+    protected function getResourceContent(string $file): string
+    {
+        return $this->resourceReadFile($this->getResourceFilePath($file));
+    }
+
+    protected function getResourceJson(string $file): array
+    {
+        return $this->resourceDecodeJsonFile($this->getResourceFilePath($file));
+    }
+
+    protected function getResourceYaml(string $file): array
+    {
+        return $this->resourceDecodeYamlFile($this->getResourceFilePath($file));
+    }
+
+    protected function getResourceFilePath(string $file, bool $create = false): string
     {
         $path = static::getResourcesPath().$file;
 
