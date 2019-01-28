@@ -87,10 +87,17 @@ abstract class AbstractApplication extends Core
             if (!class_exists($class)) {
                 $class = $namespace.'\\Command\\'.$lastPart;
             }
+
+            if ('true' === $config['APP_DEBUG']) {
+                $output->writeln(sprintf('<fg=yellow>DEBUG:</> Command <info>%s</> added', $class));
+            }
+
             $this->add(new $class($factory));
         }
 
         $this->displayInstructionsBanner($output);
+        $this->doRun($input, $output);
+        $output->writeln('');
     }
 
     protected function displayInstructionsBanner(OutputInterface $output)
