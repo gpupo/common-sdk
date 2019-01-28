@@ -90,10 +90,10 @@ abstract class AbstractApplication extends Core
             $this->add(new $class($factory));
         }
 
-        $this->showBanner($output);
+        $this->displayInstructionsBanner($output);
     }
 
-    protected function showBanner(OutputInterface $output)
+    protected function displayInstructionsBanner(OutputInterface $output)
     {
         $output->writeln([
             '',
