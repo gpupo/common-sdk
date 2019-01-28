@@ -29,6 +29,7 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
+use Gpupo\CommonSchema\ORM\Entity\EntityInterface as ORMEntityInterface;
 
 abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsInterface
 {
@@ -64,14 +65,14 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
     {
     }
 
-    public function findById($itemId)
+    public function findById($itemId):? CollectionInterface
     {
         try {
             $map = $this->factoryMap('findById', ['itemId' => $itemId]);
 
             return $this->processResponse($this->perform($map));
         } catch (ManagerException $exception) {
-            return false;
+            return null;
         }
     }
 
@@ -108,7 +109,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
         return $response->getData();
     }
 
-    protected function fetchDefaultParameters()
+    protected function fetchDefaultParameters(): array
     {
         return [];
     }
@@ -116,7 +117,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
     /**
      * @param mixed $data
      */
-    protected function fetchPrepare($data): ?CollectionInterface
+    protected function fetchPrepare($data)
     {
         if (empty($data)) {
             return null;
@@ -125,12 +126,12 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
         return $data;
     }
 
-    protected function factoryCollection(array $list)
+    protected function factoryCollection(array $list): CollectionInterface
     {
         return new Collection($list);
     }
 
-    protected function getEntityName()
+    protected function getEntityName(): string
     {
         if (empty($this->entity)) {
             throw new ManagerException('Entity missed!');
@@ -139,7 +140,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
         return $this->entity;
     }
 
-    protected function factoryEntityCollection($data)
+    protected function factoryEntityCollection($data): CollectionInterface
     {
         $list = [];
         foreach ($data as $item) {
@@ -151,7 +152,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
         return $this->factoryCollection($list);
     }
 
-    protected function factoryEntity($data = null)
+    protected function factoryEntity($data): CollectionInterface
     {
         $ent = $this->factoryNeighborObject($this->getEntityName(), $data);
         $ent->set('expands', $data);
@@ -159,7 +160,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
         return $ent;
     }
 
-    protected function factorySubManager(FactoryAbstract $factory, $name)
+    protected function factorySubManager(FactoryAbstract $factory, $name): ManagerInterface
     {
         $subManager = $factory->factoryManager($name)->setClient($this->getClient());
 
@@ -170,7 +171,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
         return $subManager;
     }
 
-    protected function factoryORM(ThingInterface $thing, string $string)
+    protected function factoryORM(ThingInterface $thing, string $string): ORMEntityInterface
     {
         $class = sprintf('%s\\%s', $this->getClient()->getOptions()->get('common_schema_namespace'), $string);
 

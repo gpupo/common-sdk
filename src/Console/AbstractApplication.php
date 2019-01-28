@@ -31,10 +31,14 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
+use Gpupo\CommonSdk\Factory;
 
 abstract class AbstractApplication extends Core
 {
-    abstract public function factorySdk(array $options, LoggerInterface $logger = null, CacheInterface $cache = null): FactoryInterface;
+    public function factorySdk(array $options, LoggerInterface $logger = null, CacheInterface $cache = null): FactoryInterface
+    {
+        return new Factory($options, $logger, $cache);
+    }
 
     public function displayOrderList(TranslatorDataCollection $collection, OutputInterface $output)
     {
@@ -86,6 +90,11 @@ abstract class AbstractApplication extends Core
             $this->add(new $class($factory));
         }
 
+        $this->showBanner($output);
+    }
+
+    protected function showBanner(OutputInterface $output)
+    {
         $output->writeln([
             '',
             sprintf(':: <bg=green;options=bold> %s </>', $this->getName()),
@@ -93,8 +102,5 @@ abstract class AbstractApplication extends Core
             '<options=bold>Atenção!</> Esta aplicação é apenas uma ferramenta de apoio ao desenvolvedor e não deve ser usada no ambiente de produção!',
             '',
         ]);
-
-        $this->doRun($input, $output);
-        $output->writeln('');
     }
 }

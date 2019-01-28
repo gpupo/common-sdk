@@ -11,7 +11,7 @@
 
 namespace Gpupo\CommonSdk\Console;
 
-require dirname(__DIR__).'/config/bootstrap.php';
+require './config/bootstrap.php';
 
 use Gpupo\CommonSdk\Console\Application;
 
