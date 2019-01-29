@@ -22,7 +22,7 @@ namespace Gpupo\CommonSdk\Client;
  */
 final class Client extends ClientAbstract implements ClientInterface
 {
-    protected function renderAuthorization():array
+    protected function renderAuthorization(): array
     {
         return [
             'Knock' => 'Door',

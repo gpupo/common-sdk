@@ -59,14 +59,21 @@ trait FactoryTrait
         return new $className($data);
     }
 
-    protected function factoryNeighborObject($objectName, $data)
+    protected function findNeighborObject(string $objectName)
     {
-        $className = static::getFullyQualifiedNeighborObject(
+        if (class_exists($objectName)) {
+            return $objectName;
+        }
+
+        return static::getFullyQualifiedNeighborObject(
             \get_called_class(),
             $objectName
         );
+    }
 
-        return $this->factoryNewElement($className, $data);
+    protected function factoryNeighborObject(string $objectName, $data)
+    {
+        return $this->factoryNewElement($this->findNeighborObject($objectName), $data);
     }
 
     /**

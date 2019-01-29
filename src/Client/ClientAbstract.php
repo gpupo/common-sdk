@@ -121,7 +121,6 @@ abstract class ClientAbstract extends BoardAbstract
      * @param string       $resource Url de Endpoint
      * @param array|string $body     Valores do Request
      * @param string       $name     POST por default mas também pode ser usado para PUT
-     *
      */
     public function post(string $resource, $body, string $name = 'POST'): Response
     {
@@ -133,7 +132,6 @@ abstract class ClientAbstract extends BoardAbstract
      *
      * @param string       $resource Url de Endpoint
      * @param array|string $body     Valores do Request
-     *
      */
     public function put(string $resource, $body): Response
     {
@@ -145,7 +143,6 @@ abstract class ClientAbstract extends BoardAbstract
      *
      * @param string       $resource Url de Endpoint
      * @param array|string $body     Valores do Request
-     *
      */
     public function patch(string $resource, $body): Response
     {
@@ -223,6 +220,7 @@ abstract class ClientAbstract extends BoardAbstract
     protected function exec(Request $request): Response
     {
         $this->log('debug', 'Client->exec->Request', $request->toLog());
+
         try {
             $data = $request->exec();
             $response = new Response($data);

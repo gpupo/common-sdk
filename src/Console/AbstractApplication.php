@@ -19,7 +19,10 @@ namespace Gpupo\CommonSdk\Console;
 
 use Gpupo\Common\Console\AbstractApplication as Core;
 use Gpupo\CommonSchema\TranslatorDataCollection;
+use Gpupo\CommonSdk\Factory;
 use Gpupo\CommonSdk\FactoryInterface;
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
@@ -29,9 +32,6 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
-use Monolog\Handler\ErrorLogHandler;
-use Monolog\Handler\StreamHandler;
-use Gpupo\CommonSdk\Factory;
 
 abstract class AbstractApplication extends Core
 {

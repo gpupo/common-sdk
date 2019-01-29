@@ -19,6 +19,7 @@ namespace Gpupo\CommonSdk\Entity\Metadata;
 
 use Gpupo\Common\Entity\Collection;
 use Gpupo\Common\Entity\CollectionInterface;
+
 /**
  * @codeCoverageIgnore
  */

@@ -27,17 +27,17 @@ use Gpupo\Common\Entity\Collection;
  */
 class Request extends Collection
 {
-    public function getMethod():? string
+    public function getMethod(): ?string
     {
         return $this->get('method') ?: 'GET';
     }
 
-    public function getBody():? string
+    public function getBody(): ?string
     {
         return $this->get('body');
     }
 
-    public function getUrl():? string
+    public function getUrl(): ?string
     {
         return $this->get('url');
     }
@@ -50,7 +50,7 @@ class Request extends Collection
     public function buildHeader(): array
     {
         $list = [];
-        foreach($this->getHeader() as $key => $value) {
+        foreach ($this->getHeader() as $key => $value) {
             $list[] = sprintf('%s:%s', $key, $value);
         }
 

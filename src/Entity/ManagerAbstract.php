@@ -22,6 +22,7 @@ use Gpupo\Common\Entity\CollectionInterface;
 use Gpupo\Common\Interfaces\OptionsInterface;
 use Gpupo\Common\Traits\OptionsTrait;
 use Gpupo\CommonSchema\ArrayCollection\Thing\EntityInterface as ThingInterface;
+use Gpupo\CommonSchema\ORM\Entity\EntityInterface as ORMEntityInterface;
 use Gpupo\CommonSdk\Client\ClientManagerAbstract;
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\FactoryAbstract;
@@ -29,7 +30,6 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\EntityDiffTrait;
 use Gpupo\CommonSdk\Traits\FactoryTrait;
 use Gpupo\CommonSdk\Traits\MagicCommandTrait;
-use Gpupo\CommonSchema\ORM\Entity\EntityInterface as ORMEntityInterface;
 
 abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsInterface
 {
@@ -65,7 +65,7 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
     {
     }
 
-    public function findById($itemId):? CollectionInterface
+    public function findById($itemId): ?CollectionInterface
     {
         try {
             $map = $this->factoryMap('findById', ['itemId' => $itemId]);

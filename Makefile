@@ -48,7 +48,7 @@ update:
 loc:
 	mkdir -p Resources/statistics;
 	printf "${COLOR_COMMENT}Running PHP Lines of code statistics on library folder${COLOR_RESET}\n"
-	${COMPOSER_BIN}/phploc --count-tests src/ tests/ | tee Resources/statistics/lines-of-codes.txt
+	${COMPOSER_BIN}/phploc --count-tests src/ tests/ | grep -v Warning | tee Resources/statistics/lines-of-codes.txt
 
 ## PHP Static Analysis Tool
 stan:
