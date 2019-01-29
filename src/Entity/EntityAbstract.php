@@ -18,11 +18,12 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk\Entity;
 
 use Gpupo\CommonSdk\Entity\Schema\SchemaAbstract;
+use Gpupo\Common\Traits\PreviousAwareTrait;
 
 abstract class EntityAbstract extends SchemaAbstract
 {
-    protected $previous;
-
+    use PreviousAwareTrait;
+    
     /**
      * Utilizado em entidades que possuem chave primária diferente de [id].
      *
@@ -74,17 +75,6 @@ abstract class EntityAbstract extends SchemaAbstract
         return $this->get($this->primaryKey);
     }
 
-    public function setPrevious(EntityInterface $previous)
-    {
-        $this->previous = $previous;
-
-        return $this;
-    }
-
-    public function getPrevious()
-    {
-        return $this->previous;
-    }
 
     public function toArray(): array
     {
