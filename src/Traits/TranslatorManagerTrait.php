@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Traits;
 
+use Gpupo\Common\Entity\CollectionInterface;
 use Gpupo\CommonSchema\TranslatorDataCollection;
 
 trait TranslatorManagerTrait
@@ -29,8 +30,8 @@ trait TranslatorManagerTrait
     public function translatorUpdate(TranslatorDataCollection $data, TranslatorDataCollection $existent = null)
     {
         return $this->update($this->factoryTranslatorByForeign($data)
-            ->translateFrom(), empty($existent) ? null : $this
-            ->factoryTranslatorByForeign($existent)->translateFrom());
+            ->import(), empty($existent) ? null : $this
+            ->factoryTranslatorByForeign($existent)->import());
     }
 
     public function translatorFetch($offset = 0, $limit = 50, array $parameters = [])
@@ -40,14 +41,14 @@ trait TranslatorManagerTrait
 
         if (0 < $collection->count()) {
             foreach ($collection as $entity) {
-                $dataCollection->add($this->factoryTranslatorByNative($entity)->translateTo());
+                $dataCollection->add($this->factoryTranslatorByNative($entity)->export());
             }
         }
 
         return $dataCollection;
     }
 
-    public function translatorFindById($itemId)
+    public function translatorFindById(int $itemId)
     {
         $collection = $this->findById($itemId);
 
@@ -55,10 +56,10 @@ trait TranslatorManagerTrait
             return false;
         }
 
-        return $this->factoryTranslator(['native' => $collection])->translateTo();
+        return $this->factoryTranslator(['native' => $collection])->export();
     }
 
-    protected function factoryTranslatorByNative($entity)
+    protected function factoryTranslatorByNative(CollectionInterface $entity)
     {
         return $this->factoryTranslator(['native' => $entity]);
     }
