@@ -111,9 +111,7 @@ class Tools
 
     protected static function returnInvalid($key, $current, $value)
     {
-        throw new SchemaException('Validation Fail:['.$key
-            .'] should have value of type ['.$value
-            .'].Received:['.$current.'].');
+        throw new SchemaException('Validation Fail:['.$key.'] should have value of type ['.$value.'].Received:['.$current.'].');
     }
 
     protected static function isEmptyValue($value, $required = false)

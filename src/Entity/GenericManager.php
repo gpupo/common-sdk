@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Entity;
 
+use Gpupo\Common\Entity\CollectionInterface;
 use Gpupo\CommonSdk\Map;
 
 class GenericManager extends ManagerAbstract
@@ -32,8 +33,25 @@ class GenericManager extends ManagerAbstract
     public function getFromRoute(array $route, array $parameters = null, $body = null)
     {
         $map = $this->factorySimpleMap($route, $parameters);
+
         $perform = $this->perform($map, $body);
 
         return $perform->getData();
+    }
+
+    public function requestWithCache(array $route, string $identifier): CollectionInterface
+    {
+        $cacheId = $this->getClient()->simpleCacheGenerateId($identifier);
+
+        if ($this->getClient()->getSimpleCache()->has($cacheId)) {
+            $this->getClient()->log('debug', 'Using cached response', ['id' => $cacheId]);
+
+            return $this->getClient()->getSimpleCache()->get($cacheId);
+        }
+
+        $response = $this->getFromRoute($route, $this->getClient()->getOptions()->toArray());
+        $this->getClient()->getSimpleCache()->set($cacheId, $response, $this->getClient()->getOptions()->get('cacheTTL', 3600));
+
+        return $response;
     }
 }

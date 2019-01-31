@@ -102,8 +102,7 @@ abstract class ClientManagerAbstract
         }
 
         if (!array_key_exists($operation, $this->maps)) {
-            throw new ManagerException('Map ['.$operation.'] not found on ['
-                .$this->getEntityName().' Manager]');
+            throw new ManagerException('Map ['.$operation.'] not found on ['.$this->getEntityName().' Manager]');
         }
 
         $data = $this->maps[$operation];
@@ -187,7 +186,7 @@ abstract class ClientManagerAbstract
 
                 if ('get' === $methodName) {
                     //set the cache TTL
-                    $parameter = true;
+                    $parameter = null;
                 } else {
                     $parameter = $body;
                 }

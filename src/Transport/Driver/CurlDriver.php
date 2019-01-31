@@ -154,11 +154,7 @@ class CurlDriver extends DriverAbstract
 
     protected function dataToRegister($array)
     {
-        $data = "\n.......start.......\n"
-        .$this->registerEncode('at', date('Y-m-d H:i:s'), false)
-        .$this->registerEncode('url', $this->get('url'), false)
-        .$this->registerEncode('method', $this->getMethod(), false)
-        .$this->registerEncode('header', implode("\n", $this->header), false);
+        $data = "\n.......start.......\n".$this->registerEncode('at', date('Y-m-d H:i:s'), false).$this->registerEncode('url', $this->get('url'), false).$this->registerEncode('method', $this->getMethod(), false).$this->registerEncode('header', implode("\n", $this->header), false);
 
         $body = $this->getBody();
 
@@ -166,8 +162,7 @@ class CurlDriver extends DriverAbstract
             $data .= $this->registerEncode('Body', $body, false);
         }
 
-        $data .= $this->registerEncode('transfer', $this->getLastTransfer(), false)
-        ."---\n\n* Response\n";
+        $data .= $this->registerEncode('transfer', $this->getLastTransfer(), false)."---\n\n* Response\n";
 
         foreach ($array as $k => $v) {
             $data .= $this->registerEncode($k, $v, false);

@@ -25,9 +25,10 @@ use Gpupo\CommonSdk\Transport;
 
 abstract class ClientAbstract extends BoardAbstract
 {
-    protected $mode;
+    const PROTOCOL = 'https';
 
-    protected $endpoint_domain = 'api.localhost';
+    const ENDPOINT = 'api.localhost';
+    protected $mode;
 
     public function getDefaultOptions(): array
     {
@@ -37,9 +38,9 @@ abstract class ClientAbstract extends BoardAbstract
             'access_token' => false,
             'user_id' => false,
             'refresh_token' => false,
-            'users_url' => sprintf('https://%s/users', $this->endpoint_domain),
-            'base_url' => sprintf('https://%s', $this->endpoint_domain),
-            'oauth_url' => sprintf('https://%s/oauth', $this->endpoint_domain),
+            'users_url' => sprintf('%s://%s/users', $this::PROTOCOL, $this::ENDPOINT),
+            'base_url' => sprintf('%s://%s', $this::PROTOCOL, $this::ENDPOINT),
+            'oauth_url' => sprintf('%s://%s/oauth', $this::PROTOCOL, $this::ENDPOINT),
             'common_schema_namespace' => '\\Gpupo\\CommonSchema\\ORM',
             'verbose' => true,
             'cacheTTL' => 3600,
@@ -91,7 +92,7 @@ abstract class ClientAbstract extends BoardAbstract
         $request = $this->factoryRequest($resource);
 
         //Cache
-        if (true === $ttl && $this->hasSimpleCache()) {
+        if (null === $ttl && $this->hasSimpleCache()) {
             $cacheId = $this->simpleCacheGenerateId($resource);
 
             if ($this->getSimpleCache()->has($cacheId)) {
@@ -101,7 +102,7 @@ abstract class ClientAbstract extends BoardAbstract
             }
 
             $response = $this->exec($request);
-            if (true === $ttl) {
+            if (null === $ttl) {
                 $this->getSimpleCache()->set($cacheId, $response, $this->getOptions()->get('cacheTTL', 3600));
                 $jsonFile = sprintf('var/cache/get-%s.json', $cacheId);
                 $fp = fopen($jsonFile, 'w');
@@ -168,8 +169,6 @@ abstract class ClientAbstract extends BoardAbstract
 
         return $endpoint.$resource;
     }
-
-    abstract protected function renderAuthorization(): array;
 
     protected function renderContentType(): array
     {
@@ -269,5 +268,10 @@ abstract class ClientAbstract extends BoardAbstract
         }
 
         return false;
+    }
+
+    protected function renderAuthorization(): array
+    {
+        return [];
     }
 }

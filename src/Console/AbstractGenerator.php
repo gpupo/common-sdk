@@ -73,70 +73,70 @@ class AbstractGenerator
     protected function getFieldDescription($key, $value)
     {
         switch ($value) {
-                case 'string':
-                    $spec = [
-                        'type' => 'string',
-                        'lenght' => 50,
-                        'unique' => false,
-                        'nullable' => true,
-                        'options' => [],
-                    ];
+            case 'string':
+                $spec = [
+                    'type' => 'string',
+                    'lenght' => 50,
+                    'unique' => false,
+                    'nullable' => true,
+                    'options' => [],
+                ];
+
+                break;
+            case 'datetime':
+                $spec = [
+                    'type' => 'datetime',
+                    'nullable' => true,
+                    'options' => [],
+                ];
+
+                break;
+            case 'number':
+                $spec = [
+                    'type' => 'float',
+                    'precision' => 10,
+                    'scale' => 2,
+                    'nullable' => true,
+                    'options' => [],
+                ];
+
+                break;
+            case 'integer':
+                $spec = [
+                    'type' => 'bigint',
+                    'nullable' => true,
+                    'options' => [],
+                ];
+
+                break;
+            case 'array':
+                $spec = [
+                    'type' => 'array',
+                    'nullable' => true,
+                    'options' => [],
+                ];
+
+                break;
+            case 'boolean':
+                $spec = [
+                    'type' => 'boolean',
+                    'nullable' => true,
+                    'options' => [],
+                ];
+
+                break;
+            case 'oneToOneBidirectional':
+                $spec = [
+                    // 'type' => 'boolean',
+                    // 'options' => [],
+                ];
+
+                break;
+            default:
+                throw new \Exception(sprintf('Type %s not found', $value));
 
                     break;
-                case 'datetime':
-                    $spec = [
-                        'type' => 'datetime',
-                        'nullable' => true,
-                        'options' => [],
-                    ];
-
-                    break;
-                case 'number':
-                    $spec = [
-                        'type' => 'float',
-                        'precision' => 10,
-                        'scale' => 2,
-                        'nullable' => true,
-                        'options' => [],
-                    ];
-
-                    break;
-                case 'integer':
-                    $spec = [
-                        'type' => 'bigint',
-                        'nullable' => true,
-                        'options' => [],
-                    ];
-
-                    break;
-                case 'array':
-                    $spec = [
-                        'type' => 'array',
-                        'nullable' => true,
-                        'options' => [],
-                    ];
-
-                    break;
-                case 'boolean':
-                    $spec = [
-                        'type' => 'boolean',
-                        'nullable' => true,
-                        'options' => [],
-                    ];
-
-                    break;
-                case 'oneToOneBidirectional':
-                    $spec = [
-                        // 'type' => 'boolean',
-                        // 'options' => [],
-                    ];
-
-                    break;
-                default:
-                    throw new \Exception(sprintf('Type %s not found', $value));
-
-                    break;
-            }
+        }
 
         return $spec;
     }
