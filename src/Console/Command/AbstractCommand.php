@@ -24,7 +24,7 @@ abstract class AbstractCommand extends Core
 {
     protected $factory;
 
-    public function __construct(FactoryInterface $factory = null)
+    public function __construct(FactoryInterface $factory)
     {
         $this->factory = $factory;
 

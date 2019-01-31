@@ -76,17 +76,29 @@ abstract class AbstractApplication extends Core
 
         $factory = $this->factorySdk($config, $logger, new FilesystemCache());
 
+        $this->findAndAddCommands($output, $config, $factory, __NAMESPACE__, sprintf('%s/Command', __DIR__));
+        $this->findAndAddCommands($output, $config, $factory, $namespace, sprintf('%s/src/Console/Command', $rootDirectory));
+
+        $this->displayInstructionsBanner($output);
+        $this->doRun($input, $output);
+        $output->writeln('');
+    }
+
+    protected function findAndAddCommands(OutputInterface $output, array $config, $factory, string $namespace, string $path): void
+    {
         $finder = new Finder();
-        $finder->files()->name('*Command.php')->notName('*Abstract*')->in(sprintf('%s/src/Console/Command', $rootDirectory));
+        $finder->files()->name('*Command.php')->notName('*Abstract*')->in($path);
 
         foreach ($finder as $file) {
             $class = str_replace('.php', '', $file->getRelativePathname());
             $segments = explode('/', $class);
-            $lastPart = implode('\\', $segments);
-            $class = $namespace.'\\'.$lastPart;
+            $lastPart = implode(NAMESPACE_SEPARATOR, $segments);
+            $class = $namespace.NAMESPACE_SEPARATOR.$lastPart;
             if (!class_exists($class)) {
-                $class = $namespace.'\\Command\\'.$lastPart;
+                $class = $namespace.NAMESPACE_SEPARATOR.'Command'.NAMESPACE_SEPARATOR.$lastPart;
             }
+
+            $class = NAMESPACE_SEPARATOR.$class;
 
             if ('true' === $config['APP_DEBUG']) {
                 $output->writeln(sprintf('<fg=yellow>DEBUG:</> Command <info>%s</> added', $class));
@@ -94,10 +106,6 @@ abstract class AbstractApplication extends Core
 
             $this->add(new $class($factory));
         }
-
-        $this->displayInstructionsBanner($output);
-        $this->doRun($input, $output);
-        $output->writeln('');
     }
 
     protected function displayInstructionsBanner(OutputInterface $output)
