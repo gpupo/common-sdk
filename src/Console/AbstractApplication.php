@@ -30,6 +30,7 @@ use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
@@ -52,10 +53,10 @@ abstract class AbstractApplication extends Core
         ], 49, true);
     }
 
-    public function init(string $namespace, string $rootDirectory)
+    public function init(string $namespace, string $rootDirectory, OutputInterface $output = null, InputInterface $input = null)
     {
-        $input = new ArgvInput();
-        $output = new ConsoleOutput();
+        $input = $input ?: new ArgvInput();
+        $output = $output ?: new ConsoleOutput();
         $config = getenv();
 
         if (!empty($config['extra_file'])) {
