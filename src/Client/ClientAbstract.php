@@ -22,12 +22,17 @@ use Gpupo\CommonSdk\Exception\RequestException;
 use Gpupo\CommonSdk\Request;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Transport;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 abstract class ClientAbstract extends BoardAbstract
 {
     const PROTOCOL = 'https';
 
     const ENDPOINT = 'api.localhost';
+
+    const CACHE_TTL = 3600;
+
     protected $mode;
 
     public function getDefaultOptions(): array
@@ -43,7 +48,7 @@ abstract class ClientAbstract extends BoardAbstract
             'oauth_url' => sprintf('%s://%s/oauth', $this::PROTOCOL, $this::ENDPOINT),
             'common_schema_namespace' => '\\Gpupo\\CommonSchema\\ORM',
             'verbose' => true,
-            'cacheTTL' => 3600,
+            'cacheTTL' => $this::CACHE_TTL,
             'offset' => 0,
             'limit' => 30,
         ];
@@ -168,6 +173,14 @@ abstract class ClientAbstract extends BoardAbstract
         }
 
         return $endpoint.$resource;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sendRequest(RequestInterface $request): ResponseInterface
+    {
+        return   $this->exec($request);
     }
 
     protected function renderContentType(): array

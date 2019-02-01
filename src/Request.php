@@ -18,6 +18,8 @@ declare(strict_types=1);
 namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * @method setMethod(string $string)
@@ -25,26 +27,13 @@ use Gpupo\Common\Entity\Collection;
  * @method setUrl(string $string)
  * @method setHeader(array $string)
  */
-class Request extends Collection
+class Request extends Collection implements RequestInterface
 {
-    public function getMethod(): ?string
-    {
-        return $this->get('method') ?: 'GET';
-    }
-
-    public function getBody(): ?string
-    {
-        return $this->get('body');
-    }
+    use Traits\MessageTrait;
 
     public function getUrl(): ?string
     {
         return $this->get('url');
-    }
-
-    public function getHeader(): array
-    {
-        return $this->get('header');
     }
 
     public function buildHeader(): array
@@ -94,5 +83,42 @@ class Request extends Collection
             'header' => $this->getHeader(),
             'body' => $this->getBody(),
         ];
+    }
+    
+    /**
+     * @see https://www.php-fig.org/psr/psr-7/
+     * @todo PSR-7 Implement
+     **/
+    public function getRequestTarget()
+    {
+    }
+
+    /**
+     * @see https://www.php-fig.org/psr/psr-7/
+     * @todo PSR-7 Implement
+     **/
+    public function withRequestTarget($requestTarget)
+    {
+    }
+
+    /**
+     * @see https://www.php-fig.org/psr/psr-7/
+     * @todo PSR-7 Implement
+     **/
+    public function withMethod($method)
+    {
+    }
+
+    public function getUri()
+    {
+        return $this->getUrl;
+    }
+
+    /**
+     * @see https://www.php-fig.org/psr/psr-7/
+     * @todo PSR-7 Implement
+     **/
+    public function withUri(UriInterface $uri, $preserveHost = false)
+    {
     }
 }

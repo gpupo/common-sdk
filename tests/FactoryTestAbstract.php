@@ -29,6 +29,7 @@ abstract class FactoryTestAbstract extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderObjetos
+     * @testdox Factory Entity
      * @large
      *
      * @param mixed $objectExpected

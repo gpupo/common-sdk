@@ -17,7 +17,9 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Client;
 
-interface ClientInterface
+use Psr\Http\Client\ClientInterface as PSR;
+
+interface ClientInterface extends PSR
 {
     public function getDefaultOptions();
 }

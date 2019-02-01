@@ -19,14 +19,16 @@ namespace Gpupo\CommonSdk;
 
 use Gpupo\Common\Entity\Collection;
 use Gpupo\CommonSdk\Exception\ClientException;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @method getHttpStatusCode()
  * @method getResponseRaw()
  */
-class Response extends Collection
+class Response extends Collection implements ResponseInterface
 {
     use Traits\LoggerTrait;
+    use Traits\MessageTrait;
 
     protected static $statusTexts = [
         100 => 'Continue',
@@ -125,5 +127,26 @@ class Response extends Collection
             'raw' => str_replace('"', '', $this->getResponseRaw()),
             'statusCode' => $this->getHttpStatusCode(),
         ];
+    }
+
+    public function getStatusCode()
+    {
+        return $this->getHttpStatusCode();
+    }
+
+    /**
+     * @see https://www.php-fig.org/psr/psr-7/
+     * @todo PSR-7 Implement
+     **/
+    public function getReasonPhrase()
+    {
+    }
+
+    /**
+     * @see https://www.php-fig.org/psr/psr-7/
+     * @todo PSR-7 Implement
+     **/
+    public function withStatus($code, $reasonPhrase = '')
+    {
     }
 }

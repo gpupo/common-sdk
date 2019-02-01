@@ -39,7 +39,7 @@ class GenericManager extends ManagerAbstract
         return $perform->getData();
     }
 
-    public function requestWithCache(array $route, string $identifier): CollectionInterface
+    public function requestWithCache(array $route, string $identifier, $body = null): CollectionInterface
     {
         $cacheId = $this->getClient()->simpleCacheGenerateId($identifier);
 
@@ -49,7 +49,7 @@ class GenericManager extends ManagerAbstract
             return $this->getClient()->getSimpleCache()->get($cacheId);
         }
 
-        $response = $this->getFromRoute($route, $this->getClient()->getOptions()->toArray());
+        $response = $this->getFromRoute($route, $this->getClient()->getOptions()->toArray(), $body);
         $this->getClient()->getSimpleCache()->set($cacheId, $response, $this->getClient()->getOptions()->get('cacheTTL', 3600));
 
         return $response;
