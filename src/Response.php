@@ -136,16 +136,20 @@ class Response extends Collection implements ResponseInterface
 
     /**
      * @see https://www.php-fig.org/psr/psr-7/
+     * {@inheritdoc}
+     *
      * @todo PSR-7 Implement
-     **/
+     */
     public function getReasonPhrase()
     {
     }
 
     /**
      * @see https://www.php-fig.org/psr/psr-7/
+     * {@inheritdoc}
+     *
      * @todo PSR-7 Implement
-     **/
+     */
     public function withStatus($code, $reasonPhrase = '')
     {
     }

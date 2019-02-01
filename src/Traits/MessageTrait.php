@@ -76,24 +76,35 @@ trait MessageTrait
 
     /**
      * @see https://www.php-fig.org/psr/psr-7/
+     *
      * @todo PSR-7 Implement
-     **/
+     *
+     * @param mixed $header
+     * @param mixed $value
+     */
     public function withHeader($header, $value)
     {
     }
 
     /**
      * @see https://www.php-fig.org/psr/psr-7/
+     *
      * @todo PSR-7 Implement
-     **/
+     *
+     * @param mixed $header
+     * @param mixed $value
+     */
     public function withAddedHeader($header, $value)
     {
     }
 
     /**
      * @see https://www.php-fig.org/psr/psr-7/
+     *
      * @todo PSR-7 Implement
-     **/
+     *
+     * @param mixed $header
+     */
     public function withoutHeader($header)
     {
     }

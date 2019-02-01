@@ -84,27 +84,36 @@ class Request extends Collection implements RequestInterface
             'body' => $this->getBody(),
         ];
     }
-    
+
     /**
+     * {@inheritdoc}
+     *
      * @see https://www.php-fig.org/psr/psr-7/
+     *
      * @todo PSR-7 Implement
-     **/
+     */
     public function getRequestTarget()
     {
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @see https://www.php-fig.org/psr/psr-7/
+     *
      * @todo PSR-7 Implement
-     **/
+     */
     public function withRequestTarget($requestTarget)
     {
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @see https://www.php-fig.org/psr/psr-7/
+     *
      * @todo PSR-7 Implement
-     **/
+     */
     public function withMethod($method)
     {
     }
@@ -115,9 +124,12 @@ class Request extends Collection implements RequestInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @see https://www.php-fig.org/psr/psr-7/
+     *
      * @todo PSR-7 Implement
-     **/
+     */
     public function withUri(UriInterface $uri, $preserveHost = false)
     {
     }

@@ -24,9 +24,8 @@ use Gpupo\CommonSdk\Traits\LoggerTrait;
 
 abstract class ClientManagerAbstract
 {
+    use ClientAwareTrait;
     use LoggerTrait;
-
-    protected $client;
 
     protected $maps;
 
@@ -43,18 +42,6 @@ abstract class ClientManagerAbstract
 
     protected function setUp()
     {
-    }
-
-    public function setClient(ClientInterface $client)
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    public function getClient()
-    {
-        return $this->client;
     }
 
     /**
