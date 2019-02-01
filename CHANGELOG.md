@@ -2,6 +2,35 @@
 VERSION 5  MAJOR VERSION 4
 ==========================
 
+   Version 4.8 - Add PSR7
+      01/02/2019 10:18  4.8.0  initial release
+         c6ed5be Add PSR-7
+         f81e9db Injection of Output
+         b4cec44 Add parse
+         3dcb2f5 Add requestWithCache()
+         df9a07b Update doc
+         0ceccfb Rename Translator Methods
+         43b96bf Improve Make file
+         951ffaa Reuse trait
+         d5b8290 Improve Factory Trait
+         289af39 make with var
+         d5ea665 Improve Resource Trait
+         992f733 Add command debug
+         6a88223 Fix conflict method name;
+         1a47049 Add default factory sdk
+         b02a05e Add gp build
+         8a31e99 Remove gh page build
+         d586f37 Fix schema
+         6d3a95c Update getSchema
+         281bf6d Add getSchema hint
+         d0d2e24 Add build header
+         f330793 Add Logger Channel
+         06484c4 Fix tests
+         dad4fc9 Add client hints
+         b94dacd Add Client Hints
+         71eb05f Add header
+         6ff0e23 Fix class loading
+
    Version 4.7 - Improve Commands
       23/01/2019 10:42  4.7.0  initial release
          22ca384 Add App init()
