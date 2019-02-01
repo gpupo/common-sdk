@@ -165,7 +165,7 @@ abstract class ClientManagerAbstract
     {
         $this->log('debug', 'ClientManager:Perform', [
             'mode' => $mode,
-            'map' => $map->toLog(),
+            // 'map' => $map->toLog(),
         ]);
 
         return $return;
