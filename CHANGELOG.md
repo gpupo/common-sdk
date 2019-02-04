@@ -3,6 +3,8 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 4.9 - Improve Resource Trait, update Phpunit to 8.0
+      04/02/2019 14:21  4.9.1  Fix serialized'
+         564fc6f Fix serialize
       04/02/2019 10:57  4.9.0  initial release
          e8db1c2 Add renew
          b8bff03 Add ClientAwareTrait
