@@ -95,9 +95,9 @@ trait ResourcesTrait
         $this->_file_put_contents($filename, $content);
     }
 
-    protected function saveResourceToSerializedFile(string $filename, array $array): void
+    protected function saveResourceToSerializedFile(string $filename,$data): void
     {
-        $content = serialize($detailedModels);
+        $content = serialize($data);
         $this->_file_put_contents($filename, $content);
     }
 
