@@ -40,7 +40,20 @@ final class ParseCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $filename = $input->getArgument('filename');
-        $data = $this->resourceDecodeJsonFile($filename);
+
+        $type = end(explode('.', $filename));
+
+        switch($type) {
+            case 'yaml':
+            case 'yml':
+                $data = $this->resourceDecodeYamlFile($filename);
+                break;
+            default:
+                $data = $this->resourceDecodeJsonFile($filename);
+                break;
+        }
+
+
         $this->displayTableResults($output, $data);
     }
 }

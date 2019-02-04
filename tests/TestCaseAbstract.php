@@ -86,7 +86,7 @@ abstract class TestCaseAbstract extends TestCaseCore
      *
      * <code>
      *     //...
-     *     public static function setUpBeforeClass()
+     *     public static function setUpBeforeClass(): void
      *     {
      *          self::displayClassDocumentation(new Product());
      *     }

@@ -29,9 +29,9 @@ class EntityTest extends TestCaseAbstract
 {
     use EntityTrait;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
-        static::setFullyQualifiedObject('\Gpupo\CommonSdk\Entity\Entity');
+        static::setFullyQualifiedObject(Entity::class);
         parent::setUpBeforeClass();
     }
 
@@ -59,7 +59,7 @@ class EntityTest extends TestCaseAbstract
     {
         $entity = $this->factory();
         $this->assertSame('Entity', $entity->getCalledEntityName());
-        $this->assertSame('Gpupo\CommonSdk\Entity\Entity', $entity->getCalledEntityName(true));
+        $this->assertSame(Entity::class, $entity->getCalledEntityName(true));
     }
 
     public function testValidaDadosObrigatórios()

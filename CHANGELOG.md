@@ -2,6 +2,13 @@
 VERSION 5  MAJOR VERSION 4
 ==========================
 
+   Version 4.9 - Improve Resource Trait, update Phpunit to 8.0
+      04/02/2019 10:57  4.9.0  initial release
+         e8db1c2 Add renew
+         b8bff03 Add ClientAwareTrait
+         cf9510e Reduce log
+         9d3c60f Update common-schema
+
    Version 4.8 - Add PSR7
       01/02/2019 10:18  4.8.0  initial release
          c6ed5be Add PSR-7

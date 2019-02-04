@@ -81,7 +81,13 @@ abstract class AbstractApplication extends Core
         $this->findAndAddCommands($output, $config, $factory, $namespace, sprintf('%s/src/Console/Command', $rootDirectory));
 
         $this->displayInstructionsBanner($output);
-        $this->doRun($input, $output);
+
+        try {
+            $this->doRun($input, $output);
+        } catch (\Exception $exception) {
+            $output->writeln(sprintf('<error>%s</>', $exception->getMessage()));
+        }
+
         $output->writeln('');
     }
 

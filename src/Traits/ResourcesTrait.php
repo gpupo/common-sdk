@@ -36,6 +36,13 @@ trait ResourcesTrait
         return json_decode($this->resourceReadFile($file), true);
     }
 
+    protected function resourceDecodeSerializedFile(string $file)
+    {
+        $content = $this->resourceReadFile($file);
+
+        return unserialize($content);
+    }
+
     protected function resourceDecodeYamlFile(string $file): array
     {
         return Yaml::parseFile($file);
@@ -76,4 +83,39 @@ trait ResourcesTrait
 
         throw new \InvalidArgumentException('File '.$path.' Not Exist');
     }
+
+    private function _file_put_contents(string $filename, string $content): void
+    {
+        file_put_contents($filename, $content);
+    }
+
+    protected function saveResourceToYamlFile(string $filename, array $array): void
+    {
+        $content = Yaml::dump($array);
+        $this->_file_put_contents($filename, $content);
+    }
+
+    protected function saveResourceToSerializedFile(string $filename, array $array): void
+    {
+        $content = serialize($detailedModels);
+        $this->_file_put_contents($filename, $content);
+    }
+
+    protected function saveResourceToCsvFile(string $filename, array $array): void
+    {
+        $file = fopen($filename, 'w');
+
+        $i = 0;
+        foreach ($array as $data) {
+            if (0 === $i) {
+                fputcsv($file, array_keys($data));
+            }
+            ++$i;
+
+            fputcsv($file, $data);
+        }
+
+        fclose($file);
+    }
+
 }
