@@ -20,7 +20,7 @@
         "php": ">=7.3",
         "ext-curl": "*",
         "gpupo/common": "^4.8|dev-master",
-        "gpupo/common-schema": "^4.6.1|dev-master",
+        "gpupo/common-schema": "^4.6.1|dev-master|dev-*",
         "doctrine/orm": "^2.6",
         "psr/http-message": "^1.0",
         "gedmo/doctrine-extensions": "^2.4",
