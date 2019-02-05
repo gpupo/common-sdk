@@ -3,6 +3,7 @@ VERSION 5  MAJOR VERSION 4
 ==========================
 
    Version 4.9 - Improve Resource Trait, update Phpunit to 8.0
+      05/02/2019 12:12  4.9.2  Improve yaml dump
       04/02/2019 14:21  4.9.1  Fix serialized'
          564fc6f Fix serialize
       04/02/2019 10:57  4.9.0  initial release

@@ -91,7 +91,7 @@ trait ResourcesTrait
 
     protected function saveResourceToYamlFile(string $filename, array $array): void
     {
-        $content = Yaml::dump($array);
+        $content = Yaml::dump($array, 6, 2);
         $this->_file_put_contents($filename, $content);
     }
 

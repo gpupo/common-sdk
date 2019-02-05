@@ -24,5 +24,5 @@ if (!class_exists('\Gpupo\Common\Console\Application')) {
 if (!class_exists(Dotenv::class)) {
     throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
 }
-    // load all the .env files
-    (new Dotenv())->loadEnv(dirname(__DIR__).'/.env');
+// load all the .env files
+(new Dotenv())->loadEnv(dirname(__DIR__).'/.env');
