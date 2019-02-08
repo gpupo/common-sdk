@@ -4,10 +4,7 @@ os:
   - linux
 php:
   - 7.3
-  - nightly
 matrix:
-  allow_failures:
-    - php: nightly
 before_script:
   - composer self-update
   - composer install --prefer-dist
