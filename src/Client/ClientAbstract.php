@@ -31,6 +31,10 @@ abstract class ClientAbstract extends BoardAbstract
 
     const ENDPOINT = 'api.localhost';
 
+    const CONTENT_TYPE_DEFAULT = 'application/json;charset=UTF-8';
+
+    const ACCEPT_DEFAULT = 'application/json;charset=UTF-8';
+
     const CACHE_TTL = 3600;
 
     protected $mode;
@@ -191,8 +195,8 @@ abstract class ClientAbstract extends BoardAbstract
             $this->setMode(false);
             $list['Content-Type'] = 'application/x-www-form-urlencoded';
         } else {
-            $list['Accept'] = 'application/json;charset=UTF-8';
-            $list['Content-Type'] = 'application/json;charset=UTF-8';
+            $list['Accept'] = $this::ACCEPT_DEFAULT;
+            $list['Content-Type'] = $this::CONTENT_TYPE_DEFAULT;
         }
 
         return $list;
