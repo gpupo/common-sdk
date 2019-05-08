@@ -92,6 +92,10 @@ class CurlDriver extends DriverAbstract
                 $this->execPatch();
 
                 break;
+            case 'DELETE':
+                $this->execDelete();
+
+                break;
         }
 
         $data = [
@@ -140,6 +144,13 @@ class CurlDriver extends DriverAbstract
     protected function execPatch()
     {
         $this->execPut()->setOption(CURLOPT_CUSTOMREQUEST, 'PATCH');
+
+        return $this;
+    }
+
+    protected function execDelete()
+    {
+        $this->setOption(CURLOPT_CUSTOMREQUEST, 'DELETE');
 
         return $this;
     }

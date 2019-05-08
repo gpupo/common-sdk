@@ -96,12 +96,12 @@ abstract class ClientAbstract extends BoardAbstract
         return file_put_contents($filename, $data['responseRaw']);
     }
 
-    public function get(string $resource, int $ttl = null): Response
+    public function get(string $resource, int $ttl = null, string $method = ''): Response
     {
-        $request = $this->factoryRequest($resource);
+        $request = $this->factoryRequest($resource, $method);
 
         //Cache
-        if (null === $ttl && $this->hasSimpleCache()) {
+        if (null === $ttl && $this->hasSimpleCache() && 'DELETE' !== $method) {
             $cacheId = $this->simpleCacheGenerateId($resource);
 
             if ($this->getSimpleCache()->has($cacheId)) {
@@ -157,6 +157,17 @@ abstract class ClientAbstract extends BoardAbstract
     public function patch(string $resource, $body): Response
     {
         return $this->post($resource, $body, 'PATCH');
+    }
+
+    /**
+     * Executa uma requisição DELETE
+     *
+     * @param string       $resource Url de Endpoint
+     * @param array|string $body     Valores do Request
+     */
+    public function delete(string $resource, $body): Response
+    {
+        return $this->get($resource, null, 'DELETE');
     }
 
     public function getResourceUri($resource): string
