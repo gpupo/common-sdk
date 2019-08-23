@@ -206,7 +206,7 @@ abstract class ClientAbstract extends BoardAbstract
             $this->setMode(false);
             $list['Content-Type'] = 'application/x-www-form-urlencoded';
         } else {
-            $list['Accept'] = $this::ACCEPT_DEFAULT;
+            $list['Accept'] = $this->getOptions()->get('accept') ?? $this::ACCEPT_DEFAULT;
             $list['Content-Type'] = $this::CONTENT_TYPE_DEFAULT;
         }
 
