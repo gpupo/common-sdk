@@ -91,6 +91,12 @@ abstract class ClientAbstract extends BoardAbstract
     public function downloadFile(string $resource, string $filename = null)
     {
         $request = $this->factoryRequest($resource);
+
+        return $this->downloadFileByRequest($request, $filename);
+    }
+
+    public function downloadFileByRequest(Request $request, string $filename = null)
+    {
         $data = $request->exec();
 
         return file_put_contents($filename, $data['responseRaw']);
