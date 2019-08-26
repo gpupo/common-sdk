@@ -40,7 +40,7 @@ class Map extends Collection
         parent::__construct($data);
     }
 
-    public function getResource()
+    public function getResource(): string
     {
         $route = $this->get('resource');
         $parameters = $this->getParameters();
@@ -58,7 +58,7 @@ class Map extends Collection
         ]);
     }
 
-    public function getMode()
+    public function getMode(): string
     {
         $parameters = $this->getParameters();
 
@@ -67,7 +67,7 @@ class Map extends Collection
         }
     }
 
-    protected function placeHolderValueEmpty($value)
+    protected function placeHolderValueEmpty($value): bool
     {
         return empty($value) && 0 !== $value && '0' !== $value;
     }
