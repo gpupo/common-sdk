@@ -175,8 +175,12 @@ abstract class ClientManagerAbstract
     {
         $dryRun = $this->getDryRun();
 
-        if (empty($dryRun)) {
-            return $this->getClient()->downloadFileByRequest($request, $filename);
+        if (!empty($dryRun)) {
+            return $filename;
+        }
+
+        if(!$this->getClient()->downloadFileByRequest($request, $filename)) {
+            throw new ManagerException(sprintf('Error downloading %s file.', $filename));
         }
 
         return $filename;
