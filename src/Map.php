@@ -58,7 +58,7 @@ class Map extends Collection
         ]);
     }
 
-    public function getMode(): string
+    public function getMode()
     {
         $parameters = $this->getParameters();
 
