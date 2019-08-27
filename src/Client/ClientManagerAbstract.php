@@ -32,6 +32,8 @@ abstract class ClientManagerAbstract
 
     protected $dryRun;
 
+    protected $lastRequest;
+
     public function __construct(ClientInterface $client = null)
     {
         if ($client) {
@@ -142,6 +144,12 @@ abstract class ClientManagerAbstract
         if (empty($dryRun)) {
             return $this->performReturn($this->performReal($map, $body), 'Real', $map);
         }
+
+        //factory a Request for DryRun
+        $this->lastRequest = new Request([
+            'body' => $body,
+        ]);
+
         if ($dryRun instanceof Response) {
             return $this->performReturn($dryRun, 'Mockup', $map);
         }
@@ -157,6 +165,11 @@ abstract class ClientManagerAbstract
         ]);
 
         return $return;
+    }
+
+    public function getLastRequest()
+    {
+        return $this->lastRequest;
     }
 
     public function factoryRequestByMap(Map $map)
