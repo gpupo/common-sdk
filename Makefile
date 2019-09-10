@@ -58,7 +58,7 @@ phpstan:
 	${COMPOSER_BIN}/phpstan analyse -c config/phpstan.neon -l 4 src
 
 ## Apply CS fixers and QA watchers
-qa: cs phploc phpstan phpmd phan
+qa: cs phploc phpstan phpmd phan psalm
 
 ## Apply Php CS fixer and PHPCBF fix rules
 cs: php-cs-fixer phpcbf
@@ -89,6 +89,10 @@ phan:
 ## Run phpunit testcases
 phpunit:
 	${VENDOR_BIN}/phpunit --testdox
+
+## Psalm - a static analysis
+psalm:
+	${VENDOR_BIN}/psalm --show-info=false
 
 ## Update make file
 selfupdate:
