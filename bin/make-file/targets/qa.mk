@@ -27,3 +27,11 @@ qa@phploc:
 qa@phpstan:
 	printf "${COLOR_COMMENT}Running PHP Static Analysis Tool${COLOR_RESET}\n"
 	${COMPOSER_BIN}/phpstan analyse -c config/phpstan.neon -l 4 src
+
+## Run Phan checkup
+qa@phan:
+	${COMPOSER_BIN}/phan --config-file config/phan.php
+
+## Psalm - a static analysis
+qa@psalm:
+	${VENDOR_BIN}/psalm --show-info=false
