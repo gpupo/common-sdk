@@ -1,8 +1,8 @@
 ## Apply CS fixers and QA watchers
-qa@all: cs phploc phpstan phpmd phan psalm
+qa@all: qa@cs qa@phploc qa@phpstan qa@phpmd qa@phan qa@psalm
 
 ## Apply Php CS fixer and PHPCBF fix rules
-qa@cs: php-cs-fixer phpcbf
+qa@cs: qa@php-cs-fixer qa@phpcbf
 
 ## Apply Php CS fixer rules
 qa@php-cs-fixer:
