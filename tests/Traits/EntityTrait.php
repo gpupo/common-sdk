@@ -66,7 +66,7 @@ trait EntityTrait
             return;
         }
 
-        if (!array_key_exists($name, $expected)) {
+        if (!\array_key_exists($name, $expected)) {
             return $this->markSkipped('not found key '.$name);
         }
 

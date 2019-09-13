@@ -43,16 +43,17 @@ final class ParseCommand extends AbstractCommand
 
         $type = end(explode('.', $filename));
 
-        switch($type) {
+        switch ($type) {
             case 'yaml':
             case 'yml':
                 $data = $this->resourceDecodeYamlFile($filename);
+
                 break;
             default:
                 $data = $this->resourceDecodeJsonFile($filename);
+
                 break;
         }
-
 
         $this->displayTableResults($output, $data);
     }

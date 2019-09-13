@@ -166,7 +166,7 @@ abstract class ClientAbstract extends BoardAbstract
     }
 
     /**
-     * Executa uma requisição DELETE
+     * Executa uma requisição DELETE.
      *
      * @param string       $resource Url de Endpoint
      * @param array|string $body     Valores do Request
@@ -296,7 +296,7 @@ abstract class ClientAbstract extends BoardAbstract
         }
 
         foreach (['endpoint', 'url'] as $key) {
-            if (array_key_exists($key, $resource) && !empty($resource[$key])) {
+            if (\array_key_exists($key, $resource) && !empty($resource[$key])) {
                 return $resource[$key];
             }
         }

@@ -31,7 +31,7 @@ trait TranslatorManagerTrait
     {
         return $this->update($this->factoryTranslatorByForeign($data)
             ->import(), empty($existent) ? null : $this
-        ->factoryTranslatorByForeign($existent)->import());
+            ->factoryTranslatorByForeign($existent)->import());
     }
 
     public function translatorFetch($offset = 0, $limit = 50, array $parameters = [])

@@ -143,7 +143,7 @@ abstract class FactoryAbstract implements FactoryInterface
     {
         $key[0] = strtolower($key[0]);
 
-        if (!array_key_exists($key, $list)) {
+        if (!\array_key_exists($key, $list)) {
             throw new \BadMethodCallException('Faltando Factory ['.$key.'] no Schema ['.implode(' ', array_keys($list)).']');
         }
 
@@ -169,7 +169,7 @@ abstract class FactoryAbstract implements FactoryInterface
             throw new Exception\InvalidArgumentException('Class ['.$className.'] not found!');
         }
 
-        if (array_key_exists('method', $schema)) {
+        if (\array_key_exists('method', $schema)) {
             return $this->forwardCallForMethod($schema, $data);
         }
 

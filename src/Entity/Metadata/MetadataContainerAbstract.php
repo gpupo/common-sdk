@@ -72,7 +72,7 @@ abstract class MetadataContainerAbstract extends CollectionAbstract
         if ($data instanceof CollectionAbstract) {
             return $data->get($piece);
         }
-        if (\is_array($data) && array_key_exists($piece, $data)) {
+        if (\is_array($data) && \array_key_exists($piece, $data)) {
             return $data[$piece];
         }
 

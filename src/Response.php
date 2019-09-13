@@ -102,7 +102,7 @@ class Response extends Collection implements ResponseInterface
         if ($code < 100 || $code > 399) {
             $this->error('Response With Errors', $this->toLog());
 
-            if (array_key_exists($code, static::$statusTexts)) {
+            if (\array_key_exists($code, static::$statusTexts)) {
                 $message = static::$statusTexts[$code];
             } else {
                 $message = 'Unknow Error ('.$code.')';

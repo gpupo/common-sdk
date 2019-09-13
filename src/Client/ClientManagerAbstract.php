@@ -19,9 +19,9 @@ namespace Gpupo\CommonSdk\Client;
 
 use Gpupo\CommonSdk\Exception\ManagerException;
 use Gpupo\CommonSdk\Map;
+use Gpupo\CommonSdk\Request;
 use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
-use Gpupo\CommonSdk\Request;
 
 abstract class ClientManagerAbstract
 {
@@ -91,7 +91,7 @@ abstract class ClientManagerAbstract
             throw new ManagerException('Maps missed!');
         }
 
-        if (!array_key_exists($operation, $this->maps)) {
+        if (!\array_key_exists($operation, $this->maps)) {
             throw new ManagerException('Map ['.$operation.'] not found on ['.$this->getEntityName().' Manager]');
         }
 
@@ -101,6 +101,38 @@ abstract class ClientManagerAbstract
         }
 
         return new Map($data, $parameters);
+    }
+
+    public function getLastRequest()
+    {
+        return $this->lastRequest;
+    }
+
+    public function factoryRequestByMap(Map $map)
+    {
+        return $this->getClient()->factoryRequest($map->getResource());
+    }
+
+    public function downloadFile(Map $map, $filename)
+    {
+        $request = $this->factoryRequestByMap($map->getResource());
+
+        return $this->downloadFileByRequest($request, $filename);
+    }
+
+    public function downloadFileByRequest(Request $request, $filename): string
+    {
+        $dryRun = $this->getDryRun();
+
+        if (!empty($dryRun)) {
+            return $filename;
+        }
+
+        if (!$this->getClient()->downloadFileByRequest($request, $filename)) {
+            throw new ManagerException(sprintf('Error downloading %s file.', $filename));
+        }
+
+        return $filename;
     }
 
     /**
@@ -165,38 +197,6 @@ abstract class ClientManagerAbstract
         ]);
 
         return $return;
-    }
-
-    public function getLastRequest()
-    {
-        return $this->lastRequest;
-    }
-
-    public function factoryRequestByMap(Map $map)
-    {
-        return $this->getClient()->factoryRequest($map->getResource());
-    }
-
-    public function downloadFile(Map $map, $filename)
-    {
-        $request = $this->factoryRequestByMap($map->getResource());
-
-        return $this->downloadFileByRequest($request, $filename);
-    }
-
-    public function downloadFileByRequest(Request $request, $filename): string
-    {
-        $dryRun = $this->getDryRun();
-
-        if (!empty($dryRun)) {
-            return $filename;
-        }
-
-        if(!$this->getClient()->downloadFileByRequest($request, $filename)) {
-            throw new ManagerException(sprintf('Error downloading %s file.', $filename));
-        }
-
-        return $filename;
     }
 
     protected function performReal(Map $map, $body = null)

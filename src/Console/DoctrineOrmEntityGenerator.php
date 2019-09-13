@@ -88,7 +88,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
             $modeMethod = sprintf('get%s', ucfirst($mode));
             $modeValue = $this->{$modeMethod}($modeTo);
             if (!empty($modeValue)) {
-                if (array_key_exists($mode, $doctrine)) {
+                if (\array_key_exists($mode, $doctrine)) {
                     $doctrine[$mode] = array_merge($doctrine[$mode], $modeValue);
                 } else {
                     $doctrine[$mode] = $modeValue;

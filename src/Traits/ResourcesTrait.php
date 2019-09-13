@@ -84,18 +84,13 @@ trait ResourcesTrait
         throw new \InvalidArgumentException('File '.$path.' Not Exist');
     }
 
-    private function _file_put_contents(string $filename, string $content): void
-    {
-        file_put_contents($filename, $content);
-    }
-
     protected function saveResourceToYamlFile(string $filename, array $array): void
     {
         $content = Yaml::dump($array, 6, 2);
         $this->_file_put_contents($filename, $content);
     }
 
-    protected function saveResourceToSerializedFile(string $filename,$data): void
+    protected function saveResourceToSerializedFile(string $filename, $data): void
     {
         $content = serialize($data);
         $this->_file_put_contents($filename, $content);
@@ -118,4 +113,8 @@ trait ResourcesTrait
         fclose($file);
     }
 
+    private function _file_put_contents(string $filename, string $content): void
+    {
+        file_put_contents($filename, $content);
+    }
 }

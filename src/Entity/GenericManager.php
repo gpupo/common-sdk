@@ -17,9 +17,9 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Entity;
 
+use Closure;
 use Gpupo\Common\Entity\CollectionInterface;
 use Gpupo\CommonSdk\Map;
-use Closure;
 
 class GenericManager extends ManagerAbstract
 {
@@ -47,7 +47,7 @@ class GenericManager extends ManagerAbstract
         if (false === $renew && $this->getClient()->getSimpleCache()->has($cacheId)) {
             $this->log('info', 'Using cached response', [
                 'route' => $route,
-                'cacheId' => $cacheId
+                'cacheId' => $cacheId,
             ]);
 
             return $this->getClient()->getSimpleCache()->get($cacheId);
@@ -65,7 +65,6 @@ class GenericManager extends ManagerAbstract
             'cacheId' => $cacheId,
             'renew' => $renew,
         ]);
-
 
         return $response;
     }

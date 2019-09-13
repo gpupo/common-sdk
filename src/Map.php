@@ -62,7 +62,7 @@ class Map extends Collection
     {
         $parameters = $this->getParameters();
 
-        if (\is_array($parameters) && array_key_exists('mode', $parameters)) {
+        if (\is_array($parameters) && \array_key_exists('mode', $parameters)) {
             return $parameters['mode'];
         }
     }
