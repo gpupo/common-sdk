@@ -27,8 +27,8 @@ class EntityFoo extends EntityAbstract implements EntityInterface
         return  [
             'Foo_Codigo' => 'integer',
             'Foo_Descricao' => 'string',
-            'FooBar_Qtde' => 'integer',
-            'FooBar_Ideal' => 'integer',
+            'FooBar_QtdeBar' => 'integer',
+            'FooBar_Ideal_ZeT' => 'integer',
             'Foo_GTIN' => 'string',
         ];
     }

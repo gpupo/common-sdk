@@ -53,8 +53,8 @@ class EntityTest extends TestCaseAbstract
         $expected = [
             'Foo_Codigo' => '456',
             'Foo_Descricao' => 'Um dia qualquer',
-            'FooBar_Qtde' => '7',
-            'FooBar_Ideal' => '2',
+            'FooBar_QtdeBar' => '7',
+            'FooBar_Ideal_ZeT' => '2',
             'Foo_GTIN' => '68999444Zse1',
         ];;
 
@@ -156,8 +156,11 @@ class EntityTest extends TestCaseAbstract
      */
     public function testAcessoAChavesForaDoPadrao(EntityInterface $object, $expected = null)
     {
-        dump($object);
-        $this->assertSame($expected['Foo_Codigo'], $object->getFoo_Codigo());
+        $this->assertSame((int) $expected['Foo_Codigo'], $object->getFoo_Codigo());
+        $this->assertSame($expected['Foo_Descricao'], $object->getFoo_Descricao());
+        $this->assertSame((int) $expected['FooBar_QtdeBar'], $object->getFooBar_QtdeBar());
+        $this->assertSame((int) $expected['FooBar_Ideal_ZeT'], $object->getFooBar_Ideal_ZeT());
+        $this->assertSame($expected['Foo_GTIN'], $object->getFoo_GTIN());
     }
 
 }
