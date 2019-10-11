@@ -33,7 +33,7 @@ class CurlDriver extends DriverAbstract
      */
     public function __construct(Collection $options)
     {
-        $this->curl = curl_init();
+        $this->curl = \curl_init();
 
         $sslVersion = $options->get('sslVersion', 'SecureTransport');
         $this->setOption(CURLOPT_SSLVERSION, $sslVersion);

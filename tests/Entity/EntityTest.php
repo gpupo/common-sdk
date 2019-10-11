@@ -48,6 +48,24 @@ class EntityTest extends TestCaseAbstract
         ]];
     }
 
+    public function dataProviderEntityFoo()
+    {
+        $expected = [
+            'Foo_Codigo' => '456',
+            'Foo_Descricao' => 'Um dia qualquer',
+            'FooBar_Qtde' => '7',
+            'FooBar_Ideal' => '2',
+            'Foo_GTIN' => '68999444Zse1',
+        ];;
+
+        $foo = new EntityFoo($expected);
+
+        return [[
+            $foo,
+            $expected,
+        ]];
+    }
+
     public function testAcessoAIdentificadorPadraoDaEntidade()
     {
         $entity = $this->factory();
@@ -126,8 +144,20 @@ class EntityTest extends TestCaseAbstract
         $this->assertSchemaSetter('value', 'number', $object);
     }
 
-    protected function factory()
+    protected function factory(): EntityInterface
     {
         return new Entity(['key' => 'hello']);
     }
+
+    /**
+     * @dataProvider dataProviderEntityFoo
+     *
+     * @param null|mixed $expected
+     */
+    public function testAcessoAChavesForaDoPadrao(EntityInterface $object, $expected = null)
+    {
+        dump($object);
+        $this->assertSame($expected['Foo_Codigo'], $object->getFoo_Codigo());
+    }
+
 }
