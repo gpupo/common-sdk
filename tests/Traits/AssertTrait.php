@@ -21,6 +21,6 @@ trait AssertTrait
 {
     public function assertHttpStatusCodeSuccess($code, $context = null)
     {
-        $this->assertContains($code, [200, 204], $context);
+        $this->assertStringContainsString($code, [200, 204], $context);
     }
 }
