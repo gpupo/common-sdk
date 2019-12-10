@@ -17,7 +17,7 @@
         }
     },
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "ext-curl": "*",
         "gpupo/common": "^4.12|dev-master",
         "gpupo/common-schema": "^4.6.1|dev-master",
