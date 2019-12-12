@@ -21,7 +21,7 @@ use Gpupo\CommonSdk\Client\Client;
 use Gpupo\CommonSdk\Request;
 use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 use Monolog\Logger;
-use Symfony\Component\Cache\Simple\FilesystemCache;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 /**
  * @coversNothing
@@ -39,7 +39,7 @@ class ClientTest extends TestCaseAbstract
 
     public function testUrlBaseadoEmConfiguracao()
     {
-        $cache = new FilesystemCache();
+        $cache = new FilesystemAdapter();
         $logger = new Logger('test');
 
         $client = new Client([

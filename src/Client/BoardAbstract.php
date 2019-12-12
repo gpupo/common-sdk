@@ -23,7 +23,7 @@ use Gpupo\Common\Traits\SingletonTrait;
 use Gpupo\CommonSdk\Traits\LoggerTrait;
 use Gpupo\CommonSdk\Traits\PlaceholderTrait;
 use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 
 abstract class BoardAbstract
 {
