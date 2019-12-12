@@ -56,5 +56,7 @@ final class ParseCommand extends AbstractCommand
         }
 
         $this->displayTableResults($output, $data);
+
+        return 0;
     }
 }

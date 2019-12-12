@@ -41,5 +41,7 @@ final class ChecklistCommand extends AbstractCommand
         $data = $this->getProjectData();
         $output->writeln('Current config:');
         $this->writeInfo($output, $data);
+
+        return 0;
     }
 }

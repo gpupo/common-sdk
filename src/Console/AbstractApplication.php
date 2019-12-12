@@ -25,8 +25,8 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
-use Symfony\Component\Cache\Simple\FilesystemCache;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -75,7 +75,7 @@ abstract class AbstractApplication extends Core
             $logger->pushHandler(new ErrorLogHandler(0, $this->getLogLevel()));
         }
 
-        $factory = $this->factorySdk($config, $logger, new FilesystemCache());
+        $factory = $this->factorySdk($config, $logger, new FilesystemAdapter());
 
         $this->findAndAddCommands($output, $config, $factory, __NAMESPACE__, sprintf('%s/Command', __DIR__));
         $this->findAndAddCommands($output, $config, $factory, $namespace, sprintf('%s/src/Console/Command', $rootDirectory));
