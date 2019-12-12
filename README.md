@@ -6,7 +6,7 @@ Componente de uso comum entre SDKs
 
 ## Requisitos para uso
 
-* PHP >= *7.3*
+* PHP *>=7.4*
 * [curl extension](http://php.net/manual/en/intro.curl.php)
 * [Composer Dependency Manager](http://getcomposer.org)
 
