@@ -124,6 +124,19 @@ class ClientTest extends TestCaseAbstract
         $response = $client->get('/hello-world');
         $this->assertSame(200, $response->getHttpStatusCode());
         $this->assertSame('runner', $response->getData()->get('blade'));
+
+        $lastmod = $response->get('cache_lastmod');
+
+        //Cache;
+        $i = 0;
+        while(10 > $i) {
+            ++$i;
+            $response = $client->get('/hello-world', 3600);
+            $this->assertSame(200, $response->getHttpStatusCode());
+            $this->assertSame('runner', $response->getData()->get('blade'));
+            $this->assertSame($lastmod, $response->get('cache_lastmod'));
+        }
+
     }
 
     public function testCatlemockHelloWorldPost()

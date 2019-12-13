@@ -24,6 +24,7 @@ use Gpupo\CommonSdk\Response;
 use Gpupo\CommonSdk\Transport;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 abstract class ClientAbstract extends BoardAbstract
 {
@@ -104,31 +105,33 @@ abstract class ClientAbstract extends BoardAbstract
 
     public function get(string $resource, int $ttl = null, string $method = ''): Response
     {
-        $request = $this->factoryRequest($resource, $method);
-
         //Cache
-        if (null === $ttl && $this->hasSimpleCache() && 'DELETE' !== $method) {
-            $cacheId = $this->simpleCacheGenerateId($resource);
+        if ((null === $ttl || 10 < $ttl) && $this->hasSimpleCache() && 'DELETE' !== $method) {
 
-            if ($this->getSimpleCache()->has($cacheId)) {
-                $response = $this->getSimpleCache()->get($cacheId);
+            $cacheId = $this->simpleCacheGenerateId($resource);
+            $response = $this->getSimpleCache()->get($cacheId, function (ItemInterface $item) use ($resource, $ttl, $method, $cacheId) {
+                $item->expiresAfter($ttl ?: $this->getOptions()->get('cacheTTL', 3600));
+                $response = $this->exec($this->factoryRequest($resource, $method));
+                $this->log('info', 'Client GET cache', [
+                    'cacheId' => $cacheId,
+                    'hint'  => false,
+                ]);
+
+                $response->set('cache_lastmod', date("Y-m-d H:i:s"));
 
                 return $response;
-            }
-
-            $response = $this->exec($request);
-            if (null === $ttl) {
-                $this->getSimpleCache()->set($cacheId, $response, $this->getOptions()->get('cacheTTL', 3600));
-                $jsonFile = sprintf('var/cache/get-%s.json', $cacheId);
-                $fp = fopen($jsonFile, 'w');
-                fwrite($fp, $response->get('responseRaw'));
-                fclose($fp);
-            }
+            });
 
             return $response;
         }
 
-        return $this->exec($request);
+        $this->log('info', 'Client GET NO cache', [
+            'hasSimpleCache'  => $this->hasSimpleCache(),
+            'ttl'   => $ttl,
+            'method' => $method,
+        ]);
+
+        return $this->exec($this->factoryRequest($resource, $method));
     }
 
     /**

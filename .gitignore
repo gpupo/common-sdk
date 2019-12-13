@@ -8,3 +8,4 @@ app.json
 phpunit.xml
 .phan
 .env.local
+Resources/castlemock/rest/event/v1/
