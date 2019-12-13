@@ -2,7 +2,6 @@
 /vendor/
 /var/
 app.json
-Resources
 *.phar
 *.lock
 *.cache

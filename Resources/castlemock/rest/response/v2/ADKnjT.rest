@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<restMockResponse>
+    <body>{&#13;
+	"blade": "runner"&#13;
+}</body>
+    <contentEncodings/>
+    <headerQueries/>
+    <httpHeaders/>
+    <httpStatusCode>200</httpStatusCode>
+    <id>ADKnjT</id>
+    <jsonPathExpressions/>
+    <methodId>opyEzg</methodId>
+    <name>Success</name>
+    <parameterQueries/>
+    <status>ENABLED</status>
+    <usingExpressions>false</usingExpressions>
+    <xpathExpressions/>
+</restMockResponse>

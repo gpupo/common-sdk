@@ -21,6 +21,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose -v
   - docker -v
+  - docker network create nginx-proxy
   - docker-compose up -d
 
 script: docker-compose exec php-fpm make test@travis-script

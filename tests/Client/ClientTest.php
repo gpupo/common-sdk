@@ -118,6 +118,14 @@ class ClientTest extends TestCaseAbstract
         $this->assertSame($string, $request->getBody());
     }
 
+    public function testCatlemockHelloWorldGet()
+    {
+        $client = $this->factoryCastlemockClient();
+        $response = $client->get('/hello-world');
+        $this->assertSame(200, $response->getHttpStatusCode());
+        $this->assertSame('runner', $response->getData()->get('blade'));
+    }
+
     public function testCatlemockHelloWorldPost()
     {
         $client = $this->factoryCastlemockClient();
