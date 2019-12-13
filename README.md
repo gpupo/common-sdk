@@ -66,6 +66,16 @@ Adicione o pacote ``common-sdk`` ao seu projeto utilizando [composer](http://get
 
     composer require gpupo/common-sdk "^4.3"
 
+
+## Desenvolvimento
+
+
+### Castlemock
+
+http://castlemock-common-sdk.localhost/castlemock/login
+
+user: admin, password: admin
+
 ---
 
 ## Links

@@ -1,8 +1,28 @@
 version: '3.3'
 services:
     php-fpm:
-        image: gpupo/container-orchestration:php-dev-${TAG_VERSION}
+        image: gpupo/container-orchestration:php-dev-${CONTAINER_ORCHESTRATION_TAG_VERSION}
         env_file:
             - .env
         volumes:
             - $PWD/:/var/www/app
+        networks:
+            - backend
+    castlemock:
+        image: castlemock/castlemock
+        volumes:
+          - $PWD/Resources/castlemock/:/root/.castlemock
+        expose:
+          - 8080
+          - 80
+        environment:
+          - VIRTUAL_HOST=castlemock-${APP_DEV_SUBDOMAIN}
+          - VIRTUAL_PORT=80
+        networks:
+          - default
+          - backend
+networks:
+    default:
+        external:
+            name: ${NGINX_PROXY_NAME}
+    backend: ~

@@ -33,7 +33,7 @@ abstract class ClientAbstract extends BoardAbstract
 
     const CONTENT_TYPE_DEFAULT = 'application/json;charset=UTF-8';
 
-    const ACCEPT_DEFAULT = 'application/json;charset=UTF-8';
+    const ACCEPT_DEFAULT =  self::CONTENT_TYPE_DEFAULT;
 
     const CACHE_TTL = 3600;
 

@@ -22,7 +22,7 @@ use Gpupo\CommonSdk\Request;
 use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 use Monolog\Logger;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-
+use Gpupo\Common\Tools\Reflected;
 /**
  * @coversNothing
  */
@@ -117,4 +117,24 @@ class ClientTest extends TestCaseAbstract
         $request = $proxy->factoryPostRequest('/', $array);
         $this->assertSame($string, $request->getBody());
     }
+
+    public function testCatlemockHelloWorldPost()
+    {
+        $client = $this->factoryCastlemockClient();
+        $response = $client->post('/hello-world', '');
+        $this->assertSame(200, $response->getHttpStatusCode());
+        $this->assertSame('bar', $response->getData()->get('foo'));
+    }
+
+    public function factoryCastlemockClient(): Reflected
+    {
+        $cache = new FilesystemAdapter();
+
+        $client = new Client([
+            'base_url' => $this::CASTLEMOCK_PREFIX,
+        ], $this->getLogger(), $cache);
+
+        return $this->proxy($client);
+    }
+
 }
