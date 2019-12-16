@@ -44,7 +44,11 @@ abstract class BoardAbstract
     {
         if ($this->hasSimpleCache()) {
             $key = $this->simpleCacheGenerateId($resource);
-            $this->getSimpleCache()->delete($key);
+            $this->getSimpleCache()->deleteItem($key);
+
+            $this->log('debug', 'Destroy Cache', [
+                'cacheId' => $key,
+            ]);
         }
 
         return $this;
