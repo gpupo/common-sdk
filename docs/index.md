@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # common-sdk
 
 Componente de uso comum entre SDKs
