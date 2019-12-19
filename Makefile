@@ -9,6 +9,7 @@
 # Targets must exist in the bin/make-file/targets/ directory.
 
 .SILENT:
+CURRENT_DIR := $(shell pwd)
 
 include bin/make-file/variables.mk
 include bin/make-file/define.mk

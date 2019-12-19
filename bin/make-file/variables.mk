@@ -1,14 +1,7 @@
-DC=docker-compose
-RUN=$(DC) run --rm php-fpm
-COMPOSER_BIN=~/.composer/vendor/bin
-COMMON_SDK_BIN=~/.composer/vendor/gpupo/common-sdk/bin
 VENDOR_BIN=./vendor/bin
-## Colors
-COLOR_RESET   = \033[0m
-COLOR_INFO  = \033[32m
-COLOR_COMMENT = \033[33m
-SHELL := /bin/bash
-COLOR_ERROR=\033[31m
+CORE_FILES=./vendor/gpupo/common/bin/make-file/
+COMMON_SDK_BIN=./vendor/gpupo/common-sdk/bin
 
-## VERBOSE=-vv
-VERBOSE=
+include ${CORE_FILES}/variables.mk
+include ${CORE_FILES}/define.mk
+include ${CORE_FILES}/help.mk
