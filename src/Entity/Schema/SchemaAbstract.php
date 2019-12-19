@@ -107,7 +107,7 @@ abstract class SchemaAbstract extends CollectionAbstract
         foreach ($schema as $key => $value) {
             if ('collection' === $value) {
                 $iv = $ov = Tools::getInitValue($data, $key, []);
-                if ('s' === substr($key, -1)) {
+                if ('s' === mb_substr($key, -1)) {
                     try {
                         $iv = [];
                         foreach ($ov as $y) {

@@ -201,7 +201,7 @@ abstract class ClientManagerAbstract
 
     protected function performReal(Map $map, $body = null)
     {
-        $methodName = strtolower($map->getMethod());
+        $methodName = mb_strtolower($map->getMethod());
 
         $attempt = 0;
         while ($attempt <= 5) {
@@ -229,11 +229,7 @@ abstract class ClientManagerAbstract
                 return $result;
             } catch (\Exception $exception) {
                 if (!$this->retry($exception, $attempt)) {
-                    throw $this->exceptionHandler(
-                        $exception,
-                        $map->getMethod(),
-                        $map->getResource()
-                    );
+                    throw $this->exceptionHandler($exception, $map->getMethod(), $map->getResource());
                 }
             }
         }

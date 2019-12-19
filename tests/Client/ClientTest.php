@@ -17,12 +17,13 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Tests\Client;
 
+use Gpupo\Common\Tools\Reflected;
 use Gpupo\CommonSdk\Client\Client;
 use Gpupo\CommonSdk\Request;
 use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 use Monolog\Logger;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Gpupo\Common\Tools\Reflected;
+
 /**
  * @coversNothing
  */
@@ -129,7 +130,7 @@ class ClientTest extends TestCaseAbstract
 
         //Cache;
         $i = 0;
-        while(10 > $i) {
+        while (10 > $i) {
             ++$i;
             $response = $client->get('/hello-world', 3600);
             $this->assertSame(200, $response->getHttpStatusCode());
@@ -141,7 +142,6 @@ class ClientTest extends TestCaseAbstract
         $this->assertSame(200, $response->getHttpStatusCode());
         $this->assertSame('runner', $response->getData()->get('blade'));
         $this->assertNotSame($lastmod, $response->get('cache_lastmod'));
-
     }
 
     public function testCatlemockHelloWorldPost()
@@ -162,5 +162,4 @@ class ClientTest extends TestCaseAbstract
 
         return $this->proxy($client);
     }
-
 }

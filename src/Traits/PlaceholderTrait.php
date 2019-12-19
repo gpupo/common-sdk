@@ -24,7 +24,7 @@ trait PlaceholderTrait
         foreach ($array as $key => $value) {
             $string = str_replace([
                 '{'.$key.'}',
-                '{'.strtoupper($key).'}',
+                '{'.mb_strtoupper($key).'}',
             ], $value, $string);
         }
 

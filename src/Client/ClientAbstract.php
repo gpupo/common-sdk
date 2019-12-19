@@ -34,7 +34,7 @@ abstract class ClientAbstract extends BoardAbstract
 
     const CONTENT_TYPE_DEFAULT = 'application/json;charset=UTF-8';
 
-    const ACCEPT_DEFAULT =  self::CONTENT_TYPE_DEFAULT;
+    const ACCEPT_DEFAULT = self::CONTENT_TYPE_DEFAULT;
 
     const CACHE_TTL = 3600;
 
@@ -107,17 +107,16 @@ abstract class ClientAbstract extends BoardAbstract
     {
         //Cache
         if ((null === $ttl || 10 < $ttl) && $this->hasSimpleCache() && 'DELETE' !== $method) {
-
             $cacheId = $this->simpleCacheGenerateId($resource);
             $response = $this->getSimpleCache()->get($cacheId, function (ItemInterface $item) use ($resource, $ttl, $method, $cacheId) {
                 $item->expiresAfter($ttl ?: $this->getOptions()->get('cacheTTL', 3600));
                 $response = $this->exec($this->factoryRequest($resource, $method));
                 $this->log('info', 'Client GET cache', [
                     'cacheId' => $cacheId,
-                    'hint'  => false,
+                    'hint' => false,
                 ]);
 
-                $response->set('cache_lastmod', date("Y-m-d H:i:s"));
+                $response->set('cache_lastmod', date('Y-m-d H:i:s'));
 
                 return $response;
             });
@@ -126,8 +125,8 @@ abstract class ClientAbstract extends BoardAbstract
         }
 
         $this->log('info', 'Client GET NO cache', [
-            'hasSimpleCache'  => $this->hasSimpleCache(),
-            'ttl'   => $ttl,
+            'hasSimpleCache' => $this->hasSimpleCache(),
+            'ttl' => $ttl,
             'method' => $method,
         ]);
 
@@ -189,7 +188,7 @@ abstract class ClientAbstract extends BoardAbstract
 
         $endpoint = $this->fillPlaceholdersWithOptions($base, ['version', 'protocol']);
 
-        if ('http' === substr($resource, 0, 4)) {
+        if ('http' === mb_substr($resource, 0, 4)) {
             return $resource;
         }
         if ('/' !== $resource[0]) {
@@ -272,14 +271,7 @@ abstract class ClientAbstract extends BoardAbstract
 
             $data = $response->getData();
 
-            throw new RequestException(sprintf(
-                'Type: %s, Message: %s, Status: %d, Method:%s, URI: %s',
-                $data->get('error'),
-                $data->get('message'),
-                $data->get('status'),
-                $request->get('method'),
-                $request->get('url')
-            ), (int) $data->get('status'), $e);
+            throw new RequestException(sprintf('Type: %s, Message: %s, Status: %d, Method:%s, URI: %s', $data->get('error'), $data->get('message'), $data->get('status'), $request->get('method'), $request->get('url')), (int) $data->get('status'), $e);
         }
     }
 

@@ -17,12 +17,10 @@ declare(strict_types=1);
 
 namespace Gpupo\CommonSdk\Tests\Client;
 
-use Gpupo\CommonSdk\Client\Client;
-use Gpupo\CommonSdk\Request;
+use Gpupo\Common\Tools\Reflected;
 use Gpupo\CommonSdk\Tests\TestCaseAbstract;
 use Monolog\Logger;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Gpupo\Common\Tools\Reflected;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
@@ -52,15 +50,15 @@ class BoardAbstractTest extends TestCaseAbstract
     {
         $sample = [
             'hello' => 'world',
-            'i'  => 0,
+            'i' => 0,
         ];
 
         $resourceString = 'resource01';
 
-        $factory = function($i) use ($sample) {
+        $factory = function ($i) use ($sample) {
             $list = $sample;
             $list['i'] = $i;
-            $list['cache_lastmod'] = date("H:i:s");
+            $list['cache_lastmod'] = date('H:i:s');
 
             return $list;
         };
@@ -89,7 +87,6 @@ class BoardAbstractTest extends TestCaseAbstract
         $listB = $adapter->get($cacheId, $lambda);
         $this->assertSame(1, $listB['i']);
         $this->assertSame($sample['hello'], $listB['hello']);
-
 
         $board->destroyCache($resourceString);
 

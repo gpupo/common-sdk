@@ -47,7 +47,7 @@ abstract class DriverAbstract extends Collection
     {
         $string = $this->get('method');
 
-        return strtoupper(empty($string) ? 'GET' : $string);
+        return mb_strtoupper(empty($string) ? 'GET' : $string);
     }
 
     public function getBody()

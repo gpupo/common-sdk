@@ -172,7 +172,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
 
     protected function generateDoctrineObject($object, $classNames, $key, $value, $lastname)
     {
-        $lastname = strtolower($lastname);
+        $lastname = mb_strtolower($lastname);
         $targetObject = $object->get($key);
         $targetEntity = \get_class($targetObject);
 

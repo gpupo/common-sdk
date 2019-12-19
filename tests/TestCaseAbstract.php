@@ -36,7 +36,7 @@ abstract class TestCaseAbstract extends TestCaseCore
     use AssertTrait;
     use ResourcesTrait;
 
-    const CASTLEMOCK_PREFIX ='http://castlemock:8080/castlemock/mock/rest/project/W5ZUJy/application/OHSoz9';
+    const CASTLEMOCK_PREFIX = 'http://castlemock:8080/castlemock/mock/rest/project/W5ZUJy/application/OHSoz9';
 
     private $output;
 

@@ -25,7 +25,6 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,6 +32,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Contracts\Cache\CacheInterface;
 
 abstract class AbstractApplication extends Core
 {

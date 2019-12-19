@@ -141,7 +141,7 @@ abstract class FactoryAbstract implements FactoryInterface
      */
     protected function resolvSchema(array $list, $key)
     {
-        $key[0] = strtolower($key[0]);
+        $key[0] = mb_strtolower($key[0]);
 
         if (!\array_key_exists($key, $list)) {
             throw new \BadMethodCallException('Faltando Factory ['.$key.'] no Schema ['.implode(' ', array_keys($list)).']');

@@ -71,7 +71,7 @@ trait ResourcesTrait
             return $path;
         }
 
-        if (false !== strpos($file, 'private')) {
+        if (false !== mb_strpos($file, 'private')) {
             return $this->getResourceFilePath(str_replace('private', 'public', $file), $create);
         }
 

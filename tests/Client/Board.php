@@ -24,5 +24,4 @@ use Gpupo\CommonSdk\Client\BoardAbstract;
  */
 class Board extends BoardAbstract
 {
-
 }

@@ -129,7 +129,7 @@ class CurlDriver extends DriverAbstract
 
         $this->setOption(CURLOPT_BINARYTRANSFER, true);
         $this->setOption(CURLOPT_INFILE, $pointer);
-        $this->setOption(CURLOPT_INFILESIZE, \strlen($this->getBody()));
+        $this->setOption(CURLOPT_INFILESIZE, \mb_strlen($this->getBody()));
 
         return $this;
     }

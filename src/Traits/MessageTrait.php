@@ -52,7 +52,7 @@ trait MessageTrait
     {
         $headers = $this->getHeaders();
 
-        return isset($headers[strtolower($header)]);
+        return isset($headers[mb_strtolower($header)]);
     }
 
     /**

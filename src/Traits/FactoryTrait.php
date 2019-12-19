@@ -24,8 +24,8 @@ trait FactoryTrait
 {
     public static function __callStatic($method, $args)
     {
-        $command = substr($method, 0, 7);
-        $objectName = substr($method, 7);
+        $command = mb_substr($method, 0, 7);
+        $objectName = mb_substr($method, 7);
 
         if ('factory' === $command) {
             return self::factory($objectName, current($args), next($args));
@@ -101,7 +101,7 @@ trait FactoryTrait
 
     protected static function resolvNeighborObject($calledClass, $objectName)
     {
-        if (false !== strpos($objectName, '_')) {
+        if (false !== mb_strpos($objectName, '_')) {
             $explode = explode('_', $objectName);
             $normalized = array_map('ucfirst', $explode);
             $objectName = implode('', $normalized);

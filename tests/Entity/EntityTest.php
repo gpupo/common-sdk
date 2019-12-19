@@ -56,7 +56,7 @@ class EntityTest extends TestCaseAbstract
             'FooBar_QtdeBar' => '7',
             'FooBar_Ideal_ZeT' => '2',
             'Foo_GTIN' => '68999444Zse1',
-        ];;
+        ];
 
         $foo = new EntityFoo($expected);
 
@@ -144,11 +144,6 @@ class EntityTest extends TestCaseAbstract
         $this->assertSchemaSetter('value', 'number', $object);
     }
 
-    protected function factory(): EntityInterface
-    {
-        return new Entity(['key' => 'hello']);
-    }
-
     /**
      * @dataProvider dataProviderEntityFoo
      *
@@ -163,4 +158,8 @@ class EntityTest extends TestCaseAbstract
         $this->assertSame($expected['Foo_GTIN'], $object->getFoo_GTIN());
     }
 
+    protected function factory(): EntityInterface
+    {
+        return new Entity(['key' => 'hello']);
+    }
 }
