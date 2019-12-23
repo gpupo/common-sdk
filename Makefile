@@ -17,3 +17,8 @@ include bin/make-file/help.mk
 
 include bin/make-file/functions/*.mk
 include bin/make-file/targets/*.mk
+
+#CommonDev
+ifneq ($(wildcard vendor/gpupo/common-dev/bin/make-file/targets/*),)
+	include vendor/gpupo/common-dev/bin/make-file/targets/*
+endif
