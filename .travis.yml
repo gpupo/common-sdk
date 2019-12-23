@@ -23,9 +23,8 @@ before_install:
   - docker -v
   - docker network create nginx-proxy
   - docker-compose up -d
-  - docker-compose exec php-fpm composer install --prefer-dist
 
-script: docker-compose exec php-fpm make test@travis-script
+script: docker-compose exec php-fpm make common-test@travis-script
 
 notifications:
   email: false
