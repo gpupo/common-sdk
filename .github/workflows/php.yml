@@ -34,7 +34,7 @@ jobs:
         run: composer validate
 
       - name: Docker Compose prepare
-        run: docker network create nginx-proxy && docker compose up -d
+        run: docker network create nginx-proxy && docker-compose up -d
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-scripts --ignore-platform-reqs
