@@ -40,4 +40,4 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest --no-scripts --ignore-platform-reqs
 
       - name: Run test suite
-        run: docker-compose exec php-fpm make common-test@travis-script
+        run: docker-compose exec -T php-fpm make common-test@travis-script
