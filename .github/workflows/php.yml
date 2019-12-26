@@ -36,5 +36,8 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-scripts --ignore-platform-reqs
 
+      - name: Docker Compose prepare
+        run: docker network create nginx-proxy
+        
       - name: Run test suite
-        run: composer run-script test
+        run: docker-compose exec php-fpm make common-test@travis-script
