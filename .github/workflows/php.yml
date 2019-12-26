@@ -33,11 +33,11 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
 
+      - name: Docker Compose prepare
+        run: docker network create nginx-proxy && docker compose up -d
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-scripts --ignore-platform-reqs
 
-      - name: Docker Compose prepare
-        run: docker network create nginx-proxy
-        
       - name: Run test suite
         run: docker-compose exec php-fpm make common-test@travis-script
