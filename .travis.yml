@@ -24,7 +24,7 @@ before_install:
   - docker network create nginx-proxy
   - docker-compose up -d
   - composer self-update
-  - COMPOSER_MEMORY_LIMIT=5G composer install --prefer-dist
+  - COMPOSER_MEMORY_LIMIT=5G composer install --no-progress --prefer-dist
 
 script: docker-compose exec -T php-fpm make common-test@travis-script
 
