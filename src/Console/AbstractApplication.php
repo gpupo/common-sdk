@@ -57,6 +57,7 @@ abstract class AbstractApplication extends Core
     {
         $input = $input ?: new ArgvInput();
         $output = $output ?: new ConsoleOutput();
+        $this->configureIO($input, $output);
         $config = getenv();
 
         if (!empty($config['extra_file'])) {
@@ -120,8 +121,8 @@ abstract class AbstractApplication extends Core
         $output->writeln([
             '',
             sprintf(':: <bg=green;options=bold> %s </>', $this->getName()),
-            '',
-            '<options=bold>Atenção!</> Esta aplicação é apenas uma ferramenta de apoio ao desenvolvedor e não deve ser usada no ambiente de produção!',
+            '<options=bold>Atenção!</> Esta aplicação é apenas uma ferramenta de apoio ao desenvolvedor',
+            '<options=bold>Não deve ser usada no ambiente de produção!</>',
             '',
         ]);
     }
