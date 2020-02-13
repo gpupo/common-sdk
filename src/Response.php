@@ -108,7 +108,7 @@ class Response extends Collection implements ResponseInterface
                 $message = 'Unknow Error ('.$code.')';
             }
 
-            throw new ClientException($message, $code);
+            throw new ClientException($message, $code, new \Exception(json_encode($this->toLog())));
         }
 
         return true;
