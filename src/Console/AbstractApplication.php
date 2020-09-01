@@ -71,7 +71,7 @@ abstract class AbstractApplication extends Core
 
         $logger = new Logger('console');
         $logger->pushHandler(new StreamHandler($this->getLogFilePath(), $this->getLogLevel()));
-        if ('true' === $config['APP_DEBUG']) {
+        if (array_key_exists('APP_DEBUG', $config) && 'true' === $config['APP_DEBUG']) {
             $logger->pushHandler(new ErrorLogHandler(0, $this->getLogLevel()));
         }
 
@@ -107,7 +107,7 @@ abstract class AbstractApplication extends Core
 
             $class = NAMESPACE_SEPARATOR.$class;
 
-            if ('true' === $config['APP_DEBUG']) {
+            if (array_key_exists('APP_DEBUG', $config) && 'true' === $config['APP_DEBUG']) {
                 $output->writeln(sprintf('<fg=yellow>DEBUG:</> Command <info>%s</> added', $class));
             }
 
