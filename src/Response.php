@@ -116,7 +116,8 @@ class Response extends Collection implements ResponseInterface
 
     public function getData($collectionClass = Collection::class)
     {
-        $data = (array) json_decode($this->get('responseRaw'), true);
+        $string = $this->get('responseRaw');
+        $data = empty($string) ? [] : (array) json_decode($string, true);
 
         return new $collectionClass($data, true);
     }
