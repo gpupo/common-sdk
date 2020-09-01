@@ -43,14 +43,15 @@ class GenericManager extends ManagerAbstract
     public function requestWithCache(array $route, string $identifier, $body = null, bool $renew = false, Closure $normalizer = null): CollectionInterface
     {
         $cacheId = $this->getClient()->simpleCacheGenerateId($identifier);
+        $responseCached = $this->getClient()->getSimpleCache()->getItem($cacheId);
 
-        if (false === $renew && $this->getClient()->getSimpleCache()->has($cacheId)) {
+        if (false === $renew && $responseCached->isHit()) {
             $this->log('info', 'Using cached response', [
                 'route' => $route,
                 'cacheId' => $cacheId,
             ]);
 
-            return $this->getClient()->getSimpleCache()->get($cacheId);
+            return $responseCached->get();
         }
 
         $response = $this->getFromRoute($route, $this->getClient()->getOptions()->toArray(), $body);
@@ -59,7 +60,9 @@ class GenericManager extends ManagerAbstract
             $response = $normalizer($response);
         }
 
-        $this->getClient()->getSimpleCache()->set($cacheId, $response, $this->getClient()->getOptions()->get('cacheTTL', 3600));
+        $responseCached->set($response);
+        $this->getClient()->getSimpleCache()->save($responseCached);
+
         $this->log('info', 'Saving response to cache', [
             'route' => $route,
             'cacheId' => $cacheId,
