@@ -61,6 +61,10 @@ abstract class FactoryAbstract implements FactoryInterface
         $this->getOptions()->set('client_id', $ormClient->getClientId());
         $this->getOptions()->set('client_secret', $ormClient->getClientSecret());
 
+        if ($ormClient->getRefreshToken()) {
+            $this->getOptions()->set('client_refresh_token', $ormClient->getRefreshToken());
+        }
+
         if ($ormClient->hasAccessToken()) {
             $this->getOptions()->set('access_token', $ormClient->getAccessToken()->getAccessToken());
             $this->getOptions()->set('refresh_token', $ormClient->getAccessToken()->getRefreshToken());
