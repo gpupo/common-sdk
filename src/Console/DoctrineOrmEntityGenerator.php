@@ -36,6 +36,7 @@ class DoctrineOrmEntityGenerator extends AbstractGenerator
         $table = $object->getTableName();
         $doctrine = [
             'type' => 'entity',
+            'schema' => 'public',
             'table' => $table,
             'repositoryClass' => $classNames['repository'],
             'id' => [
