@@ -69,9 +69,9 @@ class Map extends Collection
     {
         foreach ($parameters as $key => $value) {
             if ($this->placeHolderValueEmpty($value)) {
-                $route = str_replace('&'.$key.'={'.$key.'}', '', $route);
+                $route = str_replace('&'.$key.'={'.$key.'}', '', (string) $route);
             } else {
-                $route = str_replace('{'.$key.'}', $value, $route);
+                $route = str_replace('{'.$key.'}', $value, (string) $route);
             }
         }
 

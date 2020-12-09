@@ -90,7 +90,7 @@ abstract class AbstractApplication extends Core
         $finder->files()->name('*Command.php')->notName('*Abstract*')->in($path);
 
         foreach ($finder as $file) {
-            $class = str_replace('.php', '', $file->getRelativePathname());
+            $class = str_replace('.php', '', (string) $file->getRelativePathname());
             $segments = explode('/', $class);
             $lastPart = implode(NAMESPACE_SEPARATOR, $segments);
             $class = $namespace.NAMESPACE_SEPARATOR.$lastPart;

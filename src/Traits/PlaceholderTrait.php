@@ -12,13 +12,13 @@ namespace Gpupo\CommonSdk\Traits;
 
 trait PlaceholderTrait
 {
-    protected function fillPlaceholdersWithArray($string, array $array)
+    protected function fillPlaceholdersWithArray(string $string, array $array): string
     {
         foreach ($array as $key => $value) {
             $string = str_replace([
                 '{'.$key.'}',
                 '{'.mb_strtoupper($key).'}',
-            ], $value, $string);
+            ], (string) $value, $string);
         }
 
         return $string;

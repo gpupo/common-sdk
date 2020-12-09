@@ -118,7 +118,7 @@ class Response extends Collection implements ResponseInterface
     public function toLog(): array
     {
         return [
-            'raw' => str_replace('"', '', $this->getResponseRaw()),
+            'raw' => str_replace('"', '', (string) $this->getResponseRaw()),
             'statusCode' => $this->getHttpStatusCode(),
         ];
     }
