@@ -48,27 +48,26 @@ class BoardAbstractTest extends TestCaseAbstract
 
         $resourceString = 'resource01';
 
-        $factory = function ($i) use ($sample) {
-            $list = $sample;
-            $list['i'] = $i;
-            $list['cache_lastmod'] = date('H:i:s');
-
-            return $list;
+        $factoryArrayData = function ($i) use ($sample) {
+            return array_merge($sample, [
+                'i' => $i,
+                'cache_lastmod' => date('H:i:s'),
+            ]);
         };
 
-        $adapter = $board->getSimpleCache();
-        $this->assertInstanceOf(CacheInterface::class, $adapter);
+        $cacheAdapter = $board->getSimpleCache();
+        $this->assertInstanceOf(CacheInterface::class, $cacheAdapter);
 
-        $lambda = function (ItemInterface $item) use ($factory) {
+        $lambda = function (ItemInterface $item) use ($factoryArrayData) {
             $item->expiresAfter(3600);
 
-            return $factory($this->__i);
+            return $factoryArrayData($this->__i);
         };
 
         $cacheId = $board->simpleCacheGenerateId($resourceString);
 
         $this->__i = 1;
-        $listA = $adapter->get($cacheId, $lambda);
+        $listA = $cacheAdapter->get($cacheId, $lambda);
 
         $this->assertIsArray($listA);
         $this->assertSame($sample['hello'], $listA['hello']);
@@ -77,14 +76,14 @@ class BoardAbstractTest extends TestCaseAbstract
         $this->assertSame(1, $this->__i, 'Check i');
 
         $this->__i = 2;
-        $listB = $adapter->get($cacheId, $lambda);
+        $listB = $cacheAdapter->get($cacheId, $lambda);
         $this->assertSame(1, $listB['i']);
         $this->assertSame($sample['hello'], $listB['hello']);
 
         $board->destroyCache($resourceString);
 
         $this->__i = 3;
-        $listC = $adapter->get($cacheId, $lambda);
+        $listC = $cacheAdapter->get($cacheId, $lambda);
         $this->assertSame(3, $this->__i, 'Check i');
         $this->assertSame(3, $listC['i']);
     }
