@@ -19,8 +19,8 @@
     "require": {
         "php": "^8.0",
         "ext-curl": "*",
-        "gpupo/common": "^5.4|dev-master",
-        "gpupo/common-schema": "^5.0|dev-master",
+        "gpupo/common": "^5.4 || dev-master",
+        "gpupo/common-schema": "^5.0 || ^6.0 || dev-master",
         "doctrine/orm": "^2.6",
         "psr/http-message": "^1.0",
         "psr/http-client": "^1.0",
