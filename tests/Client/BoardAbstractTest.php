@@ -46,7 +46,7 @@ class BoardAbstractTest extends TestCaseAbstract
             'i' => 0,
         ];
 
-        $resourceString = 'resource01';
+        $resourceString = sprintf('resource_%d', rand(0,99));
 
         $factoryArrayData = function ($i) use ($sample) {
             return array_merge($sample, [
@@ -58,7 +58,7 @@ class BoardAbstractTest extends TestCaseAbstract
         $cacheAdapter = $board->getSimpleCache();
         $this->assertInstanceOf(CacheInterface::class, $cacheAdapter);
 
-        $lambda = function (ItemInterface $item) use ($factoryArrayData) {
+        $factoryItem = function (ItemInterface $item) use ($factoryArrayData) {
             $item->expiresAfter(3600);
 
             return $factoryArrayData($this->__i);
@@ -67,24 +67,24 @@ class BoardAbstractTest extends TestCaseAbstract
         $cacheId = $board->simpleCacheGenerateId($resourceString);
 
         $this->__i = 1;
-        $listA = $cacheAdapter->get($cacheId, $lambda);
+        $arrayFromCacheItem_Sample_A = $cacheAdapter->get($cacheId, $factoryItem);
 
-        $this->assertIsArray($listA);
-        $this->assertSame($sample['hello'], $listA['hello']);
-        $this->assertSame(1, $listA['i']);
+        $this->assertIsArray($arrayFromCacheItem_Sample_A);
+        $this->assertSame($sample['hello'], $arrayFromCacheItem_Sample_A['hello']);
+        $this->assertSame(1, $arrayFromCacheItem_Sample_A['i']);
 
         $this->assertSame(1, $this->__i, 'Check i');
 
         $this->__i = 2;
-        $listB = $cacheAdapter->get($cacheId, $lambda);
-        $this->assertSame(1, $listB['i']);
-        $this->assertSame($sample['hello'], $listB['hello']);
+        $arrayFromCacheItem_Sample_B = $cacheAdapter->get($cacheId, $factoryItem);
+        $this->assertSame(1, $arrayFromCacheItem_Sample_B['i']);
+        $this->assertSame($sample['hello'], $arrayFromCacheItem_Sample_B['hello']);
 
         $board->destroyCache($resourceString);
 
         $this->__i = 3;
-        $listC = $cacheAdapter->get($cacheId, $lambda);
+        $arrayFromCacheItem_Sample_C = $cacheAdapter->get($cacheId, $factoryItem);
         $this->assertSame(3, $this->__i, 'Check i');
-        $this->assertSame(3, $listC['i']);
+        $this->assertSame(3, $arrayFromCacheItem_Sample_C['i']);
     }
 }
