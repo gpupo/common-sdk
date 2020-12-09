@@ -114,6 +114,10 @@ class ClientTest extends TestCaseAbstract
 
     public function testCatlemockHelloWorldGet()
     {
+        if (true !== $_ENV['CASTLEMOCK']) {
+            return $this->markTestIncomplete('CASTLEMOCK disabled');
+        }
+
         $client = $this->factoryCastlemockClient();
         $response = $client->get('/hello-world');
         $this->assertSame(200, $response->getHttpStatusCode());
@@ -139,6 +143,10 @@ class ClientTest extends TestCaseAbstract
 
     public function testCatlemockHelloWorldPost()
     {
+        if (true !== $_ENV['CASTLEMOCK']) {
+            return $this->markTestIncomplete('CASTLEMOCK disabled');
+        }
+        
         $client = $this->factoryCastlemockClient();
         $response = $client->post('/hello-world', '');
         $this->assertSame(200, $response->getHttpStatusCode());
