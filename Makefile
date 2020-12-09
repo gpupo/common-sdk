@@ -16,4 +16,4 @@ endif
 
 ## Install vendores
 install:
-	composer install --prefer-dist --ignore-platform-reqs --no-scripts
+	composer install --prefer-dist --no-scripts
