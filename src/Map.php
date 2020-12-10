@@ -71,7 +71,7 @@ class Map extends Collection
             if ($this->placeHolderValueEmpty($value)) {
                 $route = str_replace('&'.$key.'={'.$key.'}', '', (string) $route);
             } else {
-                $route = str_replace('{'.$key.'}', $value, (string) $route);
+                $route = str_replace('{'.$key.'}', (string) $value, (string) $route);
             }
         }
 
