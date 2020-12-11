@@ -65,7 +65,7 @@ Proibido:
 
 Adicione o pacote ``common-sdk`` ao seu projeto utilizando [composer](http://getcomposer.org):
 
-    composer require gpupo/common-sdk "^5.0"
+    composer require gpupo/common-sdk
 
 
 ## Desenvolvimento
