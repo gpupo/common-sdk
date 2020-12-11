@@ -35,7 +35,7 @@
         "preferred-install": "dist"
     },
     "replace": {
-        "gpupo/common-schema": "*"
+        "gpupo/common-sdk": "*"
     },
     "scripts": {
         "test": "phpunit"
