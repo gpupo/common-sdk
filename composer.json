@@ -19,20 +19,23 @@
     "require": {
         "php": "^8.0",
         "ext-curl": "*",
-        "gpupo/common": "^5.4 || dev-master",
-        "gpupo/common-schema": "^5.0 || ^6.0 || dev-master",
+        "gpupo/common": "^5.4 || ^6.0 || dev-master",
+        "gpupo/common-schema": "^6.0 || dev-master",
         "doctrine/orm": "^2.6",
         "psr/http-message": "^1.0",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
-        "symfony/cache": "^5.1"
+        "symfony/cache": "^5.2"
     },
     "require-dev": {
-      "gpupo/common-dev": "dev-master"
+      "gpupo/common-dev": "* || dev-master"
     },
     "bin": ["bin/common-sdk"],
     "config": {
         "preferred-install": "dist"
+    },
+    "replace": {
+        "gpupo/common-schema": "*"
     },
     "scripts": {
         "test": "phpunit"
