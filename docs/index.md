@@ -5,12 +5,12 @@ layout: default
 
 Componente de uso comum entre SDKs
 
-[![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
+[![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=main)](http://travis-ci.org/gpupo/common-sdk)
 [![Actions Status](https://github.com/gpupo/common-sdk/workflows/CI/badge.svg)](https://github.com/gpupo/common-sdk/actions)
 
 ## Requisitos para uso
 
-* PHP *>=7.4*
+* PHP *>=8.0*
 * [curl extension](http://php.net/manual/en/intro.curl.php)
 * [Composer Dependency Manager](http://getcomposer.org)
 

@@ -2,7 +2,7 @@
 
 Componente de uso comum entre SDKs
 
-[![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=master)](http://travis-ci.org/gpupo/common-sdk)
+[![Build Status](https://secure.travis-ci.org/gpupo/common-sdk.png?branch=main)](http://travis-ci.org/gpupo/common-sdk)
 [![Actions Status](https://github.com/gpupo/common-sdk/workflows/CI/badge.svg)](https://github.com/gpupo/common-sdk/actions)
 
 ## Requisitos para uso
