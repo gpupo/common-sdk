@@ -23,8 +23,8 @@ use Gpupo\CommonSdk\Traits\LoggerTrait;
  */
 abstract class SchemaAbstract extends CollectionAbstract
 {
-    use FactoryTrait;
     use DocumentationTrait;
+    use FactoryTrait;
     use LoggerTrait;
 
     protected $requiredSchema = [];

@@ -26,8 +26,8 @@ use Gpupo\CommonSdk\Traits\MagicCommandTrait;
 
 abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsInterface
 {
-    use FactoryTrait;
     use EntityDiffTrait;
+    use FactoryTrait;
     use MagicCommandTrait;
     use OptionsTrait;
 

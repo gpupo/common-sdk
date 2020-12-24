@@ -65,7 +65,7 @@ trait EntityDiffTrait
 
         $data['isDiff'] = ($data['a'] !== $data['b']);
 
-        return  $data['isDiff'];
+        return $data['isDiff'];
     }
 
     protected function attributesResolv(EntityInterface $entityA, array $attributes = null)

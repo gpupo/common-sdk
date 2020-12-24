@@ -196,7 +196,7 @@ abstract class ClientAbstract extends BoardAbstract
      */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        return   $this->exec($request);
+        return $this->exec($request);
     }
 
     protected function renderContentType(): array

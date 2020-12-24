@@ -21,10 +21,10 @@ use Symfony\Contracts\Cache\CacheInterface;
 abstract class BoardAbstract
 {
     use LoggerTrait;
-    use SimpleCacheAwareTrait;
-    use SingletonTrait;
     use OptionsTrait;
     use PlaceholderTrait;
+    use SimpleCacheAwareTrait;
+    use SingletonTrait;
 
     public function __construct($options = [], LoggerInterface $logger = null, CacheInterface $cache = null)
     {

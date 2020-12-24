@@ -14,8 +14,8 @@ use Psr\Log\LoggerInterface;
 
 trait LoggerTrait
 {
-    use \Psr\Log\LoggerTrait;
     use \Psr\Log\LoggerAwareTrait;
+    use \Psr\Log\LoggerTrait;
 
     public function getLogger()
     {

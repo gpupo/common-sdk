@@ -19,8 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class ParseCommand extends AbstractCommand
 {
-    use TableTrait;
     use ResourcesTrait;
+    use TableTrait;
 
     protected function configure()
     {

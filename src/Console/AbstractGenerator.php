@@ -45,7 +45,7 @@ class AbstractGenerator
         }
 
         if (!$object instanceof EntityInterface) {
-            die(sprintf('Class %s must implement %s', \get_class($object), EntityInterface::class));
+            exit(sprintf('Class %s must implement %s', \get_class($object), EntityInterface::class));
         }
 
         $this->saveDataDoctrineMetadata($object);

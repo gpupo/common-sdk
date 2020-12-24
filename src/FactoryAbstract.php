@@ -24,11 +24,11 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 abstract class FactoryAbstract implements FactoryInterface
 {
-    use SingletonTrait;
-    use OptionsTrait;
     use LoggerTrait;
     use MagicCommandTrait;
+    use OptionsTrait;
     use SimpleCacheAwareTrait;
+    use SingletonTrait;
 
     protected $name = 'common-sdk';
 

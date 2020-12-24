@@ -33,7 +33,7 @@ final class Entity extends EntityAbstract implements EntityInterface
 
     public function getSchema(): array
     {
-        return  [
+        return [
             'key' => 'string',
             'value' => 'string',
         ];

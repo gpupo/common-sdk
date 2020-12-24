@@ -74,7 +74,7 @@ abstract class MetadataContainerAbstract extends CollectionAbstract
 
     protected function cutMetadata($raw)
     {
-        return  $this->dataPiece('metadata', $raw);
+        return $this->dataPiece('metadata', $raw);
     }
 
     protected function factoryMetadata($raw)

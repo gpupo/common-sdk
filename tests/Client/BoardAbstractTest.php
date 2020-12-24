@@ -46,7 +46,7 @@ class BoardAbstractTest extends TestCaseAbstract
             'i' => 0,
         ];
 
-        $resourceString = sprintf('resource_%d', rand(0,99));
+        $resourceString = sprintf('resource_%d', rand(0, 99));
 
         $factoryArrayData = function ($i) use ($sample) {
             return array_merge($sample, [

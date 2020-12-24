@@ -146,7 +146,7 @@ class ClientTest extends TestCaseAbstract
         if (true !== $_ENV['CASTLEMOCK']) {
             return $this->markTestIncomplete('CASTLEMOCK disabled');
         }
-        
+
         $client = $this->factoryCastlemockClient();
         $response = $client->post('/hello-world', '');
         $this->assertSame(200, $response->getHttpStatusCode());

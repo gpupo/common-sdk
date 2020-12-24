@@ -17,7 +17,7 @@ class EntityFoo extends EntityAbstract implements EntityInterface
 {
     public function getSchema(): array
     {
-        return  [
+        return [
             'Foo_Codigo' => 'integer',
             'Foo_Descricao' => 'string',
             'FooBar_QtdeBar' => 'integer',

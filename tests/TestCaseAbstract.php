@@ -24,9 +24,9 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 abstract class TestCaseAbstract extends TestCaseCore
 {
+    use AssertTrait;
     use LoggerTrait;
     use ProxyTrait;
-    use AssertTrait;
     use ResourcesTrait;
 
     const CASTLEMOCK_PREFIX = 'http://castlemock:8080/castlemock/mock/rest/project/W5ZUJy/application/OHSoz9';
