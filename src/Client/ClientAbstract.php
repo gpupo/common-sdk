@@ -99,7 +99,8 @@ abstract class ClientAbstract extends BoardAbstract
     public function get(string $resource, int $ttl = null, string $method = ''): Response
     {
         //Cache
-        if ((null === $ttl || 10 < $ttl) && $this->hasSimpleCache() && 'DELETE' !== $method) {
+        $ttl = (int) $ttl;
+        if (10 < $ttl && 'DELETE' !== $method && $this->hasSimpleCache()) {
             $cacheId = $this->simpleCacheGenerateId($resource);
             $response = $this->getSimpleCache()->get($cacheId, function (ItemInterface $item) use ($resource, $ttl, $method, $cacheId) {
                 $item->expiresAfter($ttl ?: $this->getOptions()->get('cacheTTL', 3600));
