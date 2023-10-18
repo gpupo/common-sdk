@@ -69,6 +69,17 @@ abstract class ManagerAbstract extends ClientManagerAbstract implements OptionsI
         }
     }
 
+    public function findItemById($itemId): ?CollectionInterface
+    {
+        try {
+            $map = $this->factoryMap('findById', ['itemId' => $itemId]);
+
+            return $this->processResponse($this->perform($map));
+        } catch (ManagerException $exception) {
+            throw $exception;
+        }
+    }
+
     public function rawFetch($offset = 0, $limit = 50, array $parameters = [], $route = 'fetch'): ?Collection
     {
         $pars = array_merge($this->fetchDefaultParameters(), $parameters, ['offset' => $offset, 'limit' => $limit]);
