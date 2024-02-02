@@ -93,6 +93,25 @@ abstract class ClientAbstract extends BoardAbstract
     {
         $data = $request->exec();
 
+        // Verificar o tipo MIME do conteúdo
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->buffer($data['responseRaw']);
+
+        if ($mimeType === 'application/zip')
+        {
+            $filenameZip = $filename . '.zip';
+            // salva file.zip e extrai para filename.csv
+            file_put_contents($filenameZip, $data['responseRaw']);
+            $zip = new \ZipArchive;
+            if ($zip->open($filename) === TRUE) {
+                $filename = str_replace('.zip', '', $filename);
+                $zip->extractTo(dirname($filename));
+                $zip->close();
+            }
+
+            return true;
+        }
+
         return file_put_contents($filename, $data['responseRaw']);
     }
 
